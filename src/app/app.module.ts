@@ -11,18 +11,23 @@ import {
   MatChipsModule,
   MatDividerModule,
   MatIconModule,
-  MatInputModule, MatOptionModule, MatSelectModule,
+  MatInputModule, MatListModule, MatOptionModule, MatSelectModule,
   MatTabsModule
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CommonBodyComponent } from './components/common-body/common-body.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CommonBodyComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,9 @@ import { FooterComponent } from './components/footer/footer.component';
     MatInputModule,
     MatCardModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
