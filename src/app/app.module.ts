@@ -18,7 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonBodyComponent } from './components/common-body/common-body.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,22 +29,23 @@ import {ReactiveFormsModule} from '@angular/forms';
     CommonBodyComponent,
     LandingPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatChipsModule,
-    MatIconModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatInputModule,
-    MatCardModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatListModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatChipsModule,
+        MatIconModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatTabsModule,
+        MatInputModule,
+        MatCardModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatListModule,
+        ReactiveFormsModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
