@@ -25,69 +25,67 @@
 
         <mat-tab label="New Users">
             <div class="mat-card-style" align="center">
-                <div>
-                    <mat-form-field style="width: 240px" appearance="legacy">
-                        <mat-label>Name</mat-label>
-                        <input required matInput #input1 [(ngModel)]='name'>
-                    </mat-form-field>
-                    <br>
+                <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-label>Name</mat-label>
+                    <input required matInput #input1 [(ngModel)]='name'>
+                </mat-form-field>
+                <br>
+                <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-label>Email</mat-label>
+                    <input required matInput #input2 [(ngModel)]='email'>
+                </mat-form-field>
+                <br>
+                <div [hidden]="logInType === 'doctor'">
                     <mat-form-field style="width: 240px"  appearance="legacy">
-                        <mat-label>Email</mat-label>
-                        <input required matInput #input2 [(ngModel)]='email'>
+                        <mat-label>Title</mat-label>
+                        <input matInput #input3 [(ngModel)]='title'>
                     </mat-form-field>
-                    <br>
-                    <div [hidden]="logInType === 'doctor'">
-                        <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Title</mat-label>
-                            <input matInput #input3 [(ngModel)]='title'>
-                        </mat-form-field>
-                        <br>
-                    </div>
-                    <div [hidden]="logInType === 'doctor'">
-                        <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Gender</mat-label>
-                            <input matInput required  #input4 [(ngModel)]='gender'>
-                        </mat-form-field>
-                        <br>
-                    </div>
-                    <div [hidden]="logInType === 'doctor'">
-                        <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Birthday</mat-label>
-                            <input matInput required #input5 [(ngModel)]='birthday'>
-                        </mat-form-field>
-                        <br>
-                    </div>
-                    <mat-form-field style="width: 240px"  appearance="legacy">
-                        <mat-label>Skype ID</mat-label>
-                        <input matInput required #input6 [(ngModel)]='skypeId'>
-                    </mat-form-field>
-                    <br>
-                    <mat-form-field style="width: 240px"  appearance="legacy">
-                        <mat-label>Contact Number</mat-label>
-                        <input required matInput #input7 [(ngModel)]='contact'>
-                    </mat-form-field>
-                    <br>
-                    <div [hidden]="logInType === 'patient'">
-                        <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Known Allergies & Medical History</mat-label>
-                            <input type="text" matInput #input8 [(ngModel)]='birthday'>
-                        </mat-form-field>
-                        <br>
-                    </div>
-                    <mat-form-field style="width: 240px"  appearance="legacy">
-                        <mat-label>Preferred Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'"  #input8 [(ngModel)]='pass'>
-                    </mat-form-field>
-                    <br>
-                    <mat-form-field style="width: 240px"  appearance="legacy">
-                        <mat-label>Confirm Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'" #input9 [(ngModel)]='conPass'>
-                    </mat-form-field>
-                    <br>
-                    <br>
-                    <button style="width: 240px" mat-flat-button color="primary">Sign Up</button>
                     <br>
                 </div>
+                <div [hidden]="logInType === 'doctor'">
+                    <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-label>Gender</mat-label>
+                        <input matInput required  #input4 [(ngModel)]='gender'>
+                    </mat-form-field>
+                    <br>
+                </div>
+                <div [hidden]="logInType === 'doctor'">
+                    <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-label>Birthday</mat-label>
+                        <input matInput required #input5 [(ngModel)]='birthday'>
+                    </mat-form-field>
+                    <br>
+                </div>
+                <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-label>Skype ID</mat-label>
+                    <input matInput required #input6 [(ngModel)]='skypeId'>
+                </mat-form-field>
+                <br>
+                <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-label>Contact Number</mat-label>
+                    <input required matInput #input7 [(ngModel)]='contact'>
+                </mat-form-field>
+                <br>
+                <div [hidden]="logInType === 'patient'">
+                    <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-label>Known Allergies & Medical History</mat-label>
+                        <input type="text" matInput #input8 [(ngModel)]='birthday'>
+                    </mat-form-field>
+                    <br>
+                </div>
+                <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-label>Preferred Password</mat-label>
+                    <input matInput required [type]="hide ? 'password' : 'text'"  #input8 [(ngModel)]='pass'>
+                </mat-form-field>
+                <br>
+                <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput required [type]="hide ? 'password' : 'text'" #input9 [(ngModel)]='conPass'>
+                </mat-form-field>
+                <br>
+                <br>
+                <button style="width: 240px" mat-flat-button color="primary">Sign Up</button>
+                <br>
             </div>
         </mat-tab>
     </mat-tab-group>

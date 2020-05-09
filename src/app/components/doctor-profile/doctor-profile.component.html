@@ -1,0 +1,381 @@
+<div class="mat-card-style">
+    <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="" value="{{doctorProfile.name}}">
+    </mat-form-field>
+
+    <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-label>Registration Number (SLMC)</mat-label>
+        <input matInput placeholder=""  value="{{doctorProfile.doctorRegistrationNumber}}">
+    </mat-form-field>
+
+    <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-label>Qualifications</mat-label>
+        <input matInput placeholder="" value="{{doctorProfile.qualificationString}}">
+    </mat-form-field>
+
+    <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-label>Price Per Consultation</mat-label>
+        <input matInput placeholder="" value="{{doctorProfile.pricePerConsultation}}">
+    </mat-form-field>
+
+    <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-label>Average Time For Consultation (minutes)</mat-label>
+        <input matInput placeholder="" value="{{doctorProfile.averageTimeForOneConsultation}}">
+    </mat-form-field>
+
+    <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-label>Tags</mat-label>
+        <input matInput placeholder="" value="{{doctorProfile.tags}}">
+    </mat-form-field>
+    <br>
+    <br>
+    <br>
+
+    <p>Weekly Schedule for consultations</p>
+    <br>
+
+    <mat-accordion>
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Monday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Tuesday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Wednesday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Thursday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Friday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Saturday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel style="width: 240px">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Sunday
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-label>Time Slot #01</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #02</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-label>Time Slot #03</mat-label>
+            <br>
+            <br>
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot1}}">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="time" placeholder="" value="{{doctorProfile.schedule.monday.slot2}}">
+            </mat-form-field>
+        </mat-expansion-panel>
+
+    </mat-accordion>
+
+    <br>
+    <br>
+    <button style="width: 240px" mat-flat-button color="primary">Update Details</button>
+    <br>
+</div>

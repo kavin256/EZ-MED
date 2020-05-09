@@ -6,16 +6,20 @@
         </app-landing-page>
     </div>
 
+    <div *ngIf="flow===3">
+        <app-doctor-profile
+        ></app-doctor-profile>
+    </div>
     <div *ngIf="flow===2">
         <app-signup
         ></app-signup>
     </div>
 
-    <div *ngIf="flow===3">
+    <div *ngIf="flow===4">
         <app-signup></app-signup>
     </div>
 
-    <div *ngIf="flow===4">
+    <div *ngIf="flow===5">
         <app-signup></app-signup>
     </div>
 </div>
