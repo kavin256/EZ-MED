@@ -19,6 +19,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CommonBodyComponent } from './components/common-body/common-body.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { DoctorProfileComponent } from './components/doctor-profile/doctor-profi
     FooterComponent,
     CommonBodyComponent,
     LandingPageComponent,
+    DoctorScheduleComponent,
     DoctorProfileComponent
   ],
     imports: [
