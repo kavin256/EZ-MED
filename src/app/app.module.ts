@@ -11,7 +11,7 @@ import {
     MatChipsModule,
     MatDividerModule, MatExpansionModule,
     MatIconModule,
-    MatInputModule, MatListModule, MatOptionModule, MatSelectModule,
+    MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
     MatTabsModule
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
@@ -21,6 +21,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
+import { PatientDashboardComponent } from './components/patient-dashboard/patient-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DoctorProfileComponent } from './components/doctor-profile/doctor-profi
     CommonBodyComponent,
     LandingPageComponent,
     DoctorScheduleComponent,
-    DoctorProfileComponent
+    DoctorProfileComponent,
+    PatientDashboardComponent
   ],
     imports: [
         BrowserModule,
@@ -49,7 +51,8 @@ import { DoctorProfileComponent } from './components/doctor-profile/doctor-profi
         MatListModule,
         ReactiveFormsModule,
         FormsModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatRadioModule
     ],
   providers: [],
   bootstrap: [AppComponent]

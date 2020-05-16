@@ -1,0 +1,27 @@
+.mat-card-style {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    min-width: 320px;
+    max-width: 320px;
+}
+
+.table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.th {
+    border: 1px solid #dddddd;
+    text-align: right;
+}
+
+.td {
+    border: 1px solid #dddddd;
+    text-align: right;
+}
+
+.tr:nth-child(even) {
+    background-color: #dddddd;
+}

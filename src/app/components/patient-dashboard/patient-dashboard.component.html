@@ -1,0 +1,92 @@
+<div class="mat-card-style">
+    <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="1">All</mat-radio-button>    <br><br>
+        <mat-radio-button value="2">Specialists</mat-radio-button>    <br><br>
+        <mat-radio-button value="3">General Practitioners</mat-radio-button>    <br><br>
+        <mat-radio-button value="4">Other Medical Services</mat-radio-button>    <br><br>
+    </mat-radio-group>
+        <button style="width: 320px" mat-stroked-button>Filter</button>
+    <br>
+    <br>
+
+    <mat-divider></mat-divider>
+    <br>
+    <p style="font-size: x-large">List of Professionals</p>
+    <mat-divider></mat-divider>
+    <br>
+
+    <div *ngFor="let doc of docList">
+        <mat-card (click)="selectDoc(doc.id)" style="width: 300px; height: 180px">
+            <table>
+                <tr>
+                    <th style="width: 115px; height: 115px; align-content: center">
+                        <img src="./assets/img/doctor2.jpg" width="115px" height="115px">
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                        <table>
+                            <tr>
+                                <th style="font-size: medium; text-align: left">
+                                    {{doc.name}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="font-size: x-small; text-align: left">
+                                    {{doc.bio}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <mat-divider style="left: inherit; width: 180px"></mat-divider>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style="font-size: small; text-align: left">
+                                    Specializations:
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <div *ngFor="let speciality of doc.specialities">
+                                <tr>
+                                    <td style="font-size: x-small; text-align: left">
+                                        {{speciality}}
+                                    </td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <mat-divider style="left: inherit; width: 180px"></mat-divider>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style="font-size: small; text-align: left">
+                                    Charge per consultation:
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style="font-size: x-small; text-align: left">
+                                    {{doc.consultationPrice}}
+                                </td>
+                            </tr>
+                            <tr>
+                        </table>
+                    </th>
+                </tr>
+            </table>
+        </mat-card>
+        <br>
+    </div>
+
+</div>
