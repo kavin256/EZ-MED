@@ -5,3 +5,6 @@
     min-width: 320px;
     max-width: 320px;
 }
+.strikethrough {
+    text-decoration: line-through;
+}

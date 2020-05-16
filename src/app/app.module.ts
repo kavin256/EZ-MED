@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
@@ -22,6 +23,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
 import { PatientDashboardComponent } from './components/patient-dashboard/patient-dashboard.component';
+import { DoctorSideBookingListComponent } from './components/doctor-side-booking-list/doctor-side-booking-list.component';
+import { DoctorSideBookingComponent } from './components/doctor-side-booking/doctor-side-booking.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,9 @@ import { PatientDashboardComponent } from './components/patient-dashboard/patien
     LandingPageComponent,
     DoctorScheduleComponent,
     DoctorProfileComponent,
-    PatientDashboardComponent
+    PatientDashboardComponent,
+    DoctorSideBookingListComponent,
+    DoctorSideBookingComponent
   ],
     imports: [
         BrowserModule,
@@ -52,7 +57,8 @@ import { PatientDashboardComponent } from './components/patient-dashboard/patien
         ReactiveFormsModule,
         FormsModule,
         MatExpansionModule,
-        MatRadioModule
+        MatRadioModule,
+        MatBadgeModule
     ],
   providers: [],
   bootstrap: [AppComponent]
