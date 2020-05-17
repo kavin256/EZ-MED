@@ -63,8 +63,10 @@ export class DoctorSideBookingComponent implements OnInit {
 
   copyToClipBoard() {
       const copyText = document.getElementById('skypeId');
+      // @ts-ignore
       copyText.select();
       document.execCommand('copy');
+      // @ts-ignore
       alert('Copied the text: ' + copyText.value);
   }
 }

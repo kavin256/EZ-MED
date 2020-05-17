@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {professionalType} from '../search-professionals/search-professionals.component';
 
 @Component({
-  selector: 'app-patient-dashboard',
-  templateUrl: './patient-dashboard.component.html',
-  styleUrls: ['./patient-dashboard.component.css']
+  selector: 'app-search-professionals',
+  templateUrl: './search-professionals.component.html',
+  styleUrls: ['./search-professionals.component.css']
 })
-export class PatientDashboardComponent implements OnInit {
+export class SearchProfessionalsComponent implements OnInit {
+
+  professionalListType = professionalType.CONSULTANT;
+  selectedProfessionalType = 'option2';
+
+
+  searchString = null;
 
   professionalList = [
     {
@@ -23,7 +28,7 @@ export class PatientDashboardComponent implements OnInit {
     {
       id: 2,
       name: 'Dr. Punya Anupama',
-      professionalType: professionalType.GENERAL_PRACTITIONER,
+      professionalType: professionalType.CONSULTANT,
       bio: 'MBBS [COLOMBO](1998)',
       specialities: [
         'Consultant Pathologist'
@@ -33,13 +38,17 @@ export class PatientDashboardComponent implements OnInit {
     {
       id: 3,
       name: 'Dr. Eric Deepal',
-      professionalType: professionalType.SUPPORT_MEDICAL_SERVICE,
+      professionalType: professionalType.CONSULTANT,
       bio: 'MBBS [RUHUNA](2000)',
       specialities: [
         'Consultant Clinical Nutritionist'
       ],
       consultationPrice: 'Rs. 2500.00'
     }
+  ];
+
+  specializations = [
+
   ];
 
   constructor() { }
@@ -50,4 +59,15 @@ export class PatientDashboardComponent implements OnInit {
   selectDoc($event: number) {
     console.log($event);
   }
+
+  search() {
+      console.log('jhbrch');
+  }
+}
+
+export enum professionalType {
+  ANY = 'ANY',
+  CONSULTANT = 'Consultant',
+  GENERAL_PRACTITIONER = 'General Practitioner',
+  SUPPORT_MEDICAL_SERVICE = 'Other Medical Practitioner'
 }
