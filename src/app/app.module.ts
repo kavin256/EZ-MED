@@ -7,7 +7,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
     MatBadgeModule,
-    MatButtonModule,
+    MatButtonModule, MatButtonToggleModule,
     MatCardModule,
     MatChipsModule,
     MatDividerModule, MatExpansionModule,
@@ -58,7 +58,8 @@ import { DoctorSideBookingComponent } from './components/doctor-side-booking/doc
         FormsModule,
         MatExpansionModule,
         MatRadioModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatButtonToggleModule
     ],
   providers: [],
   bootstrap: [AppComponent]

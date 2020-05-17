@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {BookingStatus} from '../doctor-side-booking-list/doctor-side-booking-list.component';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-doctor-side-booking',
@@ -13,7 +15,10 @@ export class DoctorSideBookingComponent implements OnInit {
       patientId: '76531',
       doctorName: 'Dr. Tim Cook',
       patientName: 'John Doe',
-      massageThread: [
+      skypeID: 'kafkjnf34',
+      phoneNumber: '0773092511',
+      bookingStatus: BookingStatus.BOOKING_NOT_STARTED,
+      messageThread: [
         {
           sender: 'patient',
           message: 'Hi doctor, I have a headache and a cough.'
@@ -29,7 +34,23 @@ export class DoctorSideBookingComponent implements OnInit {
         {
           sender: 'doctor',
           message: 'Thanks.'
-        }
+        },
+        {
+            sender: 'patient',
+            message: 'THANK YOU DOC!.'
+        },
+        {
+            sender: 'patient',
+            message: 'Can you send me a prescription btw?'
+        },
+          {
+              sender: 'doctor',
+              message: 'Sure. I will send you.'
+          },
+          {
+              sender: 'patient',
+              message: 'Awesome. Thanks'
+          }
       ],
       bookingPrice: 'Rs. 2000.00',
       doctorCharge: 'Rs. 1800.00'
@@ -40,4 +61,10 @@ export class DoctorSideBookingComponent implements OnInit {
   ngOnInit() {
   }
 
+  copyToClipBoard() {
+      const copyText = document.getElementById('skypeId');
+      copyText.select();
+      document.execCommand('copy');
+      alert('Copied the text: ' + copyText.value);
+  }
 }

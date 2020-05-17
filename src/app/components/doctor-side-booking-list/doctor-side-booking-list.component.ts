@@ -113,25 +113,25 @@ export class DoctorSideBookingListComponent implements OnInit {
         bookingId: 2387,
         patientId: '76531',
         patientName: 'John Doe',
-        bookingStatus: BookingStatus.BOOKING_NOT_OPENED
+        bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       },
       {
         bookingId: 2387,
         patientId: '76531',
         patientName: 'John Doe',
-        bookingStatus: BookingStatus.BOOKING_NOT_OPENED
+        bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       },
       {
         bookingId: 1196,
         patientId: '65456',
         patientName: 'Sumanasiri',
-        bookingStatus: BookingStatus.BOOKING_NOT_OPENED
+        bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       },
       {
         bookingId: 2387,
         patientId: '76531',
         patientName: 'John Doe',
-        bookingStatus: BookingStatus.BOOKING_NOT_OPENED
+        bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       }
     ]
   };
@@ -150,14 +150,14 @@ export class DoctorSideBookingListComponent implements OnInit {
     switch ($event) {
       case BookingStatus.BOOKING_CANCELLED:
         return Colors.BOOKING_CANCELLED;
-      case BookingStatus.BOOKING_NOT_OPENED:
-        return Colors.BOOKING_NOT_OPENED;
+      case BookingStatus.BOOKING_NOT_STARTED:
+        return Colors.BOOKING_NOT_STARTED;
       case BookingStatus.BOOKING_COMPLETED:
         return Colors.BOOKING_COMPLETED;
       case BookingStatus.BOOKING_CURRENT:
         return Colors.BOOKING_CURRENT;
       default:
-        return Colors.BOOKING_NOT_OPENED;
+        return Colors.BOOKING_NOT_STARTED;
     }
   }
 }
@@ -166,12 +166,12 @@ export enum BookingStatus {
   BOOKING_CANCELLED = 'BOOKING_CANCELLED',
   BOOKING_COMPLETED = 'BOOKING_COMPLETED',
   BOOKING_CURRENT = 'BOOKING_CURRENT',
-  BOOKING_NOT_OPENED = 'BOOKING_NOT_OPENED'
+  BOOKING_NOT_STARTED = 'BOOKING_NOT_STARTED'
 }
 
 export enum Colors {
   BOOKING_CANCELLED = '#ff6666',
   BOOKING_COMPLETED = '#e6e6e6',
   BOOKING_CURRENT = '#99ccff',
-  BOOKING_NOT_OPENED = '#d5ff80'
+  BOOKING_NOT_STARTED = '#d5ff80'
 }
