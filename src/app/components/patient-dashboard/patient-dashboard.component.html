@@ -3,17 +3,44 @@
 <!--    <br>-->
 <!--    <br>-->
 
-    <mat-radio-group aria-label="Select an option">
-        <mat-radio-button value="1">All</mat-radio-button>    <br><br>
-        <mat-radio-button value="2">Consultants</mat-radio-button>    <br><br>
-        <mat-radio-button value="3">General Practitioners</mat-radio-button>    <br><br>
-        <mat-radio-button value="4">Other Medical Services</mat-radio-button>    <br><br>
-    </mat-radio-group>
-        <button style="width: 320px" mat-stroked-button>Filter Professionals</button>
-    <br>
-    <br>
+<!--    <mat-radio-group aria-label="Select an option">-->
+<!--        <mat-radio-button value="1">All</mat-radio-button>    <br><br>-->
+<!--        <mat-radio-button value="2">Consultants</mat-radio-button>    <br><br>-->
+<!--        <mat-radio-button value="3">General Practitioners</mat-radio-button>    <br><br>-->
+<!--        <mat-radio-button value="4">Other Medical Services</mat-radio-button>    <br><br>-->
+<!--    </mat-radio-group>-->
 
+    <button mat-flat-button color="primary" style="width: 320px">Consultants >></button>
+    <br>
+    <br>
+    <button mat-flat-button color="primary"  style="width: 320px">General Practitioners >></button>
+    <br>
+    <br>
+        <button mat-raised-button color="primary"  style="width: 320px" >Counsellors (New) >></button>
+    <br>
+    <br>
+        <button mat-flat-button color="primary"  style="width: 320px">Other Medical Service Professionals >></button>
+    <br>
+    <br>
     <mat-divider></mat-divider>
+
+    <table align="center">
+        <tr>
+            <td>
+                <mat-form-field style="width: 190px">
+                    <input id="skypeId" matInput type="text" placeholder="Search by name" value="{{searchString}}">
+                </mat-form-field>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search All</button>
+            </td>
+        </tr>
+    </table>
+    <mat-divider></mat-divider>
+
     <p style="font-size: x-large">List of Professionals:</p>
 
     <div *ngFor="let doc of professionalList">

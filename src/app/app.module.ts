@@ -28,6 +28,7 @@ import { DoctorSideBookingComponent } from './components/doctor-side-booking/doc
 import { SearchProfessionalsComponent } from './components/search-professionals/search-professionals.component';
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
+import { PrescriptionComponent } from './components/prescription/prescription.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FaqsComponent } from './components/faqs/faqs.component';
     DoctorSideBookingComponent,
     SearchProfessionalsComponent,
     ContactPageComponent,
-    FaqsComponent
+    FaqsComponent,
+    PrescriptionComponent
   ],
     imports: [
         BrowserModule,

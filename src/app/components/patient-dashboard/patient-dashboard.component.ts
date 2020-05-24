@@ -8,6 +8,8 @@ import {professionalType} from '../search-professionals/search-professionals.com
 })
 export class PatientDashboardComponent implements OnInit {
 
+  searchString = null;
+
   professionalList = [
     {
       id: 1,
@@ -41,6 +43,10 @@ export class PatientDashboardComponent implements OnInit {
       consultationPrice: 'Rs. 2500.00'
     }
   ];
+
+  search() {
+    console.log('jhbrch');
+  }
 
   constructor() { }
 
