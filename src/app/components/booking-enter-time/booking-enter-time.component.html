@@ -39,7 +39,8 @@
         </mat-form-field>
     </ng-container>
     <div *ngIf="selectedDate !== undefined && selectedTimeSlot !== undefined" style="width: 240px">
-        <p>** You are about to book a consultation with <b>{{doctor.name}}</b>. Wait for the Skype call from him/her at around {{consultationTime}}<br><br>
+        <p>** You are about to book a consultation with <b>{{doctor.name}}</b> on <b>{{selectedDate}}</b>. Wait for the Skype call from him/her at around <b>{{consultationTime}}</b><br><br>
+            Make sure your Skype call notifications are switched on.<br><br>
         (Note that the time might change due to different reasons)</p>
     </div>
     <button mat-raised-button color="primary" style="width: 240px" >Continue</button>
