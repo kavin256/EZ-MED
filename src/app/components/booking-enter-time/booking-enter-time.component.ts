@@ -40,7 +40,7 @@ export class BookingEnterTimeComponent implements OnInit {
         slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        title: 'Monday',
+        title: 'Thursday',
         slot1: '12.30 P.M. - 1.30 P.M.',
         slot2: '3.30 P.M. - 5.00 P.M.',
         slot3: '6.00 P.M. - 8.00 P.M.'
@@ -102,6 +102,7 @@ export class BookingEnterTimeComponent implements OnInit {
   selectedDate: any;
   selectedTimeSlot: any;
   consultationTime = '8.00 P.M.';
+  summaryShown = false;
 
   constructor() { }
 
@@ -156,5 +157,11 @@ export class BookingEnterTimeComponent implements OnInit {
       return scheduleObj.title = selectedDate;
     });
     return [found.slot1, found.slot2, found.slot3];
+  }
+
+  continueClicked($event: boolean) {
+    if ($event) {
+      this.summaryShown = $event;
+    }
   }
 }
