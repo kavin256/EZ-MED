@@ -9,9 +9,9 @@ import {
     MatBadgeModule,
     MatButtonModule, MatButtonToggleModule,
     MatCardModule,
-    MatChipsModule,
+    MatChipsModule, MatDatepickerModule,
     MatDividerModule, MatExpansionModule,
-    MatIconModule,
+    MatIconModule, MatNativeDateModule,
     MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
     MatTabsModule
 } from '@angular/material';
@@ -30,6 +30,8 @@ import { ContactPageComponent } from './components/contact-page/contact-page.com
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
 import { BookingEnterComponent } from './components/booking-enter/booking-enter.component';
+import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { BookingEnterComponent } from './components/booking-enter/booking-enter.
     ContactPageComponent,
     FaqsComponent,
     PrescriptionComponent,
-    BookingEnterComponent
+    BookingEnterComponent,
+    BookingEnterTimeComponent
   ],
     imports: [
         BrowserModule,
@@ -69,7 +72,9 @@ import { BookingEnterComponent } from './components/booking-enter/booking-enter.
         MatExpansionModule,
         MatRadioModule,
         MatBadgeModule,
-        MatButtonToggleModule
+        MatNativeDateModule,
+        MatButtonToggleModule,
+        MatDatepickerModule
     ],
   providers: [],
   bootstrap: [AppComponent]

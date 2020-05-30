@@ -73,7 +73,7 @@ export class BookingEnterComponent implements OnInit {
   ngOnInit() {
   }
 
-    scheduleVisibilityToggle($event: boolean) {
-        this.isScheduleVisible = $event;
-    }
+  scheduleVisibilityToggle($event: boolean) {
+      this.isScheduleVisible = $event;
+  }
 }
