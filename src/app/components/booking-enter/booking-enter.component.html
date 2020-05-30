@@ -1,37 +1,6 @@
 <div class="mat-card-style">
-    <table align="center">
-        <tr>
-            <td>
-                <mat-form-field style="width: 200px">
-                    <input id="skypeId" matInput type="text" placeholder="Search by name" value="{{searchString}}">
-                </mat-form-field>
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                <button (click)="search()" style="width: 80px" color="primary" mat-flat-button>Search</button>
-            </td>
-        </tr>
-    </table>
-    <br>
-
-    <div align="center" *ngIf="professionalListType==='Consultant'">
-        <mat-form-field style="width: 290px">
-            <mat-label>Select specialization [optional]</mat-label>
-            <mat-select [(value)]="selectedProfessionalType">
-                <mat-option>None</mat-option>
-                <mat-option value="option1">Option 1</mat-option>
-                <mat-option value="option2">Option 2</mat-option>
-                <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-    <mat-divider></mat-divider>
-    <p style="font-size: x-large">List of {{professionalListType}}s:</p>
-
-    <div *ngFor="let doc of professionalList">
-        <mat-card (click)="selectDoc(doc.id)" style="width: 300px; height: 180px">
+    <div *ngIf="doctor">
+        <div style="width: 300px; height: 180px">
             <table>
                 <tr>
                     <th style="width: 115px; height: 115px; align-content: center">
@@ -43,12 +12,12 @@
                         <table>
                             <tr>
                                 <th style="font-size: medium; text-align: left">
-                                    {{doc.name}}
+                                    {{doctor.name}}
                                 </th>
                             </tr>
                             <tr>
                                 <td style="font-size: x-small; text-align: left">
-                                    {{doc.bio}}
+                                    {{doctor.bio}}
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +36,7 @@
                             </tr>
                             <tr>
                             </tr>
-                            <div *ngFor="let speciality of doc.specialities">
+                            <div *ngFor="let speciality of doctor.specialities">
                                 <tr>
                                     <td style="font-size: x-small; text-align: left">
                                         {{speciality}}
@@ -92,7 +61,7 @@
                             </tr>
                             <tr>
                                 <td style="font-size: x-small; text-align: left">
-                                    {{doc.consultationPrice}}
+                                    {{doctor.consultationPrice}}
                                 </td>
                             </tr>
                             <tr>
@@ -100,9 +69,31 @@
                     </th>
                 </tr>
             </table>
-        </mat-card>
+        </div>
         <br>
     </div>
 
-    </div>
+    <button mat-raised-button color="primary" style="width: 320px">Book a Consultation</button>
+    <br>
+    <br>
+    <button *ngIf="!isScheduleVisible" mat-raised-button color="secondary" style="width: 320px" (click)="scheduleVisibilityToggle(true)" >Show Available Times</button>
+    <button *ngIf="isScheduleVisible" mat-raised-button color="secondary" style="width: 320px" (click)="scheduleVisibilityToggle(false)" >Hide Available Times</button>
+    <br>
+    <br>
+    <ng-container *ngIf="isScheduleVisible" >
+        <p>Available Times:</p>
+        <mat-accordion>
+            <div *ngFor="let schedule of doctorSchedule.schedule;">
+                <mat-expansion-panel style="width: 320px">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>{{schedule.title}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Time Slot 1: <b>{{schedule.slot1}}</b></p>
+                    <p>Time Slot 2: <b>{{schedule.slot2}}</b></p>
+                    <p>Time Slot 3: <b>{{schedule.slot3}}</b></p>
+                </mat-expansion-panel>
+                <br>
+            </div>
+        </mat-accordion>
+    </ng-container>
 </div>
