@@ -48,53 +48,46 @@ export class DoctorProfileComponent implements OnInit {
   doctorSchedule = {
     schedule: [
       {
-        monday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Monday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        tuesday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Tuesday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        wednesday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Wednesday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        thursday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Monday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        friday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Friday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        saturday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Saturday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       },
       {
-        sunday: {
-          slot1: '12:30',
-          slot2: '15:30',
-          slot3: '18:00'
-        }
+        title: 'Sunday',
+        slot1: '12.30 P.M. - 1.30 P.M.',
+        slot2: '3.30 P.M. - 5.00 P.M.',
+        slot3: '6.00 P.M. - 8.00 P.M.'
       }
     ]
   };

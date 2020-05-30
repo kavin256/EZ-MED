@@ -2,83 +2,20 @@
     <button style="width: 320px" mat-stroked-button>My Profile</button>
     <br>
     <br>
-    <button style="width: 320px" mat-stroked-button>Schedule Changes</button>
+    <button style="width: 320px" mat-stroked-button>Change Schedule</button>
     <br>
     <br>
     <br>
     <p>Your Schedule</p>
     <mat-accordion>
-        <div *ngFor="let schedule of doctorSchedule.schedule; let i = index">
+        <div *ngFor="let schedule of doctorSchedule.schedule;">
             <mat-expansion-panel style="width: 320px">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>Monday</mat-panel-title>
+                    <mat-panel-title>{{schedule.title}}</mat-panel-title>
                 </mat-expansion-panel-header>
-
-                <mat-label>Time Slot #01</mat-label>
-                <br>
-                <br>
-                <div *ngFor="let booking of bookings">
-                    <mat-accordion>
-                        <mat-expansion-panel style="width: 300px">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    {{booking.bookingNo}} - {{booking.name}}
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    {{booking.state}}
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <p>SkypeID: {{booking.skypeId}}</p>
-                            <p>Email: {{booking.email}}</p>
-                            <p>Booking Number: {{booking.bookingNo}}</p>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <br>
-                </div>
-
-                <mat-label>Time Slot #02</mat-label>
-                <br>
-                <br>
-                <div *ngFor="let booking of bookings">
-                    <mat-accordion>
-                        <mat-expansion-panel style="width: 300px">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    {{booking.name}}
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    {{booking.state}}
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <p>SkypeID: {{booking.skypeId}}</p>
-                            <p>Email: {{booking.email}}</p>
-                            <p>Booking Number: {{booking.bookingNo}}</p>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <br>
-                </div>
-
-                <mat-label>Time Slot #03</mat-label>
-                <br>
-                <br>
-                <div *ngFor="let booking of bookings">
-                    <mat-accordion>
-                        <mat-expansion-panel style="width: 300px">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    {{booking.name}}
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    {{booking.state}}
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <p>SkypeID: {{booking.skypeId}}</p>
-                            <p>Email: {{booking.email}}</p>
-                            <p>Booking Number: {{booking.bookingNo}}</p>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <br>
-                </div>
+                <p>Time Slot 1: <b>{{schedule.slot1}}</b></p>
+                <p>Time Slot 2: <b>{{schedule.slot2}}</b></p>
+                <p>Time Slot 3: <b>{{schedule.slot3}}</b></p>
             </mat-expansion-panel>
             <br>
         </div>
