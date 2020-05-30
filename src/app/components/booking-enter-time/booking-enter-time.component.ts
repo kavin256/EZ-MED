@@ -160,8 +160,6 @@ export class BookingEnterTimeComponent implements OnInit {
   }
 
   continueClicked($event: boolean) {
-    if ($event) {
-      this.summaryShown = $event;
-    }
+    this.summaryShown = $event;
   }
 }

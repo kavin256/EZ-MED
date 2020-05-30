@@ -32,6 +32,7 @@ import { PrescriptionComponent } from './components/prescription/prescription.co
 import { BookingEnterComponent } from './components/booking-enter/booking-enter.component';
 import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
     FaqsComponent,
     PrescriptionComponent,
     BookingEnterComponent,
-    BookingEnterTimeComponent
+    BookingEnterTimeComponent,
+    PaymentSuccessComponent
   ],
     imports: [
         BrowserModule,

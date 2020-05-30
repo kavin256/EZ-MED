@@ -20,7 +20,7 @@
                 </div>
             </mat-accordion>
         </ng-container>
-        <h4>Select Your Convenient Time</h4>
+        <h4>Select Your Convenient Date and Time</h4>
         <mat-form-field  style="width: 240px" >
             <mat-label>Date</mat-label>
             <mat-select [(value)]="selectedDate">
@@ -47,7 +47,11 @@
                 Make sure your Skype call notifications are switched on.<br><br>
             (Note that the time might change due to different reasons)</p>
         </div>
-        <button mat-raised-button color="primary" style="width: 240px">Confirm</button>
+        <button mat-raised-button color="primary" style="width: 240px">Confirm Booking</button>
+        <br>
+        <br>
+
+        <button mat-raised-button color="secondary" style="width: 240px"  (click)="continueClicked(false)">Back</button>
     </ng-container>
     <br>
     <br>

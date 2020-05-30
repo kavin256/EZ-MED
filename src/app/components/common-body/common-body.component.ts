@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommonBodyComponent implements OnInit {
 
-  flow = 14;
+  flow = 15;
 
   constructor() { }
 
