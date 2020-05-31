@@ -1,23 +1,74 @@
 <div class="mat-card-style">
-    <button style="width: 320px" mat-stroked-button>My Profile</button>
-    <br>
-    <br>
-    <button style="width: 320px" mat-stroked-button>Change Schedule</button>
-    <br>
-    <br>
-    <br>
-    <p>Your Schedule</p>
-    <mat-accordion>
-        <div *ngFor="let schedule of doctorSchedule.schedule;">
-            <mat-expansion-panel style="width: 320px">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>{{schedule.title}}</mat-panel-title>
-                </mat-expansion-panel-header>
-                <p>Time Slot 1: <b>{{schedule.slot1}}</b></p>
-                <p>Time Slot 2: <b>{{schedule.slot2}}</b></p>
-                <p>Time Slot 3: <b>{{schedule.slot3}}</b></p>
-            </mat-expansion-panel>
-            <br>
-        </div>
-    </mat-accordion>
+
+    <ng-container *ngIf="editable">
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Title:</mat-label>
+            <input matInput placeholder="" value="{{doctor.title}}">
+        </mat-form-field>
+
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Name:</mat-label>
+            <input matInput placeholder="" value="{{doctor.name}}">
+        </mat-form-field>
+
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Registration Number (SLMC):</mat-label>
+            <input matInput placeholder=""  value="{{doctor.doctorRegistrationNumber}}">
+        </mat-form-field>
+
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Qualifications:</mat-label>
+            <input matInput placeholder="" value="{{doctor.qualificationString}}">
+        </mat-form-field>
+
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Specializations:</mat-label>
+            <input matInput placeholder="" value="{{doctor.specializations}}">
+        </mat-form-field>
+        <br>
+        <br>
+        <button style="width: 320px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
+        <br>
+        <br>
+    </ng-container>
+
+    <ng-container *ngIf="!editable">
+
+        <button style="width: 320px" mat-raised-button color="primary">My Bookings</button>
+        <br>
+        <br>
+        <button style="width: 320px" mat-stroked-button>Edit Schedule</button>
+        <br>
+        <br>
+        <button style="width: 320px" mat-stroked-button>My Finances</button>
+        <br>
+        <br>
+        <button style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
+        <br>
+        <br>
+
+        <mat-label style="font-size: small">Title:</mat-label>
+        <br>
+        <mat-label>{{doctor.title}}</mat-label>
+        <br>
+        <br>
+        <mat-label style="font-size: small">Name:</mat-label>
+        <br>
+        <mat-label>{{doctor.name}}</mat-label>
+        <br>
+        <br>
+        <mat-label style="font-size: small">Registration Number (SLMC):</mat-label>
+        <br>
+        <mat-label>{{doctor.doctorRegistrationNumber}}</mat-label>
+        <br>
+        <br>
+        <mat-label style="font-size: small">Qualifications:</mat-label>
+        <br>
+        <mat-label>{{doctor.qualificationString}}</mat-label>
+        <br>
+        <br>
+        <mat-label style="font-size: small">Specializations:</mat-label>
+        <br>
+        <mat-label>{{doctor.specializations}}</mat-label>
+    </ng-container>
 </div>

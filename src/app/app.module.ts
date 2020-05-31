@@ -33,6 +33,7 @@ import { BookingEnterComponent } from './components/booking-enter/booking-enter.
 import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PaymentSuccessComponent } from './components/payment-success/payment-su
     PrescriptionComponent,
     BookingEnterComponent,
     BookingEnterTimeComponent,
-    PaymentSuccessComponent
+    PaymentSuccessComponent,
+    DoctorFinanceComponent
   ],
     imports: [
         BrowserModule,

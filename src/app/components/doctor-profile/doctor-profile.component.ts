@@ -8,6 +8,14 @@ import {colors} from '@angular/cli/utilities/color';
 })
 export class DoctorProfileComponent implements OnInit {
 
+  doctor = {
+    title: 'Dr.',
+    name: 'John Doe',
+    doctorRegistrationNumber: 'reg/xxx/34234235',
+    qualificationString: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
+    specializations: 'General, Hematology, Gastrointestinal Surgery, Transplantation, Surgery'
+  };
+
   bookings = [
     {
       name: 'Simon ',
@@ -92,6 +100,8 @@ export class DoctorProfileComponent implements OnInit {
     ]
   };
 
+  editable = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -99,5 +109,9 @@ export class DoctorProfileComponent implements OnInit {
 
   getColor(state: string) {
     return '#000000';
+  }
+
+  toggleEditable(editable: boolean) {
+    this.editable = editable;
   }
 }
