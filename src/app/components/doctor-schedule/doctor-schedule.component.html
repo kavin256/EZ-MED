@@ -1,38 +1,48 @@
 <div class="mat-card-style">
-    <mat-label style="font-size: small">Average Time For Consultation:</mat-label>
-    <br>
-    <mat-label>20 minutes</mat-label>
+    <mat-form-field style="width: 240px"  appearance="legacy">
+        <mat-label>Average Time For Consultation (minutes):</mat-label>
+        <input required matInput #input7 [(ngModel)]='doctorProfile.averageTimeForOneConsultation'>
+    </mat-form-field>
     <br>
     <br>
 
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion>
-        <div *ngFor="let schedule of scheduleOfDoc.schedule;">
+        <div *ngFor="let schedule of scheduleOfDoc?.schedule;">
             <mat-expansion-panel style="width: 320px">
                 <mat-expansion-panel-header>
                     <mat-panel-title><b>{{schedule.title}}</b></mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-divider></mat-divider>
                 <br>
-                <p align="center"><b><mat-checkbox>Time Slot 01</mat-checkbox></b></p>
-                <mat-label>From:</mat-label>
-                <ngb-timepicker [(ngModel)]="schedule.slot1.from" [meridian]="meridian"></ngb-timepicker>
-                <mat-label>To:</mat-label>
-                <ngb-timepicker [(ngModel)]="schedule.slot1.to" [meridian]="meridian"></ngb-timepicker>
-                <mat-divider></mat-divider>
-                <br>
-                <p align="center"><b><mat-checkbox>Time Slot 02</mat-checkbox></b></p>
-                <mat-label>From:</mat-label>
-                <ngb-timepicker [(ngModel)]="schedule.slot2.from" [meridian]="meridian"></ngb-timepicker>
-                <mat-label>To:</mat-label>
-                <ngb-timepicker [(ngModel)]="schedule.slot2.to" [meridian]="meridian"></ngb-timepicker>
-                <mat-divider></mat-divider>
-                <br>
-                <p align="center"><b><mat-checkbox>Time Slot 03</mat-checkbox></b></p>
-                <mat-label>From:</mat-label>
-                <ngb-timepicker [(ngModel)]="schedule.slot3.from" [meridian]="meridian"></ngb-timepicker>
-                <mat-label>To:</mat-label>
-                <ngb-timepicker [(ngModel)]="schedule.slot3.to" [meridian]="meridian"></ngb-timepicker>
+                <p align="center"><b>
+                    <mat-checkbox  [checked]="schedule.slot1.isActive"  (change)="schedule.slot1.isActive = !schedule.slot1.isActive">Time Slot 01
+                    </mat-checkbox>
+                </b></p>
+                <ng-container *ngIf="schedule.slot1.isActive">
+                    <mat-label>From:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot1.from" [meridian]="meridian"></ngb-timepicker>
+                    <mat-label>To:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot1.to" [meridian]="meridian"></ngb-timepicker>
+                    <mat-divider></mat-divider>
+                    <br>
+                </ng-container>
+                <p align="center"><b><mat-checkbox [checked]="schedule.slot2.isActive" (change)="schedule.slot2.isActive = !schedule.slot2.isActive">Time Slot 02</mat-checkbox></b></p>
+                <ng-container *ngIf="schedule.slot2.isActive">
+                    <mat-label>From:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot2.from" [meridian]="meridian"></ngb-timepicker>
+                    <mat-label>To:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot2.to" [meridian]="meridian"></ngb-timepicker>
+                    <mat-divider></mat-divider>
+                    <br>
+                </ng-container>
+                <p align="center"><b><mat-checkbox [checked]="schedule.slot3.isActive"  (change)="schedule.slot3.isActive = !schedule.slot3.isActive">Time Slot 03</mat-checkbox></b></p>
+                <ng-container *ngIf="schedule.slot3.isActive">
+                    <mat-label>From:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot3.from" [meridian]="meridian"></ngb-timepicker>
+                    <mat-label>To:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot3.to" [meridian]="meridian"></ngb-timepicker>
+                </ng-container>
             </mat-expansion-panel>
             <br>
         </div>
