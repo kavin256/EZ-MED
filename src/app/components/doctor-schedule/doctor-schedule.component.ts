@@ -25,14 +25,14 @@ export class DoctorScheduleComponent implements OnInit {
     schedule: [
       {
         title: 'Monday',
-        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: false},
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: true},
         slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: true},
         slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: false}
       },
       {
         title: 'Tuesday',
         slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: false},
-        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: true},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: false},
         slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: true}
       },
       {
@@ -44,26 +44,26 @@ export class DoctorScheduleComponent implements OnInit {
       {
         title: 'Thursday',
         slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: true},
-        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: true},
-        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: true}
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: false},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: false}
       },
       {
         title: 'Friday',
         slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: true},
         slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: true},
-        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: true}
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: false}
       },
       {
         title: 'Saturday',
-        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
-        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
-        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: true},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: true},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: true}
       },
       {
         title: 'Sunday',
-        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
-        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
-        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}, isActive: true},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}, isActive: true},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}, isActive: false}
       }
     ]
   };
