@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {colors} from '@angular/cli/utilities/color';
+import {professionalType} from '../search-professionals/search-professionals.component';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -9,12 +10,34 @@ import {colors} from '@angular/cli/utilities/color';
 export class DoctorProfileComponent implements OnInit {
 
   doctor = {
-    title: 'Dr.',
+    title: 'Mr.',
     name: 'John Doe',
-    doctorRegistrationNumber: 'reg/xxx/34234235',
+    professionalType: professionalType.CONSULTANT,
+    doctorRegistrationNumber: 'reg/34234235',
     qualificationString: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
-    specializations: 'General, Hematology, Gastrointestinal Surgery, Transplantation, Surgery'
+    specialization_1: 'Pulmonologist',
+    specialization_2: 'Dermatologist',
+    specialization_3: ''
   };
+
+  titles = [
+    {value: 'Dr.'},
+    {value: 'Mr.'},
+    {value: 'Mrs.'},
+    {value: 'Ms.'},
+    {value: 'Prof.'}
+  ];
+
+  specializations = [
+    {value: 'None'},
+    {value: 'Immunologist'},
+    {value: 'Cardiologist'},
+    {value: 'Pulmonologist'},
+    {value: 'Radiologist'},
+    {value: 'Dermatologist'},
+    {value: 'Clinical Nutritionist'},
+    {value: 'Endocrinologist'}
+  ];
 
   bookings = [
     {
@@ -113,5 +136,9 @@ export class DoctorProfileComponent implements OnInit {
 
   toggleEditable(editable: boolean) {
     this.editable = editable;
+  }
+
+  isConsultant(type: professionalType) {
+    return type === professionalType.CONSULTANT;
   }
 }

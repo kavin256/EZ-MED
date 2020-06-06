@@ -1,12 +1,22 @@
 <div class="mat-card-style">
 
     <ng-container *ngIf="editable">
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Title:</mat-label>
-            <input matInput placeholder="" value="{{doctor.title}}">
+<!--        <mat-form-field  style="width: 240px" class="example-full-width">-->
+<!--            <mat-label>Title:</mat-label>-->
+<!--            <input matInput placeholder="" value="{{doctor.title}}">-->
+<!--        </mat-form-field>-->
+        <mat-form-field style="width: 240px" class="example-full-width">
+            <mat-label>Title</mat-label>
+            <mat-select matNativeControl [(value)]="doctor.title">
+                <ng-container *ngFor="let title of titles" >
+                    <mat-option value="{{title.value}}">
+                        {{title.value}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
         </mat-form-field>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Name:</mat-label>
             <input matInput placeholder="" value="{{doctor.name}}">
         </mat-form-field>
@@ -21,9 +31,39 @@
             <input matInput placeholder="" value="{{doctor.qualificationString}}">
         </mat-form-field>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Specializations:</mat-label>
-            <input matInput placeholder="" value="{{doctor.specializations}}">
+<!--        <mat-form-field  style="width: 240px" class="example-full-width">-->
+<!--            <mat-label>Specialization #1:</mat-label>-->
+<!--            <input matInput placeholder="" value="{{doctor.specialization_1}}">-->
+<!--        </mat-form-field>-->
+        <mat-form-field *ngIf="isConsultant(doctor.professionalType)" style="width: 240px" class="example-full-width">
+            <mat-label>Specialization #1</mat-label>
+            <mat-select matNativeControl [(value)]="doctor.specialization_1">
+                <ng-container *ngFor="let specialization of specializations" >
+                    <mat-option value="{{specialization.value}}">
+                        {{specialization.value}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="isConsultant(doctor.professionalType)" style="width: 240px" class="example-full-width">
+            <mat-label>Specialization #2 (Optional)</mat-label>
+            <mat-select matNativeControl [(value)]="doctor.specialization_2">
+                <ng-container *ngFor="let specialization of specializations" >
+                    <mat-option value="{{specialization.value}}">
+                        {{specialization.value}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="isConsultant(doctor.professionalType)" style="width: 240px" class="example-full-width">
+            <mat-label>Specialization #3 (Optional)</mat-label>
+            <mat-select matNativeControl [(value)]="doctor.specialization_3">
+                <ng-container *ngFor="let specialization of specializations" >
+                    <mat-option value="{{specialization.value}}">
+                        {{specialization.value}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
         </mat-form-field>
         <br>
         <br>
@@ -69,6 +109,10 @@
         <br>
         <mat-label style="font-size: small">Specializations:</mat-label>
         <br>
-        <mat-label>{{doctor.specializations}}</mat-label>
+        <mat-label>{{doctor.specialization_1}}</mat-label>
+        <br>
+        <mat-label>{{doctor.specialization_2}}</mat-label>
+        <br>
+        <mat-label>{{doctor.specialization_3}}</mat-label>
     </ng-container>
 </div>
