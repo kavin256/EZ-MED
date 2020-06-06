@@ -10,14 +10,14 @@ import {professionalType} from '../search-professionals/search-professionals.com
 export class DoctorProfileComponent implements OnInit {
 
   doctor = {
+    id: 1,
     title: 'Mr.',
     name: 'John Doe',
     professionalType: professionalType.CONSULTANT,
     doctorRegistrationNumber: 'reg/34234235',
     qualificationString: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
-    specialization_1: 'Pulmonologist',
-    specialization_2: 'Dermatologist',
-    specialization_3: ''
+    specializations: ['Pulmonologist', 'Dermatologist', ''],
+    consultationPrice: 'Rs. 2000.00'
   };
 
   titles = [
