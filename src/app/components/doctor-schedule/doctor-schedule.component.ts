@@ -6,9 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./doctor-schedule.component.css']
 })
 export class DoctorScheduleComponent implements OnInit {
-  panelOpenState = false;
 
-  hide = true;
+  constructor() { }
+
+  meridian = true;
+
   doctorSchedule = {
     name: 'John Doe',
     doctorRegistrationNumber: 'reg/xxx/34234235',
@@ -16,47 +18,57 @@ export class DoctorScheduleComponent implements OnInit {
     pricePerConsultation: 1500,
     priceCurrency: 'LKR',
     averageTimeForOneConsultation: 20,
-    tags: 'general, Hematology, Gastrointestinal Surgery, Transplantation, Surgery',
-    schedule: {
-      monday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      },
-      tuesday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      },
-      wednesday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      },
-      thursday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      },
-      friday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      },
-      saturday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      },
-      sunday: {
-        slot1: '12:30',
-        slot2: '15:30',
-        slot3: '18:00'
-      }
-    }
+    tags: 'general, Hematology, Gastrointestinal Surgery, Transplantation, Surgery'
   };
 
-  constructor() { }
+  time = {hour: 13, minute: 30};
+
+  scheduleOfDoc = {
+    schedule: [
+      {
+        title: 'Monday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      },
+      {
+        title: 'Tuesday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      },
+      {
+        title: 'Wednesday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      },
+      {
+        title: 'Thursday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      },
+      {
+        title: 'Friday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      },
+      {
+        title: 'Saturday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      },
+      {
+        title: 'Sunday',
+        slot1: {from: {hour: 11, minute: 30}, to: {hour: 13, minute: 30}},
+        slot2: {from: {hour: 15, minute: 30}, to: {hour: 17, minute: 0}},
+        slot3: {from: {hour: 18, minute: 30}, to: {hour: 20, minute: 30}}
+      }
+    ]
+  };
 
   ngOnInit() {
   }

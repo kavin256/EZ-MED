@@ -12,7 +12,7 @@ import {
     MatDividerModule, MatExpansionModule,
     MatIconModule, MatNativeDateModule,
     MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
-    MatTabsModule
+    MatTabsModule, MatCheckboxModule
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -30,9 +30,9 @@ import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
 import { BookingEnterComponent } from './components/booking-enter/booking-enter.component';
 import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
+import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,9 @@ import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finan
         MatBadgeModule,
         MatNativeDateModule,
         MatButtonToggleModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        MatCheckboxModule,
+        NgbTimepickerModule
     ],
   providers: [],
   bootstrap: [AppComponent]

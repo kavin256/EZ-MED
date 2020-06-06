@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {colors} from '@angular/cli/utilities/color';
 import {professionalType} from '../search-professionals/search-professionals.component';
 
 @Component({
