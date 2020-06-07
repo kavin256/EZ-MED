@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
 
 @Component({
-  selector: 'app-patient-dashboard',
-  templateUrl: './patient-dashboard.component.html',
-  styleUrls: ['./patient-dashboard.component.css']
+  selector: 'app-search-professionals-main',
+  templateUrl: './search-professionals-main.component.html',
+  styleUrls: ['./search-professionals-main.component.css']
 })
-export class PatientDashboardComponent implements OnInit {
+export class SearchProfessionalsMainComponent implements OnInit {
 
   searchString = null;
 

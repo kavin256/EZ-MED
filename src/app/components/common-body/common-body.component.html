@@ -19,11 +19,15 @@
         <app-doctor-profile></app-doctor-profile>
     </div>
 
+    <div *ngIf="flow===17">
+        <app-patient-profile></app-patient-profile>
+    </div>
+
     <div *ngIf="flow===5">
         <app-signup></app-signup>
     </div>
     <div  *ngIf="flow===6">
-        <app-patient-dashboard></app-patient-dashboard>
+        <app-search-professionals-main></app-search-professionals-main>
     </div>
     <div  *ngIf="flow===7">
         <app-doctor-side-booking-list></app-doctor-side-booking-list>

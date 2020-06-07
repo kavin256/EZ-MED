@@ -72,6 +72,8 @@
         <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
         <br>
         <br>
+        <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
+        <br>
     </ng-container>
 
     <ng-container *ngIf="!editable">
@@ -86,13 +88,13 @@
         <button [disabled]="!doctor.isActiveProfile" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
-        <button style="width: 320px" mat-stroked-button>Edit Schedule</button>
+        <button [color]="doctor.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
+        <br>
+        <br>
+        <button [color]="doctor.isActiveProfile? null:'warn'"  style="width: 320px" mat-stroked-button>Edit Schedule</button>
         <br>
         <br>
         <button style="width: 320px" mat-stroked-button>My Finances</button>
-        <br>
-        <br>
-        <button style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
 

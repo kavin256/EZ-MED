@@ -18,7 +18,7 @@ export class DoctorProfileComponent implements OnInit {
     specializations: ['Pulmonologist', 'Dermatologist', ''],
     pricePerConsultation: 1500,
     priceCurrency: 'LKR',
-    isActiveProfile: false
+    isActiveProfile: true
   };
 
   titles = [

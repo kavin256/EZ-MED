@@ -11,8 +11,8 @@ export class SignupComponent implements OnInit {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
   hide = true;
-  // logInType = 'doctor';
-  logInType = 'patient';
+  logInType = 'doctor';
+  // logInType = 'patient';
   name: string;
   email: string;
   gender: any;

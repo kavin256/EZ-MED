@@ -21,7 +21,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
-import { PatientDashboardComponent } from './components/patient-dashboard/patient-dashboard.component';
+import { SearchProfessionalsMainComponent } from './components/search-professionals-main/search-professionals-main.component';
 import { DoctorSideBookingListComponent } from './components/doctor-side-booking-list/doctor-side-booking-list.component';
 import { DoctorSideBookingComponent } from './components/doctor-side-booking/doctor-side-booking.component';
 import { SearchProfessionalsComponent } from './components/search-professionals/search-professionals.component';
@@ -33,29 +33,33 @@ import { BookingEnterTimeComponent } from './components/booking-enter-time/booki
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
 import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
+import { PageTitleComponent } from './components/page-title/page-title.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignupComponent,
-    HeaderComponent,
-    FooterComponent,
-    CommonBodyComponent,
-    LandingPageComponent,
-    DoctorScheduleComponent,
-    DoctorProfileComponent,
-    PatientDashboardComponent,
-    DoctorSideBookingListComponent,
-    DoctorSideBookingComponent,
-    SearchProfessionalsComponent,
-    ContactPageComponent,
-    FaqsComponent,
-    PrescriptionComponent,
-    BookingEnterComponent,
-    BookingEnterTimeComponent,
-    PaymentSuccessComponent,
-    DoctorFinanceComponent
-  ],
+    declarations: [
+        AppComponent,
+        SignupComponent,
+        HeaderComponent,
+        FooterComponent,
+        CommonBodyComponent,
+        LandingPageComponent,
+        DoctorScheduleComponent,
+        DoctorProfileComponent,
+        DoctorSideBookingListComponent,
+        DoctorSideBookingComponent,
+        SearchProfessionalsComponent,
+        ContactPageComponent,
+        FaqsComponent,
+        PrescriptionComponent,
+        BookingEnterComponent,
+        BookingEnterTimeComponent,
+        PaymentSuccessComponent,
+        DoctorFinanceComponent,
+        PatientProfileComponent,
+        SearchProfessionalsMainComponent,
+        PageTitleComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
