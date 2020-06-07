@@ -23,6 +23,10 @@
         <app-patient-profile></app-patient-profile>
     </div>
 
+    <div *ngIf="flow===18">
+        <app-patient-booking-list></app-patient-booking-list>
+    </div>
+
     <div *ngIf="flow===5">
         <app-signup></app-signup>
     </div>

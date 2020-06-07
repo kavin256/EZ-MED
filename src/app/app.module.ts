@@ -35,6 +35,7 @@ import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finan
 import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
+import { PatientBookingListComponent } from './components/patient-booking-list/patient-booking-list.component';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { PageTitleComponent } from './components/page-title/page-title.component
         DoctorFinanceComponent,
         PatientProfileComponent,
         SearchProfessionalsMainComponent,
-        PageTitleComponent
+        PageTitleComponent,
+        PatientBookingListComponent
     ],
     imports: [
         BrowserModule,
