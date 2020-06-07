@@ -32,7 +32,7 @@ import { BookingEnterComponent } from './components/booking-enter/booking-enter.
 import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
-import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,8 @@ import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
         MatButtonToggleModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        NgbTimepickerModule
+        NgbTimepickerModule,
+        NgbAlertModule
     ],
   providers: [],
   bootstrap: [AppComponent]
