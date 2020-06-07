@@ -67,6 +67,6 @@ export class DoctorSideBookingComponent implements OnInit {
       copyText.select();
       document.execCommand('copy');
       // @ts-ignore
-      alert('Copied the text: ' + copyText.value);
+      // alert('Copied the text: ' + copyText.value);
   }
 }

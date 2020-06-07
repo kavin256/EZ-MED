@@ -10,6 +10,8 @@ export class DoctorScheduleComponent implements OnInit {
   constructor() { }
 
   meridian = true;
+  changeRequestSent = false;
+  isConfirmationActive = false;
 
   doctorProfile = {
     name: 'John Doe',
@@ -71,4 +73,13 @@ export class DoctorScheduleComponent implements OnInit {
   ngOnInit() {
   }
 
+  save() {
+    this.isConfirmationActive = false;
+    this.changeRequestSent = true;
+  }
+
+  cancel() {
+    this.isConfirmationActive = false;
+    this.changeRequestSent = false;
+  }
 }

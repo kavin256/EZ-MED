@@ -16,7 +16,8 @@ export class DoctorProfileComponent implements OnInit {
     doctorRegistrationNumber: 'reg/34234235',
     qualificationString: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
     specializations: ['Pulmonologist', 'Dermatologist', ''],
-    consultationPrice: 'Rs. 2000.00'
+    pricePerConsultation: 1500,
+    priceCurrency: 'LKR',
   };
 
   titles = [

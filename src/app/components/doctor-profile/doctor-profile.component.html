@@ -61,9 +61,15 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Price per consultation ({{doctor.priceCurrency}}):</mat-label>
+            <input matInput placeholder=""  value="{{doctor.pricePerConsultation}}">
+        </mat-form-field>
+
         <br>
         <br>
-        <button style="width: 320px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
+        <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
         <br>
         <br>
     </ng-container>

@@ -28,7 +28,7 @@
         <tr>
             <td>
                 <mat-form-field style="width: 190px">
-                    <input id="skypeId" matInput type="text" placeholder="Search by name" value="{{searchString}}">
+                    <input matInput type="text" placeholder="Search by name" value="{{searchString}}">
                 </mat-form-field>
             </td>
             <td>
@@ -44,11 +44,11 @@
     <p style="font-size: x-large">List of Professionals:</p>
 
     <div *ngFor="let doc of professionalList">
-        <mat-card (click)="selectDoc(doc.id)" style="width: 300px; height: 180px">
+        <mat-card (click)="selectDoc(doc.id)" style="width: 320px; height: auto">
             <table>
                 <tr>
-                    <th style="width: 115px; height: 115px; align-content: center">
-                        <img src="./assets/img/doctor2.jpg" width="115px" height="115px">
+                    <th style="width: 100px; height: 100px; align-content: center">
+                        <img src="./assets/img/doctor2.jpg" width="100px" height="100px">
                     </th>
                     <th>
                     </th>
@@ -65,7 +65,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <mat-divider style="left: inherit; width: 180px"></mat-divider>
+                                <mat-divider style="left: inherit; width: 160px"></mat-divider>
                             </tr>
                             <tr>
                             </tr>
@@ -88,7 +88,7 @@
                                 </tr>
                             </div>
                             <tr>
-                                <mat-divider style="left: inherit; width: 180px"></mat-divider>
+                                <mat-divider style="left: inherit; width: 160px"></mat-divider>
                             </tr>
                             <tr>
                             </tr>
