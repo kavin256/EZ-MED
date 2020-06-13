@@ -47,7 +47,7 @@
         <mat-card (click)="selectDoc(doc.id)" style="width: 320px; height: auto">
             <table>
                 <tr>
-                    <th style="width: 100px; height: 100px; align-content: center">
+                    <th style="width: 120px; height: 100px; align-content: center">
                         <img src="./assets/img/doctor2.jpg" width="100px" height="100px">
                     </th>
                     <th>
@@ -110,6 +110,21 @@
                             </tr>
                             <tr>
                         </table>
+                    </th>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th width="240px">
+
+                    </th>
+                    <th>
+                        <ng-container *ngIf="doc.isSkypePreferred">
+                            <img src="./assets/img/Icon-Skype.jpg" width="12px" height="12px">
+                        </ng-container>
+                        <ng-container *ngIf="doc.isWhatsAppPreferred">
+                            <span style="padding-left: 7px"><img src="./assets/img/whatsapp.jpg" width="15px" height="15px"></span>
+                        </ng-container>
                     </th>
                 </tr>
             </table>

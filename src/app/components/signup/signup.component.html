@@ -35,7 +35,7 @@
                     <input required matInput #input2 [(ngModel)]='email'>
                 </mat-form-field>
                 <br>
-                <div [hidden]="logInType === 'doctor'">
+                <div [hidden]="logInType === 'patient'">
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Title</mat-label>
                         <input matInput #input3 [(ngModel)]='title'>
@@ -45,31 +45,34 @@
                 <div [hidden]="logInType === 'doctor'">
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Gender</mat-label>
-                        <input matInput required  #input4 [(ngModel)]='gender'>
+                        <mat-select>
+                            <mat-option required *ngFor="let gender of genders" [value]="gender.value">
+                                {{gender.viewValue}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                     <br>
                 </div>
                 <div [hidden]="logInType === 'doctor'">
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Birthday</mat-label>
-                        <input matInput required #input5 [(ngModel)]='birthday'>
+                        <input matInput required [(ngModel)]='birthday'>
                     </mat-form-field>
                     <br>
                 </div>
                 <mat-form-field style="width: 240px"  appearance="legacy">
-                    <mat-label>Skype ID</mat-label>
-                    <input matInput required #input6 [(ngModel)]='skypeId'>
-                </mat-form-field>
-                <br>
-                <mat-form-field style="width: 240px"  appearance="legacy">
                     <mat-label>Contact Number</mat-label>
                     <input required matInput #input7 [(ngModel)]='contact'>
+                </mat-form-field>
+                <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-label>Skype ID [optional]</mat-label>
+                    <input matInput #input6 [(ngModel)]='skypeId'>
                 </mat-form-field>
                 <br>
                 <div [hidden]="logInType === 'doctor'">
                     <mat-form-field style="width: 240px"  appearance="legacy">
-                        <mat-label>Known Allergies & Medical History</mat-label>
-                        <input type="text" matInput #input8 [(ngModel)]='birthday'>
+                        <mat-label>Known Allergies</mat-label>
+                        <textarea type="text" matInput #input8 [(ngModel)]='birthday'></textarea>
                     </mat-form-field>
                     <br>
                 </div>
@@ -82,11 +85,6 @@
                     <mat-label>Confirm Password</mat-label>
                     <input matInput required [type]="hide ? 'password' : 'text'" #input9 [(ngModel)]='conPass'>
                 </mat-form-field>
-                <br>
-                <a href="https://support.skype.com/en/faq/FA11098/how-do-i-get-started-with-skype" style="color: dodgerblue">Help me set up Skype</a>
-                <br>
-                <a href="https://www.businessinsider.com/what-is-my-skype-id" style="color: dodgerblue">What is my Skype ID?</a>
-                <br>
                 <br>
                 <button style="width: 240px" mat-flat-button color="primary">Sign Up</button>
             </div>

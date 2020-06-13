@@ -20,9 +20,4 @@ export class LandingPageComponent implements OnInit, OnChanges {
       this.flow = changes.flow.currentValue;
     }
   }
-
-  changeFlow($event) {
-    this.flow = $event;
-    this.emitFlowChange.emit($event);
-  }
 }

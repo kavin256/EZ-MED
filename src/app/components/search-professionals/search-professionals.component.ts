@@ -23,7 +23,9 @@ export class SearchProfessionalsComponent implements OnInit {
         'Consultant Neurologist',
         'Consultant Pediatrician'
       ],
-      consultationPrice: 'Rs. 2000.00'
+      consultationPrice: 'Rs. 2000.00',
+      isSkypePreferred: true,
+      isWhatsAppPreferred: true
     },
     {
       id: 2,
@@ -33,7 +35,9 @@ export class SearchProfessionalsComponent implements OnInit {
       specialities: [
         'Consultant Pathologist'
       ],
-      consultationPrice: 'Rs. 1500.00'
+      consultationPrice: 'Rs. 1500.00',
+      isSkypePreferred: true,
+      isWhatsAppPreferred: false
     },
     {
       id: 3,
@@ -43,7 +47,9 @@ export class SearchProfessionalsComponent implements OnInit {
       specialities: [
         'Consultant Clinical Nutritionist'
       ],
-      consultationPrice: 'Rs. 2500.00'
+      consultationPrice: 'Rs. 2500.00',
+      isSkypePreferred: false,
+      isWhatsAppPreferred: true
     }
   ];
 

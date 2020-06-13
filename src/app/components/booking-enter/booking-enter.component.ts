@@ -17,57 +17,18 @@ export class BookingEnterComponent implements OnInit {
       'Consultant Neurologist',
       'Consultant Pediatrician'
     ],
-    consultationPrice: 'Rs. 2000.00'
-  };
-  doctorSchedule = {
-    schedule: [
-      {
-        title: 'Monday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Tuesday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Wednesday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Monday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Friday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Saturday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Sunday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      }
-    ]
+    consultationPrice: 'Rs. 2000.00',
+    isSkypePreferred: true,
+    isWhatsAppPreferred: false
   };
 
   isScheduleVisible = false;
-
+  isPatientSkypeAvailable = false;
+  media = [
+    {value: 'skype', viewValue: 'Skype'},
+    {value: 'whatsapp', viewValue: 'Whatsapp'}
+  ];
+  skypeID: any;
   constructor() { }
 
   ngOnInit() {
@@ -75,5 +36,9 @@ export class BookingEnterComponent implements OnInit {
 
   scheduleVisibilityToggle($event: boolean) {
       this.isScheduleVisible = $event;
+  }
+
+  saveSkype(b: boolean) {
+    //
   }
 }
