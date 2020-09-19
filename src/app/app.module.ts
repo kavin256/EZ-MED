@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { SignUpComponent } from './components/signup/sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
     MatBadgeModule,
@@ -12,12 +12,13 @@ import {
     MatDividerModule, MatExpansionModule,
     MatIconModule, MatNativeDateModule,
     MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
-    MatTabsModule, MatCheckboxModule
+    MatTabsModule, MatCheckboxModule, MatDialogModule
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonBodyComponent } from './components/common-body/common-body.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { DialogOverviewExampleDialog } from './components/header/header.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
@@ -40,10 +41,11 @@ import { PatientBookingListComponent } from './components/patient-booking-list/p
 @NgModule({
     declarations: [
         AppComponent,
-        SignupComponent,
+        SignUpComponent,
         HeaderComponent,
         FooterComponent,
         CommonBodyComponent,
+        DialogOverviewExampleDialog,
         LandingPageComponent,
         DoctorScheduleComponent,
         DoctorProfileComponent,
@@ -86,9 +88,11 @@ import { PatientBookingListComponent } from './components/patient-booking-list/p
         MatDatepickerModule,
         MatCheckboxModule,
         NgbTimepickerModule,
-        NgbAlertModule
+        NgbAlertModule,
+        MatDialogModule
     ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ DialogOverviewExampleDialog ]
 })
 export class AppModule { }

@@ -35,14 +35,14 @@
                     <input required matInput #input2 [(ngModel)]='email'>
                 </mat-form-field>
                 <br>
-                <div [hidden]="logInType === 'patient'">
+                <div>
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Title</mat-label>
                         <input matInput #input3 [(ngModel)]='title'>
                     </mat-form-field>
                     <br>
                 </div>
-                <div [hidden]="logInType === 'doctor'">
+                <div>
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Gender</mat-label>
                         <mat-select>

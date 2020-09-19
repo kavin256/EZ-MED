@@ -1,4 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Inject, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-landing-page',
@@ -9,8 +15,6 @@ export class LandingPageComponent implements OnInit, OnChanges {
 
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
-
-  constructor() { }
 
   ngOnInit() {
   }
