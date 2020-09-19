@@ -3,11 +3,18 @@
     <table>
         <tr>
             <th style="width: 250px;" align="left">
-                <img src="./assets/img/wellbeey_logo.png" width="150" >
+                <img src="./assets/img/ez_med_logo.png" width="100" >
             </th>
-            <th align="right" style="width: 70px;" >
-                <img (click)="openDialog()" src="./assets/img/profilePicDefault2.png" width="30px"/>
-<!--                <p style="padding-top: 0px; font-size: x-small">Ranawella</p>-->
+            <th style="width: 70px;" >
+                <div align="center">
+                    <img (click)="openDialog()" src="./assets/img/profilePicDefault2.png" width="40px"/>
+                </div>
+                <div *ngIf="firstName" align="center">
+                    <p style="align-content: center; padding-top: 6px; font-size: x-small">{{firstName}}</p>
+                </div>
+                <div *ngIf="!firstName" align="center">
+                    <button class="link" (click)="openDialog()" style="align-content: center; padding-top: 6px; font-size: x-small">Log in</button>
+                </div>
             </th>
         </tr>
     </table>

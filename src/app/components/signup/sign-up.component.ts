@@ -15,6 +15,7 @@ export class SignUpComponent implements OnInit {
   logInType = 'patient';
   name: string;
   email: string;
+  isSignUp = true;
   title: any;
   birthday: any;
   skypeId: any;

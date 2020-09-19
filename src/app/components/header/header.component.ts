@@ -13,6 +13,8 @@ import {ModalComponent} from '../modal/modal.component';
 export class HeaderComponent implements OnInit {
 
   doctorOrPatient = null;
+  // firstName = 'Kavin';
+  firstName = null;
 
   constructor(public dialog: MatDialog,
               private router: Router) {}
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
       modalType: 'SIGN_UP'
     };
 
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.width = '300px';
 
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig
@@ -34,10 +36,15 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.doctorOrPatient = result;
-      console.log(result);
-      this.router.navigate(['signUp']).then(r => {
-
-      });
+      if (result) {
+        if (!result.isSignUp) {
+          this.firstName = 'Kavin';
+        }
+        console.log(result.isSignUp);
+        console.log(result.userType);
+        this.router.navigate(['signup']).then(r => {
+        });
+      }
     });
   }
 }

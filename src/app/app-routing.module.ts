@@ -17,7 +17,7 @@ import {PrescriptionComponent} from './components/prescription/prescription.comp
 const routes: Routes = [
     { path: '', component: LandingPageComponent },
     { path: 'index', component: LandingPageComponent },
-    { path: 'signUp', component: SignUpComponent },
+    { path: 'signup', component: SignUpComponent },
     { path: 'searchProfessionals', component: SearchProfessionalsMainComponent },
     { path: 'appointmentTime', component: BookingEnterTimeComponent },
     { path: 'confirmation', component: BookingEnterComponent },
