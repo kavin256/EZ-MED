@@ -18,7 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonBodyComponent } from './components/common-body/common-body.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { DialogOverviewExampleDialog } from './components/header/header.component';
+// import { DialogOverviewExampleDialog } from './components/header/header.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
@@ -37,6 +37,7 @@ import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { PatientBookingListComponent } from './components/patient-booking-list/patient-booking-list.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,6 @@ import { PatientBookingListComponent } from './components/patient-booking-list/p
         HeaderComponent,
         FooterComponent,
         CommonBodyComponent,
-        DialogOverviewExampleDialog,
         LandingPageComponent,
         DoctorScheduleComponent,
         DoctorProfileComponent,
@@ -62,7 +62,8 @@ import { PatientBookingListComponent } from './components/patient-booking-list/p
         PatientProfileComponent,
         SearchProfessionalsMainComponent,
         PageTitleComponent,
-        PatientBookingListComponent
+        PatientBookingListComponent,
+        ModalComponent
     ],
     imports: [
         BrowserModule,
@@ -93,6 +94,6 @@ import { PatientBookingListComponent } from './components/patient-booking-list/p
     ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogOverviewExampleDialog ]
+  entryComponents: [ ModalComponent ]
 })
 export class AppModule { }
