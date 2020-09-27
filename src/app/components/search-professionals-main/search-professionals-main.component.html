@@ -33,7 +33,7 @@
     <p style="font-size: x-large">List of Professionals:</p>
 
     <div *ngFor="let doc of professionalList">
-        <div>
+        <div [ngClass]="isOverTheDoctorCard(doc.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(doc.id)" (mouseleave)="onMouseLeave(doc.id)">
         <mat-card (click)="selectDoc(doc.id)" style="width: 320px; height: auto">
             <table>
                 <tr>

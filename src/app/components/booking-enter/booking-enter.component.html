@@ -12,7 +12,7 @@
                         <table>
                             <tr>
                                 <th style="font-size: medium; text-align: left">
-                                    {{doctor.name}}
+                                    {{doctor.name | uppercase}}
                                 </th>
                             </tr>
                             <tr>
@@ -71,57 +71,15 @@
             </table>
         </div>
         <br>
-        <ng-container *ngIf="!isPatientSkypeAvailable && doctor.isSkypePreferred && !doctor.isWhatsAppPreferred">
-            <div class="alert alert-danger" role="alert">
-                <strong>Note!</strong> {{doctor.name}} only uses Skype. And seems like you have forgotten to add your Skype ID in your profile. To continue
-                this booking add your Skype ID now.
-            </div>
-
-            <div align="center">
-                <mat-form-field  style="width: 240px" class="example-full-width">
-                    <mat-label>Skype ID:</mat-label>
-                    <input matInput placeholder="" value="{{skypeID}}">
-                </mat-form-field>
-                <br>
-                <button style="width: 240px" mat-raised-button color="primary" (click)="saveSkype(false)">Add Skype ID</button>
-                <br>
-                <br>
-            </div>
-        </ng-container>
-        <ng-container *ngIf="!isPatientSkypeAvailable">
-            <ng-container *ngIf="doctor.isSkypePreferred && doctor.isWhatsAppPreferred">
-                <p style="font-size: small" align="center">{{doctor.name}} uses both Skype and WhatsApp for consultations. Therefore, you can choose your preference below;</p>
-            </ng-container>
-
-            <ng-container *ngIf="!doctor.isSkypePreferred && doctor.isWhatsAppPreferred">
-                <p>
-                    <ngb-alert [dismissible]="false">
-                        {{doctor.name}} uses only WhatsApp for consultations!
-                    </ngb-alert>
-                </p>
-            </ng-container>
-
-            <ng-container *ngIf="isPatientSkypeAvailable && doctor.isSkypePreferred && !doctor.isWhatsAppPreferred">
-                <p>
-                    <ngb-alert [dismissible]="false">
-                        {{doctor.name}} uses only Skype for consultations!
-                    </ngb-alert>
-                </p>
-            </ng-container>
-
-            <ng-container *ngIf="doctor.isSkypePreferred && doctor.isWhatsAppPreferred">
-                <mat-form-field style="width: 240px"  appearance="legacy">
-                    <mat-label>Communication Medium</mat-label>
-                    <mat-select>
-                        <mat-option required *ngFor="let medium of media" [value]="medium.value">
-                            {{medium.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </ng-container>
-            <br>
-        </ng-container>
     </div>
 
-    <button [disabled]="!isPatientSkypeAvailable && doctor.isSkypePreferred && !doctor.isWhatsAppPreferred" mat-raised-button color="primary" style="width: 320px">Make an Appointment</button>
+    <div>
+        <br>
+
+        <span>Total amount: </span><span>{{doctor.consultationPrice}}</span>
+        <br>
+        <br>
+<!--        <h5>{{doctor.consultationPrice}}</h5>-->
+    </div>
+    <button mat-raised-button color="primary" style="width: 320px">Continue to payment</button>
 </div>
