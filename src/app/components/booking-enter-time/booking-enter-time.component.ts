@@ -100,7 +100,7 @@ export class BookingEnterTimeComponent implements OnInit {
   ];
 
   selectedDate: any;
-  selectedTimeSlot: any;
+  selectedSpecialization: any;
   consultationTime = '8.00 P.M.';
   summaryShown = false;
 

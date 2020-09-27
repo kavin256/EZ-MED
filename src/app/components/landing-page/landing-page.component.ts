@@ -1,5 +1,6 @@
 import {Component, Inject, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,6 +12,8 @@ export class LandingPageComponent implements OnInit, OnChanges {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
 
+  constructor(private router: Router) {}
+
   ngOnInit() {
   }
 
@@ -18,5 +21,10 @@ export class LandingPageComponent implements OnInit, OnChanges {
     if (changes.flow && changes.flow.currentValue) {
       this.flow = changes.flow.currentValue;
     }
+  }
+
+  goToSearchPage() {
+    this.router.navigate(['searchProfessionals']).then(r => {
+    });
   }
 }

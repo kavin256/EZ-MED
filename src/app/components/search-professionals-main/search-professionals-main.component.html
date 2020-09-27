@@ -1,54 +1,44 @@
 <div class="mat-card-style">
-<!--    <button style="width: 20px" mat-stroked-button>Back</button>-->
-<!--    <br>-->
-<!--    <br>-->
 
-<!--    <mat-radio-group aria-label="Select an option">-->
-<!--        <mat-radio-button value="1">All</mat-radio-button>    <br><br>-->
-<!--        <mat-radio-button value="2">Consultants</mat-radio-button>    <br><br>-->
-<!--        <mat-radio-button value="3">General Practitioners</mat-radio-button>    <br><br>-->
-<!--        <mat-radio-button value="4">Other Medical Services</mat-radio-button>    <br><br>-->
-<!--    </mat-radio-group>-->
+    <div align="center">
+    <mat-form-field style="width: 250px">
+        <input matInput type="text" placeholder="Search by name" value="{{searchString}}">
+    </mat-form-field>
 
-    <button mat-flat-button color="primary" style="width: 320px">Consultants >></button>
     <br>
-    <br>
-    <button mat-flat-button color="primary"  style="width: 320px">General Practitioners >></button>
-    <br>
-    <br>
-        <button mat-raised-button color="primary"  style="width: 320px" >Counsellors (New) >></button>
-    <br>
-    <br>
-        <button mat-flat-button color="primary"  style="width: 320px">Other Medical Service Professionals >></button>
-    <br>
-    <br>
-    <mat-divider></mat-divider>
+    <mat-form-field  style="width: 240px" >
+        <mat-label>Category</mat-label>
+        <mat-select [(value)]="selectedCategory">
+            <ng-container *ngFor="let category of categories">
+                <mat-option value="{{category.category}}">{{category.category}}</mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== 'General Practitioners'">
+        <mat-form-field  style="width: 240px" >
+            <mat-label>Specialization</mat-label>
+            <mat-select [(value)]="selectedSpecialization">
+                <ng-container *ngFor="let subCategory of subCategories">
+                    <mat-option value="{{subCategory}}">{{subCategory.category}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
 
-    <table align="center">
-        <tr>
-            <td>
-                <mat-form-field style="width: 190px">
-                    <input matInput type="text" placeholder="Search by name" value="{{searchString}}">
-                </mat-form-field>
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search</button>
-            </td>
-        </tr>
-    </table>
+        <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search</button>
+    </div>
+    <br>
     <mat-divider></mat-divider>
 
     <p style="font-size: x-large">List of Professionals:</p>
 
     <div *ngFor="let doc of professionalList">
+        <div>
         <mat-card (click)="selectDoc(doc.id)" style="width: 320px; height: auto">
             <table>
                 <tr>
                     <th style="width: 120px; height: 100px; align-content: center">
-                        <img src="./assets/img/doctor2.jpg" width="100px" height="100px">
+                        <img  onmouseover="funOne()" onmouseout="funTwo()" src="./assets/img/doctor2.jpg" width="100px" height="100px">
                     </th>
                     <th>
                     </th>
@@ -60,7 +50,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td style="font-size: x-small; text-align: left">
+                                <td style="font-size: x-small; color: #797D7F;  text-align: left">
                                     {{doc.bio}}
                                 </td>
                             </tr>
@@ -74,7 +64,7 @@
                             <tr>
                             </tr>
                             <tr>
-                                <td style="font-size: small; text-align: left">
+                                <td style="font-size: small; color: #797D7F;  text-align: left">
                                     Specializations:
                                 </td>
                             </tr>
@@ -82,13 +72,13 @@
                             </tr>
                             <div *ngFor="let speciality of doc.specialities">
                                 <tr>
-                                    <td style="font-size: x-small; text-align: left">
+                                    <td style=" color: #797D7F; font-size: x-small; text-align: left">
                                         {{speciality}}
                                     </td>
                                 </tr>
                             </div>
                             <tr>
-                                <mat-divider style="left: inherit; width: 160px"></mat-divider>
+                                <mat-divider style=" color: #797D7F; left: inherit; width: 160px"></mat-divider>
                             </tr>
                             <tr>
                             </tr>
@@ -97,14 +87,14 @@
                             <tr>
                             </tr>
                             <tr>
-                                <td style="font-size: small; text-align: left">
+                                <td style=" color: #797D7F; font-size: small; text-align: left">
                                     Charge per consultation:
                                 </td>
                             </tr>
                             <tr>
                             </tr>
                             <tr>
-                                <td style="font-size: x-small; text-align: left">
+                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
                                     {{doc.consultationPrice}}
                                 </td>
                             </tr>
@@ -129,7 +119,9 @@
                 </tr>
             </table>
         </mat-card>
+        </div>
         <br>
     </div>
 
 </div>
+

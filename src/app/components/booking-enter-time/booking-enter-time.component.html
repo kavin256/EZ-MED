@@ -32,14 +32,14 @@
         <ng-container *ngIf="selectedDate !== undefined">
             <mat-form-field  style="width: 240px" >
                 <mat-label>Time</mat-label>
-                <mat-select [(value)]="selectedTimeSlot">
+                <mat-select [(value)]="selectedSpecialization">
                     <ng-container *ngFor="let timeSlot of getTimeSlots(selectedDate)">
                         <mat-option value="{{timeSlot}}">{{timeSlot}}</mat-option>
                     </ng-container>
                 </mat-select>
             </mat-form-field>
         </ng-container>
-        <button [disabled]="selectedDate === undefined || selectedTimeSlot === undefined" mat-raised-button color="primary" style="width: 240px" (click)="continueClicked(true)">Continue</button>
+        <button [disabled]="selectedDate === undefined || selectedSpecialization === undefined" mat-raised-button color="primary" style="width: 240px" (click)="continueClicked(true)">Continue</button>
     </ng-container>
     <ng-container *ngIf="summaryShown">
         <div style="width: 240px">
