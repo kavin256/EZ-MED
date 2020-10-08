@@ -12,8 +12,8 @@ export class PatientProfileComponent implements OnInit {
     id: 1,
     title: 'Mr.',
     birthday: '03-05-1994',
+    age: 31,
     name: 'John Doe',
-    skypeID: 'hgfghj34',
     medicalHistory: 'long term gastritis patient',
     allergies: 'allergic to hindi songs',
   };

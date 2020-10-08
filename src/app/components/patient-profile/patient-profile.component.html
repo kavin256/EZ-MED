@@ -1,6 +1,9 @@
 <div class="mat-card-style">
 
     <app-page-title [title]="title"></app-page-title>
+    <h5 *ngIf="!editable">Name: {{patient.title}} {{patient.name}}</h5>
+    <h6 *ngIf="!editable">Age: {{patient.age}}</h6>
+    <br>
 
     <ng-container *ngIf="editable">
         <mat-form-field style="width: 240px" class="example-full-width">
@@ -17,11 +20,6 @@
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Name: {{patient.name}}</mat-label>
             <input matInput placeholder="" [value]="patient.name">
-        </mat-form-field>
-
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Skype ID:</mat-label>
-            <input matInput placeholder=""  value="{{patient.skypeID}}">
         </mat-form-field>
 
         <mat-form-field  style="width: 240px" class="example-full-width">

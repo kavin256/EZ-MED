@@ -43,35 +43,30 @@ export class DoctorProfileComponent implements OnInit {
   bookings = [
     {
       name: 'Simon ',
-      skypeId: 'simon3',
       email: 'jhbksrc@gmail.com',
       bookingNo: 1,
       state: 'Done'
     },
     {
       name: 'George',
-      skypeId: 'ge45t',
       email: 'geo@yahoo.com',
       bookingNo: 2,
       state: 'In Progress'
     },
     {
       name: 'Tom',
-      skypeId: 'tom5frfr',
       email: 'kfhb@hotmail.com',
       bookingNo: 3,
       state: 'New'
     },
     {
       name: 'John',
-      skypeId: 'john54g',
       email: 'kjn@gmail.com',
       bookingNo: 4,
       state: 'Cancelled'
     },
     {
       name: 'Emilie',
-      skypeId: 'emilie5t',
       email: 'hbjdc@yahoo.com',
       bookingNo: 5,
       state: 'New'
