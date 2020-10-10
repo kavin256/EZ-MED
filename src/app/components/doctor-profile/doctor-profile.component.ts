@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -121,7 +122,9 @@ export class DoctorProfileComponent implements OnInit {
 
   editable = false;
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -136,5 +139,15 @@ export class DoctorProfileComponent implements OnInit {
 
   isConsultant(type: professionalType) {
     return type === professionalType.CONSULTANT;
+  }
+
+  goToMyAppointments() {
+    this.router.navigate(['doctor/appointments']).then(r => {
+    });
+  }
+
+  editSchedule() {
+    this.router.navigate(['doctor/schedule']).then(r => {
+    });
   }
 }
