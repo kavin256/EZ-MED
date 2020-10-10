@@ -38,6 +38,7 @@ import { PatientProfileComponent } from './components/patient-profile/patient-pr
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { PatientBookingListComponent } from './components/patient-booking-list/patient-booking-list.component';
 import { ModalComponent } from './components/modal/modal.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -90,7 +91,8 @@ import { ModalComponent } from './components/modal/modal.component';
         MatCheckboxModule,
         NgbTimepickerModule,
         NgbAlertModule,
-        MatDialogModule
+        MatDialogModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent],
