@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -43,35 +44,30 @@ export class DoctorProfileComponent implements OnInit {
   bookings = [
     {
       name: 'Simon ',
-      skypeId: 'simon3',
       email: 'jhbksrc@gmail.com',
       bookingNo: 1,
       state: 'Done'
     },
     {
       name: 'George',
-      skypeId: 'ge45t',
       email: 'geo@yahoo.com',
       bookingNo: 2,
       state: 'In Progress'
     },
     {
       name: 'Tom',
-      skypeId: 'tom5frfr',
       email: 'kfhb@hotmail.com',
       bookingNo: 3,
       state: 'New'
     },
     {
       name: 'John',
-      skypeId: 'john54g',
       email: 'kjn@gmail.com',
       bookingNo: 4,
       state: 'Cancelled'
     },
     {
       name: 'Emilie',
-      skypeId: 'emilie5t',
       email: 'hbjdc@yahoo.com',
       bookingNo: 5,
       state: 'New'
@@ -126,7 +122,9 @@ export class DoctorProfileComponent implements OnInit {
 
   editable = false;
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -141,5 +139,15 @@ export class DoctorProfileComponent implements OnInit {
 
   isConsultant(type: professionalType) {
     return type === professionalType.CONSULTANT;
+  }
+
+  goToMyAppointments() {
+    this.router.navigate(['doctor/appointments']).then(r => {
+    });
+  }
+
+  editSchedule() {
+    this.router.navigate(['doctor/schedule']).then(r => {
+    });
   }
 }

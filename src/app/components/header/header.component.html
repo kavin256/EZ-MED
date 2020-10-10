@@ -7,13 +7,13 @@
             </th>
             <th style="width: 70px;" >
                 <div align="center">
-                    <img (click)="openDialog()" src="./assets/img/profilePicDefault2.png" width="40px"/>
+                    <img (click)="logoClick()" src="./assets/img/profilePicDefault2.png" width="40px"/>
                 </div>
                 <div *ngIf="firstName" align="center">
                     <p style="align-content: center; padding-top: 6px; font-size: x-small">{{firstName}}</p>
                 </div>
                 <div *ngIf="!firstName" align="center">
-                    <button class="link" (click)="openDialog()" style="align-content: center; padding-top: 6px; font-size: x-small">Log in</button>
+                    <button class="link" (click)="logoClick()" style="align-content: center; padding-top: 6px; font-size: x-small">Log in</button>
                 </div>
             </th>
         </tr>

@@ -85,13 +85,13 @@
             </p>
         </ng-container>
 
-        <button [disabled]="!doctor.isActiveProfile" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
+        <button [disabled]="!doctor.isActiveProfile" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
         <button [color]="doctor.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button [color]="doctor.isActiveProfile? null:'warn'"  style="width: 320px" mat-stroked-button>Edit Schedule</button>
+        <button [color]="doctor.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
         <br>
         <br>
         <button style="width: 320px" mat-stroked-button>My Finances</button>

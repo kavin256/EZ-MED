@@ -12,39 +12,50 @@ import {ModalComponent} from '../modal/modal.component';
 
 export class HeaderComponent implements OnInit {
 
-  doctorOrPatient = null;
+  user = null;
   // firstName = 'Kavin';
   firstName = null;
+  // typeOfUser;
+  // typeOfUser = 'Doctor';
+  typeOfUser = 'Patient';
 
   constructor(public dialog: MatDialog,
               private router: Router) {}
 
   ngOnInit() {}
 
-  openDialog(): void {
-    const dialogConfig = new MatDialogConfig();
+  logoClick(): void {
+    if (!this.typeOfUser) {
+      const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.data = {
-      modalType: 'SIGN_UP'
-    };
+      dialogConfig.data = {
+        modalType: 'SIGN_UP'
+      };
 
-    dialogConfig.disableClose = false;
-    dialogConfig.width = '300px';
+      dialogConfig.disableClose = false;
+      dialogConfig.width = '300px';
 
-    const dialogRef = this.dialog.open(ModalComponent, dialogConfig
-    );
+      const dialogRef = this.dialog.open(ModalComponent, dialogConfig
+      );
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.doctorOrPatient = result;
-      if (result) {
-        if (!result.isSignUp) {
-          this.firstName = 'Kavin';
+      dialogRef.afterClosed().subscribe(result => {
+        this.user = result;
+        if (result) {
+          if (!result.isSignUp) {
+            this.firstName = 'Kavin';
+          }
+          console.log(result.isSignUp);
+          console.log(result.userType);
+          this.router.navigate(['signup']).then(r => {
+          });
         }
-        console.log(result.isSignUp);
-        console.log(result.userType);
-        this.router.navigate(['signup']).then(r => {
-        });
-      }
-    });
+      });
+    } else if (this.typeOfUser === 'Doctor') {
+      this.router.navigate(['doctor/dashboard']).then(r => {
+      });
+    } else if (this.typeOfUser === 'Patient') {
+      this.router.navigate(['user/dashboard']).then(r => {
+      });
+    }
   }
 }

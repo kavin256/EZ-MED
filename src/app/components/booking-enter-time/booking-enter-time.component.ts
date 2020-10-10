@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-booking-enter-time',
@@ -104,7 +105,9 @@ export class BookingEnterTimeComponent implements OnInit {
   consultationTime = '8.00 P.M.';
   summaryShown = false;
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -150,6 +153,11 @@ export class BookingEnterTimeComponent implements OnInit {
 
   scheduleVisibilityToggle($event: boolean) {
     this.isScheduleVisible = $event;
+  }
+
+  navigateToPaymentOrLogIn() {
+    this.router.navigate(['confirmation']).then(r => {
+    });
   }
 
   getTimeSlots(selectedDate: any) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-search-professionals-main',
@@ -81,25 +82,35 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ];
 
   selectedSpecialization: any;
+  overTheDoctorCard = null;
 
   search() {
     console.log('jhbrch');
   }
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
-  selectDoc($event: number) {
-    console.log($event);
+  onMouseEnter($event: number) {
+    this.overTheDoctorCard = $event;
   }
-  // funOne() {
-  //   console.log('funOne');
-  // }
-  // funTwo() {
-  //   console.log('funTwo');
-  // }
+
+  onMouseLeave($event: number) {
+    this.overTheDoctorCard = null;
+  }
+
+  isOverTheDoctorCard($event: number) {
+    return $event === this.overTheDoctorCard;
+  }
+
+  selectDoc($event: number) {
+    this.router.navigate(['appointmentTime']).then(r => {
+    });
+  }
 
   getTimeSlots(selectedCategory: any) {
     // const found = this.doctorSchedule.schedule.find((scheduleObj) => {

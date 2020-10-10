@@ -10,7 +10,7 @@ export class BookingEnterComponent implements OnInit {
 
   doctor = {
     id: 1,
-    name: 'Dr. Nuwan Chinthaka',
+    name: 'Dr. Nuwan chinthaka',
     professionalType: professionalType.CONSULTANT,
     bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
     specialities: [
