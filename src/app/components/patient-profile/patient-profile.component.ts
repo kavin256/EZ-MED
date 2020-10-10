@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-patient-profile',
@@ -29,9 +30,16 @@ export class PatientProfileComponent implements OnInit {
   title = 'MY PROFILE';
   editable = false;
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+  goToMyAppointments() {
+    this.router.navigate(['user/appointments']).then(r => {
+    });
   }
 
   toggleEditable(editable: boolean) {
