@@ -48,7 +48,7 @@ export class DataStoreService {
 }
 
 export enum DataKey {
-  // user details
-  userDetail,
-  test
+  error,
+  authKey,
+  loggedUser,
 }
