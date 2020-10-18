@@ -1,0 +1,51 @@
+<div class="mat-card-style">
+    <h1 style="font-size: x-large">Name: {{booking.patientName}}</h1>
+    <span style="font-size: large">Skype ID:</span>
+    &nbsp;
+    <mat-form-field style="width: 150px">
+        <input id="skypeId" readonly matInput type="text" value="{{booking.skypeID}}">
+    </mat-form-field>    &nbsp;
+
+    <button (click)="copyToClipBoard()" style="width: 60px" color="primary" mat-flat-button>Copy</button>    <br>
+    <p style="font-size: small">Phone number: {{booking.phoneNumber}}</p>
+    <p style="font-size: small">Booking Number: {{booking.bookingId}}</p>
+
+    <p style="font-size: small">Booking Status: {{booking.bookingStatus}}</p>
+    <mat-divider></mat-divider>
+    <br>
+
+    <button [disabled]="booking.bookingStatus !== 'BOOKING_NOT_STARTED'" style="width: 320px" color="primary" mat-flat-button>Start Consultation</button>    <br>
+    <br>
+
+    <button [disabled]="booking.bookingStatus === 'BOOKING_NOT_STARTED' || booking.bookingStatus === 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>End Consultation</button>
+    <br>
+    <br>
+
+    <button style="width: 320px" color="accent" mat-flat-button>Prescription</button>
+    <br>
+    <br>
+
+    <br>
+    <p style="font-size: large;">Conversation:</p>
+    <mat-divider></mat-divider>
+
+
+    <div *ngFor="let message of booking.messageThread">
+        <div *ngIf="message.sender === 'doctor'" style="align: right">
+            <p style="font-style: italic; font-size: small; text-align:right; color: cornflowerblue" role="listitem">You: {{message.message}}</p>
+        </div>
+        <div *ngIf="message.sender === 'patient'" >
+            <p style="font-style: italic; font-size: small; text-align:left; color: slategray" role="listitem">{{booking.patientName}}: {{message.message}}</p>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <br>
+    <button [disabled]="booking.bookingStatus === 'BOOKING_CANCELLED'" style="width: 320px" mat-flat-button  color="warn" >Cancel Booking</button>
+    <br>
+    <br>
+
+    <button [disabled]="booking.bookingStatus !== 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>Reactivate Booking</button>
+
+</div>

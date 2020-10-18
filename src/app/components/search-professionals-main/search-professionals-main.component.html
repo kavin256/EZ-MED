@@ -1,0 +1,127 @@
+<div class="mat-card-style">
+
+    <div align="center">
+    <mat-form-field style="width: 250px">
+        <input matInput type="text" placeholder="Search by name" value="{{searchString}}">
+    </mat-form-field>
+
+    <br>
+    <mat-form-field  style="width: 240px" >
+        <mat-label>Category</mat-label>
+        <mat-select [(value)]="selectedCategory">
+            <ng-container *ngFor="let category of categories">
+                <mat-option value="{{category.category}}">{{category.category}}</mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== 'General Practitioners'">
+        <mat-form-field  style="width: 240px" >
+            <mat-label>Specialization</mat-label>
+            <mat-select [(value)]="selectedSpecialization">
+                <ng-container *ngFor="let subCategory of subCategories">
+                    <mat-option value="{{subCategory}}">{{subCategory.category}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+
+        <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search</button>
+    </div>
+    <br>
+    <mat-divider></mat-divider>
+
+    <p style="font-size: x-large">List of Professionals:</p>
+
+    <div *ngFor="let doc of professionalList">
+        <div [ngClass]="isOverTheDoctorCard(doc.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(doc.id)" (mouseleave)="onMouseLeave(doc.id)">
+        <mat-card (click)="selectDoc(doc.id)" style="width: 320px; height: auto">
+            <table>
+                <tr>
+                    <th style="width: 120px; height: 100px; align-content: center">
+                        <img  onmouseover="funOne()" onmouseout="funTwo()" src="./assets/img/doctor2.jpg" width="100px" height="100px">
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                        <table>
+                            <tr>
+                                <th style="font-size: medium; text-align: left">
+                                    {{doc.name}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="font-size: x-small; color: #797D7F;  text-align: left">
+                                    {{doc.bio}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <mat-divider style="left: inherit; width: 160px"></mat-divider>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style="font-size: small; color: #797D7F;  text-align: left">
+                                    Specializations:
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <div *ngFor="let speciality of doc.specialities">
+                                <tr>
+                                    <td style=" color: #797D7F; font-size: x-small; text-align: left">
+                                        {{speciality}}
+                                    </td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <mat-divider style=" color: #797D7F; left: inherit; width: 160px"></mat-divider>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style=" color: #797D7F; font-size: small; text-align: left">
+                                    Charge per consultation:
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
+                                    {{doc.consultationPrice}}
+                                </td>
+                            </tr>
+                            <tr>
+                        </table>
+                    </th>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th width="240px">
+
+                    </th>
+                    <th>
+                        <ng-container *ngIf="doc.isSkypePreferred">
+                            <img src="./assets/img/Icon-Skype.jpg" width="12px" height="12px">
+                        </ng-container>
+                        <ng-container *ngIf="doc.isWhatsAppPreferred">
+                            <span style="padding-left: 7px"><img src="./assets/img/whatsapp.jpg" width="15px" height="15px"></span>
+                        </ng-container>
+                    </th>
+                </tr>
+            </table>
+        </mat-card>
+        </div>
+        <br>
+    </div>
+
+</div>
+

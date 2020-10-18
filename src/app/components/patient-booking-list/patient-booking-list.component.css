@@ -1,0 +1,13 @@
+.mat-card-style {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    min-width: 320px;
+    max-width: 320px;
+}
+.strikethrough {
+    text-decoration: line-through;
+}
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}

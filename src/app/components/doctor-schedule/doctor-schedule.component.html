@@ -1,0 +1,65 @@
+<div class="mat-card-style">
+    <mat-form-field style="width: 240px"  appearance="legacy">
+        <mat-label>Average Time For Consultation (minutes):</mat-label>
+        <input required matInput #input7 [(ngModel)]='doctorProfile.averageTimeForOneConsultation'>
+    </mat-form-field>
+    <br>
+    <br>
+
+    <p>Weekly Schedule for consultations:</p>
+    <mat-accordion>
+        <div *ngFor="let schedule of scheduleOfDoc?.schedule;">
+            <mat-expansion-panel style="width: 320px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title><b>{{schedule.title}}</b></mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-divider></mat-divider>
+                <br>
+                <p align="center"><b>
+                    <mat-checkbox  [checked]="schedule.slot1.isActive"  (change)="schedule.slot1.isActive = !schedule.slot1.isActive">Time Slot 01
+                    </mat-checkbox>
+                </b></p>
+                <ng-container *ngIf="schedule.slot1.isActive">
+                    <mat-label>From:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot1.from" [meridian]="meridian"></ngb-timepicker>
+                    <mat-label>To:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot1.to" [meridian]="meridian"></ngb-timepicker>
+                    <mat-divider></mat-divider>
+                    <br>
+                </ng-container>
+                <p align="center"><b><mat-checkbox [checked]="schedule.slot2.isActive" (change)="schedule.slot2.isActive = !schedule.slot2.isActive">Time Slot 02</mat-checkbox></b></p>
+                <ng-container *ngIf="schedule.slot2.isActive">
+                    <mat-label>From:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot2.from" [meridian]="meridian"></ngb-timepicker>
+                    <mat-label>To:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot2.to" [meridian]="meridian"></ngb-timepicker>
+                    <mat-divider></mat-divider>
+                    <br>
+                </ng-container>
+                <p align="center"><b><mat-checkbox [checked]="schedule.slot3.isActive"  (change)="schedule.slot3.isActive = !schedule.slot3.isActive">Time Slot 03</mat-checkbox></b></p>
+                <ng-container *ngIf="schedule.slot3.isActive">
+                    <mat-label>From:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot3.from" [meridian]="meridian"></ngb-timepicker>
+                    <mat-label>To:</mat-label>
+                    <ngb-timepicker [(ngModel)]="schedule.slot3.to" [meridian]="meridian"></ngb-timepicker>
+                </ng-container>
+            </mat-expansion-panel>
+            <br>
+        </div>
+    </mat-accordion>
+
+    <br>
+    <ng-container *ngIf="!changeRequestSent">
+        <p style="font-size: small; color: crimson">** Once you send the change request, changes will be activated only after 7 days because already available bookings will be affected by these changes.<br><br>
+        ** You will not be able to send another change request till 7 days.</p>
+    </ng-container>
+    <ng-container *ngIf="changeRequestSent">
+        <p style="font-size: small; color: crimson">** You can not save above details temporarily. You have made a change request already and it takes 7 days before you can send another change request.
+            Contact us for more clarifications.</p>
+    </ng-container>
+    <button *ngIf="!isConfirmationActive" (click)="isConfirmationActive = !isConfirmationActive"  [disabled]="changeRequestSent" style="width: 320px" mat-raised-button color="primary">Send Request to Change Details</button>
+    <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
+    <button *ngIf="isConfirmationActive" (click)="save()" style="width: 150px" mat-raised-button color="primary">Send Request</button>
+    <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button color="secondary">Cancel</button></span>
+    <br>
+</div>

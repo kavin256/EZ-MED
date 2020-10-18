@@ -1,0 +1,18 @@
+<div class="mat-card-style">
+
+    <p style="font-size: x-large">Frequently Asked Questions:</p>
+
+    <div *ngFor="let faq of faqs">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <p style="font-size: small"><b>
+                        {{faq.q}}
+                </b></p>
+            </mat-expansion-panel-header>
+            <p style="font-size: small">
+                Answer: {{faq.a}}
+            </p>
+        </mat-expansion-panel>
+        <br>
+    </div>
+</div>
