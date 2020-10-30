@@ -34,7 +34,7 @@ export class LandingPageComponent implements OnInit, OnChanges {
     this.router.navigate(['searchProfessionals']).then(r => {
     });
 
-    /*const obj: AuthModel = new AuthModel();
+    const obj: AuthModel = new AuthModel();
     obj.username = 'foo12345';
     obj.password = 'foo';
     this.dataLoader.login<AuthResponse>('http://localhost:8080/authenticate', new RequestOptions(), obj, DataKey.authKey);
@@ -43,6 +43,6 @@ export class LandingPageComponent implements OnInit, OnChanges {
         (data) => {
           console.log(data);
         }
-    );*/
+    );
   }
 }
