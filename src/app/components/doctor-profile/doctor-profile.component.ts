@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {professionalType} from '../search-professionals/search-professionals.component';
 import {Router} from '@angular/router';
+import {DataLoaderService} from '../../services/data-loader.service';
+import {Constants} from '../../utils/Constants';
+import {DataKey} from '../../services/data-store.service';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -8,6 +12,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent implements OnInit {
+  selectedImage: File;
+  profileUsername: string;
+  constants: Constants = new Constants();
 
   doctor = {
     id: 1,
@@ -123,7 +130,8 @@ export class DoctorProfileComponent implements OnInit {
   editable = false;
 
   constructor(
-      private router: Router
+      private router: Router,
+      private dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {
@@ -149,5 +157,16 @@ export class DoctorProfileComponent implements OnInit {
   editSchedule() {
     this.router.navigate(['doctor/schedule']).then(r => {
     });
+  }
+
+  uploadImage(event) {
+    this.selectedImage = event.target.file;
+    const formData = new FormData();
+    formData.append('image', this.selectedImage);
+    formData.append( 'username', this.profileUsername);
+
+    // sent request
+    const url = this.constants.BASE_URL + this.constants.UPLOAD_USER_IMAGE;
+    this.dataLoaderService.post(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, formData);
   }
 }
