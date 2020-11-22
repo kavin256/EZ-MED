@@ -15,35 +15,39 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  constants: Constants = new Constants();
-
-  encryptionKey = 'ezmed';
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
+
+  constants: Constants = new Constants();
+  encryptionKey = 'ezmed';
   hide = true;
   logInType = 'doctor';
-  //logInType = 'patient';
-  name: string;
+  // logInType = 'patient';
+  firstName: string;
+  lastName: string;
   email: string;
   isSignUp = true;
   title: any;
   birthday: any;
-  skypeId: any;
-  contact: any;
+  // skypeId: any;
+  contactNumber: any;
+  whatsAppNumber: any;
   pass: any;
   conPass: any;
   genders = [
     {value: 'male', viewValue: 'Male'},
-    {value: 'female', viewValue: 'Female'},
-    {value: 'other', viewValue: 'Other'}
+    {value: 'female', viewValue: 'Female'}
   ];
+  isMale = true;
+  knownAlergies: any;
+  isIncompleteErrorAvailable = false;
 
   constructor(
       private dataLoaderService: DataLoaderService,
   ) { }
 
   ngOnInit() {
-    //console.log(this.encryptPassword('milinda'));
+    // console.log(this.encryptPassword('milinda'));
   }
 
   registerNewUser(user: UserData) {
@@ -55,7 +59,47 @@ export class SignUpComponent implements OnInit {
 
   encryptPassword(password: string): string {
     password =  CryptoJS.AES.encrypt(password, this.encryptionKey).toString();
-    //console.log(CryptoJS.AES.decrypt(password, this.encryptionKey).toString(CryptoJS.enc.Utf8));
+    // console.log(CryptoJS.AES.decrypt(password, this.encryptionKey).toString(CryptoJS.enc.Utf8));
     return password;
+  }
+
+  validateInput(): boolean {
+    return true;
+  }
+
+  SignUp() {
+    if ( this.validateInput() ) {
+      this.isIncompleteErrorAvailable = true;
+    } else {
+      this.isIncompleteErrorAvailable = false;
+
+      const userObj = new UserData();
+      userObj.userName = this.email;
+      userObj.password = this.pass;
+      userObj.firstName = this.firstName;
+      userObj.lastName = this.lastName;
+      userObj.title = this.title;
+      userObj.isMale = this.isMale;
+      userObj.birthday = this.birthday;
+      userObj.contactNumber = this.contactNumber;
+      userObj.whatsAppNumber = this.whatsAppNumber;
+      userObj.doctor = this.logInType === 'doctor';
+      userObj.userAllergies = this.knownAlergies;
+
+      this.registerNewUser(userObj);
+    }
+  }
+
+  setGender(value: any) {
+    switch (value) {
+      case 'female': {
+        this.isMale = false;
+        break;
+      }
+      case 'male': {
+        this.isMale = true;
+        break;
+      }
+    }
   }
 }

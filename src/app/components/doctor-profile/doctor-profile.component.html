@@ -67,6 +67,14 @@
             <input matInput placeholder=""  value="{{doctor.pricePerConsultation}}">
         </mat-form-field>
 
+        <label class="image-upload-container btn btn-bwm">
+            <span>Upload Profile Picture</span>
+            <input #imageInput
+                   type="file"
+                   accept="image/*"
+                   (change)="uploadImage(imageInput)">
+        </label>
+
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
@@ -94,7 +102,7 @@
         <button [color]="doctor.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
         <br>
         <br>
-        <button style="width: 320px" mat-stroked-button>My Finances</button>
+        <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
         <br>
         <br>
 
