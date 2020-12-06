@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {professionalType} from '../search-professionals/search-professionals.component';
 import {Router} from '@angular/router';
+import {DoctorType} from '../../utils/Constants';
 
 @Component({
   selector: 'app-booking-enter-time',
@@ -12,7 +12,7 @@ export class BookingEnterTimeComponent implements OnInit {
   doctor = {
     id: 1,
     name: 'Dr. Nuwan Chinthaka',
-    professionalType: professionalType.CONSULTANT,
+    doctorType: DoctorType.CONSULTANT,
     bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
     specialities: [
       'Consultant Neurologist',

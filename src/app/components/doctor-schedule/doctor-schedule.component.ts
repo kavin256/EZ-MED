@@ -32,15 +32,6 @@ export class DoctorScheduleComponent implements OnInit {
   isConfirmationActive = false;
   doctorScheduleData: DoctorScheduleData;
 
-  doctorProfile = {
-    name: 'John Doe',
-    doctorRegistrationNumber: 'reg/xxx/34234235',
-    qualificationString: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
-    pricePerConsultation: 1500,
-    priceCurrency: 'LKR',
-    tags: 'general, Hematology, Gastrointestinal Surgery, Transplantation, Surgery'
-  };
-
   ngOnInit() {
     // this.populateDoctorScheduleData();
     this.populateDoctorScheduleDataByMock();

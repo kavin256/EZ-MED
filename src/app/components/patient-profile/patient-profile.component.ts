@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {professionalType} from '../search-professionals/search-professionals.component';
 import {Router} from '@angular/router';
 
 @Component({

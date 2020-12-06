@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DoctorType} from '../../utils/Constants';
 
 @Component({
   selector: 'app-search-professionals',
@@ -7,17 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchProfessionalsComponent implements OnInit {
 
-  professionalListType = professionalType.CONSULTANT;
+  professionalListType = DoctorType.CONSULTANT;
   selectedProfessionalType = 'option2';
-
-
   searchString = null;
 
   professionalList = [
     {
       id: 1,
       name: 'Dr. Nuwan Chinthaka',
-      professionalType: professionalType.CONSULTANT,
+      doctorType: DoctorType.CONSULTANT,
       bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
       specialities: [
         'Consultant Neurologist',
@@ -30,7 +29,7 @@ export class SearchProfessionalsComponent implements OnInit {
     {
       id: 2,
       name: 'Dr. Punya Anupama',
-      professionalType: professionalType.CONSULTANT,
+      doctorType: DoctorType.CONSULTANT,
       bio: 'MBBS [COLOMBO](1998)',
       specialities: [
         'Consultant Pathologist'
@@ -42,7 +41,7 @@ export class SearchProfessionalsComponent implements OnInit {
     {
       id: 3,
       name: 'Dr. Eric Deepal',
-      professionalType: professionalType.CONSULTANT,
+      doctorType: DoctorType.CONSULTANT,
       bio: 'MBBS [RUHUNA](2000)',
       specialities: [
         'Consultant Clinical Nutritionist'
@@ -71,9 +70,3 @@ export class SearchProfessionalsComponent implements OnInit {
   }
 }
 
-export enum professionalType {
-  ANY = 'ANY',
-  CONSULTANT = 'Consultant',
-  GENERAL_PRACTITIONER = 'General Practitioner',
-  SUPPORT_MEDICAL_SERVICE = 'Other Medical Practitioner'
-}
