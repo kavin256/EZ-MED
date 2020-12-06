@@ -9,7 +9,7 @@
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion>
         <div *ngFor="let schedule of doctorScheduleData.fixedDoctorDates;">
-            <mat-expansion-panel style="width: 320px">
+            <mat-expansion-panel [disabled]="!(schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0)" style="width: 320px">
                 <mat-expansion-panel-header>
                     <mat-panel-title style="font-family: 'Arial Black'"><b>{{schedule.title}}</b></mat-panel-title>
                 </mat-expansion-panel-header>
@@ -26,8 +26,6 @@
                         <br>
                     </ng-container>
                 </ng-container>
-
-
             </mat-expansion-panel>
             <br>
         </div>
