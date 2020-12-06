@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
 
-  constants: Constants = new Constants();
+
   encryptionKey = 'ezmed';
   hide = true;
   logInType = 'doctor';
@@ -29,7 +29,6 @@ export class SignUpComponent implements OnInit {
   isSignUp = true;
   title: any;
   birthday: any;
-  // skypeId: any;
   contactNumber: any;
   whatsAppNumber: any;
   pass: any;
@@ -53,7 +52,7 @@ export class SignUpComponent implements OnInit {
   registerNewUser(user: UserData) {
     user.password = this.encryptPassword(user.password);
     // create url and send request
-    const url = this.constants.BASE_URL + this.constants.CREATE_NEW_USER;
+    const url = Constants.BASE_URL + Constants.CREATE_NEW_USER;
     this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user );
   }
 

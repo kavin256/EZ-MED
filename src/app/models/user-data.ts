@@ -30,3 +30,18 @@ export class DoctorScheduleData {
     fixedDoctorDates: FixedDoctorDate [];
 }
 
+export class DoctorSpecificData {
+    username?: string;
+    title: string;
+    name: string;
+    doctorRegistrationNumber: string;
+    pricePerAppointment: string;
+    priceCurrency: string;
+    qualifications: string;
+    doctorType?: string;
+    specialityA?: string;
+    specialityB?: string;
+    specialityC?: string;
+    isActiveProfile?: string;
+}
+

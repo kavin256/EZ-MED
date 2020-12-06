@@ -3,7 +3,7 @@
     <ng-container *ngIf="editable">
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Title</mat-label>
-            <mat-select [(value)]="doctor.title">
+            <mat-select [(value)]="doctorSpecificData.title">
                 <ng-container *ngFor="let title of titles" >
                     <mat-option value="{{title.value}}">
                         {{title.value}}
@@ -13,27 +13,34 @@
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Name: {{doctor.name}}</mat-label>
-            <input matInput placeholder="" [value]="doctor.name">
+            <mat-label>Name: {{doctorSpecificData.name}}</mat-label>
+            <input matInput placeholder="" [(ngModel)]="doctorSpecificData.name">
+        </mat-form-field>
+
+        <mat-form-field style="width: 240px" class="example-full-width">
+            <mat-label>Professional Level</mat-label>
+            <mat-select [(value)]="doctorSpecificData.doctorType">
+                <ng-container *ngFor="let doctorType of doctorTypes" >
+                    <mat-option value="{{doctorType.value}}">
+                        {{doctorType.value}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Registration Number (SLMC):</mat-label>
-            <input matInput placeholder=""  value="{{doctor.doctorRegistrationNumber}}">
+            <input matInput placeholder=""  [(ngModel)]="doctorSpecificData.doctorRegistrationNumber">
         </mat-form-field>
 
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Qualifications / Description:</mat-label>
-            <textarea matInput placeholder="" value="{{doctor.qualificationString}}"></textarea>
+            <textarea matInput placeholder="" [(ngModel)]="doctorSpecificData.qualifications"></textarea>
         </mat-form-field>
 
-<!--        <mat-form-field  style="width: 240px" class="example-full-width">-->
-<!--            <mat-label>Specialization #1:</mat-label>-->
-<!--            <input matInput placeholder="" value="{{doctor.specialization_1}}">-->
-<!--        </mat-form-field>-->
-        <mat-form-field *ngIf="isConsultant(doctor.professionalType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #1</mat-label>
-            <mat-select matNativeControl [(value)]="doctor.specializations[0]">
+            <mat-select matNativeControl [(value)]="doctorSpecificData.specialityA">
                 <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization.value}}">
                         {{specialization.value}}
@@ -41,9 +48,9 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="isConsultant(doctor.professionalType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
-            <mat-select matNativeControl [(value)]="doctor.specializations[1]">
+            <mat-select matNativeControl [(value)]="doctorSpecificData.specialityB">
                 <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization.value}}">
                         {{specialization.value}}
@@ -51,9 +58,9 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="isConsultant(doctor.professionalType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
-            <mat-select matNativeControl [(value)]="doctor.specializations[2]">
+            <mat-select matNativeControl [(value)]="doctorSpecificData.specialityC">
                 <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization.value}}">
                         {{specialization.value}}
@@ -63,18 +70,16 @@
         </mat-form-field>
 
         <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Price per consultation ({{doctor.priceCurrency}}):</mat-label>
-            <input matInput placeholder=""  value="{{doctor.pricePerConsultation}}">
+            <mat-label>Price per consultation ({{doctorSpecificData.priceCurrency}}):</mat-label>
+            <input matInput placeholder="" [(ngModel)]="doctorSpecificData.pricePerAppointment">
         </mat-form-field>
-
-        <label class="image-upload-container btn btn-bwm">
-            <span>Upload Profile Picture</span>
-            <input #imageInput
-                   type="file"
-                   accept="image/*"
-                   (change)="uploadImage(imageInput)">
-        </label>
-
+        <br>
+        <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
+        <br>
+        <input #imageInput
+               type="file"
+               accept="image/*"
+               (change)="uploadImage(imageInput)">
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
@@ -85,7 +90,7 @@
     </ng-container>
 
     <ng-container *ngIf="!editable">
-        <ng-container *ngIf="!doctor.isActiveProfile">
+        <ng-container *ngIf="!doctorSpecificData.isActiveProfile">
             <p>
                 <ngb-alert [dismissible]="false">
                     <strong>Note!</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
@@ -93,48 +98,21 @@
             </p>
         </ng-container>
 
-        <button [disabled]="!doctor.isActiveProfile" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
+        <button [disabled]="!doctorSpecificData.isActiveProfile" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
-        <button [color]="doctor.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
+        <button [color]="doctorSpecificData.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button [color]="doctor.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
+        <button [color]="doctorSpecificData.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
         <br>
         <br>
 
-<!--        <mat-label style="font-size: small">Title:</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.title}}</mat-label>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <mat-label style="font-size: small">Name:</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.name}}</mat-label>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <mat-label style="font-size: small">Registration Number (SLMC):</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.doctorRegistrationNumber}}</mat-label>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <mat-label style="font-size: small">Qualifications:</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.qualificationString}}</mat-label>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <mat-label style="font-size: small">Specializations:</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.specializations[0]}}</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.specializations[1]}}</mat-label>-->
-<!--        <br>-->
-<!--        <mat-label>{{doctor.specializations[2]}}</mat-label>-->
         <br>
-        <ng-container  *ngIf="doctor.isActiveProfile">
+        <ng-container  *ngIf="doctorSpecificData.isActiveProfile">
             <p>Preview of view for patients:</p>
             <mat-card style="width: 300px; height: 150px">
                 <table>
@@ -148,12 +126,12 @@
                             <table>
                                 <tr>
                                     <th style="font-size: medium; text-align: left">
-                                        {{doctor.title}} {{doctor.name}}
+                                        {{doctorSpecificData.title}} {{doctorSpecificData.name}}
                                     </th>
                                 </tr>
                                 <tr>
                                     <td style="font-size: x-small; text-align: left">
-                                        {{doctor.qualificationString}}
+                                        {{doctorSpecificData?.qualifications}}
                                     </td>
                                 </tr>
                                 <tr>
@@ -172,13 +150,21 @@
                                 </tr>
                                 <tr>
                                 </tr>
-                                <div *ngFor="let speciality of doctor.specializations">
-                                    <tr>
-                                        <td style="font-size: x-small; text-align: left">
-                                            {{speciality}}
-                                        </td>
-                                    </tr>
-                                </div>
+                                <tr>
+                                    <td style="font-size: x-small; text-align: left">
+                                        {{doctorSpecificData?.specialityA}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: x-small; text-align: left">
+                                        {{doctorSpecificData?.specialityB}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: x-small; text-align: left">
+                                        {{doctorSpecificData.specialityC}}
+                                    </td>
+                                </tr>
                                 <tr>
                                 </tr>
                             </table>

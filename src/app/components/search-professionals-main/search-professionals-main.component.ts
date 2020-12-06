@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {professionalType} from '../search-professionals/search-professionals.component';
 import {Router} from '@angular/router';
+import {DoctorType} from '../../utils/Constants';
 
 @Component({
   selector: 'app-search-professionals-main',
@@ -15,7 +15,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     {
       id: 1,
       name: 'Dr. Nuwan Chinthaka',
-      professionalType: professionalType.CONSULTANT,
+      doctorType: DoctorType.CONSULTANT,
       bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
       specialities: [
         'Consultant Neurologist',
@@ -28,7 +28,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     {
       id: 2,
       name: 'Dr. Punya Anupama',
-      professionalType: professionalType.GENERAL_PRACTITIONER,
+      doctorType: DoctorType.GENERAL_PRACTITIONER,
       bio: 'MBBS [COLOMBO](1998)',
       specialities: [
         'Consultant Pathologist'
@@ -40,7 +40,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     {
       id: 3,
       name: 'Dr. Eric Deepal',
-      professionalType: professionalType.SUPPORT_MEDICAL_SERVICE,
+      doctorType: DoctorType.SUPPORT_MEDICAL_SERVICE,
       bio: 'MBBS [RUHUNA](2000)',
       specialities: [
         'Consultant Clinical Nutritionist'

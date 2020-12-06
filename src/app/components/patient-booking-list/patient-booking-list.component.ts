@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
-import {professionalType} from '../search-professionals/search-professionals.component';
+import {DoctorType} from '../../utils/Constants';
 
 @Component({
   selector: 'app-patient-booking-list',
@@ -43,7 +43,7 @@ export class PatientBookingListComponent implements OnInit {
   doctor = {
     id: 2,
     name: 'Dr. Punya Anupama',
-    professionalType: professionalType.GENERAL_PRACTITIONER,
+    doctorType: DoctorType.GENERAL_PRACTITIONER,
     bio: 'MBBS [COLOMBO](1998)',
     specialities: [
       'Consultant Pathologist'

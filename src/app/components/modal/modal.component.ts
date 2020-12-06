@@ -1,6 +1,5 @@
 import {Component, Inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Constants} from '../../utils/Constants';
 
 @Component({
   selector: 'app-modal',
@@ -14,7 +13,6 @@ export class ModalComponent implements OnInit {
     isSignUp: undefined,
     userType: undefined
   };
-  modalTypes: Constants = new Constants();
   isSignUp = null;
 
   constructor(
