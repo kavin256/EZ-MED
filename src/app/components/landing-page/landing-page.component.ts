@@ -6,6 +6,7 @@ import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {RequestOptions} from '../../models/request-options';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {AuthResponse} from '../../models/auth-response';
+import {Constants} from '../../utils/Constants';
 
 @Component({
   selector: 'app-landing-page',
@@ -16,6 +17,7 @@ export class LandingPageComponent implements OnInit, OnChanges {
 
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
+  constants: Constants = new Constants();
 
   constructor(private router: Router,
               private dataLoader: DataLoaderService,
@@ -34,15 +36,15 @@ export class LandingPageComponent implements OnInit, OnChanges {
     this.router.navigate(['searchProfessionals']).then(r => {
     });
 
-    /*const obj: AuthModel = new AuthModel();
+    const obj: AuthModel = new AuthModel();
     obj.username = 'foo12345';
     obj.password = 'foo';
-    this.dataLoader.login<AuthResponse>('http://localhost:8080/authenticate', new RequestOptions(), obj, DataKey.authKey);
+    this.dataLoader.login<AuthResponse>(this.constants.BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
 
     this.dataStore.get(DataKey.authKey, true).subscribe(
         (data) => {
           console.log(data);
         }
-    );*/
+    );
   }
 }

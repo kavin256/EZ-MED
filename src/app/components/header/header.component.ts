@@ -15,9 +15,9 @@ export class HeaderComponent implements OnInit {
   user = null;
   // firstName = 'Kavin';
   firstName = null;
-  // typeOfUser;
+  typeOfUser;
   // typeOfUser = 'Doctor';
-  typeOfUser = 'Patient';
+  // typeOfUser = 'Patient';
 
   constructor(public dialog: MatDialog,
               private router: Router) {}
@@ -57,5 +57,10 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['user/dashboard']).then(r => {
       });
     }
+  }
+
+  goToHomePage() {
+    this.router.navigate(['/']).then(r => {
+    });
   }
 }
