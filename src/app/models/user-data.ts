@@ -11,3 +11,22 @@ export class UserData {
     doctor: boolean;
     userAllergies: string;
 }
+
+export class WorkingTimePeriod {
+    startTime: string;
+    endTime: string;
+    startTimeSelected?: { hour: number; minute: number };
+    endTimeSelected?: { hour: number; minute: number };
+}
+
+export class FixedDoctorDate {
+    day: number;
+    workingTimePeriods: WorkingTimePeriod [];
+    title?: string;
+}
+
+export class DoctorScheduleData {
+    averageTimeForAppointment: number;
+    fixedDoctorDates: FixedDoctorDate [];
+}
+
