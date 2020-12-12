@@ -3,6 +3,7 @@ import './header.component.css';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ModalComponent} from '../modal/modal.component';
+import {MODAL_TYPES} from '../../utils/Constants';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit {
       const dialogConfig = new MatDialogConfig();
 
       dialogConfig.data = {
-        modalType: 'SIGN_UP'
+        modalType: MODAL_TYPES.SIGN_UP
       };
 
       dialogConfig.disableClose = false;
