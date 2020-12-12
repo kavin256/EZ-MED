@@ -18,6 +18,10 @@ export enum DoctorTitles {
     MS = 'Ms',
     PROF = 'Prof',
 }
+export enum MODAL_TYPES {
+    SIGN_UP = 'SIGN_UP',
+    PROFILE = 'PROFILE',
+}
 
 export enum currencyCodes {
     LKR = 'LKR',
