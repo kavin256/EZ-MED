@@ -18,8 +18,23 @@ export class DoctorSideBookingComponent implements OnInit {
       price: 'Rs. 2000.00',
       doctorNotes: [],
       userNotes: [],
-      cancellationRule: ''
-    };
+      cancellationRule: '',
+      messageThread:
+          [
+              {
+                  sender: 'doctor',
+                  message: 'jhbsdkcsd'
+              },
+              {
+                  sender: 'patient',
+                  message: 'jhbsdddfdfdkcsd'
+              },
+              {
+                  sender: 'doctor',
+                  message: 'hgvbhashjd'
+              }
+          ]
+  };
   patient = {patientId: '76531', patientName: 'Mr. John Doe',
       contactNumber: '0773092511', whatsAppNumber: '0773092511'};
   doctor = {doctorId: '4352545235', doctorName: 'Dr. Tim Cook'};
