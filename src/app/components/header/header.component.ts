@@ -16,8 +16,8 @@ export class HeaderComponent implements OnInit {
   user = null;
   // firstName = 'Kavin';
   firstName = null;
-  typeOfUser;
-  // typeOfUser = 'Doctor';
+  // typeOfUser;
+  typeOfUser = 'Doctor';
   // typeOfUser = 'Patient';
 
   constructor(public dialog: MatDialog,
