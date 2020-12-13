@@ -16,11 +16,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
       id: 1,
       name: 'Dr. Nuwan Chinthaka',
       doctorType: DoctorType.CONSULTANT,
-      bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
-      specialities: [
-        'Consultant Neurologist',
-        'Consultant Pediatrician'
-      ],
+      qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
+      specialityA: 'Neurologist',
+      specialityB: 'Pediatrician',
+      specialityC: '',
       consultationPrice: 'Rs. 2000.00',
       isSkypePreferred: true,
       isWhatsAppPreferred: true
@@ -29,10 +28,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
       id: 2,
       name: 'Dr. Punya Anupama',
       doctorType: DoctorType.GENERAL_PRACTITIONER,
-      bio: 'MBBS [COLOMBO](1998)',
-      specialities: [
-        'Consultant Pathologist'
-      ],
+      qualifications: 'MBBS [COLOMBO](1998)',
+      specialityA: 'Pathologist',
+      specialityB: '',
+      specialityC: '',
       consultationPrice: 'Rs. 1500.00',
       isSkypePreferred: false,
       isWhatsAppPreferred: true
@@ -41,10 +40,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
       id: 3,
       name: 'Dr. Eric Deepal',
       doctorType: DoctorType.SUPPORT_MEDICAL_SERVICE,
-      bio: 'MBBS [RUHUNA](2000)',
-      specialities: [
-        'Consultant Clinical Nutritionist'
-      ],
+      qualifications: 'MBBS [RUHUNA](2000)',
+      specialityA: 'Clinical Nutritionist',
+      specialityB: '',
+      specialityC: '',
       consultationPrice: 'Rs. 2500.00',
       isSkypePreferred: true,
       isWhatsAppPreferred: false

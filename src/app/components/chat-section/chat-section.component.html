@@ -1,0 +1,8 @@
+<div *ngFor="let message of messageThread">
+    <div *ngIf="message.sender === 'doctor'" style="align: right">
+        <p style="font-style: italic; font-size: small; text-align:right; color: cornflowerblue" role="listitem">You: {{message.message}}</p>
+    </div>
+    <div *ngIf="message.sender === 'patient'" >
+        <p style="font-style: italic; font-size: small; text-align:left; color: slategray" role="listitem">{{patientName}}: {{message.message}}</p>
+    </div>
+</div>

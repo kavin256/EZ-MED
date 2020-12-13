@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {DoctorScheduleData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-doctor-schedule',
@@ -11,6 +12,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class DoctorScheduleComponent implements OnInit {
 
   constructor(
+      private router: Router,
       private dataStore: DataStoreService,
       private dataHandlerService: DataHandlerService
   ) {}
@@ -156,5 +158,10 @@ export class DoctorScheduleComponent implements OnInit {
 
   userConsent() {
     this.isConfirmationActive = !this.isConfirmationActive;
+  }
+
+  goToProfessionalDashboard() {
+    this.router.navigate(['doctor/dashboard']).then(r => {
+    });
   }
 }

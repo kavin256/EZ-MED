@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-patient-booking-list',
@@ -122,7 +123,9 @@ export class PatientBookingListComponent implements OnInit {
   isPrescriptionsVisible = false;
   selectedPrescription = null;
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -162,5 +165,15 @@ export class PatientBookingListComponent implements OnInit {
 
   showPrescriptions(bookingId: number, action?) {
     this.isPrescriptionsVisible = action;
+  }
+
+  goToUserDashboard() {
+    this.router.navigate(['user/dashboard']).then(r => {
+    });
+  }
+
+  newBooking() {
+    this.router.navigate(['searchProfessionals']).then(r => {
+    });
   }
 }

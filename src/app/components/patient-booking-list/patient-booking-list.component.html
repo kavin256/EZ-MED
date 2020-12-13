@@ -3,16 +3,20 @@
 
         <app-page-title [title]="title"></app-page-title>
 
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="all">All</mat-radio-button>
-            <mat-radio-button value="new">New</mat-radio-button>
-        </mat-radio-group>
+<!--        <mat-radio-group aria-label="Select an option">-->
+<!--            <mat-radio-button value="all">All</mat-radio-button>-->
+<!--            <mat-radio-button value="new">New</mat-radio-button>-->
+<!--        </mat-radio-group>-->
+<!--        <br>-->
+<!--        <br>-->
+        <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
         <br>
         <br>
-
+        <p style="font-size: large;">Bookings:</p>
+<!--        <mat-divider></mat-divider>-->
         <div *ngFor="let booking of bookings">
             <ng-container>
-                <mat-card (click)="selectBooking(booking.bookingId)" style="width: 240px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
+                <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
                     <table>
                         <tr>
                             <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.doctorName}}</td>
@@ -28,6 +32,8 @@
                 <br>
             </ng-container>
         </div>
+        <button (click)="goToUserDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
+
     </ng-container>
 
     <ng-container *ngIf="selectedBookingId && !isPrescriptionsVisible">
@@ -40,24 +46,18 @@
 
         <p style="font-size: small">Booking Status: {{booking.bookingStatus}}</p>
         <mat-divider></mat-divider>
-        <br>
 
-        <button (click)="showPrescriptions(booking.bookingId, true)" style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>
-        <br>
+<!--        <button (click)="showPrescriptions(booking.bookingId, true)" style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>-->
 
         <br>
         <p style="font-size: large;">Conversation:</p>
-        <mat-divider></mat-divider>
 
+        <app-chat-section
+            [messageThread]="booking.messageThread"
+            [patientName]="booking.patientName"
+        >
+        </app-chat-section>
 
-        <div *ngFor="let message of booking.messageThread">
-            <div *ngIf="message.sender === 'doctor'" style="align: right">
-                <p style="font-style: italic; font-size: small; text-align:right; color: cornflowerblue" role="listitem">You: {{message.message}}</p>
-            </div>
-            <div *ngIf="message.sender === 'patient'" >
-                <p style="font-style: italic; font-size: small; text-align:left; color: slategray" role="listitem">{{booking.patientName}}: {{message.message}}</p>
-            </div>
-        </div>
 
         <mat-divider></mat-divider>
 
