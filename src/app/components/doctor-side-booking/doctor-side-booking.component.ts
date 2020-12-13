@@ -9,7 +9,9 @@ import {MatSnackBar} from '@angular/material';
 })
 export class DoctorSideBookingComponent implements OnInit {
 
-  booking = {
+    isConfirmationActive = false;
+    changeRequestSent = false;
+    booking = {
       id: 2387,
       createdDateTime: new Date(2020, 4, 20, 10, 45),
       appointmentDateTime: new Date(2020, 4, 21, 10, 0),
@@ -36,12 +38,31 @@ export class DoctorSideBookingComponent implements OnInit {
           ]
   };
   patient = {patientId: '76531', patientName: 'Mr. John Doe',
-      contactNumber: '0773092511', whatsAppNumber: '0773092511'};
+      contactNumber: '0773092511', whatsAppNumber: '0773092511', email: 'kavin256@gmail.com',
+      birthday: new Date(1993, 4, 21).toLocaleDateString('en-US'),
+      age: 33,
+      knownAllergies: 'allergic to bad music, allergic to negative people'};
   doctor = {doctorId: '4352545235', doctorName: 'Dr. Tim Cook'};
-  isPatientDetailsShown = false;
+  isPatientDetailsShown = true;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  userConsent() {
+      this.isConfirmationActive = !this.isConfirmationActive;
+  }
+
+  cancel() {
+      // this.updateSchedule();
+      this.isConfirmationActive = false;
+      this.changeRequestSent = true;
+      this.booking.status = BookingStatus.BOOKING_CANCELLED;
+  }
+
+  dismiss() {
+      this.isConfirmationActive = false;
+      this.changeRequestSent = false;
   }
 }

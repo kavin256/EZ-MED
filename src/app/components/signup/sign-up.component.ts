@@ -38,7 +38,7 @@ export class SignUpComponent implements OnInit {
     {value: 'female', viewValue: 'Female'}
   ];
   isMale = true;
-  knownAlergies: any;
+  knownAllergies: any;
   isIncompleteErrorAvailable = false;
 
   constructor(
@@ -83,7 +83,7 @@ export class SignUpComponent implements OnInit {
       userObj.contactNumber = this.contactNumber;
       userObj.whatsAppNumber = this.whatsAppNumber;
       userObj.doctor = this.logInType === 'doctor';
-      userObj.userAllergies = this.knownAlergies;
+      userObj.userAllergies = this.knownAllergies;
 
       this.registerNewUser(userObj);
     }
