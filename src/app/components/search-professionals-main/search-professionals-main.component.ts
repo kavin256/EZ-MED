@@ -82,7 +82,6 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ];
 
   selectedSpecialization: any;
-  overTheDoctorCard = null;
 
   search() {
     console.log('jhbrch');
@@ -95,27 +94,8 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ngOnInit() {
   }
 
-  onMouseEnter($event: number) {
-    this.overTheDoctorCard = $event;
-  }
-
-  onMouseLeave($event: number) {
-    this.overTheDoctorCard = null;
-  }
-
-  isOverTheDoctorCard($event: number) {
-    return $event === this.overTheDoctorCard;
-  }
-
-  selectDoc($event: number) {
+  selectProfessional($event: number) {
     this.router.navigate(['appointmentTime']).then(r => {
     });
-  }
-
-  getTimeSlots(selectedCategory: any) {
-    // const found = this.doctorSchedule.schedule.find((scheduleObj) => {
-    //   return scheduleObj.title = selectedCategory;
-    // });
-    // return [found.slot1, found.slot2, found.slot3];
   }
 }
