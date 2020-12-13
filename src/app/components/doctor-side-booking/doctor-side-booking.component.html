@@ -1,23 +1,33 @@
 <div class="mat-card-style">
-    <h1 style="font-size: x-large">Name: {{booking.patientName}}</h1>
-    <span style="font-size: large">Skype ID:</span>
-    &nbsp;
-    <mat-form-field style="width: 150px">
-        <input id="skypeId" readonly matInput type="text" value="{{booking.skypeID}}">
-    </mat-form-field>    &nbsp;
+    <h1 style="font-size: x-large">{{patient.patientName}}</h1>
 
-    <button (click)="copyToClipBoard()" style="width: 60px" color="primary" mat-flat-button>Copy</button>    <br>
-    <p style="font-size: small">Phone number: {{booking.phoneNumber}}</p>
-    <p style="font-size: small">Booking Number: {{booking.bookingId}}</p>
+    <p style="font-size: small">Booking Number: {{booking.id}}</p>
+    <p style="font-size: small">WhatApp number: <b>{{patient.whatsAppNumber}}</b></p>
 
-    <p style="font-size: small">Booking Status: {{booking.bookingStatus}}</p>
+    <p style="font-size: small">Booking Status: {{booking.status}}</p>
+
+    <ng-container *ngIf="!isPatientDetailsShown">
+        <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Show Patient Details</button>    <br>
+    </ng-container>
+    <ng-container *ngIf="isPatientDetailsShown">
+        <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Hide Patient Details</button>    <br>
+    </ng-container>
+    <br>
+    <ng-container *ngIf="isPatientDetailsShown">
+        <p style="font-size: small">Patient Ref. No: {{patient.patientId}}</p>
+        <p style="font-size: small">Contact number: {{patient.contactNumber}}</p>
+        <p style="font-size: small">Email: {{patient.email}}</p>
+        <p style="font-size: small">Birthday: {{patient.birthday}}</p>
+        <p style="font-size: small">Age: {{patient.age}}</p>
+        <p style="font-size: small">Known Allergies: {{patient.knownAllergies}}</p>
+    </ng-container>
     <mat-divider></mat-divider>
     <br>
 
-    <button [disabled]="booking.bookingStatus !== 'BOOKING_NOT_STARTED'" style="width: 320px" color="primary" mat-flat-button>Start Consultation</button>    <br>
+    <button [disabled]="booking.status !== 'BOOKING_NOT_STARTED'" style="width: 320px" color="primary" mat-flat-button>Start Consultation</button>    <br>
     <br>
 
-    <button [disabled]="booking.bookingStatus === 'BOOKING_NOT_STARTED' || booking.bookingStatus === 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>End Consultation</button>
+    <button [disabled]="booking.status === 'BOOKING_NOT_STARTED' || booking.status === 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>End Consultation</button>
     <br>
     <br>
 
@@ -29,23 +39,23 @@
     <p style="font-size: large;">Conversation:</p>
     <mat-divider></mat-divider>
 
+    <br>
 
     <div *ngFor="let message of booking.messageThread">
         <div *ngIf="message.sender === 'doctor'" style="align: right">
             <p style="font-style: italic; font-size: small; text-align:right; color: cornflowerblue" role="listitem">You: {{message.message}}</p>
         </div>
         <div *ngIf="message.sender === 'patient'" >
-            <p style="font-style: italic; font-size: small; text-align:left; color: slategray" role="listitem">{{booking.patientName}}: {{message.message}}</p>
+            <p style="font-style: italic; font-size: small; text-align:left; color: slategray" role="listitem">{{patient.patientName}}: {{message.message}}</p>
         </div>
     </div>
 
     <mat-divider></mat-divider>
 
     <br>
-    <button [disabled]="booking.bookingStatus === 'BOOKING_CANCELLED'" style="width: 320px" mat-flat-button  color="warn" >Cancel Booking</button>
-    <br>
-    <br>
+    <button *ngIf="!isConfirmationActive" [disabled]="booking.status === 'BOOKING_CANCELLED'" (click)="userConsent()" style="width: 320px" mat-flat-button color="warn" >Cancel Booking</button>
 
-    <button [disabled]="booking.bookingStatus !== 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>Reactivate Booking</button>
-
+    <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
+    <button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button  color="warn">Cancel Booking</button>
+    <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="dismiss()" style="width: 150px" mat-raised-button color="secondary">Dismiss</button></span>
 </div>

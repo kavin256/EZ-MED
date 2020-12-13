@@ -9,7 +9,7 @@ import {Constants} from '../utils/Constants';
     providedIn: 'root'
 })
 export class DataLoaderService {
-    constants: Constants = new Constants();
+
 
     constructor(
         private http: HttpClient,
@@ -112,9 +112,9 @@ export class DataLoaderService {
         options.headers = options.headers.append('Content-Type', 'application/json');
 
         // get auth key for authorization
-        if (localStorage.getItem(this.constants.EZMED_AUTH) != null) {
+        if (localStorage.getItem(Constants.EZMED_AUTH) != null) {
             let authKey = 'Bearer ';
-            authKey = authKey + localStorage.getItem(this.constants.EZMED_AUTH);
+            authKey = authKey + localStorage.getItem(Constants.EZMED_AUTH);
             options.headers = options.headers.append('Authorization', authKey);
         }
         return options;
@@ -135,7 +135,7 @@ export class DataLoaderService {
             result => {
                 this.dataStore.set(DataKey.loggedUser, data, true);
                 // @ts-ignore
-                localStorage.setItem(this.constants.EZMED_AUTH, result.jwt);
+                localStorage.setItem(Constants.EZMED_AUTH, result.jwt);
             },
             error => {
                 this.dataStore.set(DataKey.error, error, true);
@@ -144,6 +144,6 @@ export class DataLoaderService {
 
     // logout from the app
     public logOut() {
-        localStorage.removeItem(this.constants.EZMED_AUTH);
+        localStorage.removeItem(Constants.EZMED_AUTH);
     }
 }

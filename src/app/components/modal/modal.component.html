@@ -1,14 +1,14 @@
 <div align="center">
-    <ng-container *ngIf="modalType === modalTypes.MODAL_TYPE_SIGN_UP && !isSignUp">
+    <ng-container *ngIf="modalType === 'SIGN_UP' && !isSignUp">
         <button style="width: 150px; height: 50px" mat-stroked-button color="primary" (click)="signUp()">Sign Up</button><br><br>
     </ng-container>
-    <ng-container *ngIf="modalType === modalTypes.MODAL_TYPE_SIGN_UP && !isSignUp">
+    <ng-container *ngIf="modalType === 'SIGN_UP' && !isSignUp">
         <button style="width: 150px; height: 50px" mat-raised-button color="primary" (click)="signIn()">Sign In</button><br><br>
     </ng-container>
-    <ng-container *ngIf="modalType === modalTypes.MODAL_TYPE_SIGN_UP && isSignUp">
+    <ng-container *ngIf="modalType === 'SIGN_UP' && isSignUp">
         <button style="width: 150px; height: 50px" mat-stroked-button color="primary" (click)="doctorSignUp()">Doctor Sign Up</button><br><br>
     </ng-container>
-    <ng-container *ngIf="modalType === modalTypes.MODAL_TYPE_SIGN_UP && isSignUp">
+    <ng-container *ngIf="modalType === 'SIGN_UP' && isSignUp">
         <button style="width: 150px; height: 50px" mat-raised-button color="primary" (click)="patientSignUp()">Patient Sign Up</button><br><br>
     </ng-container>
 </div>

@@ -17,7 +17,6 @@ export class LandingPageComponent implements OnInit, OnChanges {
 
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
-  constants: Constants = new Constants();
 
   constructor(private router: Router,
               private dataLoader: DataLoaderService,
@@ -39,7 +38,7 @@ export class LandingPageComponent implements OnInit, OnChanges {
     const obj: AuthModel = new AuthModel();
     obj.username = 'foo12345';
     obj.password = 'foo';
-    this.dataLoader.login<AuthResponse>(this.constants.BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
+    this.dataLoader.login<AuthResponse>(Constants.BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
 
     this.dataStore.get(DataKey.authKey, true).subscribe(
         (data) => {

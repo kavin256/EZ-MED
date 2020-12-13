@@ -9,64 +9,60 @@ import {MatSnackBar} from '@angular/material';
 })
 export class DoctorSideBookingComponent implements OnInit {
 
-  booking = {
-      bookingId: 2387,
-      doctorId: '4352545235',
-      patientId: '76531',
-      doctorName: 'Dr. Tim Cook',
-      patientName: 'John Doe',
-      skypeID: 'kafkjnf34',
-      phoneNumber: '0773092511',
-      bookingStatus: BookingStatus.BOOKING_NOT_STARTED,
-      messageThread: [
-        {
-          sender: 'patient',
-          message: 'Hi doctor, I have a headache and a cough.'
-        },
-        {
-          sender: 'doctor',
-          message: 'Hi John, do you have any allergies?'
-        },
-        {
-          sender: 'patient',
-          message: 'I\'m allergic to panadol'
-        },
-        {
-          sender: 'doctor',
-          message: 'Thanks.'
-        },
-        {
-            sender: 'patient',
-            message: 'THANK YOU DOC!.'
-        },
-        {
-            sender: 'patient',
-            message: 'Can you send me a prescription btw?'
-        },
-          {
-              sender: 'doctor',
-              message: 'Sure. I will send you.'
-          },
-          {
-              sender: 'patient',
-              message: 'Awesome. Thanks'
-          }
-      ],
-      bookingPrice: 'Rs. 2000.00',
-      doctorCharge: 'Rs. 1800.00'
-    };
+    isConfirmationActive = false;
+    changeRequestSent = false;
+    booking = {
+      id: 2387,
+      createdDateTime: new Date(2020, 4, 20, 10, 45),
+      appointmentDateTime: new Date(2020, 4, 21, 10, 0),
+      durationInMinutes: 15,
+      status: BookingStatus.BOOKING_NOT_STARTED,
+      price: 'Rs. 2000.00',
+      doctorNotes: [],
+      userNotes: [],
+      cancellationRule: '',
+      messageThread:
+          [
+              {
+                  sender: 'doctor',
+                  message: 'jhbsdkcsd'
+              },
+              {
+                  sender: 'patient',
+                  message: 'jhbsdddfdfdkcsd'
+              },
+              {
+                  sender: 'doctor',
+                  message: 'hgvbhashjd'
+              }
+          ]
+  };
+  patient = {patientId: '76531', patientName: 'Mr. John Doe',
+      contactNumber: '0773092511', whatsAppNumber: '0773092511', email: 'kavin256@gmail.com',
+      birthday: new Date(1993, 4, 21).toLocaleDateString('en-US'),
+      age: 33,
+      knownAllergies: 'allergic to bad music, allergic to negative people'};
+  doctor = {doctorId: '4352545235', doctorName: 'Dr. Tim Cook'};
+  isPatientDetailsShown = true;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  copyToClipBoard() {
-      const copyText = document.getElementById('skypeId');
-      // @ts-ignore
-      copyText.select();
-      document.execCommand('copy');
-      // @ts-ignore
-      // alert('Copied the text: ' + copyText.value);
+  userConsent() {
+      this.isConfirmationActive = !this.isConfirmationActive;
+  }
+
+  cancel() {
+      // this.updateSchedule();
+      this.isConfirmationActive = false;
+      this.changeRequestSent = true;
+      this.booking.status = BookingStatus.BOOKING_CANCELLED;
+  }
+
+  dismiss() {
+      this.isConfirmationActive = false;
+      this.changeRequestSent = false;
   }
 }
