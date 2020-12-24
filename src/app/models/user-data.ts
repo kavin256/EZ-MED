@@ -15,6 +15,7 @@ export class UserData {
 export class WorkingTimePeriod {
     startTime: string;
     endTime: string;
+    isActive?: boolean;
     startTimeSelected?: { hour: number; minute: number };
     endTimeSelected?: { hour: number; minute: number };
 }
@@ -34,6 +35,8 @@ export class DoctorSpecificData {
     username?: string;
     title: string;
     name: string;
+    contactNumber: string;
+    whatsAppNumber: string;
     doctorRegistrationNumber: string;
     pricePerAppointment: string;
     priceCurrency: string;

@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BookingStatus} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
+import {Router} from '@angular/router';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import {$} from 'protractor';
 
 @Component({
   selector: 'app-prescription',
   templateUrl: './prescription.component.html',
   styleUrls: ['./prescription.component.css']
 })
+
 export class PrescriptionComponent implements OnInit {
+  @ViewChild('test', {static: true}) el: ElementRef;
 
   currentDate = new Date();
 
   doctor = {
     id: 2,
     name: 'Dr. Punya Anupama',
-    doctorType: DoctorType.GENERAL_PRACTITIONER,
+    doctorType: DoctorType.GEN,
     bio: 'MBBS [COLOMBO](1998)',
     specialities: [
       'Consultant Pathologist'
@@ -83,7 +89,9 @@ export class PrescriptionComponent implements OnInit {
       ''
   ];
 
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -103,5 +111,16 @@ export class PrescriptionComponent implements OnInit {
         } else {
           this.preview = false;
         }
+    }
+  public SavePDF(): void {
+    // var pdf = new jsPDF('p','pt','a4');
+    // pdf.html2pdf(document.getElementById('pdfTable'), function() {
+    //   pdf.save('pdfTable.pdf');
+    // });
+  }
+
+  goToAppointmentList(b: boolean) {
+      this.router.navigate(['appointment/prescriptionList']).then(r => {
+      });
     }
 }

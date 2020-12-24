@@ -4,7 +4,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, currencyCodes, DoctorTitles, DoctorType, Specializations} from '../../utils/Constants';
 import {DataKey} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DoctorSpecificData} from '../../models/user-data';
+import {DoctorSpecificData, UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -25,9 +25,9 @@ export class DoctorProfileComponent implements OnInit {
   ];
 
   doctorTypes = [
-    {value: DoctorType.CONSULTANT},
-    {value: DoctorType.GENERAL_PRACTITIONER},
-    {value: DoctorType.SUPPORT_MEDICAL_SERVICE}
+    {value: DoctorType.CON},
+    {value: DoctorType.GEN},
+    {value: DoctorType.OTH}
   ];
 
   specializations = [
@@ -62,7 +62,7 @@ export class DoctorProfileComponent implements OnInit {
   }
 
   isConsultant(type: string) {
-    return type === DoctorType.CONSULTANT;
+    return type === DoctorType.CON;
   }
 
   goToMyAppointments() {
@@ -83,7 +83,16 @@ export class DoctorProfileComponent implements OnInit {
 
     // sent request
     const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE;
-    this.dataLoaderService.post(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, formData);
+    this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, formData )
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            // console.log('data');
+            // console.log(data.data);
+          } else if (data && data.status && data.status.code === -1) {
+            // console.log('data null');
+            // console.log(data.data);
+          }
+        });
   }
 
   private loadDoctorSpecificData() {
@@ -95,11 +104,13 @@ export class DoctorProfileComponent implements OnInit {
       username: 'johndoe@gmail.com',
       title: DoctorTitles.DR,
       name: 'John Doe',
+      contactNumber: '+94773092323',
+      whatsAppNumber: '+94773092323',
       doctorRegistrationNumber: 'reg/34234235',
       pricePerAppointment: '1650',
       priceCurrency: currencyCodes.LKR,
       qualifications: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
-      doctorType: DoctorType.CONSULTANT,
+      doctorType: DoctorType.CON,
       specialityA: 'Pulmonologist',
       specialityB: 'Dermatologist',
       specialityC: '',

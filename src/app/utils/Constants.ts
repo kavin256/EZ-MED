@@ -43,8 +43,8 @@ export enum Specializations {
 }
 
 export enum DoctorType {
-    ANY = 'ANY',
-    CONSULTANT = 'Consultant',
-    GENERAL_PRACTITIONER = 'General Practitioner',
-    SUPPORT_MEDICAL_SERVICE = 'Other Medical Practitioner'
+    CON = 'Consultant',
+    COUN = 'Counselor',
+    GEN = 'General Practitioner',
+    OTH = 'Other Medical Practitioner'
 }

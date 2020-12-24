@@ -2,12 +2,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import './sign-up.component.css';
 import * as CryptoJS from 'crypto-js';
 import {UserData} from '../../models/user-data';
-import {Constants} from '../../utils/Constants';
+import {Constants, DoctorTitles} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthResponse} from '../../models/auth-response';
 import {RequestOptions} from '../../models/request-options';
-import {DataKey} from '../../services/data-store.service';
+import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -40,12 +41,30 @@ export class SignUpComponent implements OnInit {
   isMale = true;
   knownAllergies: any;
   isIncompleteErrorAvailable = false;
+  signUpResultObject = {
+    isSignUp: undefined,
+    userType: undefined
+  };
+  titles = [
+    {value: DoctorTitles.DR},
+    {value: DoctorTitles.MR},
+    {value: DoctorTitles.MRS},
+    {value: DoctorTitles.MS},
+    {value: DoctorTitles.PROF},
+  ];
 
   constructor(
+      private router: Router,
       private dataLoaderService: DataLoaderService,
+      private dataStore: DataStoreService
   ) { }
 
   ngOnInit() {
+    if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
+      this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
+      this.logInType = this.signUpResultObject.userType;
+    }
+
     // console.log(this.encryptPassword('milinda'));
   }
 
@@ -53,7 +72,20 @@ export class SignUpComponent implements OnInit {
     user.password = this.encryptPassword(user.password);
     // create url and send request
     const url = Constants.BASE_URL + Constants.CREATE_NEW_USER;
-    this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user );
+    this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user )
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+            if (data.data[0].doctor) {
+              this.router.navigate(['doctor/dashboard']).then(r => {
+              });
+            } else if (!data.data[0].doctor) {
+              this.router.navigate(['user/dashboard']).then(r => {
+              });
+            }
+          } else if (data && data.status && data.status.code === -1) {
+            alert('Something went wrong. Please contact support !!');
+          }
+        });
   }
 
   encryptPassword(password: string): string {
@@ -63,7 +95,7 @@ export class SignUpComponent implements OnInit {
   }
 
   validateInput(): boolean {
-    return true;
+    return false;
   }
 
   SignUp() {

@@ -1,60 +1,76 @@
 <div class="mat-card-style">
-    <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>
+    <div class="container" id="test" #test>
+        <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>
 
-    <p style="font-size: small">Name: <b>{{booking.patientTitle}}. {{booking.patientName}}</b></p>
-    <p style="font-size: small">Age: {{booking.patientAge}} yrs</p>
-    <mat-divider></mat-divider>
-    <mat-divider></mat-divider>
-    <div *ngIf="preview">
+        <p style="font-size: small">Name: <b>{{booking.patientTitle}}. {{booking.patientName}}</b></p>
+        <p style="font-size: small">Age: {{booking.patientAge}} yrs</p>
+        <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+        <div *ngIf="preview">
 
-        <p style="font-size: small; text-align: center"><b><u>PRESCRIPTION</u></b></p>
-
-        <br>
-        <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li>
-
-        <table>
             <br>
-            <tr>
-                <th style="font-size: medium; text-align: left">
-                    {{doctor.name}}
-                </th>
-            </tr>
-            <tr>
-                <td style="font-size: x-small; text-align: left">
-                    {{doctor.bio}}
-                </td>
-            </tr>
-        </table>
-        <p style="font-size: x-small">** No signature required. This is a electronically generated document that could only be edited by the prescriber **</p>
+            <p style="font-size: small; text-align: center"><b><u>PRESCRIPTION</u></b></p>
 
-        <mat-divider></mat-divider>
-        <mat-divider></mat-divider>
-        <br>
-    </div>
-    <div *ngIf="!preview">
-        <p>Start adding items below</p>
-        <div *ngFor="let item of prescriptionList">
-            <table align="center">
+            <br>
+            <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li>
+
+            <br>
+
+            <p style="font-size: x-small">** No signature required. This is a electronically generated document that was prepared by the following prescriber **</p>
+            <table>
                 <tr>
-                    <td>
-                        <mat-form-field style="width: 300px">
-                            <input style="font-size: small" matInput type="text" placeholder="Type here.." value="{{item}}">
-                        </mat-form-field>
+                    <th style="font-size: medium; text-align: left">
+                        {{doctor.name}}
+                    </th>
+                </tr>
+                <tr>
+                    <td style="font-size: x-small; text-align: left">
+                        {{doctor.bio}}
                     </td>
                 </tr>
             </table>
-        </div>
-        <div align="center">
-            <button style="width: 90px" color="primary" mat-flat-button>Add more</button>
-        </div>
-        <br>
 
-        <mat-divider></mat-divider>
-        <mat-divider></mat-divider>
+    <!--        <mat-divider></mat-divider>-->
+    <!--        <mat-divider></mat-divider>-->
+            <br>
+        </div>
+    </div>
+    <div *ngIf="!preview">
+        <mat-form-field  style="width: 320px" class="example-full-width">
+            <mat-label>Add prescriptions:</mat-label>
+            <textarea rows="10" cols="50" matInput placeholder="Start typing.."></textarea>
+        </mat-form-field>
+<!--        <p>Start adding items below</p>-->
+<!--        <div *ngFor="let item of prescriptionList">-->
+<!--            <table align="center">-->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <mat-form-field style="width: 300px">-->
+<!--                            <input style="font-size: small" matInput type="text" placeholder="Type here.." value="{{item}}">-->
+<!--                        </mat-form-field>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--        <div align="center">-->
+<!--            <button style="width: 90px" color="primary" mat-flat-button>Add more</button>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        <mat-divider></mat-divider>-->
+<!--        <mat-divider></mat-divider>-->
         <br>
     </div>
 
     <button (click)="previewToggle('')" *ngIf="preview" style="width: 320px" color="primary" mat-flat-button>Exit Preview</button>
-    <button (click)="previewToggle('preview')" *ngIf="!preview" style="width: 320px" color="primary" mat-flat-button>Preview Prescription</button>
+    <input *ngIf="preview" type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
+    <button (click)="previewToggle('preview')" *ngIf="!preview" style="width: 320px" color="secondary" mat-raised-button>Preview Prescription</button>
+    <br>
+    <br>
+
+    <button *ngIf="!preview" style="width: 320px" color="primary" mat-flat-button>Save</button>
+    <br>
+    <br>
+    <button  *ngIf="!preview" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList(false)">Back</button>
 
 </div>

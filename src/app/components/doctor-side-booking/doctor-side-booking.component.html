@@ -1,8 +1,9 @@
 <div class="mat-card-style">
-    <h1 style="font-size: x-large">{{patient.patientName}}</h1>
+    <h1 style="font-size: x-large"># {{booking.id}}</h1>
+<!--    <mat-panel-title style="font-family: 'Arial Black'; size: A3"><b># {{booking.id}}</b></mat-panel-title>-->
 
-    <p style="font-size: small">Booking Number: {{booking.id}}</p>
-    <p style="font-size: small">WhatApp number: <b>{{patient.whatsAppNumber}}</b></p>
+    <br>
+    <p style="font-size: small">WhatApp: <b>{{patient.whatsAppNumber}}</b></p>
 
     <p style="font-size: small">Booking Status: {{booking.status}}</p>
 
@@ -14,6 +15,7 @@
     </ng-container>
     <br>
     <ng-container *ngIf="isPatientDetailsShown">
+        <p style="font-size: small">Booking Number: {{patient.patientName}}</p>
         <p style="font-size: small">Patient Ref. No: {{patient.patientId}}</p>
         <p style="font-size: small">Contact number: {{patient.contactNumber}}</p>
         <p style="font-size: small">Email: {{patient.email}}</p>
@@ -24,14 +26,20 @@
     <mat-divider></mat-divider>
     <br>
 
-    <button [disabled]="booking.status !== 'BOOKING_NOT_STARTED'" style="width: 320px" color="primary" mat-flat-button>Start Consultation</button>    <br>
+    <ng-container  *ngIf="!inProgress" >
+    <button [disabled]="booking.status === 'BOOKING_CANCELLED'"  style="width: 320px" color="primary" (click)="inProgress = !inProgress" mat-flat-button>Start Consultation</button>
+<!--    <button [disabled]="booking.status !== 'BOOKING_NOT_STARTED'" style="width: 320px" color="primary" mat-flat-button>Start Consultation</button>    <br>-->
+    </ng-container>
+    <ng-container *ngIf="inProgress">
+
+    <button [disabled]="booking.status === 'BOOKING_CANCELLED'" (click)="inProgress = !inProgress" color="warn" style="width: 320px" mat-stroked-button>
+        End Consultation</button>
+<!--    <button [disabled]="booking.status === 'BOOKING_NOT_STARTED' || booking.status === 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>End Consultation</button>-->
+    </ng-container>
+    <br>
     <br>
 
-    <button [disabled]="booking.status === 'BOOKING_NOT_STARTED' || booking.status === 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>End Consultation</button>
-    <br>
-    <br>
-
-    <button style="width: 320px" color="accent" mat-flat-button>Prescription</button>
+    <button style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>
     <br>
     <br>
 

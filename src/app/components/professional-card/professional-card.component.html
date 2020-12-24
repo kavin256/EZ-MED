@@ -1,4 +1,4 @@
-<div [ngClass]="isOverTheDoctorCard(professional.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.id)" (mouseleave)="onMouseLeave(professional.id)">
+<div [ngClass]="isOverTheDoctorCard(professional.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.id)" (mouseleave)="onMouseLeave()">
     <mat-card (click)="selectProfessional_(professional.id)" style="width: 320px; height: auto">
         <table>
             <tr>
@@ -11,12 +11,12 @@
                     <table>
                         <tr>
                             <th style="font-size: medium; text-align: left">
-                                {{professional.name}}
+                                {{professional.title}} {{professional.name}}
                             </th>
                         </tr>
                         <tr>
                             <td style="font-size: x-small; color: #797D7F;  text-align: left">
-                                {{professional.bio}}
+                                {{professional?.qualifications}}
                             </td>
                         </tr>
                         <tr>
@@ -35,13 +35,23 @@
                         </tr>
                         <tr>
                         </tr>
-                        <div *ngFor="let speciality of professional.specialities">
+<!--                        <div *ngFor="let speciality of specialities">-->
                             <tr>
                                 <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                    {{speciality}}
+                                    {{professional?.specialityA}}
                                 </td>
                             </tr>
-                        </div>
+                            <tr>
+                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
+                                    {{professional?.specialityB}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
+                                    {{professional?.specialityC}}
+                                </td>
+                            </tr>
+<!--                        </div>-->
                         <tr>
                             <mat-divider style=" color: #797D7F; left: inherit; width: 160px"></mat-divider>
                         </tr>
@@ -74,10 +84,10 @@
 
                 </th>
                 <th>
-                    <ng-container *ngIf="professional.isSkypePreferred">
+                    <ng-container *ngIf="false && professional.isSkypePreferred">
                         <img src="./assets/img/Icon-Skype.jpg" width="12px" height="12px">
                     </ng-container>
-                    <ng-container *ngIf="professional.isWhatsAppPreferred">
+                    <ng-container *ngIf="false && professional.isWhatsAppPreferred">
                         <span style="padding-left: 7px"><img src="./assets/img/whatsapp.jpg" width="15px" height="15px"></span>
                     </ng-container>
                 </th>

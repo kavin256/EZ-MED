@@ -13,6 +13,7 @@ import {DoctorScheduleComponent} from './components/doctor-schedule/doctor-sched
 import {DoctorSideBookingListComponent} from './components/doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorSideBookingComponent} from './components/doctor-side-booking/doctor-side-booking.component';
 import {PrescriptionComponent} from './components/prescription/prescription.component';
+import {PrescriptionListComponent} from './components/prescription-list/prescription-list.component';
 
 const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
     { path: 'doctor/schedule', component: DoctorScheduleComponent },
     { path: 'doctor/appointments', component: DoctorSideBookingListComponent },
     { path: 'appointment', component: DoctorSideBookingComponent },
+    { path: 'appointment/prescriptionList', component: PrescriptionListComponent },
     { path: 'appointment/prescription', component: PrescriptionComponent }
     ];
 
