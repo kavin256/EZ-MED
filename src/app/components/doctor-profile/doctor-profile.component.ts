@@ -95,6 +95,8 @@ export class DoctorProfileComponent implements OnInit {
       username: 'johndoe@gmail.com',
       title: DoctorTitles.DR,
       name: 'John Doe',
+      contactNumber: '+94773092323',
+      whatsAppNumber: '+94773092323',
       doctorRegistrationNumber: 'reg/34234235',
       pricePerAppointment: '1650',
       priceCurrency: currencyCodes.LKR,

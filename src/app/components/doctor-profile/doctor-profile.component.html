@@ -3,7 +3,7 @@
     <ng-container *ngIf="editable">
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Title</mat-label>
-            <mat-select [(value)]="doctorSpecificData.title">
+            <mat-select required [(value)]="doctorSpecificData.title">
                 <ng-container *ngFor="let title of titles" >
                     <mat-option value="{{title.value}}">
                         {{title.value}}
@@ -13,13 +13,18 @@
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Name: {{doctorSpecificData.name}}</mat-label>
-            <input matInput placeholder="" [(ngModel)]="doctorSpecificData.name">
+            <mat-label>First Name: {{doctorSpecificData.name}}</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.name">
+        </mat-form-field>
+
+        <mat-form-field style="width: 240px" class="example-full-width">
+            <mat-label>Last Name: {{doctorSpecificData.name}}</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.name">
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Professional Level</mat-label>
-            <mat-select [(value)]="doctorSpecificData.doctorType">
+            <mat-select required [(value)]="doctorSpecificData.doctorType">
                 <ng-container *ngFor="let doctorType of doctorTypes" >
                     <mat-option value="{{doctorType.value}}">
                         {{doctorType.value}}
@@ -35,7 +40,7 @@
 
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Qualifications / Description:</mat-label>
-            <textarea matInput placeholder="" [(ngModel)]="doctorSpecificData.qualifications"></textarea>
+            <textarea required matInput placeholder="" [(ngModel)]="doctorSpecificData.qualifications"></textarea>
         </mat-form-field>
 
         <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
@@ -70,8 +75,18 @@
         </mat-form-field>
 
         <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>WhatsApp Number:</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.whatsAppNumber">
+        </mat-form-field>
+        <br>
+        <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Contact Number:</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.contactNumber">
+        </mat-form-field>
+        <br>
+        <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Price per consultation ({{doctorSpecificData.priceCurrency}}):</mat-label>
-            <input matInput placeholder="" [(ngModel)]="doctorSpecificData.pricePerAppointment">
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.pricePerAppointment">
         </mat-form-field>
         <br>
         <mat-label style="font-size: small">Upload Profile Picture:</mat-label>

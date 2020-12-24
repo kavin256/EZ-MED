@@ -35,6 +35,8 @@ export class DoctorSpecificData {
     username?: string;
     title: string;
     name: string;
+    contactNumber: string;
+    whatsAppNumber: string;
     doctorRegistrationNumber: string;
     pricePerAppointment: string;
     priceCurrency: string;
