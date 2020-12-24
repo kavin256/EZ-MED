@@ -13,13 +13,13 @@
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>First Name: {{doctorSpecificData.name}}</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.name">
+            <mat-label>First Name: {{doctorSpecificData.firstName}}</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.firstName">
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Last Name: {{doctorSpecificData.name}}</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.name">
+            <mat-label>Last Name: {{doctorSpecificData.lastName}}</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.lastName">
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
@@ -97,7 +97,7 @@
                (change)="uploadImage(imageInput)">
         <br>
         <br>
-        <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
+        <button style="width: 240px" mat-raised-button color="primary" (click)="saveData()">Save</button>
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>

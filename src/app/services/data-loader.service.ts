@@ -11,7 +11,6 @@ import {take} from 'rxjs/operators';
 })
 export class DataLoaderService {
 
-
     constructor(
         private http: HttpClient,
         private dataStore: DataStoreService
@@ -70,18 +69,29 @@ export class DataLoaderService {
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
-
-        this.http.put<T>(url, data, {
-            headers: options.headers,
-            params: options.params
-        }).subscribe(
-            result => {
-                this.dataStore.set(dataKey, result, true);
-            },
-            error => {
-                this.dataStore.set(DataKey.error, error, true);
-            }
-        );
+        return new Promise(resolve => {
+            this.http.put<T>(url, data, {
+                headers: options.headers,
+                params: options.params
+            }).subscribe(
+                // tslint:disable-next-line:no-shadowed-variable
+                ( data) => {
+                    resolve(data);
+                    // @ts-ignore
+                    this.dataStore.set(dataKey, data.data, true);
+                });
+        });
+        // this.http.put<T>(url, data, {
+        //     headers: options.headers,
+        //     params: options.params
+        // }).subscribe(
+        //     result => {
+        //         this.dataStore.set(dataKey, result, true);
+        //     },
+        //     error => {
+        //         this.dataStore.set(DataKey.error, error, true);
+        //     }
+        // );
     }
 
     // make a DELETE request

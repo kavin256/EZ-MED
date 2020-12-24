@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/signup/sign-up.component';
@@ -18,7 +18,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonBodyComponent } from './components/common-body/common-body.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-// import { DialogOverviewExampleDialog } from './components/header/header.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
@@ -42,6 +41,16 @@ import {HttpClientModule} from '@angular/common/http';
 import { ProfessionalCardComponent } from './components/professional-card/professional-card.component';
 import { ChatSectionComponent } from './components/chat-section/chat-section.component';
 import { PrescriptionListComponent } from './components/prescription-list/prescription-list.component';
+import {AppService} from './app.service';
+
+export function initialize(app: AppService) {
+    return async () => {
+        await app.loadModuleConfigurations();
+        await app.loadPermissions();
+        await app.userLogin();
+        await app.loadUserDetails();
+    };
+}
 
 @NgModule({
     declarations: [
@@ -100,7 +109,14 @@ import { PrescriptionListComponent } from './components/prescription-list/prescr
         MatDialogModule,
         HttpClientModule
     ],
-  providers: [],
+  providers: [
+      {
+          provide: APP_INITIALIZER,
+          useFactory: initialize,
+          deps: [AppService],
+          multi: true
+      }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ ModalComponent ]
 })

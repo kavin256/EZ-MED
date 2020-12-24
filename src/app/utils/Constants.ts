@@ -4,6 +4,9 @@ export enum Constants {
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     UPLOAD_USER_IMAGE = '/user/upload/image',
+    UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/doctor/data/',
+    UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
+    // UPDATE_PROFESSIONAL_WORK_DATA = '/user/test?username=dfg',
 
     // modal types
     MODAL_TYPE_SIGN_UP = 'SIGN_UP',

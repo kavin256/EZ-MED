@@ -13,7 +13,7 @@ import {DoctorSpecificData, UserData} from '../../models/user-data';
 })
 export class DoctorProfileComponent implements OnInit {
   selectedImage: File;
-  profileUsername: string;
+  profileUsername = 'dfg';
   doctorSpecificData: DoctorSpecificData;
 
   titles = [
@@ -61,6 +61,24 @@ export class DoctorProfileComponent implements OnInit {
     this.editable = editable;
   }
 
+  saveData() {
+    // converting doctorType to a database readable format
+    this.doctorSpecificData.doctorType = this.convertDoctorType(JSON.parse(JSON.stringify(this.doctorSpecificData.doctorType)));
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.profileUsername;
+    this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.doctorSpecificData )
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            // console.log('data');
+            // console.log(data.data);
+            this.toggleEditable(false);
+
+          } else if (data && data.status && data.status.code === -1) {
+            // console.log('data null');
+            // console.log(data.data);
+          }
+        });
+  }
+
   isConsultant(type: string) {
     return type === DoctorType.CON;
   }
@@ -103,7 +121,8 @@ export class DoctorProfileComponent implements OnInit {
     this.doctorSpecificData = {
       username: 'johndoe@gmail.com',
       title: DoctorTitles.DR,
-      name: 'John Doe',
+      firstName: 'John',
+      lastName: 'Doe',
       contactNumber: '+94773092323',
       whatsAppNumber: '+94773092323',
       doctorRegistrationNumber: 'reg/34234235',
@@ -116,5 +135,25 @@ export class DoctorProfileComponent implements OnInit {
       specialityC: '',
       isActiveProfile: 'true'
     };
+  }
+
+  private convertDoctorType(doctorType: string) {
+    switch (doctorType) {
+      case DoctorType.CON:
+        doctorType = 'CON';
+        break;
+      case DoctorType.COUN:
+        doctorType = 'COUN';
+        break;
+      case DoctorType.GEN:
+        doctorType = 'GEN';
+        break;
+      case DoctorType.OTH:
+        doctorType = 'OTH';
+        break;
+      default:
+        break;
+    }
+    return doctorType;
   }
 }

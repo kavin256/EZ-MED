@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService} from '../../services/data-store.service';
-import {DoctorScheduleData} from '../../models/user-data';
+import {DoctorScheduleData, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
+import {Constants} from '../../utils/Constants';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-doctor-schedule',
@@ -10,10 +13,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./doctor-schedule.component.css']
 })
 export class DoctorScheduleComponent implements OnInit {
+  profileUsername = 'dfg';
+  availableForAppointment = true;
 
   constructor(
       private router: Router,
       private dataStore: DataStoreService,
+      private dataLoaderService: DataLoaderService,
       private dataHandlerService: DataHandlerService
   ) {}
 
@@ -41,8 +47,36 @@ export class DoctorScheduleComponent implements OnInit {
 
   save() {
     this.updateSchedule();
-    this.isConfirmationActive = false;
-    this.changeRequestSent = true;
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + this.profileUsername;
+    if (this.availableForAppointment) {
+      this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
+          DataKey.uploadImage, this.doctorScheduleData)
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              // console.log('data');
+              // console.log(data.data);
+              this.isConfirmationActive = false;
+              this.changeRequestSent = true;
+            } else if (data && data.status && data.status.code === -1) {
+              // console.log('data null');
+              // console.log(data.data);
+            }
+          });
+    } else {
+      this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(),
+          DataKey.uploadImage, this.doctorScheduleData)
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              // console.log('data');
+              // console.log(data.data);
+              this.isConfirmationActive = false;
+              this.changeRequestSent = true;
+            } else if (data && data.status && data.status.code === -1) {
+              // console.log('data null');
+              // console.log(data.data);
+            }
+          });
+    }
   }
 
   cancel() {

@@ -34,7 +34,8 @@ export class DoctorScheduleData {
 export class DoctorSpecificData {
     username?: string;
     title: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     contactNumber: string;
     whatsAppNumber: string;
     doctorRegistrationNumber: string;
