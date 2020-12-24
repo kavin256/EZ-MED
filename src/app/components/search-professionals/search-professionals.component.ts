@@ -8,7 +8,7 @@ import {DoctorType} from '../../utils/Constants';
 })
 export class SearchProfessionalsComponent implements OnInit {
 
-  professionalListType = DoctorType.CONSULTANT;
+  professionalListType = DoctorType.CON;
   selectedProfessionalType = 'option2';
   searchString = null;
 
@@ -16,7 +16,7 @@ export class SearchProfessionalsComponent implements OnInit {
     {
       id: 1,
       name: 'Dr. Nuwan Chinthaka',
-      doctorType: DoctorType.CONSULTANT,
+      doctorType: DoctorType.CON,
       bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
       specialities: [
         'Consultant Neurologist',
@@ -29,7 +29,7 @@ export class SearchProfessionalsComponent implements OnInit {
     {
       id: 2,
       name: 'Dr. Punya Anupama',
-      doctorType: DoctorType.CONSULTANT,
+      doctorType: DoctorType.CON,
       bio: 'MBBS [COLOMBO](1998)',
       specialities: [
         'Consultant Pathologist'
@@ -41,7 +41,7 @@ export class SearchProfessionalsComponent implements OnInit {
     {
       id: 3,
       name: 'Dr. Eric Deepal',
-      doctorType: DoctorType.CONSULTANT,
+      doctorType: DoctorType.CON,
       bio: 'MBBS [RUHUNA](2000)',
       specialities: [
         'Consultant Clinical Nutritionist'

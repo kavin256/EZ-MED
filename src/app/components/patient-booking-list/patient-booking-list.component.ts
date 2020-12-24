@@ -44,7 +44,7 @@ export class PatientBookingListComponent implements OnInit {
   doctor = {
     id: 2,
     name: 'Dr. Punya Anupama',
-    doctorType: DoctorType.GENERAL_PRACTITIONER,
+    doctorType: DoctorType.GEN,
     bio: 'MBBS [COLOMBO](1998)',
     specialities: [
       'Consultant Pathologist'

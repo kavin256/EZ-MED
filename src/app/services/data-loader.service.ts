@@ -4,6 +4,7 @@ import {RequestOptions} from '../models/request-options';
 import {DataKey, DataStoreService} from './data-store.service';
 import {BehaviorSubject} from 'rxjs';
 import {Constants} from '../utils/Constants';
+import {take} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -47,17 +48,18 @@ export class DataLoaderService {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
 
-        this.http.post<T>(url, data, {
-            headers: options.headers,
-            params: options.params
-        }).subscribe(
-            result => {
-                this.dataStore.set(dataKey, result, true);
-            },
-            error => {
-                this.dataStore.set(DataKey.error, error, true);
-            }
-        );
+        return new Promise(resolve => {
+            this.http.post<T>(url, data, {
+                headers: options.headers,
+                params: options.params
+            }).subscribe(
+                // tslint:disable-next-line:no-shadowed-variable
+                ( data) => {
+                    resolve(data);
+                    // @ts-ignore
+                    this.dataStore.set(dataKey, data.data, true);
+                });
+        });
     }
 
     // make a PUT request

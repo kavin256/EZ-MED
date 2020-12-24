@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angula
 import {Router} from '@angular/router';
 import {ModalComponent} from '../modal/modal.component';
 import {MODAL_TYPES} from '../../utils/Constants';
+import {DataKey, DataStoreService} from '../../services/data-store.service';
 
 @Component({
   selector: 'app-header',
@@ -13,20 +14,56 @@ import {MODAL_TYPES} from '../../utils/Constants';
 
 export class HeaderComponent implements OnInit {
 
+  signUpResultObject = {
+    isSignUp: undefined,
+    userType: undefined
+  };
+  loggedInUser = null;
   user = null;
-  // firstName = 'Kavin';
   firstName = null;
-  // typeOfUser;
-  typeOfUser = 'Doctor';
-  // typeOfUser = 'Patient';
+  isSignUp = true;
+
+  //
+  // firstName = 'Kavin';
+  // userType = 'Doctor';
+
+  // //
+  // firstName = 'Kavin';
+  // userType = 'Patient';
+
+  // //
+  userType;
 
   constructor(public dialog: MatDialog,
-              private router: Router) {}
+              private router: Router,
+              private dataStore: DataStoreService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
+      this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
+      this.userType = this.signUpResultObject.userType;
+      this.isSignUp = this.signUpResultObject.isSignUp;
+    }
+  }
 
   logoClick(): void {
-    if (!this.typeOfUser) {
+    if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
+      this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
+      this.userType = this.signUpResultObject.userType;
+      this.isSignUp = this.signUpResultObject.isSignUp;
+    }
+    this.loggedInUser = this.dataStore.get(DataKey.createdUser).getValue();
+    if (this.loggedInUser && this.loggedInUser[0] && this.loggedInUser[0].doctor) {
+      this.router.navigate(['doctor/dashboard']).then(r => {
+      });
+    } else if (this.loggedInUser && this.loggedInUser[0] && !this.loggedInUser[0].doctor) {
+      this.router.navigate(['user/dashboard']).then(r => {
+      });
+    }
+
+    if (!(this.signUpResultObject && this.signUpResultObject.userType)) {
+      this.goToHomePage();
       const dialogConfig = new MatDialogConfig();
 
       dialogConfig.data = {
@@ -42,19 +79,18 @@ export class HeaderComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.user = result;
         if (result) {
-          if (!result.isSignUp) {
-            this.firstName = 'Kavin';
-          }
-          console.log(result.isSignUp);
-          console.log(result.userType);
+          // if (!result.isSignUp) {
+          //   this.firstName = 'Kavin';
+          // }
+          this.dataStore.set(DataKey.signUpResultObject, result);
           this.router.navigate(['signup']).then(r => {
           });
         }
       });
-    } else if (this.typeOfUser === 'Doctor') {
+    } else if (this.userType && this.userType.toLowerCase() === 'Doctor'.toLowerCase()) {
       this.router.navigate(['doctor/dashboard']).then(r => {
       });
-    } else if (this.typeOfUser === 'Patient') {
+    } else if (this.userType && this.userType.toLowerCase() === 'Patient'.toLowerCase()) {
       this.router.navigate(['user/dashboard']).then(r => {
       });
     }

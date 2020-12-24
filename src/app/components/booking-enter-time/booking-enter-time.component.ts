@@ -12,7 +12,7 @@ export class BookingEnterTimeComponent implements OnInit {
   doctor = {
     id: 1,
     name: 'Dr. Nuwan Chinthaka',
-    doctorType: DoctorType.CONSULTANT,
+    doctorType: DoctorType.CON,
     bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
     specialities: [
       'Consultant Neurologist',

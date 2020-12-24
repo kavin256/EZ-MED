@@ -1,6 +1,5 @@
 import {Component, Inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {MODAL_TYPES} from '../../utils/Constants';
 
 @Component({
   selector: 'app-modal',

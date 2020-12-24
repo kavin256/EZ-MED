@@ -15,7 +15,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     {
       id: 1,
       name: 'Dr. Nuwan Chinthaka',
-      doctorType: DoctorType.CONSULTANT,
+      doctorType: DoctorType.CON,
       qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
       specialityA: 'Neurologist',
       specialityB: 'Pediatrician',
@@ -27,7 +27,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     {
       id: 2,
       name: 'Dr. Punya Anupama',
-      doctorType: DoctorType.GENERAL_PRACTITIONER,
+      doctorType: DoctorType.GEN,
       qualifications: 'MBBS [COLOMBO](1998)',
       specialityA: 'Pathologist',
       specialityB: '',
@@ -39,7 +39,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     {
       id: 3,
       name: 'Dr. Eric Deepal',
-      doctorType: DoctorType.SUPPORT_MEDICAL_SERVICE,
+      doctorType: DoctorType.OTH,
       qualifications: 'MBBS [RUHUNA](2000)',
       specialityA: 'Clinical Nutritionist',
       specialityB: '',
