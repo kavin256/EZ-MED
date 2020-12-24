@@ -1,4 +1,4 @@
-<div [ngClass]="isOverTheDoctorCard(professional.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.id)" (mouseleave)="onMouseLeave(professional.id)">
+<div [ngClass]="isOverTheDoctorCard(professional.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.id)" (mouseleave)="onMouseLeave()">
     <mat-card (click)="selectProfessional_(professional.id)" style="width: 320px; height: auto">
         <table>
             <tr>

@@ -110,25 +110,25 @@ export class DoctorSideBookingListComponent implements OnInit {
         bookingStatus: BookingStatus.BOOKING_CURRENT
       },
       {
-        bookingId: 2387,
+        bookingId: 2383,
         patientId: '76531',
         patientName: 'John Doe',
         bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       },
       {
-        bookingId: 2387,
+        bookingId: 2367,
         patientId: '76531',
         patientName: 'John Doe',
         bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       },
       {
-        bookingId: 1196,
+        bookingId: 1156,
         patientId: '65456',
         patientName: 'Sumanasiri',
         bookingStatus: BookingStatus.BOOKING_NOT_STARTED
       },
       {
-        bookingId: 2387,
+        bookingId: 4387,
         patientId: '76531',
         patientName: 'John Doe',
         bookingStatus: BookingStatus.BOOKING_NOT_STARTED
@@ -136,15 +136,35 @@ export class DoctorSideBookingListComponent implements OnInit {
     ]
   };
   visible = false;
+  bookingSlotListVisible = true;
+  selectedSlot: any;
+  overTheAppointmentCard = null;
 
   constructor() { }
 
   ngOnInit() {
+    this.selectedSlot = this.bookingListSlot2;
   }
 
   selectBooking($event: string) {
     console.log($event);
   }
+
+  onMouseEnter($event: number) {
+    this.overTheAppointmentCard = $event;
+  }
+
+  onMouseLeave() {
+    this.overTheAppointmentCard = null;
+  }
+
+  isOverTheAppointmentCard($event: number) {
+    return $event === this.overTheAppointmentCard;
+  }
+
+  // selectProfessional_($event: number) {
+  //   this.selectProfessional.emit($event);
+  // }
 
   getColor($event) {
     switch ($event) {
@@ -159,6 +179,12 @@ export class DoctorSideBookingListComponent implements OnInit {
       default:
         return Colors.BOOKING_NOT_STARTED;
     }
+  }
+
+  selectSlot(slot: any) {
+    this.selectedSlot = slot;
+    this.bookingSlotListVisible = !this.bookingSlotListVisible;
+
   }
 }
 

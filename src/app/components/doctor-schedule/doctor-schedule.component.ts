@@ -78,11 +78,18 @@ export class DoctorScheduleComponent implements OnInit {
           workingTimePeriods: [
             {
               startTime: '08:00:00',
-              endTime: '10:00:00'
+              endTime: '10:00:00',
+              isActive: true
             },
             {
               startTime: '14:00:00',
-              endTime: '16:00:00'
+              endTime: '16:00:00',
+              isActive: false
+            },
+            {
+              startTime: '17:00:00',
+              endTime: '18:00:00',
+              isActive: true
             }
           ]
         },
@@ -91,7 +98,8 @@ export class DoctorScheduleComponent implements OnInit {
           workingTimePeriods: [
             {
               startTime: '10:00:00',
-              endTime: '11:45:00'
+              endTime: '11:45:00',
+              isActive: true
             }
           ]
         },
@@ -116,7 +124,13 @@ export class DoctorScheduleComponent implements OnInit {
           workingTimePeriods: [
             {
               startTime: '10:00:00',
-              endTime: '12:10:00'
+              endTime: '12:10:00',
+              isActive: true
+            },
+            {
+              startTime: '13:00:00',
+              endTime: '15:10:00',
+              isActive: false
             }
           ]
         }

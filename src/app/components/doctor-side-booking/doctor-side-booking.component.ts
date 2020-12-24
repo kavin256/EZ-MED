@@ -9,6 +9,7 @@ import {MatSnackBar} from '@angular/material';
 })
 export class DoctorSideBookingComponent implements OnInit {
 
+    inProgress = false;
     isConfirmationActive = false;
     changeRequestSent = false;
     booking = {

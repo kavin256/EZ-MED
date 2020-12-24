@@ -9,15 +9,21 @@
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion>
         <div *ngFor="let schedule of doctorScheduleData.fixedDoctorDates;">
-            <mat-expansion-panel [disabled]="!(schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0)" style="width: 320px">
+<!--            <mat-expansion-panel [disabled]="!(schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0)" style="width: 320px">-->
+            <mat-expansion-panel style="width: 320px">
                 <mat-expansion-panel-header>
                     <mat-panel-title style="font-family: 'Arial Black'"><b>{{schedule.title}}</b></mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-divider></mat-divider>
                 <br>
                 <ng-container *ngFor="let workingTimePeriod of schedule.workingTimePeriods; let i = index">
-                    <p style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</p>
-                    <ng-container>
+                    <p align="left"><b>
+                        <mat-checkbox
+                                (change)="workingTimePeriod.isActive = !workingTimePeriod.isActive"
+                                [checked]="workingTimePeriod && workingTimePeriod.isActive"><span style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</span>
+                        </mat-checkbox>
+                    </b></p>
+                    <ng-container *ngIf="workingTimePeriod.isActive">
                         <mat-label>From:</mat-label>
                         <ngb-timepicker [(ngModel)]="workingTimePeriod.startTimeSelected" [meridian]="meridian"></ngb-timepicker>
                         <mat-label>To:</mat-label>

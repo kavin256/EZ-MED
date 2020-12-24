@@ -41,6 +41,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ProfessionalCardComponent } from './components/professional-card/professional-card.component';
 import { ChatSectionComponent } from './components/chat-section/chat-section.component';
+import { PrescriptionListComponent } from './components/prescription-list/prescription-list.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import { ChatSectionComponent } from './components/chat-section/chat-section.com
         PatientBookingListComponent,
         ModalComponent,
         ProfessionalCardComponent,
-        ChatSectionComponent
+        ChatSectionComponent,
+        PrescriptionListComponent
     ],
     imports: [
         BrowserModule,

@@ -1,16 +1,26 @@
 <div class="mat-card-style">
 
 
-    <p style="font-size: x-large">List of Appointments:</p>
+    <ng-container *ngIf="bookingSlotListVisible">
+        <p style="font-size: x-large">List of Time Slots:</p>
+        <button (click)="selectSlot(bookingListSlot1)" style="width: 320px" mat-raised-button>{{bookingListSlot1.startTime}} - {{bookingListSlot1.endTime}}</button>
+        <br>
+        <br>
+        <button (click)="selectSlot(bookingListSlot2)" style="width: 320px" mat-raised-button>{{bookingListSlot2.startTime}} - {{bookingListSlot2.endTime}}</button>
+        <br>
+        <br>
+        <button (click)="selectSlot(bookingListSlot3)" style="width: 320px" mat-raised-button>{{bookingListSlot3.startTime}} - {{bookingListSlot3.endTime}} (4 New)</button>
+    </ng-container>
 
-    <mat-expansion-panel style="width: 320px">
-        <mat-expansion-panel-header>
-            <mat-panel-title style="font-size: large">
-                <span matBadge="0" [matBadgeHidden]="!visible" matBadgeOverlap="false">{{bookingListSlot1.startTime}} - {{bookingListSlot1.endTime}}</span>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngFor="let booking of bookingListSlot1.bookings">
-            <mat-card (click)="selectBooking(booking.id)" style="width: 240px; height: 60px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
+    <ng-container *ngIf="!bookingSlotListVisible && selectedSlot">
+        <button (click)="bookingSlotListVisible = !bookingSlotListVisible" style="width: 300px" mat-raised-button color="secondary">Back</button>
+        <br>
+        <br>
+        <p style="font-size: x-large">Appointments:</p>
+
+        <div *ngFor="let booking of selectedSlot?.bookings">
+            <mat-card  [ngClass]="isOverTheAppointmentCard(booking?.bookingId) ? 'shadow' : ''" (mouseenter)="onMouseEnter(booking?.bookingId)" (mouseleave)="onMouseLeave()"
+                    (click)="selectBooking(booking.id)" style="width: 300px; height: 60px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
                 <table>
                     <tr>
                         <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.patientName}}</td>
@@ -23,51 +33,8 @@
             <br>
         </div>
 
-    </mat-expansion-panel>
-    <br>
-    <mat-expansion-panel style="width: 320px">
-        <mat-expansion-panel-header>
-            <mat-panel-title style="font-size: large">
-                <span matBadge="0" [matBadgeHidden]="!visible" matBadgeOverlap="false">{{bookingListSlot2.startTime}} - {{bookingListSlot2.endTime}}</span>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngFor="let booking of bookingListSlot2.bookings">
-            <mat-card (click)="selectBooking(booking.id)" style="width: 240px; height: 60px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
-                <table>
-                    <tr>
-                        <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.patientName}}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: x-small">Booking ID: {{booking.bookingId}}</td>
-                    </tr>
-                </table>
-            </mat-card>
-            <br>
-        </div>
+    </ng-container>
 
-    </mat-expansion-panel>
-    <br>
-    <mat-expansion-panel style="width: 320px">
-        <mat-expansion-panel-header>
-            <mat-panel-title style="font-size: large">
-                <span matBadge="4" matBadgeOverlap="false">{{bookingListSlot3.startTime}} - {{bookingListSlot3.endTime}}</span>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngFor="let booking of bookingListSlot3.bookings">
-            <mat-card (click)="selectBooking(booking.id)" style="width: 240px; height: 60px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
-                <table>
-                    <tr>
-                        <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.patientName}}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: x-small">Booking ID: {{booking.bookingId}}</td>
-                    </tr>
-                </table>
-            </mat-card>
-            <br>
-        </div>
-
-    </mat-expansion-panel>
     <br>
 
 </div>

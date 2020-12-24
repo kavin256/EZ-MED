@@ -15,6 +15,7 @@ export class UserData {
 export class WorkingTimePeriod {
     startTime: string;
     endTime: string;
+    isActive?: boolean;
     startTimeSelected?: { hour: number; minute: number };
     endTimeSelected?: { hour: number; minute: number };
 }
