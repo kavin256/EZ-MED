@@ -15,7 +15,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class DoctorProfileComponent implements OnInit {
   selectedImage: File;
   // profileUsername = 'dfg';
-  doctorSpecificData: DoctorSpecificData;
+  userData: DoctorSpecificData;
 
   titles = [
     {value: DoctorTitles.DR},
@@ -52,9 +52,12 @@ export class DoctorProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.dataStore.get(DataKey.loggedUser).getValue() && this.dataStore.get(DataKey.loggedUser).getValue().doctorData) {
-      this.doctorSpecificData = this.dataStore.get(DataKey.loggedUser).getValue().doctorData;
+    if (this.dataStore.get(DataKey.loggedInUser).getValue() && this.dataStore.get(DataKey.loggedInUser).getValue().doctorData) {
+      this.userData = this.dataStore.get(DataKey.loggedInUser).getValue().doctorData;
     }
+    // converting professionalType to a user friendly readable format
+    this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
+        JSON.parse(JSON.stringify(this.userData.professionalType)));
   }
 
   getColor(state: string) {
@@ -66,12 +69,12 @@ export class DoctorProfileComponent implements OnInit {
   }
 
   saveData() {
-    // converting doctorType to a database readable format
-    this.doctorSpecificData.doctorType = this.dataHandlerService.convertDoctorType(
-        JSON.parse(JSON.stringify(this.doctorSpecificData.doctorType)));
+    // converting professionalType to a database readable format
+    this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
+        JSON.parse(JSON.stringify(this.userData.professionalType)));
 
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.doctorSpecificData.username;
-    this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.doctorSpecificData )
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.username;
+    this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
             // console.log('data');
@@ -103,7 +106,7 @@ export class DoctorProfileComponent implements OnInit {
     this.selectedImage = event.target.file;
     const formData = new FormData();
     formData.append('image', this.selectedImage);
-    formData.append( 'username', this.doctorSpecificData.username);
+    formData.append( 'username', this.userData.username);
 
     // sent request
     const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE;
@@ -117,5 +120,10 @@ export class DoctorProfileComponent implements OnInit {
             // console.log(data.data);
           }
         });
+  }
+
+  checkForMandatoryFieldsToActivateProfile(userData: DoctorSpecificData) {
+    // currently only the userData.priceForAppointment is checked as a requirement
+    return userData.priceForAppointment && parseInt(userData.priceForAppointment, 10) && parseInt(userData.priceForAppointment, 10) > 0;
   }
 }

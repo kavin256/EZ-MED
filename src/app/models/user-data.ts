@@ -38,14 +38,14 @@ export class DoctorSpecificData {
     lastName: string;
     contactNumber: string;
     whatsAppNumber: string;
-    doctorRegistrationNumber: string;
-    pricePerAppointment: string;
+    regNo: string;
+    priceForAppointment: string;
     priceCurrency: string;
     qualifications: string;
-    doctorType?: string;
+    professionalType?: string;
     specialityA?: string;
     specialityB?: string;
     specialityC?: string;
-    isActiveProfile?: string;
+    availableForAppointment?: string;
 }
 

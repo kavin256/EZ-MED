@@ -77,9 +77,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
         this.selectedSpecialization = null;
       }
 
-      // converting doctorType to a database readable format
+      // converting professionalType to a database readable format
       if (this.selectedCategory) {
-        this.selectedCategory = this.dataHandlerService.convertDoctorType(
+        this.selectedCategory = this.dataHandlerService.convertProfessionalTypeToDBFormat(
             JSON.parse(JSON.stringify(this.selectedCategory)));
       }
 
@@ -93,7 +93,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
       const httpParams = new HttpParams()
           .set('name', this.searchString);
       // Todo: complete after null handling in back end
-      // .set('doctorType', this.selectedCategory);
+      // .set('professionalType', this.selectedCategory);
       // .set('category', this.selectedSpecialization);
       this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders(), DataKey.createdUser)
           .then((data: any) => {
@@ -119,7 +119,6 @@ export class SearchProfessionalsMainComponent implements OnInit {
     });
   }
 
-  // Todo: complete
   private loadProfessionalData($event: string) {
     // create url and send request
     const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
@@ -140,7 +139,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
         title: 'Dr.',
         firstName: 'Dummy',
         lastName: 'One',
-        doctorType: DoctorType.CON,
+        professionalType: DoctorType.CON,
         qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
         specialityA: 'Neurologist',
         specialityB: 'Pediatrician',
@@ -154,7 +153,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
         title: 'Dr.',
         firstName: 'Dummy',
         lastName: 'Two',
-        doctorType: DoctorType.GEN,
+        professionalType: DoctorType.GEN,
         qualifications: 'MBBS [COLOMBO](1998)',
         specialityA: 'Pathologist',
         specialityB: '',
@@ -168,7 +167,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
         title: 'Dr.',
         firstName: 'Dummy',
         lastName: 'Three',
-        doctorType: DoctorType.OTH,
+        professionalType: DoctorType.OTH,
         qualifications: 'MBBS [RUHUNA](2000)',
         specialityA: 'Clinical Nutritionist',
         specialityB: '',

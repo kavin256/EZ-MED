@@ -20,24 +20,45 @@ export class DataHandlerService {
     const timeString = time.hour.toString().padStart(2, '0') + ':' + time.minute.toString().padStart(2, '0') + ':00';
     return timeString;
   }
-  convertDoctorType(doctorType: string) {
-    switch (doctorType) {
+
+  convertProfessionalTypeToDBFormat(professionalType: string) {
+    switch (professionalType) {
       case DoctorType.CON:
-        doctorType = 'CON';
+        professionalType = 'CON';
         break;
       case DoctorType.COUN:
-        doctorType = 'COUN';
+        professionalType = 'COUN';
         break;
       case DoctorType.GEN:
-        doctorType = 'GEN';
+        professionalType = 'GEN';
         break;
       case DoctorType.OTH:
-        doctorType = 'OTH';
+        professionalType = 'OTH';
         break;
       default:
         break;
     }
-    return doctorType;
+    return professionalType;
+  }
+
+  convertProfessionalTypeFromDBFormat(professionalType: string) {
+    switch (professionalType) {
+      case 'CON':
+        professionalType = DoctorType.CON;
+        break;
+      case 'COUN':
+        professionalType = DoctorType.COUN;
+        break;
+      case 'GEN':
+        professionalType = DoctorType.GEN;
+        break;
+      case 'OTH':
+        professionalType = DoctorType.OTH;
+        break;
+      default:
+        break;
+    }
+    return professionalType;
   }
 
 }

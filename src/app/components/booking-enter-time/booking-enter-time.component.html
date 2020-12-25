@@ -23,6 +23,11 @@
         <button [disabled]="selectedDate === undefined || selectedAppointmentId === undefined" mat-raised-button color="primary" style="width: 240px" (click)="continueClicked(true)">Continue</button>
         <br>
         <br>
+
+        <button mat-raised-button color="secondary" style="width: 240px"  (click)="goToSearchProfessionals()">Back</button>
+
+        <br>
+        <br>
 <!--        <button *ngIf="!isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(true)" >Show Available Times</button>-->
 <!--        <button *ngIf="isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(false)" >Hide Available Times</button>-->
 <!--        <br>-->

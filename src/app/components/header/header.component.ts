@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
       this.userType = this.signUpResultObject.userType;
       this.isSignUp = this.signUpResultObject.isSignUp;
     }
-    this.loggedInUser = this.dataStore.get(DataKey.loggedUser).getValue();
+    this.loggedInUser = this.dataStore.get(DataKey.loggedInUser).getValue();
     if (this.loggedInUser && this.loggedInUser.doctor !== null && this.loggedInUser.doctor) {
       this.router.navigate(['doctor/dashboard']).then(r => {
       });

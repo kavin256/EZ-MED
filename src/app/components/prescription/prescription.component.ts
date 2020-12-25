@@ -20,7 +20,7 @@ export class PrescriptionComponent implements OnInit {
   doctor = {
     id: 2,
     name: 'Dr. Punya Anupama',
-    doctorType: DoctorType.GEN,
+    professionalType: DoctorType.GEN,
     bio: 'MBBS [COLOMBO](1998)',
     specialities: [
       'Consultant Pathologist'

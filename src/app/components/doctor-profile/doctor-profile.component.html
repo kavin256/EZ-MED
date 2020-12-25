@@ -3,7 +3,7 @@
     <ng-container *ngIf="editable">
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Title</mat-label>
-            <mat-select required [(value)]="doctorSpecificData.title">
+            <mat-select required [(value)]="userData.title">
                 <ng-container *ngFor="let title of titles" >
                     <mat-option value="{{title.value}}">
                         {{title.value}}
@@ -13,21 +13,21 @@
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>First Name: {{doctorSpecificData.firstName}}</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.firstName">
+            <mat-label>First Name: {{userData.firstName}}</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="userData.firstName">
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Last Name: {{doctorSpecificData.lastName}}</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.lastName">
+            <mat-label>Last Name: {{userData.lastName}}</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="userData.lastName">
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Professional Level</mat-label>
-            <mat-select required [(value)]="doctorSpecificData.doctorType">
-                <ng-container *ngFor="let doctorType of doctorTypes" >
-                    <mat-option value="{{doctorType.value}}">
-                        {{doctorType.value}}
+            <mat-select required [(value)]="userData.professionalType">
+                <ng-container *ngFor="let professionalType of doctorTypes" >
+                    <mat-option value="{{professionalType.value}}">
+                        {{professionalType.value}}
                     </mat-option>
                 </ng-container>
             </mat-select>
@@ -35,17 +35,17 @@
 
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Registration Number (SLMC):</mat-label>
-            <input matInput placeholder=""  [(ngModel)]="doctorSpecificData.doctorRegistrationNumber">
+            <input matInput placeholder=""  [(ngModel)]="userData.regNo">
         </mat-form-field>
 
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Qualifications / Description:</mat-label>
-            <textarea required matInput placeholder="" [(ngModel)]="doctorSpecificData.qualifications"></textarea>
+            <textarea required matInput placeholder="" [(ngModel)]="userData.qualifications"></textarea>
         </mat-form-field>
 
-        <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #1</mat-label>
-            <mat-select matNativeControl [(value)]="doctorSpecificData.specialityA">
+            <mat-select matNativeControl [(value)]="userData.specialityA">
                 <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization.value}}">
                         {{specialization.value}}
@@ -53,9 +53,9 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
-            <mat-select matNativeControl [(value)]="doctorSpecificData.specialityB">
+            <mat-select matNativeControl [(value)]="userData.specialityB">
                 <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization.value}}">
                         {{specialization.value}}
@@ -63,9 +63,9 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="isConsultant(doctorSpecificData.doctorType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
-            <mat-select matNativeControl [(value)]="doctorSpecificData.specialityC">
+            <mat-select matNativeControl [(value)]="userData.specialityC">
                 <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization.value}}">
                         {{specialization.value}}
@@ -76,17 +76,17 @@
 
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>WhatsApp Number:</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.whatsAppNumber">
+            <input required matInput placeholder="" [(ngModel)]="userData.whatsAppNumber">
         </mat-form-field>
         <br>
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Contact Number:</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.contactNumber">
+            <input required matInput placeholder="" [(ngModel)]="userData.contactNumber">
         </mat-form-field>
         <br>
         <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Price per consultation ({{doctorSpecificData.priceCurrency}}):</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="doctorSpecificData.pricePerAppointment">
+            <mat-label>Price per consultation ({{userData.priceCurrency}}):</mat-label>
+            <input required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
         </mat-form-field>
         <br>
         <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
@@ -105,7 +105,7 @@
     </ng-container>
 
     <ng-container *ngIf="!editable">
-        <ng-container *ngIf="!doctorSpecificData?.isActiveProfile">
+        <ng-container *ngIf="!userData?.availableForAppointment">
             <p>
                 <ngb-alert [dismissible]="false">
                     <strong>Note!</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
@@ -113,13 +113,13 @@
             </p>
         </ng-container>
 
-        <button [disabled]="!doctorSpecificData?.isActiveProfile" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
+        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
-        <button [color]="doctorSpecificData?.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
+        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button [color]="doctorSpecificData?.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
+        <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
@@ -127,10 +127,10 @@
         <br>
 
         <br>
-        <ng-container  *ngIf="doctorSpecificData?.isActiveProfile">
+        <ng-container  *ngIf="userData?.availableForAppointment">
             <p>What the patients see:</p>
             <app-professional-card
-            [professional]="doctorSpecificData"
+            [professional]="userData"
             ></app-professional-card>
         </ng-container>
     </ng-container>

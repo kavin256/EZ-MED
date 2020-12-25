@@ -51,6 +51,7 @@ export enum DataKey {
   error,
   authKey,
   loggedUser,
+  loggedInUser,
   createdUser,
   uploadImage,
   doctorScheduleData,
