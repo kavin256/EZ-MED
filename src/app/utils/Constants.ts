@@ -4,6 +4,7 @@ export enum Constants {
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     UPLOAD_USER_IMAGE = '/user/upload/image',
+    PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
     UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/doctor/data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
     // UPDATE_PROFESSIONAL_WORK_DATA = '/user/test?username=dfg',

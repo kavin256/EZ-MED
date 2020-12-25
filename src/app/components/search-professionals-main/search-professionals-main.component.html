@@ -2,7 +2,7 @@
 
     <div align="center">
     <mat-form-field style="width: 250px">
-        <input matInput type="text" placeholder="Search by name" value="{{searchString}}">
+        <input matInput type="text" placeholder="Search by name (Optional)" [(ngModel)]="searchString">
     </mat-form-field>
 
     <br>
@@ -14,12 +14,12 @@
             </ng-container>
         </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== 'General Practitioners'">
+    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== 'General Practitioner'">
         <mat-form-field  style="width: 240px" >
             <mat-label>Specialization</mat-label>
             <mat-select [(value)]="selectedSpecialization">
                 <ng-container *ngFor="let subCategory of subCategories">
-                    <mat-option value="{{subCategory}}">{{subCategory.category}}</mat-option>
+                    <mat-option value="{{subCategory.category}}">{{subCategory.category}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>

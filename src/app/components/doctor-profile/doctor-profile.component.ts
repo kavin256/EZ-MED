@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, currencyCodes, DoctorTitles, DoctorType, Specializations} from '../../utils/Constants';
-import {DataKey} from '../../services/data-store.service';
+import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -13,7 +14,7 @@ import {DoctorSpecificData, UserData} from '../../models/user-data';
 })
 export class DoctorProfileComponent implements OnInit {
   selectedImage: File;
-  profileUsername = 'dfg';
+  // profileUsername = 'dfg';
   doctorSpecificData: DoctorSpecificData;
 
   titles = [
@@ -45,12 +46,15 @@ export class DoctorProfileComponent implements OnInit {
 
   constructor(
       private router: Router,
+      private dataStore: DataStoreService,
+      private dataHandlerService: DataHandlerService,
       private dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {
-    // this.loadDoctorSpecificData();
-    this.loadDoctorSpecificDataFromMock();
+    if (this.dataStore.get(DataKey.loggedUser).getValue() && this.dataStore.get(DataKey.loggedUser).getValue().doctorData) {
+      this.doctorSpecificData = this.dataStore.get(DataKey.loggedUser).getValue().doctorData;
+    }
   }
 
   getColor(state: string) {
@@ -63,8 +67,10 @@ export class DoctorProfileComponent implements OnInit {
 
   saveData() {
     // converting doctorType to a database readable format
-    this.doctorSpecificData.doctorType = this.convertDoctorType(JSON.parse(JSON.stringify(this.doctorSpecificData.doctorType)));
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.profileUsername;
+    this.doctorSpecificData.doctorType = this.dataHandlerService.convertDoctorType(
+        JSON.parse(JSON.stringify(this.doctorSpecificData.doctorType)));
+
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.doctorSpecificData.username;
     this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.doctorSpecificData )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
@@ -97,7 +103,7 @@ export class DoctorProfileComponent implements OnInit {
     this.selectedImage = event.target.file;
     const formData = new FormData();
     formData.append('image', this.selectedImage);
-    formData.append( 'username', this.profileUsername);
+    formData.append( 'username', this.doctorSpecificData.username);
 
     // sent request
     const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE;
@@ -111,49 +117,5 @@ export class DoctorProfileComponent implements OnInit {
             // console.log(data.data);
           }
         });
-  }
-
-  private loadDoctorSpecificData() {
-
-  }
-
-  private loadDoctorSpecificDataFromMock() {
-    this.doctorSpecificData = {
-      username: 'johndoe@gmail.com',
-      title: DoctorTitles.DR,
-      firstName: 'John',
-      lastName: 'Doe',
-      contactNumber: '+94773092323',
-      whatsAppNumber: '+94773092323',
-      doctorRegistrationNumber: 'reg/34234235',
-      pricePerAppointment: '1650',
-      priceCurrency: currencyCodes.LKR,
-      qualifications: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
-      doctorType: DoctorType.CON,
-      specialityA: 'Pulmonologist',
-      specialityB: 'Dermatologist',
-      specialityC: '',
-      isActiveProfile: 'true'
-    };
-  }
-
-  private convertDoctorType(doctorType: string) {
-    switch (doctorType) {
-      case DoctorType.CON:
-        doctorType = 'CON';
-        break;
-      case DoctorType.COUN:
-        doctorType = 'COUN';
-        break;
-      case DoctorType.GEN:
-        doctorType = 'GEN';
-        break;
-      case DoctorType.OTH:
-        doctorType = 'OTH';
-        break;
-      default:
-        break;
-    }
-    return doctorType;
   }
 }

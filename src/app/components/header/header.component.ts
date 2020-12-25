@@ -53,46 +53,46 @@ export class HeaderComponent implements OnInit {
       this.userType = this.signUpResultObject.userType;
       this.isSignUp = this.signUpResultObject.isSignUp;
     }
-    this.loggedInUser = this.dataStore.get(DataKey.createdUser).getValue();
-    if (this.loggedInUser && this.loggedInUser[0] && this.loggedInUser[0].doctor) {
+    this.loggedInUser = this.dataStore.get(DataKey.loggedUser).getValue();
+    if (this.loggedInUser && this.loggedInUser.doctor !== null && this.loggedInUser.doctor) {
       this.router.navigate(['doctor/dashboard']).then(r => {
       });
-    } else if (this.loggedInUser && this.loggedInUser[0] && !this.loggedInUser[0].doctor) {
+    } else if (this.loggedInUser && this.loggedInUser.doctor !== null && !this.loggedInUser.doctor) {
       this.router.navigate(['user/dashboard']).then(r => {
       });
-    }
+    } else {
+      if (!(this.signUpResultObject && this.signUpResultObject.userType)) {
+        this.goToHomePage();
+        const dialogConfig = new MatDialogConfig();
 
-    if (!(this.signUpResultObject && this.signUpResultObject.userType)) {
-      this.goToHomePage();
-      const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          modalType: MODAL_TYPES.SIGN_UP
+        };
 
-      dialogConfig.data = {
-        modalType: MODAL_TYPES.SIGN_UP
-      };
+        dialogConfig.disableClose = false;
+        dialogConfig.width = '300px';
 
-      dialogConfig.disableClose = false;
-      dialogConfig.width = '300px';
+        const dialogRef = this.dialog.open(ModalComponent, dialogConfig
+        );
 
-      const dialogRef = this.dialog.open(ModalComponent, dialogConfig
-      );
-
-      dialogRef.afterClosed().subscribe(result => {
-        this.user = result;
-        if (result) {
-          // if (!result.isSignUp) {
-          //   this.firstName = 'Kavin';
-          // }
-          this.dataStore.set(DataKey.signUpResultObject, result);
-          this.router.navigate(['signup']).then(r => {
-          });
-        }
-      });
-    } else if (this.userType && this.userType.toLowerCase() === 'Doctor'.toLowerCase()) {
-      this.router.navigate(['doctor/dashboard']).then(r => {
-      });
-    } else if (this.userType && this.userType.toLowerCase() === 'Patient'.toLowerCase()) {
-      this.router.navigate(['user/dashboard']).then(r => {
-      });
+        dialogRef.afterClosed().subscribe(result => {
+          this.user = result;
+          if (result) {
+            // if (!result.isSignUp) {
+            //   this.firstName = 'Kavin';
+            // }
+            this.dataStore.set(DataKey.signUpResultObject, result);
+            this.router.navigate(['signup']).then(r => {
+            });
+          }
+        });
+      } else if (this.userType && this.userType.toLowerCase() === 'Doctor'.toLowerCase()) {
+        this.router.navigate(['doctor/dashboard']).then(r => {
+        });
+      } else if (this.userType && this.userType.toLowerCase() === 'Patient'.toLowerCase()) {
+        this.router.navigate(['user/dashboard']).then(r => {
+        });
+      }
     }
   }
 

@@ -105,7 +105,7 @@
     </ng-container>
 
     <ng-container *ngIf="!editable">
-        <ng-container *ngIf="!doctorSpecificData.isActiveProfile">
+        <ng-container *ngIf="!doctorSpecificData?.isActiveProfile">
             <p>
                 <ngb-alert [dismissible]="false">
                     <strong>Note!</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
@@ -113,13 +113,13 @@
             </p>
         </ng-container>
 
-        <button [disabled]="!doctorSpecificData.isActiveProfile" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
+        <button [disabled]="!doctorSpecificData?.isActiveProfile" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
-        <button [color]="doctorSpecificData.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
+        <button [color]="doctorSpecificData?.isActiveProfile? null: 'warn'" style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button [color]="doctorSpecificData.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
+        <button [color]="doctorSpecificData?.isActiveProfile? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-stroked-button>Edit Schedule</button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
@@ -127,7 +127,7 @@
         <br>
 
         <br>
-        <ng-container  *ngIf="doctorSpecificData.isActiveProfile">
+        <ng-container  *ngIf="doctorSpecificData?.isActiveProfile">
             <p>What the patients see:</p>
             <app-professional-card
             [professional]="doctorSpecificData"

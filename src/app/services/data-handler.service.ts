@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {DoctorType} from '../utils/Constants';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +20,24 @@ export class DataHandlerService {
     const timeString = time.hour.toString().padStart(2, '0') + ':' + time.minute.toString().padStart(2, '0') + ':00';
     return timeString;
   }
+  convertDoctorType(doctorType: string) {
+    switch (doctorType) {
+      case DoctorType.CON:
+        doctorType = 'CON';
+        break;
+      case DoctorType.COUN:
+        doctorType = 'COUN';
+        break;
+      case DoctorType.GEN:
+        doctorType = 'GEN';
+        break;
+      case DoctorType.OTH:
+        doctorType = 'OTH';
+        break;
+      default:
+        break;
+    }
+    return doctorType;
+  }
+
 }

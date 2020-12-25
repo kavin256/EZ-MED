@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {DoctorType} from '../../utils/Constants';
+import {Constants, DoctorType} from '../../utils/Constants';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {UserData} from '../../models/user-data';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {DataKey} from '../../services/data-store.service';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-search-professionals-main',
@@ -14,7 +19,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
   professionalList = [
     {
       id: 1,
-      name: 'Dr. Nuwan Chinthaka',
+      title: 'Dr.',
+      firstName: 'Nuwan',
+      lastName: 'Chinthaka',
       doctorType: DoctorType.CON,
       qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
       specialityA: 'Neurologist',
@@ -26,7 +33,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
     },
     {
       id: 2,
-      name: 'Dr. Punya Anupama',
+      title: 'Dr.',
+      firstName: 'Punya',
+      lastName: 'Anupama',
       doctorType: DoctorType.GEN,
       qualifications: 'MBBS [COLOMBO](1998)',
       specialityA: 'Pathologist',
@@ -38,7 +47,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
     },
     {
       id: 3,
-      name: 'Dr. Eric Deepal',
+      title: 'Dr.',
+      firstName: 'Eric',
+      lastName: 'Deepal',
       doctorType: DoctorType.OTH,
       qualifications: 'MBBS [RUHUNA](2000)',
       specialityA: 'Clinical Nutritionist',
@@ -49,23 +60,28 @@ export class SearchProfessionalsMainComponent implements OnInit {
       isWhatsAppPreferred: false
     }
   ];
-  selectedCategory: any;
+  selectedCategory: any = null;
+  selectedSpecialization: any = null;
+
   categories = [
     {
-      category: 'Consultants'
+      category: DoctorType.CON
     },
     {
-      category: 'General Practitioners'
+      category: DoctorType.GEN
     },
     {
-      category: 'Counsellors'
+      category: DoctorType.COUN
     },
     {
-      category: 'Other Medical Service Professionals'
+      category: DoctorType.OTH
     }
   ];
 
   subCategories = [
+    {
+      category: 'Any'
+    },
     {
       category: 'Chest Docs'
     },
@@ -80,21 +96,62 @@ export class SearchProfessionalsMainComponent implements OnInit {
     }
   ];
 
-  selectedSpecialization: any;
-
-  search() {
-    console.log('jhbrch');
-  }
-
   constructor(
-      private router: Router
+      private router: Router,
+      private dataLoaderService: DataLoaderService,
+      private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
   }
 
+  search() {
+    // General Practitioners don't have a specialization
+    if (this.selectedCategory === DoctorType.GEN) {
+      this.selectedSpecialization = null;
+    }
+
+    // converting doctorType to a database readable format
+    if (this.selectedCategory) {
+      this.selectedCategory = this.dataHandlerService.convertDoctorType(
+          JSON.parse(JSON.stringify(this.selectedCategory)));
+    }
+
+    // making 'Any' option null
+    if (this.selectedSpecialization === 'Any') {
+      this.selectedSpecialization = null;
+    }
+
+    console.log(this.searchString);
+    console.log(this.selectedCategory);
+    console.log(this.selectedSpecialization);
+
+    // create url and send request
+    const url = Constants.BASE_URL + Constants.PROFESSIONAL_SEARCH;
+    const httpParams = new HttpParams()
+        .set('name', this.searchString)
+        .set('doctorType', this.selectedCategory)
+        .set('category', this.selectedSpecialization);
+    // httpParams.set('name', 'san');
+    this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders(), DataKey.createdUser)
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            console.log('data');
+            console.log(data.data);
+          } else if (data && data.status && data.status.code === -1) {
+            // console.log('data null');
+            // console.log(data.data);
+          }
+        });
+  }
+
   selectProfessional($event: number) {
+    this.loadProfessionalData();
     this.router.navigate(['appointmentTime']).then(r => {
     });
+  }
+
+  // Todo: complete
+  private loadProfessionalData() {
   }
 }
