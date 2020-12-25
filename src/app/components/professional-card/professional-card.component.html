@@ -1,5 +1,5 @@
-<div [ngClass]="isOverTheDoctorCard(professional.id) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.id)" (mouseleave)="onMouseLeave()">
-    <mat-card (click)="selectProfessional_(professional.id)" style="width: 320px; height: auto">
+<div [ngClass]="isOverTheDoctorCard(professional.userName) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.userName)" (mouseleave)="onMouseLeave()">
+    <mat-card (click)="selectProfessional_(professional.userName)" style="width: 320px; height: auto">
         <table>
             <tr>
                 <th style="width: 120px; height: 100px; align-content: center">
@@ -70,7 +70,7 @@
                         </tr>
                         <tr>
                             <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                {{professional.consultationPrice}}
+                                {{currency}} {{professional.priceForAppointment}}
                             </td>
                         </tr>
                         <tr>

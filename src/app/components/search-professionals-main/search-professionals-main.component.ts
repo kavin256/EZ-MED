@@ -4,7 +4,7 @@ import {Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataKey} from '../../services/data-store.service';
+import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
@@ -15,51 +15,8 @@ import {DataLoaderService} from '../../services/data-loader.service';
 export class SearchProfessionalsMainComponent implements OnInit {
 
   searchString = null;
+  professionalList = null;
 
-  professionalList = [
-    {
-      id: 1,
-      title: 'Dr.',
-      firstName: 'Nuwan',
-      lastName: 'Chinthaka',
-      doctorType: DoctorType.CON,
-      qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
-      specialityA: 'Neurologist',
-      specialityB: 'Pediatrician',
-      specialityC: '',
-      consultationPrice: 'Rs. 2000.00',
-      isSkypePreferred: true,
-      isWhatsAppPreferred: true
-    },
-    {
-      id: 2,
-      title: 'Dr.',
-      firstName: 'Punya',
-      lastName: 'Anupama',
-      doctorType: DoctorType.GEN,
-      qualifications: 'MBBS [COLOMBO](1998)',
-      specialityA: 'Pathologist',
-      specialityB: '',
-      specialityC: '',
-      consultationPrice: 'Rs. 1500.00',
-      isSkypePreferred: false,
-      isWhatsAppPreferred: true
-    },
-    {
-      id: 3,
-      title: 'Dr.',
-      firstName: 'Eric',
-      lastName: 'Deepal',
-      doctorType: DoctorType.OTH,
-      qualifications: 'MBBS [RUHUNA](2000)',
-      specialityA: 'Clinical Nutritionist',
-      specialityB: '',
-      specialityC: '',
-      consultationPrice: 'Rs. 2500.00',
-      isSkypePreferred: true,
-      isWhatsAppPreferred: false
-    }
-  ];
   selectedCategory: any = null;
   selectedSpecialization: any = null;
 
@@ -98,60 +55,128 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   constructor(
       private router: Router,
+      private dataStore: DataStoreService,
       private dataLoaderService: DataLoaderService,
       private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+    this.InitialSearch();
   }
 
   search() {
-    // General Practitioners don't have a specialization
-    if (this.selectedCategory === DoctorType.GEN) {
-      this.selectedSpecialization = null;
+    if (
+        !this.searchString &&
+        !this.selectedCategory &&
+        !this.selectedSpecialization
+    ) {
+      this.InitialSearch();
+    } else {
+      // General Practitioners don't have a specialization
+      if (this.selectedCategory === DoctorType.GEN) {
+        this.selectedSpecialization = null;
+      }
+
+      // converting doctorType to a database readable format
+      if (this.selectedCategory) {
+        this.selectedCategory = this.dataHandlerService.convertDoctorType(
+            JSON.parse(JSON.stringify(this.selectedCategory)));
+      }
+
+      // making 'Any' option null
+      if (this.selectedSpecialization === 'Any') {
+        this.selectedSpecialization = null;
+      }
+
+      // create url and send request
+      const url = Constants.BASE_URL + Constants.PROFESSIONAL_SEARCH;
+      const httpParams = new HttpParams()
+          .set('name', this.searchString);
+      // Todo: complete after null handling in back end
+      // .set('doctorType', this.selectedCategory);
+      // .set('category', this.selectedSpecialization);
+      this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders(), DataKey.createdUser)
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              this.professionalList = data.data[0];
+            } else if (data && data.status && data.status.code === -1) {
+              this.resetVariables();
+            }
+          });
     }
-
-    // converting doctorType to a database readable format
-    if (this.selectedCategory) {
-      this.selectedCategory = this.dataHandlerService.convertDoctorType(
-          JSON.parse(JSON.stringify(this.selectedCategory)));
-    }
-
-    // making 'Any' option null
-    if (this.selectedSpecialization === 'Any') {
-      this.selectedSpecialization = null;
-    }
-
-    console.log(this.searchString);
-    console.log(this.selectedCategory);
-    console.log(this.selectedSpecialization);
-
-    // create url and send request
-    const url = Constants.BASE_URL + Constants.PROFESSIONAL_SEARCH;
-    const httpParams = new HttpParams()
-        .set('name', this.searchString)
-        .set('doctorType', this.selectedCategory)
-        .set('category', this.selectedSpecialization);
-    // httpParams.set('name', 'san');
-    this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders(), DataKey.createdUser)
-        .then((data: any) => {
-          if (data && data.status && data.status.code === 1) {
-            console.log('data');
-            console.log(data.data);
-          } else if (data && data.status && data.status.code === -1) {
-            // console.log('data null');
-            // console.log(data.data);
-          }
-        });
   }
 
-  selectProfessional($event: number) {
-    this.loadProfessionalData();
+  private resetVariables() {
+    this.professionalList = [];
+    this.searchString = null;
+    this.selectedCategory = null;
+    this.selectedSpecialization = null;
+  }
+
+  selectProfessional($event: string) {
+    this.loadProfessionalData($event);
     this.router.navigate(['appointmentTime']).then(r => {
     });
   }
 
   // Todo: complete
-  private loadProfessionalData() {
+  private loadProfessionalData($event: string) {
+    // create url and send request
+    const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
+    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser)
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            this.dataStore.set(DataKey.availableAppointmentsForProfessional, data.data[0]);
+          } else if (data && data.status && data.status.code === -1) {
+            this.dataStore.set(DataKey.availableAppointmentsForProfessional, null);
+          }
+        });
+  }
+
+  private InitialSearch() {
+    this.professionalList = [
+      {
+        id: 1,
+        title: 'Dr.',
+        firstName: 'Dummy',
+        lastName: 'One',
+        doctorType: DoctorType.CON,
+        qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
+        specialityA: 'Neurologist',
+        specialityB: 'Pediatrician',
+        specialityC: '',
+        priceForAppointment: '2000',
+        isSkypePreferred: true,
+        isWhatsAppPreferred: true
+      },
+      {
+        id: 2,
+        title: 'Dr.',
+        firstName: 'Dummy',
+        lastName: 'Two',
+        doctorType: DoctorType.GEN,
+        qualifications: 'MBBS [COLOMBO](1998)',
+        specialityA: 'Pathologist',
+        specialityB: '',
+        specialityC: '',
+        priceForAppointment: '1500',
+        isSkypePreferred: false,
+        isWhatsAppPreferred: true
+      },
+      {
+        id: 3,
+        title: 'Dr.',
+        firstName: 'Dummy',
+        lastName: 'Three',
+        doctorType: DoctorType.OTH,
+        qualifications: 'MBBS [RUHUNA](2000)',
+        specialityA: 'Clinical Nutritionist',
+        specialityB: '',
+        specialityC: '',
+        priceForAppointment: '2500',
+        isSkypePreferred: true,
+        isWhatsAppPreferred: false
+      }
+    ];
   }
 }

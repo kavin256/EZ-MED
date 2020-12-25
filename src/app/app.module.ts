@@ -42,6 +42,7 @@ import { ProfessionalCardComponent } from './components/professional-card/profes
 import { ChatSectionComponent } from './components/chat-section/chat-section.component';
 import { PrescriptionListComponent } from './components/prescription-list/prescription-list.component';
 import {AppService} from './app.service';
+import {DatePipe} from '@angular/common';
 
 export function initialize(app: AppService) {
     return async () => {
@@ -110,6 +111,7 @@ export function initialize(app: AppService) {
         HttpClientModule
     ],
   providers: [
+      DatePipe,
       {
           provide: APP_INITIALIZER,
           useFactory: initialize,

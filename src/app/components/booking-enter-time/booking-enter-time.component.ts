@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {DoctorType} from '../../utils/Constants';
+import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-booking-enter-time',
@@ -20,96 +22,62 @@ export class BookingEnterTimeComponent implements OnInit {
     ],
     consultationPrice: 'Rs. 2000.00'
   };
-  doctorSchedule = {
-    schedule: [
-      {
-        title: 'Monday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Tuesday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Wednesday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Thursday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Friday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Saturday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      },
-      {
-        title: 'Sunday',
-        slot1: '12.30 P.M. - 1.30 P.M.',
-        slot2: '3.30 P.M. - 5.00 P.M.',
-        slot3: '6.00 P.M. - 8.00 P.M.'
-      }
-    ]
-  };
+  availableAppointmentsForProfessional = [];
 
   isScheduleVisible = false;
 
   days = [
     {
       date: this.getDate(0).date,
-      day: this.getDate(0).day
+      day: this.getDate(0).day,
+      available: true
     },
     {
       date: this.getDate(1).date,
-      day: this.getDate(1).day
+      day: this.getDate(1).day,
+      available: true
     },
     {
       date: this.getDate(2).date,
-      day: this.getDate(2).day
+      day: this.getDate(2).day,
+      available: true
     },
     {
       date: this.getDate(3).date,
-      day: this.getDate(3).day
+      day: this.getDate(3).day,
+      available: true
     },
     {
       date: this.getDate(4).date,
-      day: this.getDate(4).day
+      day: this.getDate(4).day,
+      available: true
     },
     {
       date: this.getDate(5).date,
-      day: this.getDate(5).day
+      day: this.getDate(5).day,
+      available: true
     },
     {
       date: this.getDate(6).date,
-      day: this.getDate(6).day
+      day: this.getDate(6).day,
+      available: true
     },
   ];
 
   selectedDate: any;
-  selectedSpecialization: any;
+  selectedAppointmentId = '';
   consultationTime = '8.00 P.M.';
   summaryShown = false;
 
   constructor(
-      private router: Router
+      private router: Router,
+      private datePipe: DatePipe,
+      private dataStore: DataStoreService
   ) { }
 
   ngOnInit() {
+    this.loadProfessional();
+    this.loadAvailableAppointmentsForProfessional();
   }
 
   getDate(apart: number) {
@@ -161,13 +129,101 @@ export class BookingEnterTimeComponent implements OnInit {
   }
 
   getTimeSlots(selectedDate: any) {
-    const found = this.doctorSchedule.schedule.find((scheduleObj) => {
-      return scheduleObj.title = selectedDate;
+    const selectedFullDate = new Date(selectedDate);
+
+    let dummyAppointments = [];
+    const found = this.availableAppointmentsForProfessional.find((appointmentTime: any) => {
+      const appointmentDate = new Date(appointmentTime.date);
+      return appointmentDate.getFullYear() === selectedFullDate.getFullYear() &&
+          appointmentDate.getMonth() === selectedFullDate.getMonth() &&
+          appointmentDate.getDate() === selectedFullDate.getDate();
     });
-    return [found.slot1, found.slot2, found.slot3];
+    if (found && found.dummyAppointments) {
+      dummyAppointments = found.dummyAppointments;
+      dummyAppointments.forEach((app) => {
+        if (app && app.appointmentTime) {
+          const dummyDate = new Date();
+          const h = JSON.parse(JSON.stringify(parseInt(app.appointmentTime.toString().split(':')[0], 10)));
+          const m = JSON.parse(JSON.stringify(parseInt(app.appointmentTime.toString().split(':')[1], 10)));
+          dummyDate.setHours(h);
+          dummyDate.setMinutes(m);
+          app.displayAppointmentTime = dummyDate;
+        }
+      });
+    }
+    return dummyAppointments;
   }
 
   continueClicked($event: boolean) {
     this.summaryShown = $event;
+  }
+
+  private loadAvailableAppointmentsForProfessional() {
+    this.availableAppointmentsForProfessional = [
+      {
+        date: '2020-12-26T20:30:00.000+0000',
+        dummyAppointments: [
+          {
+            appointmentId: 16,
+            appointmentTime: '08:00:00',
+            timeSlotId: null
+          }
+        ]
+      },
+      {
+        date: '2020-12-27T20:30:00.000+0000',
+        dummyAppointments: [
+          {
+            appointmentId: 21,
+            appointmentTime: '10:00:00',
+            timeSlotId: null
+          }
+        ]
+      },
+      {
+        date: '2020-12-25T20:30:00.000+0000',
+        dummyAppointments: [
+          {
+            appointmentId: 12,
+            appointmentTime: '10:00:00',
+            timeSlotId: null
+          }
+        ]
+      }
+    ];
+    if (this.dataStore.get(DataKey.availableAppointmentsForProfessional).getValue()) {
+      this.availableAppointmentsForProfessional = this.dataStore.get(DataKey.availableAppointmentsForProfessional).getValue();
+    }
+    this.filterOutUnavailableDays(this.days);
+  }
+
+  // Todo: complete
+  private loadProfessional() {
+  }
+
+  private filterOutUnavailableDays(days: any[]) {
+    days.forEach((day: any) => {
+      if (this.getTimeSlots(day.date) && this.getTimeSlots(day.date).length > 0) {
+        day.available = true;
+      } else {
+        day.available = false;
+      }
+    });
+  }
+
+  getDisplaySelectedTime(appointmentId: any) {
+    let displaySelectedTime = '';
+    if (appointmentId) {
+      this.availableAppointmentsForProfessional.forEach((appointmentArray) => {
+        if (appointmentArray.dummyAppointments) {
+          appointmentArray.dummyAppointments.forEach((appointment) => {
+            if (appointment && appointment.appointmentId && appointment.appointmentId === parseInt(appointmentId, 10)) {
+              displaySelectedTime = this.datePipe.transform(appointment.displayAppointmentTime, 'shortTime');
+            }
+          });
+        }
+      });
+    }
+    return displaySelectedTime;
   }
 }

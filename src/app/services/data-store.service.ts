@@ -54,5 +54,6 @@ export enum DataKey {
   createdUser,
   uploadImage,
   doctorScheduleData,
-  signUpResultObject
+  signUpResultObject,
+  availableAppointmentsForProfessional
 }

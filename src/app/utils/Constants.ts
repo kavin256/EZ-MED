@@ -7,6 +7,7 @@ export enum Constants {
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
     UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/doctor/data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
+    AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
     // UPDATE_PROFESSIONAL_WORK_DATA = '/user/test?username=dfg',
 
     // modal types
@@ -43,7 +44,7 @@ export enum Specializations {
     Radiologist = 'Radiologist',
     Dermatologist = 'Dermatologist',
     Clinical_Nutritionist = 'Clinical Nutritionist',
-    Endocrinologist = 'Endocrinologist',
+    Endocrinologist = 'Endocrinologist'
 }
 
 export enum DoctorType {
