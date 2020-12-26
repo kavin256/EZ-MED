@@ -39,11 +39,20 @@
         <br>
 
     </ng-container>
-    <ng-container *ngFor="let doc of professionalList">
-        <app-professional-card
-        [professional]="doc"
-        (selectProfessional)="selectProfessional($event)"
-        ></app-professional-card>
+    <ng-container *ngFor="let doc of professionalList; let i=index">
+        <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
+            <app-professional-card
+            [professional]="doc"
+            (selectProfessional)="selectProfessional($event)"
+            ></app-professional-card>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="professionalList.length > 0">
+        <mat-paginator [length]="professionalList.length"
+                       [pageSize]="RESULTS_PER_PAGE"
+                       (page)="goToPage($event)"
+        >
+        </mat-paginator>
     </ng-container>
 </div>
 

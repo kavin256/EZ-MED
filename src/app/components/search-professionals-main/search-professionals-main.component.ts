@@ -6,6 +6,7 @@ import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-search-professionals-main',
@@ -16,7 +17,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   searchString = null;
   professionalList = null;
-
+  RESULTS_PER_PAGE = 10;
+  PAGINATION_START = 0;
+  PAGINATION_END = this.RESULTS_PER_PAGE;
   selectedCategory: any = null;
   selectedSpecialization: any = null;
 
@@ -65,6 +68,8 @@ export class SearchProfessionalsMainComponent implements OnInit {
   }
 
   search() {
+    this.PAGINATION_START = 0;
+    this.PAGINATION_END = this.RESULTS_PER_PAGE;
     if (
         !this.searchString &&
         !this.selectedCategory &&
@@ -114,9 +119,16 @@ export class SearchProfessionalsMainComponent implements OnInit {
   }
 
   selectProfessional($event: string) {
+    this.PAGINATION_START = 0;
+    this.PAGINATION_END = this.RESULTS_PER_PAGE;
     this.loadProfessionalData($event);
     this.router.navigate(['appointmentTime']).then(r => {
     });
+  }
+
+  goToPage($event: PageEvent) {
+    this.PAGINATION_START = $event.pageIndex * $event.pageSize;
+    this.PAGINATION_END = this.PAGINATION_START + $event.pageSize;
   }
 
   private loadProfessionalData($event: string) {
