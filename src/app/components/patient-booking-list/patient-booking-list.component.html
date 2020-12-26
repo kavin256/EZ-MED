@@ -8,14 +8,16 @@
 <!--            <mat-radio-button value="new">New</mat-radio-button>-->
 <!--        </mat-radio-group>-->
 <!--        <br>-->
-<!--        <br>-->
+        <button (click)="goToUserDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
+         <br>
+         <br>
         <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
         <br>
         <br>
         <p style="font-size: large;">Bookings:</p>
 <!--        <mat-divider></mat-divider>-->
-        <div *ngFor="let booking of bookings">
-            <ng-container>
+        <div *ngFor="let booking of bookings; let i=index">
+            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
                 <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
                     <table>
                         <tr>
@@ -32,7 +34,11 @@
                 <br>
             </ng-container>
         </div>
-        <button (click)="goToUserDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
+        <mat-paginator [length]="bookings.length"
+                       [pageSize]="RESULTS_PER_PAGE"
+                       (page)="goToPage($event)"
+        >
+        </mat-paginator>
 
     </ng-container>
 

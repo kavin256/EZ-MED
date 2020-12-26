@@ -12,7 +12,7 @@ import {
     MatDividerModule, MatExpansionModule,
     MatIconModule, MatNativeDateModule,
     MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
-    MatTabsModule, MatCheckboxModule, MatDialogModule
+    MatTabsModule, MatCheckboxModule, MatDialogModule, MatPaginatorModule
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -108,7 +108,8 @@ export function initialize(app: AppService) {
         NgbTimepickerModule,
         NgbAlertModule,
         MatDialogModule,
-        HttpClientModule
+        HttpClientModule,
+        MatPaginatorModule
     ],
   providers: [
       DatePipe,

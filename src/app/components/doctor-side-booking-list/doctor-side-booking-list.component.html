@@ -13,25 +13,40 @@
     </ng-container>
 
     <ng-container *ngIf="!bookingSlotListVisible && selectedSlot">
-        <button (click)="bookingSlotListVisible = !bookingSlotListVisible" style="width: 300px" mat-raised-button color="secondary">Back</button>
+        <button
+                (click)="
+                bookingSlotListVisible = !bookingSlotListVisible;
+                PAGINATION_START = 0;
+                PAGINATION_END = this.RESULTS_PER_PAGE;"
+                style="width: 300px"
+                mat-raised-button
+                color="secondary"
+        >Back</button>
         <br>
         <br>
         <p style="font-size: x-large">Appointments:</p>
 
-        <div *ngFor="let booking of selectedSlot?.bookings">
-            <mat-card  [ngClass]="isOverTheAppointmentCard(booking?.bookingId) ? 'shadow' : ''" (mouseenter)="onMouseEnter(booking?.bookingId)" (mouseleave)="onMouseLeave()"
-                    (click)="selectBooking(booking.id)" style="width: 300px; height: 60px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
-                <table>
-                    <tr>
-                        <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.patientName}}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: x-small">Booking ID: {{booking.bookingId}}</td>
-                    </tr>
-                </table>
-            </mat-card>
-            <br>
+        <div *ngFor="let booking of selectedSlot?.bookings; let i=index">
+            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
+                <mat-card [ngClass]="isOverTheAppointmentCard(booking?.bookingId) ? 'shadow' : ''" (mouseenter)="onMouseEnter(booking?.bookingId)" (mouseleave)="onMouseLeave()"
+                        (click)="selectBooking(booking.id)" style="width: 300px; height: 60px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
+                    <table>
+                        <tr>
+                            <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.patientName}}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: x-small">Booking ID: {{booking.bookingId}}</td>
+                        </tr>
+                    </table>
+                </mat-card>
+                <br>
+            </ng-container>
         </div>
+        <mat-paginator [length]="selectedSlot?.bookings.length"
+                       [pageSize]="RESULTS_PER_PAGE"
+                       (page)="goToPage($event)"
+        >
+        </mat-paginator>
 
     </ng-container>
 

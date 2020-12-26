@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-patient-booking-list',
@@ -11,6 +12,9 @@ import {Router} from '@angular/router';
 export class PatientBookingListComponent implements OnInit {
 
   currentDate = new Date();
+  RESULTS_PER_PAGE = 5;
+  PAGINATION_START = 0;
+  PAGINATION_END = this.RESULTS_PER_PAGE;
 
   bookings = [
     {
@@ -168,8 +172,15 @@ export class PatientBookingListComponent implements OnInit {
   }
 
   goToUserDashboard() {
+    this.PAGINATION_START = 0;
+    this.PAGINATION_END = this.RESULTS_PER_PAGE;
     this.router.navigate(['user/dashboard']).then(r => {
     });
+  }
+
+  goToPage($event: PageEvent) {
+    this.PAGINATION_START = $event.pageIndex * $event.pageSize;
+    this.PAGINATION_END = this.PAGINATION_START + $event.pageSize;
   }
 
   newBooking() {

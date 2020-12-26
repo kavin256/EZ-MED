@@ -124,6 +124,9 @@ export class DoctorProfileComponent implements OnInit {
 
   checkForMandatoryFieldsToActivateProfile(userData: DoctorSpecificData) {
     // currently only the userData.priceForAppointment is checked as a requirement
-    return userData.priceForAppointment && parseInt(userData.priceForAppointment, 10) && parseInt(userData.priceForAppointment, 10) > 0;
+    return userData.priceForAppointment !== null &&
+        userData.priceForAppointment !== '' &&
+        parseInt(userData.priceForAppointment, 10) &&
+        parseInt(userData.priceForAppointment, 10) > 0;
   }
 }

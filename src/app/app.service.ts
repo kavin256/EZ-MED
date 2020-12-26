@@ -79,7 +79,7 @@ export class AppService {
         "specialityC": "",
         "regNo": "reg/34234235",
         "qualifications": "MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India",
-        "priceForAppointment": null,
+        "priceForAppointment": '',
         "availableForAppointment": false
       },
       "doctor": true

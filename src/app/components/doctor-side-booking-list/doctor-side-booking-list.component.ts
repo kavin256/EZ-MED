@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-doctor-side-booking-list',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./doctor-side-booking-list.component.css']
 })
 export class DoctorSideBookingListComponent implements OnInit {
+
+  RESULTS_PER_PAGE = 5;
+  PAGINATION_START = 0;
+  PAGINATION_END = this.RESULTS_PER_PAGE;
 
   bookingListSlot1 = {
     startTime: '07.00 A.M.',
@@ -15,12 +20,6 @@ export class DoctorSideBookingListComponent implements OnInit {
         bookingId: 2387,
         patientId: '76531',
         patientName: 'John Doe',
-        bookingStatus: BookingStatus.BOOKING_COMPLETED
-      },
-      {
-        bookingId: 1196,
-        patientId: '65456',
-        patientName: 'Sumanasiri',
         bookingStatus: BookingStatus.BOOKING_COMPLETED
       },
       {
@@ -185,6 +184,11 @@ export class DoctorSideBookingListComponent implements OnInit {
     this.selectedSlot = slot;
     this.bookingSlotListVisible = !this.bookingSlotListVisible;
 
+  }
+
+  goToPage($event: PageEvent) {
+    this.PAGINATION_START = $event.pageIndex * $event.pageSize;
+    this.PAGINATION_END = this.PAGINATION_START + $event.pageSize;
   }
 }
 
