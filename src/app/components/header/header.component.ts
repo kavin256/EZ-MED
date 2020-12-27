@@ -1,8 +1,8 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, AfterViewInit, Input, OnInit} from '@angular/core';
 import './header.component.css';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
 
   signUpResultObject = {
     isSignUp: undefined,
@@ -21,18 +21,10 @@ export class HeaderComponent implements OnInit {
   firstName: string;
   isSignUp = true;
 
-  //
-  // firstName = 'Kavin';
-  // userType = 'Doctor';
-
-  // //
-  // firstName = 'Kavin';
-  // userType = 'Patient';
-
-  // //
   userType;
 
-  constructor(public dialog: MatDialog,
+  constructor(
+              private dataHandlerService: DataHandlerService,
               private router: Router,
               private dataStore: DataStoreService
   ) {}
@@ -52,6 +44,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => { window.scroll(0, 0); }, 1000);
+  }
+
   logoClick(): void {
     if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
       this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
@@ -67,38 +63,6 @@ export class HeaderComponent implements OnInit {
     } else {
       this.router.navigate(['signup']).then(r => {
       });
-      // if (!(this.signUpResultObject && this.signUpResultObject.userType)) {
-      //   this.goToHomePage();
-      //   const dialogConfig = new MatDialogConfig();
-      //
-      //   dialogConfig.data = {
-      //     modalType: MODAL_TYPES.SIGN_UP
-      //   };
-      //
-      //   dialogConfig.disableClose = false;
-      //   dialogConfig.width = '300px';
-      //
-      //   const dialogRef = this.dialog.open(ModalComponent, dialogConfig
-      //   );
-      //
-      //   dialogRef.afterClosed().subscribe(result => {
-      //     this.user = result;
-      //     if (result) {
-      //       // if (!result.isSignUp) {
-      //       //   this.firstName = 'Kavin';
-      //       // }
-      //       this.dataStore.set(DataKey.signUpResultObject, result);
-      //       this.router.navigate(['signup']).then(r => {
-      //       });
-      //     }
-      //   });
-      // } else if (this.userType && this.userType.toLowerCase() === 'Doctor'.toLowerCase()) {
-      //   this.router.navigate(['doctor/dashboard']).then(r => {
-      //   });
-      // } else if (this.userType && this.userType.toLowerCase() === 'Patient'.toLowerCase()) {
-      //   this.router.navigate(['user/dashboard']).then(r => {
-      //   });
-      // }
     }
   }
 

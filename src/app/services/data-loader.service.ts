@@ -4,7 +4,6 @@ import {RequestOptions} from '../models/request-options';
 import {DataKey, DataStoreService} from './data-store.service';
 import {BehaviorSubject} from 'rxjs';
 import {Constants, MODAL_TYPES} from '../utils/Constants';
-import {take} from 'rxjs/operators';
 import {MatDialogConfig} from '@angular/material';
 import {ModalComponent} from '../components/modal/modal.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -164,13 +163,13 @@ export class DataLoaderService {
         localStorage.removeItem(Constants.EZMED_AUTH);
     }
 
-    public activateLoader(activate: boolean, MODAL_TYPE: MODAL_TYPES) {
+    public activateLoader(activate: boolean, MODAL_TYPE: MODAL_TYPES, disableClose?: boolean) {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.data = {
             modalType: MODAL_TYPE
         };
-        dialogConfig.disableClose = true;
+        dialogConfig.disableClose = disableClose;
         dialogConfig.width = '300px';
 
         let dialogRef;

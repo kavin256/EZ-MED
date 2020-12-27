@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-payment-success',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentSuccessComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+      private dataHandlerService: DataHandlerService
+  ) { }
 
   ngOnInit() {
+    // if not logged In this page should not be able to access
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
 }

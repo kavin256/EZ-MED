@@ -47,8 +47,8 @@
             <mat-label>Specialization #1</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityA">
                 <ng-container *ngFor="let specialization of specializations" >
-                    <mat-option value="{{specialization.value}}">
-                        {{specialization.value}}
+                    <mat-option value="{{specialization}}">
+                        {{specialization}}
                     </mat-option>
                 </ng-container>
             </mat-select>

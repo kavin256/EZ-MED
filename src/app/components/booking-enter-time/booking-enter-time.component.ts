@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {DoctorType} from '../../utils/Constants';
+import {DoctorType, MODAL_TYPES, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
 import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DatePipe} from '@angular/common';
 import {timeout} from 'rxjs/operators';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-booking-enter-time',
@@ -12,6 +13,7 @@ import {timeout} from 'rxjs/operators';
 })
 export class BookingEnterTimeComponent implements OnInit {
 
+  transitionType = null;
   doctor = {
     id: 1,
     name: 'Dr. Nuwan Chinthaka',
@@ -75,7 +77,8 @@ export class BookingEnterTimeComponent implements OnInit {
   constructor(
       private router: Router,
       private datePipe: DatePipe,
-      private dataStore: DataStoreService
+      private dataStore: DataStoreService,
+      private dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {
@@ -129,6 +132,7 @@ export class BookingEnterTimeComponent implements OnInit {
 
   navigateToPaymentOrLogIn() {
     if (!this.loggedInUser) {
+      this.transitionType = TRANSITION_PAGE_TYPE.LOGIN_REDIRECT;
       this.showRedirectionMessage = true;
     } else {
       this.router.navigate(['confirmation']).then(r => {
@@ -243,5 +247,17 @@ export class BookingEnterTimeComponent implements OnInit {
   logIn() {
     this.router.navigate(['signup']).then(r => {
     });
+  }
+
+  clickFromTransitionPage($event: string) {
+    switch ($event) {
+      case 'back':
+        this.showRedirectionMessage = false;
+        break;
+      case 'logIn':
+        this.logIn();
+        this.showRedirectionMessage = false;
+        break;
+    }
   }
 }

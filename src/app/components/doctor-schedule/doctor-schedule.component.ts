@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DoctorScheduleData, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
@@ -43,6 +43,8 @@ export class DoctorScheduleComponent implements OnInit {
   ngOnInit() {
     // this.populateDoctorScheduleData();
     this.populateDoctorScheduleDataByMock();
+    // if not logged In this page should not be able to access
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
   save() {

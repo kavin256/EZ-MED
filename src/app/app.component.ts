@@ -9,6 +9,6 @@ import './app.component.css';
 export class AppComponent {
   title = 'WellBeey-FE';
   onActivate(event) {
-    window.scroll(0, 0);
+    // window.scroll(0, 0);
   }
 }

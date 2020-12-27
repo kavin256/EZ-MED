@@ -24,10 +24,13 @@ export enum DoctorTitles {
     MS = 'Ms',
     PROF = 'Prof',
 }
+
 export enum MODAL_TYPES {
-    SIGN_UP = 'SIGN_UP',
-    PROFILE = 'PROFILE',
     LOADING = 'LOADING'
+}
+
+export enum TRANSITION_PAGE_TYPE {
+    LOGIN_REDIRECT = 'LOGIN_REDIRECT'
 }
 
 export enum currencyCodes {
@@ -38,20 +41,20 @@ export enum currencyCodes {
     EUR = 'EUR',
 }
 
-export enum Specializations {
-    None = 'None',
-    Immunologist = 'Immunologist',
-    Cardiologist = 'Cardiologist',
-    Pulmonologist = 'Pulmonologist',
-    Radiologist = 'Radiologist',
-    Dermatologist = 'Dermatologist',
-    Clinical_Nutritionist = 'Clinical Nutritionist',
-    Endocrinologist = 'Endocrinologist'
-}
-
 export enum DoctorType {
     CON = 'Consultant',
     COUN = 'Counselor',
     GEN = 'General Practitioner',
     OTH = 'Other Medical Practitioner'
 }
+
+export const specializations = [
+    'Any',
+    'Immunologist',
+    'Cardiologist',
+    'Pulmonologist',
+    'Radiologist',
+    'Dermatologist',
+    'ClinicalNutritionist',
+    'Endocrinologist'
+    ];

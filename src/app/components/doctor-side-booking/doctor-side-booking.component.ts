@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {BookingStatus} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {MatSnackBar} from '@angular/material';
+import {SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-doctor-side-booking',
@@ -46,9 +48,13 @@ export class DoctorSideBookingComponent implements OnInit {
   doctor = {doctorId: '4352545235', doctorName: 'Dr. Tim Cook'};
   isPatientDetailsShown = true;
 
-  constructor() { }
+  constructor(
+      private dataHandlerService: DataHandlerService
+  ) { }
 
   ngOnInit() {
+      // if not logged In this page should not be able to access
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
   userConsent() {

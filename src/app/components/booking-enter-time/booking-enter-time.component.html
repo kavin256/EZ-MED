@@ -63,14 +63,10 @@
         <button mat-raised-button color="secondary" style="width: 240px"  (click)="continueClicked(false)">Back</button>
     </ng-container>
     <ng-container *ngIf="showRedirectionMessage">
-        <h5 style="color: crimson">Sorry, You have to log in to confirm the appointment!</h5>
-        <br>
-
-        <button (click)="logIn()" mat-raised-button color="primary" style="width: 240px">Log In</button>
-        <br>
-        <br>
-        <button mat-raised-button color="secondary" style="width: 240px" (click)="showRedirectionMessage = !showRedirectionMessage">Back</button>
-
+        <app-transition-page
+                [modalType]="transitionType"
+                (clickEmitter)="clickFromTransitionPage($event)"
+        ></app-transition-page>
     </ng-container>
     <br>
     <br>

@@ -3,6 +3,8 @@ import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-boo
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {PageEvent} from '@angular/material';
+import {SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-patient-booking-list',
@@ -128,10 +130,13 @@ export class PatientBookingListComponent implements OnInit {
   selectedPrescription = null;
 
   constructor(
-      private router: Router
+      private router: Router,
+      private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+    // if not logged In this page should not be able to access
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
   selectBooking($event: string) {

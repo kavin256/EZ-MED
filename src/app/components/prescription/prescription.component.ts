@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {$} from 'protractor';
+import {SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-prescription',
@@ -90,10 +92,13 @@ export class PrescriptionComponent implements OnInit {
   ];
 
   constructor(
-      private router: Router
+      private router: Router,
+      private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+    // if not logged In this page should not be able to access
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
   copyToClipBoard() {

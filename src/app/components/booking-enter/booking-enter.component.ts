@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 
 @Component({
   selector: 'app-booking-enter',
@@ -32,10 +34,13 @@ export class BookingEnterComponent implements OnInit {
   ];
   skypeID: any;
   constructor(
-      private router: Router
+      private router: Router,
+      private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+    // if not logged In this page should not be able to access
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
   scheduleVisibilityToggle($event: boolean) {

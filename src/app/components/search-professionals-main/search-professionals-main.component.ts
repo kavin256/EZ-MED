@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Constants, DoctorType} from '../../utils/Constants';
+import {specializations, Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
@@ -38,23 +38,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     }
   ];
 
-  subCategories = [
-    {
-      category: 'Any'
-    },
-    {
-      category: 'Chest Docs'
-    },
-    {
-      category: 'ENT'
-    },
-    {
-      category: 'Immunologists'
-    },
-    {
-      category: 'Anesthesiologists'
-    }
-  ];
+  specializations = specializations;
 
   constructor(
       private router: Router,
@@ -67,7 +51,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.InitialSearch();
   }
 
-  search() {
+  search(searchString: string, selectedCategory: string, selectedSpecialization: string) {
     this.PAGINATION_START = 0;
     this.PAGINATION_END = this.RESULTS_PER_PAGE;
     if (
@@ -95,14 +79,20 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
       // create url and send request
       const url = Constants.BASE_URL + Constants.PROFESSIONAL_SEARCH;
-      const httpParams = new HttpParams()
-          .set('name', this.searchString);
-      // Todo: complete after null handling in back end
-      // .set('professionalType', this.selectedCategory);
-      // .set('category', this.selectedSpecialization);
+      let httpParams = new HttpParams();
+      if (this.searchString) {
+        httpParams = httpParams.append('name', this.searchString);
+      }
+      if (this.selectedCategory) {
+        httpParams = httpParams.append('professionalType', this.selectedCategory);
+      }
+      if (this.selectedSpecialization && this.selectedSpecialization !== 'Any') {
+        httpParams = httpParams.append('specialization', this.selectedSpecialization);
+      }
       this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders(), DataKey.createdUser)
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
+              this.resetVariables();
               this.professionalList = data.data[0];
             } else if (data && data.status && data.status.code === -1) {
               this.resetVariables();
@@ -113,7 +103,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   private resetVariables() {
     this.professionalList = [];
-    this.searchString = null;
+    // this.searchString = null;
     this.selectedCategory = null;
     this.selectedSpecialization = null;
   }
@@ -145,6 +135,8 @@ export class SearchProfessionalsMainComponent implements OnInit {
   }
 
   private InitialSearch() {
+    // todo: uncomment
+    // this.search(null, null, null);
     this.professionalList = [
       {
         id: 1,

@@ -14,18 +14,18 @@
             </ng-container>
         </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== 'General Practitioner'">
+    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== null && selectedCategory !== 'General Practitioner'">
         <mat-form-field  style="width: 240px" >
             <mat-label>Specialization</mat-label>
             <mat-select [(value)]="selectedSpecialization">
-                <ng-container *ngFor="let subCategory of subCategories">
-                    <mat-option value="{{subCategory.category}}">{{subCategory.category}}</mat-option>
+                <ng-container *ngFor="let subCategory of specializations">
+                    <mat-option value="{{subCategory}}">{{dataHandlerService.convertCamelCaseToSentence(subCategory)}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
     </ng-container>
 
-        <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search</button>
+        <button (click)="search(searchString, selectedCategory, selectedSpecialization)" style="width: 90px" color="primary" mat-flat-button>Search</button>
     </div>
     <br>
     <mat-divider></mat-divider>

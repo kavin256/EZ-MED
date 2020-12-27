@@ -30,7 +30,8 @@
             <mat-tab label="New User">
                 <div class="mat-card-style" align="center">
                     <br>
-                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">** You have some unfilled fields</p>
+                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">Please complete the mandatory details !!</p>
+                    <br>
                     <div align="left" style="padding-left: 55px">
                         <mat-radio-group aria-label="Select an option" (change)="setIsDoctor($event)">
                             <mat-radio-button [checked]='true' value=false>I'm a Patient</mat-radio-button>
@@ -40,9 +41,9 @@
                     </div>
                     <br>
                     <div>
-                        <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Title</mat-label>
-                            <mat-select required [(value)]="title">
+                            <mat-select required [(value)]="title" [formControl]="titleFormControl">
                                 <ng-container *ngFor="let title of titles" >
                                     <mat-option value="{{title.value}}">
                                         {{title.value}}
@@ -56,22 +57,22 @@
                     <div>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>First Name</mat-label>
-                            <input required matInput #input1 [(ngModel)]='firstName'>
+                            <input required matInput #input1 [(ngModel)]='firstName' [formControl]="firstNameFormControl">
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Last Name</mat-label>
-                            <input required matInput #input_ln [(ngModel)]='lastName'>
+                            <input required matInput #input_ln [(ngModel)]='lastName' [formControl]="lastNameFormControl">
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px"  appearance="legacy">
                             <mat-label>Email</mat-label>
-                            <input required matInput #input2 [(ngModel)]='email'>
+                            <input required matInput #input2 [(ngModel)]='email' [formControl]="emailFormControl">
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px"  appearance="legacy">
                             <mat-label>Gender *</mat-label>
-                            <mat-select (selectionChange)="setGender($event.value)">
+                            <mat-select (selectionChange)="setGender($event.value)" [formControl]="genderFormControl">
                                 <mat-option required *ngFor="let gender of genders" [value]="gender.value">
                                     {{gender.viewValue}}
                                 </mat-option>
@@ -82,28 +83,23 @@
                     <div [hidden]="isDoctor">
                         <mat-form-field style="width: 240px"  appearance="legacy">
                             <mat-label>Birthday</mat-label>
-                            <input matInput required [(ngModel)]='birthday'>
+                            <input matInput required [(ngModel)]='birthday' [formControl]="bDayFormControl">
                         </mat-form-field>
                         <br>
                     </div>
                     <div>
-                        <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>WhatsApp Number</mat-label>
-                            <input required matInput #input7 [(ngModel)]='whatsAppNumber'>
+                        <mat-form-field style="width: 240px" appearance="legacy">
+                            <mat-label>Contact Number<br>(Could be the WhatsApp Number)</mat-label>
+                            <br>
+                            <input required matInput [(ngModel)]='contactNumber' [formControl]="contactNumberFormControl">
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Other Contact Number (Optional)</mat-label>
-                            <input required matInput #input7 [(ngModel)]='contactNumber'>
+                            <mat-label>WhatsApp Number</mat-label>
+                            <input required matInput #input7 [(ngModel)]='whatsAppNumber' [formControl]="whatsAppNumberFormControl">
                         </mat-form-field>
                     </div>
-                    <!--                <div>-->
-                    <!--                    <mat-form-field style="width: 240px"  appearance="legacy">-->
-                    <!--                        <mat-label>Skype ID [optional]</mat-label>-->
-                    <!--                        <input matInput #input6 [(ngModel)]='skypeId'>-->
-                    <!--                    </mat-form-field>-->
-                    <!--                </div>-->
                     <div [hidden]="isDoctor">
                         <mat-form-field style="width: 240px"  appearance="legacy">
                             <mat-label>Known Allergies</mat-label>
@@ -113,19 +109,20 @@
                     </div>
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Preferred Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'"  #input8 [(ngModel)]='pass'>
+                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='pass' [formControl]="passFormControl">
                     </mat-form-field>
                     <br>
                     <mat-form-field style="width: 240px"  appearance="legacy">
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'" #input9 [(ngModel)]='conPass'>
+                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass' [formControl]="conPassFormControl">
                     </mat-form-field>
                     <br>
                     <br>
                     <button style="width: 240px" mat-flat-button color="primary" (click)="SignUp()">Sign Up</button>
                     <br>
                     <br>
-                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">** You have some unfilled fields</p>
+                    <p style="color: crimson" *ngIf="passwordMissMatch">Password and Confirmed password do not match!!</p>
+                    <br>
                 </div>
             </mat-tab>
         </ng-container>

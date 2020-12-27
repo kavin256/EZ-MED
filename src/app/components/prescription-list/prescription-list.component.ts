@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-prescription-list',
@@ -12,32 +14,35 @@ export class PrescriptionListComponent implements OnInit {
   prescriptionList: any [];
 
   constructor(
-      private router: Router
+      private router: Router,
+      private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
-    this.isDoctor = true;
-    // this.isDoctor = false;
+      // if not logged In this page should not be able to access
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
+      this.isDoctor = true;
+      // this.isDoctor = false;
 
-    this.prescriptionList = new Array<any>()
-    this.prescriptionList.push(
-        {
-          appointmentNumber: 356,
-          prescriptionTimeStamp: new Date(2020, 3, 2, 9, 45)
-        }
-    );
-    this.prescriptionList.push(
-        {
-          appointmentNumber: 423,
-          prescriptionTimeStamp: new Date(2020, 3, 2, 10, 30)
-        }
-    );
-    this.prescriptionList.push(
-        {
-          appointmentNumber: 987,
-          prescriptionTimeStamp: new Date(2020, 3, 2, 11, 20)
-        }
-    );
+      this.prescriptionList = new Array<any>()
+      this.prescriptionList.push(
+            {
+              appointmentNumber: 356,
+              prescriptionTimeStamp: new Date(2020, 3, 2, 9, 45)
+            }
+        );
+      this.prescriptionList.push(
+            {
+              appointmentNumber: 423,
+              prescriptionTimeStamp: new Date(2020, 3, 2, 10, 30)
+            }
+        );
+      this.prescriptionList.push(
+            {
+              appointmentNumber: 987,
+              prescriptionTimeStamp: new Date(2020, 3, 2, 11, 20)
+            }
+        );
   }
 
     selectPrescription() {

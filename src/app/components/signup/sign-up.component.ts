@@ -9,9 +9,10 @@ import {RequestOptions} from '../../models/request-options';
 import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {MatDialogConfig, MatRadioChange} from '@angular/material';
-import {ModalComponent} from '../modal/modal.component';
+import {MatRadioChange} from '@angular/material';
 import {MatDialog} from '@angular/material/dialog';
+import {FormControl} from '@angular/forms';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-signup',
@@ -21,6 +22,16 @@ import {MatDialog} from '@angular/material/dialog';
 export class SignUpComponent implements OnInit {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
+  titleFormControl = new FormControl('');
+  firstNameFormControl = new FormControl('');
+  lastNameFormControl = new FormControl('');
+  emailFormControl = new FormControl('');
+  genderFormControl = new FormControl('');
+  bDayFormControl = new FormControl('');
+  whatsAppNumberFormControl = new FormControl('');
+  contactNumberFormControl = new FormControl('');
+  passFormControl = new FormControl('');
+  conPassFormControl = new FormControl('');
 
   isDoctor = false;
   encryptionKey = 'ezmed';
@@ -44,6 +55,7 @@ export class SignUpComponent implements OnInit {
   isMale = true;
   knownAllergies: any;
   isIncompleteErrorAvailable = false;
+  passwordMissMatch = false;
   signUpResultObject = {
     isSignUp: undefined,
     userType: undefined
@@ -60,10 +72,12 @@ export class SignUpComponent implements OnInit {
       public dialog: MatDialog,
       private router: Router,
       private dataLoaderService: DataLoaderService,
-      private dataStore: DataStoreService
+      private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+    // if not logged In this page should not be able to access
+    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
     // this.resetFields();
 
     // if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
@@ -113,16 +127,53 @@ export class SignUpComponent implements OnInit {
     return password;
   }
 
-  validateInput(): boolean {
-    return false;
+  validateInput(isDoctor: boolean): boolean {
+    this.titleFormControl.markAsTouched();
+    this.firstNameFormControl.markAsTouched();
+    this.lastNameFormControl.markAsTouched();
+    this.emailFormControl.markAsTouched();
+    this.genderFormControl.markAsTouched();
+    this.bDayFormControl.markAsTouched();
+    this.whatsAppNumberFormControl.markAsTouched();
+    this.contactNumberFormControl.markAsTouched();
+    this.passFormControl.markAsTouched();
+    this.conPassFormControl.markAsTouched();
+
+    if (isDoctor) {
+      return !this.titleFormControl.invalid &&
+          !this.firstNameFormControl.invalid &&
+          !this.lastNameFormControl.invalid &&
+          !this.emailFormControl.invalid &&
+          !this.genderFormControl.invalid &&
+          !this.whatsAppNumberFormControl.invalid &&
+          !this.contactNumberFormControl.invalid &&
+          !this.passFormControl.invalid &&
+          !this.conPassFormControl.invalid;
+    } else {
+      return !this.titleFormControl.invalid &&
+          !this.firstNameFormControl.invalid &&
+          !this.lastNameFormControl.invalid &&
+          !this.emailFormControl.invalid &&
+          !this.genderFormControl.invalid &&
+          !this.bDayFormControl.invalid &&
+          !this.whatsAppNumberFormControl.invalid &&
+          !this.contactNumberFormControl.invalid &&
+          !this.passFormControl.invalid &&
+          !this.conPassFormControl.invalid;
+    }
   }
 
   SignUp() {
-    if ( this.validateInput() ) {
+    this.passwordMissMatch = false;
+    this.isIncompleteErrorAvailable = false;
+    if ( !this.validateInput(this.isDoctor) ) {
+      window.scroll(0, 0);
       this.isIncompleteErrorAvailable = true;
+    } else if (!this.pass || !this.conPass || this.pass !==  this.conPass) {
+      this.passwordMissMatch = true;
+      this.pass = null;
+      this.conPass = null;
     } else {
-      this.isIncompleteErrorAvailable = false;
-
       const userObj = new UserData();
       userObj.userName = this.email;
       userObj.password = this.pass;
@@ -133,7 +184,7 @@ export class SignUpComponent implements OnInit {
       userObj.birthday = this.birthday;
       userObj.contactNumber = this.contactNumber;
       userObj.whatsAppNumber = this.whatsAppNumber;
-      userObj.doctor = this.logInType === 'doctor';
+      userObj.doctor = this.isDoctor;
       userObj.userAllergies = this.knownAllergies;
 
       this.registerNewUser(userObj);
@@ -167,7 +218,7 @@ export class SignUpComponent implements OnInit {
   }
 
   logIn() {
-    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, false);
     setTimeout(() => { this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING); }, 1000);
     // todo: location.reload(); to update the header
   }
