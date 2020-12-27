@@ -73,7 +73,7 @@ export class DoctorProfileComponent implements OnInit {
     this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
         JSON.parse(JSON.stringify(this.userData.professionalType)));
 
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.username;
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.userName;
     this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
@@ -106,7 +106,7 @@ export class DoctorProfileComponent implements OnInit {
     this.selectedImage = event.target.file;
     const formData = new FormData();
     formData.append('image', this.selectedImage);
-    formData.append( 'username', this.userData.username);
+    formData.append( 'username', this.userData.userName);
 
     // sent request
     const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE;

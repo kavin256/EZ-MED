@@ -34,7 +34,7 @@ export class AppService {
       doctor: true,
       patientData: null,
       doctorData: {
-        username: 'johndoe@gmail.com',
+        userName: 'johndoe@gmail.com',
         title: DoctorTitles.DR,
         firstName: 'John',
         lastName: 'Doe',

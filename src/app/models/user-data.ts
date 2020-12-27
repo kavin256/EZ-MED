@@ -32,7 +32,7 @@ export class DoctorScheduleData {
 }
 
 export class DoctorSpecificData {
-    username?: string;
+    userName?: string;
     title: string;
     firstName: string;
     lastName: string;

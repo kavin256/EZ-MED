@@ -5,7 +5,7 @@
             <th style="width: 250px;" align="left">
                 <img src="./assets/img/ez_med_logo.png" width="100" (click)="goToHomePage()">
             </th>
-            <th style="width: 70px;" >
+            <th style="width: 100px;" >
                 <div align="center">
                     <img (click)="logoClick()" src="./assets/img/profilePicDefault2.png" width="40px"/>
                 </div>
@@ -13,7 +13,7 @@
                     <p style="align-content: center; padding-top: 6px; font-size: x-small">{{firstName}}</p>
                 </div>
                 <div *ngIf="!firstName" align="center">
-                    <button class="link" (click)="logoClick()" style="align-content: center; padding-top: 6px; font-size: x-small">Log in</button>
+                    <button class="link" (click)="logoClick()" style="align-content: center; padding-top: 6px; font-size: x-small">Login / Sign Up</button>
                 </div>
             </th>
         </tr>
