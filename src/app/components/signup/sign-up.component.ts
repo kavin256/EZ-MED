@@ -2,13 +2,16 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import './sign-up.component.css';
 import * as CryptoJS from 'crypto-js';
 import {UserData} from '../../models/user-data';
-import {Constants, DoctorTitles} from '../../utils/Constants';
+import {Constants, DoctorTitles, MODAL_TYPES} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthResponse} from '../../models/auth-response';
 import {RequestOptions} from '../../models/request-options';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MatDialogConfig, MatRadioChange} from '@angular/material';
+import {ModalComponent} from '../modal/modal.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-signup',
@@ -19,11 +22,11 @@ export class SignUpComponent implements OnInit {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
 
-
+  isDoctor = false;
   encryptionKey = 'ezmed';
   hide = true;
-  logInType = 'doctor';
-  // logInType = 'patient';
+  // logInType = 'doctor';
+  logInType = 'patient';
   firstName: string;
   lastName: string;
   email: string;
@@ -54,16 +57,19 @@ export class SignUpComponent implements OnInit {
   ];
 
   constructor(
+      public dialog: MatDialog,
       private router: Router,
       private dataLoaderService: DataLoaderService,
       private dataStore: DataStoreService
   ) { }
 
   ngOnInit() {
-    if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
-      this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
-      this.logInType = this.signUpResultObject.userType;
-    }
+    // this.resetFields();
+
+    // if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
+    //   this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
+    //   this.logInType = this.signUpResultObject.userType;
+    // }
 
     // console.log(this.encryptPassword('milinda'));
   }
@@ -75,11 +81,24 @@ export class SignUpComponent implements OnInit {
     this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+            sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
             if (data.data[0].doctor) {
+              // location.reload();
+              sessionStorage.setItem(SessionStorageKeys.userId, null);
+              // todo: uncomment
+              // sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].doctorData.userName));
+              sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
               this.router.navigate(['doctor/dashboard']).then(r => {
+                location.reload();
               });
             } else if (!data.data[0].doctor) {
+              // location.reload();
+              sessionStorage.setItem(SessionStorageKeys.userId, null);
+              // todo: uncomment
+              // sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].patientData.userName));
+              sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
               this.router.navigate(['user/dashboard']).then(r => {
+                location.reload();
               });
             }
           } else if (data && data.status && data.status.code === -1) {
@@ -132,5 +151,24 @@ export class SignUpComponent implements OnInit {
         break;
       }
     }
+  }
+
+  setIsDoctor($event: MatRadioChange) {
+    this.isDoctor = JSON.parse($event.value);
+    this.resetFields();
+  }
+
+  private resetFields() {
+    this.birthday = null;
+    this.pass = null;
+    this.conPass = null;
+    this.knownAllergies = '';
+    this.isIncompleteErrorAvailable = false;
+  }
+
+  logIn() {
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
+    setTimeout(() => { this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING); }, 1000);
+    // todo: location.reload(); to update the header
   }
 }

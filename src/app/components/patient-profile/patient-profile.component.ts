@@ -44,4 +44,10 @@ export class PatientProfileComponent implements OnInit {
   toggleEditable(editable: boolean) {
     this.editable = editable;
   }
+
+  logOut() {
+    sessionStorage.clear();
+    // location.reload();
+    this.router.navigate(['signup']).then(r => {});
+  }
 }

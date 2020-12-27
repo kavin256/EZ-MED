@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {DoctorType} from '../../utils/Constants';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DatePipe} from '@angular/common';
+import {timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-booking-enter-time',
@@ -68,6 +69,8 @@ export class BookingEnterTimeComponent implements OnInit {
   selectedAppointmentId = '';
   consultationTime = '8.00 P.M.';
   summaryShown = false;
+  loggedInUser = null;
+  showRedirectionMessage = false;
 
   constructor(
       private router: Router,
@@ -76,6 +79,7 @@ export class BookingEnterTimeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
     this.loadProfessional();
     this.loadAvailableAppointmentsForProfessional();
   }
@@ -124,8 +128,12 @@ export class BookingEnterTimeComponent implements OnInit {
   }
 
   navigateToPaymentOrLogIn() {
-    this.router.navigate(['confirmation']).then(r => {
-    });
+    if (!this.loggedInUser) {
+      this.showRedirectionMessage = true;
+    } else {
+      this.router.navigate(['confirmation']).then(r => {
+      });
+    }
   }
 
   getTimeSlots(selectedDate: any) {
@@ -229,6 +237,11 @@ export class BookingEnterTimeComponent implements OnInit {
 
   goToSearchProfessionals() {
     this.router.navigate(['searchProfessionals']).then(r => {
+    });
+  }
+
+  logIn() {
+    this.router.navigate(['signup']).then(r => {
     });
   }
 }

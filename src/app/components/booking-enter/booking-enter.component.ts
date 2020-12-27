@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DoctorType} from '../../utils/Constants';
+import {Router} from '@angular/router';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-booking-enter',
@@ -29,7 +31,9 @@ export class BookingEnterComponent implements OnInit {
     {value: 'whatsapp', viewValue: 'Whatsapp'}
   ];
   skypeID: any;
-  constructor() { }
+  constructor(
+      private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -41,4 +45,9 @@ export class BookingEnterComponent implements OnInit {
   saveSkype(b: boolean) {
     //
   }
+
+    goBack() {
+      this.router.navigate(['appointmentTime']).then(r => {
+      });
+    }
 }

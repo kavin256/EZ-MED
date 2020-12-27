@@ -12,7 +12,7 @@ import {
     MatDividerModule, MatExpansionModule,
     MatIconModule, MatNativeDateModule,
     MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
-    MatTabsModule, MatCheckboxModule, MatDialogModule, MatPaginatorModule
+    MatTabsModule, MatCheckboxModule, MatDialogModule, MatPaginatorModule, MatSlideToggleModule, MatProgressSpinnerModule
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -49,7 +49,7 @@ export function initialize(app: AppService) {
         await app.loadModuleConfigurations();
         await app.loadPermissions();
         await app.userLogin();
-        await app.loadUserDetails();
+        // await app.loadUserDetails();
     };
 }
 
@@ -109,7 +109,9 @@ export function initialize(app: AppService) {
         NgbAlertModule,
         MatDialogModule,
         HttpClientModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule
     ],
   providers: [
       DatePipe,

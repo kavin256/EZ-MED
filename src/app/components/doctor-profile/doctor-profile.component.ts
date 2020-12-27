@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, currencyCodes, DoctorTitles, DoctorType, Specializations} from '../../utils/Constants';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
@@ -15,6 +15,8 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class DoctorProfileComponent implements OnInit {
   selectedImage: File;
   // profileUsername = 'dfg';
+  editable = false;
+  loggedInUser = null;
   userData: DoctorSpecificData;
 
   titles = [
@@ -42,8 +44,6 @@ export class DoctorProfileComponent implements OnInit {
     {value: Specializations.Endocrinologist}
   ];
 
-  editable = false;
-
   constructor(
       private router: Router,
       private dataStore: DataStoreService,
@@ -52,9 +52,11 @@ export class DoctorProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.dataStore.get(DataKey.loggedInUser).getValue() && this.dataStore.get(DataKey.loggedInUser).getValue().doctorData) {
-      this.userData = this.dataStore.get(DataKey.loggedInUser).getValue().doctorData;
+    this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+    if (this.loggedInUser && this.loggedInUser.doctorData) {
+      this.userData = this.loggedInUser.doctorData;
     }
+
     // converting professionalType to a user friendly readable format
     this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
         JSON.parse(JSON.stringify(this.userData.professionalType)));

@@ -27,6 +27,7 @@ export enum DoctorTitles {
 export enum MODAL_TYPES {
     SIGN_UP = 'SIGN_UP',
     PROFILE = 'PROFILE',
+    LOADING = 'LOADING'
 }
 
 export enum currencyCodes {

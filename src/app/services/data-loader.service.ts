@@ -3,8 +3,11 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {RequestOptions} from '../models/request-options';
 import {DataKey, DataStoreService} from './data-store.service';
 import {BehaviorSubject} from 'rxjs';
-import {Constants} from '../utils/Constants';
+import {Constants, MODAL_TYPES} from '../utils/Constants';
 import {take} from 'rxjs/operators';
+import {MatDialogConfig} from '@angular/material';
+import {ModalComponent} from '../components/modal/modal.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +15,7 @@ import {take} from 'rxjs/operators';
 export class DataLoaderService {
 
     constructor(
+        public dialog: MatDialog,
         private http: HttpClient,
         private dataStore: DataStoreService
     ) {}
@@ -158,5 +162,25 @@ export class DataLoaderService {
     // logout from the app
     public logOut() {
         localStorage.removeItem(Constants.EZMED_AUTH);
+    }
+
+    public activateLoader(activate: boolean, MODAL_TYPE: MODAL_TYPES) {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.data = {
+            modalType: MODAL_TYPE
+        };
+        dialogConfig.disableClose = true;
+        dialogConfig.width = '300px';
+
+        let dialogRef;
+        if (activate) {
+            dialogRef = this.dialog.open(ModalComponent, dialogConfig);
+            dialogRef.afterClosed().subscribe(result => {
+                // console.log('dialogRef.afterClosed().subscribe');
+            });
+        } else {
+            dialogRef = this.dialog.closeAll();
+        }
     }
 }

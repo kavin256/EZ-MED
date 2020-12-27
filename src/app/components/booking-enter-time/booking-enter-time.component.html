@@ -1,5 +1,5 @@
 <div class="mat-card-style" align="center">
-    <ng-container *ngIf="!summaryShown">
+    <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
 
         <h4>Select Your Convenient Date and Time</h4>
         <mat-form-field  style="width: 240px" >
@@ -10,7 +10,7 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <ng-container *ngIf="selectedDate !== undefined">
+        <ng-container *ngIf="selectedDate !== undefined && selectedDate !== null">
             <mat-form-field  style="width: 240px" >
                 <mat-label>Time</mat-label>
                 <mat-select [(value)]="selectedAppointmentId">
@@ -20,7 +20,7 @@
                 </mat-select>
             </mat-form-field>
         </ng-container>
-        <button [disabled]="selectedDate === undefined || selectedAppointmentId === undefined" mat-raised-button color="primary" style="width: 240px" (click)="continueClicked(true)">Continue</button>
+        <button [disabled]="!selectedDate || !selectedAppointmentId" mat-raised-button color="primary" style="width: 240px" (click)="continueClicked(true)">Continue</button>
         <br>
         <br>
 
@@ -50,7 +50,7 @@
 <!--        </ng-container>-->
 
     </ng-container>
-    <ng-container *ngIf="summaryShown">
+    <ng-container *ngIf="summaryShown && !showRedirectionMessage">
         <div style="width: 240px">
             <p>** You are about to book a consultation with <b>{{doctor.name}}</b> on <b>{{selectedDate}}</b>. Wait for the Skype call from him/her at around <b>{{getDisplaySelectedTime(selectedAppointmentId)}}</b><br><br>
                 Make sure your Skype call notifications are switched on.<br><br>
@@ -61,6 +61,16 @@
         <br>
 
         <button mat-raised-button color="secondary" style="width: 240px"  (click)="continueClicked(false)">Back</button>
+    </ng-container>
+    <ng-container *ngIf="showRedirectionMessage">
+        <h5 style="color: crimson">Sorry, You have to log in to confirm the appointment!</h5>
+        <br>
+
+        <button (click)="logIn()" mat-raised-button color="primary" style="width: 240px">Log In</button>
+        <br>
+        <br>
+        <button mat-raised-button color="secondary" style="width: 240px" (click)="showRedirectionMessage = !showRedirectionMessage">Back</button>
+
     </ng-container>
     <br>
     <br>

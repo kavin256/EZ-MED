@@ -58,3 +58,9 @@ export enum DataKey {
   signUpResultObject,
   availableAppointmentsForProfessional
 }
+
+export enum SessionStorageKeys {
+  loggedInUser = 'loggedInUser',
+  userId = 'userId',
+  userName = 'userName'
+}

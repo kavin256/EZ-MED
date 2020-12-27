@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Constants, currencyCodes, DoctorTitles, DoctorType} from './utils/Constants';
-import {DataKey, DataStoreService} from './services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from './services/data-store.service';
 import {UserData} from './models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataLoaderService} from './services/data-loader.service';
@@ -25,8 +25,8 @@ export class AppService {
   }
 
   public loadUserDetails() {
-    // this.dataStore.set(DataKey.loggedInUser, this.loadUserDataFromMock(), true);
     this.dataStore.set(DataKey.loggedInUser, this.loadUserData(), true);
+    sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(this.loadUserData()));
   }
 
   private loadUserDataFromMock() {
@@ -61,28 +61,45 @@ export class AppService {
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
             userData = data.data[0];
+            return userData;
           } else if (data && data.status && data.status.code === -1) {
-            // this.dataStore.set(DataKey.loggedInUser, null);
+            return null;
+
+            return {
+              "patientData": null,
+              "doctorData": {
+                "userName": "dfg",
+                "title": "Dr",
+                "firstName": "John",
+                "lastName": "Doe",
+                "professionalType": "CON",
+                "specialityA": "Pulmonologist",
+                "specialityB": "Dermatologist",
+                "specialityC": "",
+                "regNo": "reg/34234235",
+                "qualifications": "MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India",
+                "priceForAppointment": '',
+                "availableForAppointment": false
+              },
+              "doctor": true
+            };
+            return {
+              "patientData": {
+                "userName": "kavin88@abc.com",
+                "title": "Mr",
+                "firstName": "Milinda",
+                "lastName": "Sandaruwan",
+                "birthday": "1994-12-31T00:00:00.000+0000",
+                "address": null,
+                "contactNumber": "0123456789",
+                "whatsAppNumber": "0123456789",
+                "userAllergies": "mata allergies nehe",
+                "male": false
+              },
+              "doctorData": null,
+              "doctor": false
+            };
           }
         });
-    // return userData;
-    return {
-      "patientData": null,
-      "doctorData": {
-        "userName": "dfg",
-        "title": "Dr",
-        "firstName": "John",
-        "lastName": "Doe",
-        "professionalType": "CON",
-        "specialityA": "Pulmonologist",
-        "specialityB": "Dermatologist",
-        "specialityC": "",
-        "regNo": "reg/34234235",
-        "qualifications": "MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India",
-        "priceForAppointment": '',
-        "availableForAppointment": false
-      },
-      "doctor": true
-    };
   }
 }
