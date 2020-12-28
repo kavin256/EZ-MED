@@ -8,6 +8,7 @@ export enum Constants {
     UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/doctor/data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
     GET_USER_DATA = '/user/user-data/',
+    AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
     // UPDATE_PROFESSIONAL_WORK_DATA = '/user/test?username=dfg',
 
@@ -24,6 +25,14 @@ export enum DoctorTitles {
     MS = 'Ms',
     PROF = 'Prof',
 }
+
+export const PatientTitles = [
+    'Dr',
+    'Mr',
+    'Mrs',
+    'Ms',
+    'Prof'
+];
 
 export enum MODAL_TYPES {
     LOADING = 'LOADING'

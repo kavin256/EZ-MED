@@ -13,6 +13,7 @@ import {MatRadioChange} from '@angular/material';
 import {MatDialog} from '@angular/material/dialog';
 import {FormControl} from '@angular/forms';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {AuthModel} from '../../models/auth-model';
 
 @Component({
   selector: 'app-signup',
@@ -77,7 +78,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
     // this.resetFields();
 
     // if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
@@ -95,22 +96,22 @@ export class SignUpComponent implements OnInit {
     this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-            sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+            localStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
             if (data.data[0].doctor) {
               // location.reload();
-              sessionStorage.setItem(SessionStorageKeys.userId, null);
+              localStorage.setItem(SessionStorageKeys.userId, null);
               // todo: uncomment
-              // sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].doctorData.userName));
-              sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
+              // localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].doctorData.userName));
+              localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
               this.router.navigate(['doctor/dashboard']).then(r => {
                 location.reload();
               });
             } else if (!data.data[0].doctor) {
               // location.reload();
-              sessionStorage.setItem(SessionStorageKeys.userId, null);
+              localStorage.setItem(SessionStorageKeys.userId, null);
               // todo: uncomment
-              // sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].patientData.userName));
-              sessionStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
+              // localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].patientData.userName));
+              localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
               this.router.navigate(['user/dashboard']).then(r => {
                 location.reload();
               });
@@ -218,8 +219,37 @@ export class SignUpComponent implements OnInit {
   }
 
   logIn() {
-    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, false);
-    setTimeout(() => { this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING); }, 1000);
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+    // setTimeout(() => {  }, 1000);
+
+    // create url and send request
+    const url = Constants.BASE_URL + Constants.AUTHENTICATE;
+    const obj: AuthModel = new AuthModel();
+    // obj.username = this.email;
+    obj.username = 'foo12345';
+    // obj.password = this.pass;
+    obj.password = 'foo';
+    this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
+        .then((data: any) => {
+          if (data && data.jwt) {
+            localStorage.setItem(Constants.EZMED_AUTH, data.jwt);
+            if (this.dataHandlerService.loadUserData(this.email, this.dataLoaderService)) {
+              const user = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+              if (user && user.doctor) {
+                this.router.navigate(['doctor/dashboard']).then(r => {
+                  location.reload();
+                });
+              } else if (user && !user.doctor) {
+                this.router.navigate(['user/dashboard']).then(r => {
+                  location.reload();
+                });
+              }
+            }
+          } else {
+            alert('Something went wrong. Please contact support !!');
+          }
+          this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+        });
     // todo: location.reload(); to update the header
   }
 }

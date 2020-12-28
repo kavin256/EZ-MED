@@ -20,14 +20,8 @@ export class DataLoaderService {
     ) {}
 
     // make a GET request
-    public get<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey) {
+    public get<T>(url: string, param: HttpParams, headers: HttpHeaders) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        this.dataStore.set(DataKey.error, {});
-
-        if (this.dataStore.has(dataKey, true)) {
-            this.dataStore.set(dataKey, new BehaviorSubject(null));
-        }
-
         return new Promise(resolve => {
             this.http.get<T>(url, {
                 headers: options.headers,
@@ -36,8 +30,6 @@ export class DataLoaderService {
                 // tslint:disable-next-line:no-shadowed-variable
                 ( data) => {
                     resolve(data);
-                    // @ts-ignore
-                    // this.dataStore.set(dataKey, data.data, true);
                 });
         });
     }
@@ -85,17 +77,6 @@ export class DataLoaderService {
                     this.dataStore.set(dataKey, data.data, true);
                 });
         });
-        // this.http.put<T>(url, data, {
-        //     headers: options.headers,
-        //     params: options.params
-        // }).subscribe(
-        //     result => {
-        //         this.dataStore.set(dataKey, result, true);
-        //     },
-        //     error => {
-        //         this.dataStore.set(DataKey.error, error, true);
-        //     }
-        // );
     }
 
     // make a DELETE request
@@ -143,19 +124,18 @@ export class DataLoaderService {
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
-
-        this.http.post<T>(url, data, {
-            headers: options.headers,
-            params: options.params
-        }).subscribe(
-            result => {
-                this.dataStore.set(DataKey.loggedUser, data, true);
-                // @ts-ignore
-                localStorage.setItem(Constants.EZMED_AUTH, result.jwt);
-            },
-            error => {
-                this.dataStore.set(DataKey.error, error, true);
-            });
+        return new Promise(resolve => {
+            this.http.post<T>(url, data, {
+                headers: options.headers,
+                params: options.params
+            }).subscribe(
+                // tslint:disable-next-line:no-shadowed-variable
+                ( data) => {
+                    resolve(data);
+                    // @ts-ignore
+                    this.dataStore.set(dataKey, data.data, true);
+                });
+        });
     }
 
     // logout from the app

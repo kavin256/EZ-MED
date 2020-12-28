@@ -82,7 +82,7 @@ export class BookingEnterTimeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+    this.loggedInUser = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
     this.loadProfessional();
     this.loadAvailableAppointmentsForProfessional();
   }

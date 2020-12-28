@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {PatientTitles} from '../../utils/Constants';
+import {FormControl} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-patient-profile',
@@ -10,35 +13,56 @@ import {DataHandlerService} from '../../services/data-handler.service';
 })
 export class PatientProfileComponent implements OnInit {
 
-  patient = {
-    id: 1,
-    title: 'Mr.',
-    birthday: '03-05-1994',
-    age: 31,
-    name: 'John Doe',
-    medicalHistory: 'long term gastritis patient',
-    allergies: 'allergic to hindi songs',
-  };
+  patient;
+  patientAge;
+  dateFormControl;
 
-  titles = [
-    {value: 'Dr.'},
-    {value: 'Mr.'},
-    {value: 'Mrs.'},
-    {value: 'Ms.'},
-    {value: 'Prof.'}
-  ];
+// {
+//   "firstName": "Milinda",
+//   "lastName": "Sandaruwan",
+//   "userName": "milinda6@aubc.com",
+//   "password": null,
+//   "title": "Mr",
+//   "birthday": "1994-12-31T00:00:00.000+0000",
+//   "address": null,
+//   "contactNumber": "0123456789",
+//   "whatsAppNumber": "0123456789",
+//   "userAllergies": "",
+//   "registeredDate": "2020-12-24T08:42:10.374+0000",
+//   "professionalType": null,
+//   "specialityA": null,
+//   "specialityB": null,
+//   "specialityC": null,
+//   "regNo": null,
+//   "qualifications": null,
+//   "priceForAppointment": null,
+//   "availableForAppointment": false,
+//   "averageMinutesPerAppointment": null,
+//   "doctor": false,
+//   "male": null
+// }
+
+  titles = PatientTitles;
 
   title = 'MY PROFILE';
   editable = false;
 
   constructor(
       private router: Router,
+      private datePipe: DatePipe,
       private dataHandlerService: DataHandlerService
-  ) { }
+  ) {
+    this.datePipe = new DatePipe('en-US');
+  }
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
+
+    this.patient = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+    if (this.patient) {
+      this.prepareFrontEndData(this.patient);
+    }
   }
 
   goToMyAppointments() {
@@ -46,13 +70,18 @@ export class PatientProfileComponent implements OnInit {
     });
   }
 
+  save() {
+    this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'dd/MM/yyyy');
+  }
   toggleEditable(editable: boolean) {
+    if (!editable) {
+      this.save();
+    }
     this.editable = editable;
   }
 
-  logOut() {
-    sessionStorage.clear();
-    // location.reload();
-    this.router.navigate(['signup']).then(r => {});
+  private prepareFrontEndData(patient: any) {
+    this.patientAge = this.dataHandlerService.calculateAgeFromJavaBirthdayDate(patient.birthday);
+    this.dateFormControl = new FormControl(new Date(patient.birthday));
   }
 }

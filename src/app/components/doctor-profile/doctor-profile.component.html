@@ -125,6 +125,9 @@
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
         <br>
         <br>
+        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut()">Log Out</button>
+        <br>
+        <br>
 
         <br>
         <ng-container  *ngIf="userData?.availableForAppointment">

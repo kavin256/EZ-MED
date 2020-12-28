@@ -89,7 +89,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
       if (this.selectedSpecialization && this.selectedSpecialization !== 'Any') {
         httpParams = httpParams.append('specialization', this.selectedSpecialization);
       }
-      this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders(), DataKey.createdUser)
+      this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
               this.resetVariables();
@@ -124,7 +124,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
   private loadProfessionalData($event: string) {
     // create url and send request
     const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
-    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser)
+    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
             this.dataStore.set(DataKey.availableAppointmentsForProfessional, data.data[0]);

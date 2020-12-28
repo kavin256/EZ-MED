@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Constants, currencyCodes, DoctorTitles, DoctorType} from './utils/Constants';
+import {currencyCodes, DoctorTitles, DoctorType} from './utils/Constants';
 import {DataKey, DataStoreService, SessionStorageKeys} from './services/data-store.service';
-import {UserData} from './models/user-data';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataLoaderService} from './services/data-loader.service';
+import {DataHandlerService} from './services/data-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,6 @@ export class AppService {
 
   constructor(
       private dataStore: DataStoreService,
-      private dataLoaderService: DataLoaderService
   ) { }
 
   public loadModuleConfigurations() {
@@ -25,8 +22,8 @@ export class AppService {
   }
 
   public loadUserDetails() {
-    this.dataStore.set(DataKey.loggedInUser, this.loadUserData(), true);
-    sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(this.loadUserData()));
+    // this.dataStore.set(DataKey.loggedInUser, this.dataHandlerService.loadUserData(), true);
+    // localStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(this.dataHandlerService.loadUserData()));
   }
 
   private loadUserDataFromMock() {
@@ -54,52 +51,4 @@ export class AppService {
     return data;
   }
 
-  private loadUserData() {
-    let userData = null;
-    const url = Constants.BASE_URL + Constants.GET_USER_DATA + 'dfg';
-    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.loggedInUser)
-        .then((data: any) => {
-          if (data && data.status && data.status.code === 1) {
-            userData = data.data[0];
-            return userData;
-          } else if (data && data.status && data.status.code === -1) {
-            return null;
-
-            return {
-              "patientData": null,
-              "doctorData": {
-                "userName": "dfg",
-                "title": "Dr",
-                "firstName": "John",
-                "lastName": "Doe",
-                "professionalType": "CON",
-                "specialityA": "Pulmonologist",
-                "specialityB": "Dermatologist",
-                "specialityC": "",
-                "regNo": "reg/34234235",
-                "qualifications": "MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India",
-                "priceForAppointment": '',
-                "availableForAppointment": false
-              },
-              "doctor": true
-            };
-            return {
-              "patientData": {
-                "userName": "kavin88@abc.com",
-                "title": "Mr",
-                "firstName": "Milinda",
-                "lastName": "Sandaruwan",
-                "birthday": "1994-12-31T00:00:00.000+0000",
-                "address": null,
-                "contactNumber": "0123456789",
-                "whatsAppNumber": "0123456789",
-                "userAllergies": "mata allergies nehe",
-                "male": false
-              },
-              "doctorData": null,
-              "doctor": false
-            };
-          }
-        });
-  }
 }

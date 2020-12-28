@@ -1,8 +1,8 @@
 <div class="mat-card-style">
 
     <app-page-title [title]="title"></app-page-title>
-    <h5 *ngIf="!editable">Name: {{patient.title}} {{patient.name}}</h5>
-    <h6 *ngIf="!editable">Age: {{patient.age}}</h6>
+    <h5 *ngIf="!editable">{{patient.title}}. {{patient.firstName}} {{patient.lastName}}</h5>
+    <h6 *ngIf="!editable">{{patientAge}} yrs</h6>
     <br>
 
     <ng-container *ngIf="editable">
@@ -10,23 +10,28 @@
             <mat-label>Title</mat-label>
             <mat-select [(value)]="patient.title">
                 <ng-container *ngFor="let title of titles" >
-                    <mat-option value="{{title.value}}">
-                        {{title.value}}
+                    <mat-option value="{{title}}">
+                        {{title}}
                     </mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Name: {{patient.name}}</mat-label>
-            <input matInput placeholder="" [value]="patient.name">
+            <mat-label>First Name: {{patient.firstName}}</mat-label>
+            <input matInput placeholder="" [value]="patient.firstName">
         </mat-form-field>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Birthday:</mat-label>
-            <input matInput placeholder=""  value="{{patient.birthday}}">
+        <mat-form-field style="width: 240px" class="example-full-width">
+            <mat-label>Last Name: {{patient.lastName}}</mat-label>
+            <input matInput placeholder="" [value]="patient.lastName">
         </mat-form-field>
 
+        <mat-form-field style="width: 240px" >
+            <input matInput required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="dateFormControl">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker  #picker1></mat-datepicker>
+        </mat-form-field>
         <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Allergies:</mat-label>
             <textarea matInput placeholder="" value="{{patient.allergies}}"></textarea>
@@ -47,19 +52,12 @@
     </ng-container>
 
     <ng-container *ngIf="!editable">
-
         <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
         <button style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="logOut()">Log Out</button>
-        <br>
-        <br>
-<!--        <button style="width: 320px" mat-stroked-button>My Finances</button>-->
-<!--        <br>-->
-<!--        <br>-->
-
+        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut()">Log Out</button>
     </ng-container>
 </div>

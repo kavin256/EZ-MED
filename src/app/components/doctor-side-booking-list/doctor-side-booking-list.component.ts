@@ -148,7 +148,7 @@ export class DoctorSideBookingListComponent implements OnInit {
   ngOnInit() {
     this.selectedSlot = this.bookingListSlot2;
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
   }
 
   selectBooking($event: string) {
