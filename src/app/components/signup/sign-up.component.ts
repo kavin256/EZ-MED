@@ -2,18 +2,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import './sign-up.component.css';
 import * as CryptoJS from 'crypto-js';
 import {UserData} from '../../models/user-data';
-import {Constants, DoctorTitles, MODAL_TYPES} from '../../utils/Constants';
+import {Constants, MODAL_TYPES, PatientTitles} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthResponse} from '../../models/auth-response';
 import {RequestOptions} from '../../models/request-options';
-import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
+import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatRadioChange} from '@angular/material';
-import {MatDialog} from '@angular/material/dialog';
 import {FormControl} from '@angular/forms';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {AuthModel} from '../../models/auth-model';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -37,8 +37,6 @@ export class SignUpComponent implements OnInit {
   isDoctor = false;
   encryptionKey = 'ezmed';
   hide = true;
-  // logInType = 'doctor';
-  logInType = 'patient';
   firstName: string;
   lastName: string;
   email: string;
@@ -53,65 +51,43 @@ export class SignUpComponent implements OnInit {
     {value: 'male', viewValue: 'Male'},
     {value: 'female', viewValue: 'Female'}
   ];
-  isMale = true;
+  male = true;
   knownAllergies: any;
   isIncompleteErrorAvailable = false;
   passwordMissMatch = false;
-  signUpResultObject = {
-    isSignUp: undefined,
-    userType: undefined
-  };
-  titles = [
-    {value: DoctorTitles.DR},
-    {value: DoctorTitles.MR},
-    {value: DoctorTitles.MRS},
-    {value: DoctorTitles.MS},
-    {value: DoctorTitles.PROF},
-  ];
+  titles = PatientTitles;
 
   constructor(
-      public dialog: MatDialog,
       private router: Router,
+      private datePipe: DatePipe,
       private dataLoaderService: DataLoaderService,
       private dataHandlerService: DataHandlerService
-  ) { }
+  ) {
+    this.datePipe = new DatePipe('en-US');
+  }
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
-    // this.resetFields();
-
-    // if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
-    //   this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
-    //   this.logInType = this.signUpResultObject.userType;
-    // }
-
-    // console.log(this.encryptPassword('milinda'));
+    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
   }
 
   registerNewUser(user: UserData) {
     user.password = this.encryptPassword(user.password);
+    user.birthday = this.datePipe.transform(this.bDayFormControl.value, 'yyyy-MM-dd');
+
     // create url and send request
     const url = Constants.BASE_URL + Constants.CREATE_NEW_USER;
     this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-            localStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+            localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
             if (data.data[0].doctor) {
-              // location.reload();
-              localStorage.setItem(SessionStorageKeys.userId, null);
-              // todo: uncomment
-              // localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].doctorData.userName));
-              localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
+              localStorage.setItem(LocalStorageKeys.userName, JSON.stringify(data.data[0].userName));
               this.router.navigate(['doctor/dashboard']).then(r => {
                 location.reload();
               });
             } else if (!data.data[0].doctor) {
-              // location.reload();
-              localStorage.setItem(SessionStorageKeys.userId, null);
-              // todo: uncomment
-              // localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].patientData.userName));
-              localStorage.setItem(SessionStorageKeys.userName, JSON.stringify(data.data[0].userName));
+              localStorage.setItem(LocalStorageKeys.userName, JSON.stringify(data.data[0].userName));
               this.router.navigate(['user/dashboard']).then(r => {
                 location.reload();
               });
@@ -181,7 +157,7 @@ export class SignUpComponent implements OnInit {
       userObj.firstName = this.firstName;
       userObj.lastName = this.lastName;
       userObj.title = this.title;
-      userObj.isMale = this.isMale;
+      userObj.male = this.male;
       userObj.birthday = this.birthday;
       userObj.contactNumber = this.contactNumber;
       userObj.whatsAppNumber = this.whatsAppNumber;
@@ -195,11 +171,11 @@ export class SignUpComponent implements OnInit {
   setGender(value: any) {
     switch (value) {
       case 'female': {
-        this.isMale = false;
+        this.male = false;
         break;
       }
       case 'male': {
-        this.isMale = true;
+        this.male = true;
         break;
       }
     }
@@ -220,21 +196,23 @@ export class SignUpComponent implements OnInit {
 
   logIn() {
     this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    // setTimeout(() => {  }, 1000);
 
     // create url and send request
     const url = Constants.BASE_URL + Constants.AUTHENTICATE;
     const obj: AuthModel = new AuthModel();
+
+    // Todo: handle
     // obj.username = this.email;
     obj.username = 'foo12345';
     // obj.password = this.pass;
     obj.password = 'foo';
+
     this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
         .then((data: any) => {
           if (data && data.jwt) {
-            localStorage.setItem(Constants.EZMED_AUTH, data.jwt);
+            localStorage.setItem(Constants.EZ_MED_AUTH, data.jwt);
             if (this.dataHandlerService.loadUserData(this.email, this.dataLoaderService)) {
-              const user = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+              const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
               if (user && user.doctor) {
                 this.router.navigate(['doctor/dashboard']).then(r => {
                   location.reload();
@@ -250,6 +228,5 @@ export class SignUpComponent implements OnInit {
           }
           this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
-    // todo: location.reload(); to update the header
   }
 }

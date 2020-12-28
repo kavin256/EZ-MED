@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {SessionStorageKeys} from '../../services/data-store.service';
+import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {PatientTitles} from '../../utils/Constants';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-patient-profile',
@@ -15,37 +16,20 @@ export class PatientProfileComponent implements OnInit {
 
   patient;
   patientAge;
-  dateFormControl;
+  gender;
 
-// {
-//   "firstName": "Milinda",
-//   "lastName": "Sandaruwan",
-//   "userName": "milinda6@aubc.com",
-//   "password": null,
-//   "title": "Mr",
-//   "birthday": "1994-12-31T00:00:00.000+0000",
-//   "address": null,
-//   "contactNumber": "0123456789",
-//   "whatsAppNumber": "0123456789",
-//   "userAllergies": "",
-//   "registeredDate": "2020-12-24T08:42:10.374+0000",
-//   "professionalType": null,
-//   "specialityA": null,
-//   "specialityB": null,
-//   "specialityC": null,
-//   "regNo": null,
-//   "qualifications": null,
-//   "priceForAppointment": null,
-//   "availableForAppointment": false,
-//   "averageMinutesPerAppointment": null,
-//   "doctor": false,
-//   "male": null
-// }
+  // form controls
+  firstNameFormControl = new FormControl('');
+  lastNameFormControl = new FormControl('');
+  emailFormControl = new FormControl('');
+  dateFormControl = new FormControl('');
+  whatsAppNumberFormControl = new FormControl('');
+  contactNumberFormControl = new FormControl('');
 
   titles = PatientTitles;
-
   title = 'MY PROFILE';
   editable = false;
+  genders = ['male', 'female'];
 
   constructor(
       private router: Router,
@@ -57,9 +41,9 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
 
-    this.patient = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+    this.patient = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     if (this.patient) {
       this.prepareFrontEndData(this.patient);
     }
@@ -70,9 +54,24 @@ export class PatientProfileComponent implements OnInit {
     });
   }
 
-  save() {
-    this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'dd/MM/yyyy');
+  setGender(value: any) {
+    switch (value) {
+      case 'female': {
+        this.patient.male = false;
+        break;
+      }
+      case 'male': {
+        this.patient.male = true;
+        break;
+      }
+    }
   }
+
+  save() {
+    this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'yyyy-MM-dd');
+    this.setGender(this.gender);
+  }
+
   toggleEditable(editable: boolean) {
     if (!editable) {
       this.save();
@@ -80,8 +79,9 @@ export class PatientProfileComponent implements OnInit {
     this.editable = editable;
   }
 
-  private prepareFrontEndData(patient: any) {
+  private prepareFrontEndData(patient: UserData) {
     this.patientAge = this.dataHandlerService.calculateAgeFromJavaBirthdayDate(patient.birthday);
     this.dateFormControl = new FormControl(new Date(patient.birthday));
+    this.gender = patient.male ? 'male' : 'female';
   }
 }

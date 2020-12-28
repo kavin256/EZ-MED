@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BookingStatus} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {MatSnackBar} from '@angular/material';
-import {SessionStorageKeys} from '../../services/data-store.service';
+import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
@@ -54,7 +54,7 @@ export class DoctorSideBookingComponent implements OnInit {
 
   ngOnInit() {
       // if not logged In this page should not be able to access
-      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
   }
 
   userConsent() {

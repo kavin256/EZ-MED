@@ -4,7 +4,7 @@ export class UserData {
     firstName: string;
     lastName: string;
     title: string;
-    isMale: boolean;
+    male: boolean;
     birthday: any;
     contactNumber: string;
     whatsAppNumber: string;

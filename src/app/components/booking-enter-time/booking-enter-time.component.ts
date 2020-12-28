@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {DoctorType, MODAL_TYPES, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
-import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
+import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DatePipe} from '@angular/common';
 import {timeout} from 'rxjs/operators';
 import {DataLoaderService} from '../../services/data-loader.service';
@@ -82,7 +82,7 @@ export class BookingEnterTimeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loggedInUser = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     this.loadProfessional();
     this.loadAvailableAppointmentsForProfessional();
   }

@@ -3,7 +3,7 @@ import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-boo
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {PageEvent} from '@angular/material';
-import {SessionStorageKeys} from '../../services/data-store.service';
+import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
@@ -136,7 +136,7 @@ export class PatientBookingListComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
   }
 
   selectBooking($event: string) {

@@ -15,8 +15,6 @@ export class TransitionPageComponent implements OnInit {
   ngOnInit() {}
 
   logIn() {
-    // this.router.navigate(['signup']).then(r => {
-    // });
     this.clickEmitter.emit('logIn');
   }
 

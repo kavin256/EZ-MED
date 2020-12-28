@@ -51,7 +51,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.InitialSearch();
   }
 
-  search(searchString: string, selectedCategory: string, selectedSpecialization: string) {
+  search() {
     this.PAGINATION_START = 0;
     this.PAGINATION_END = this.RESULTS_PER_PAGE;
     if (
@@ -103,7 +103,6 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   private resetVariables() {
     this.professionalList = [];
-    // this.searchString = null;
     this.selectedCategory = null;
     this.selectedSpecialization = null;
   }
@@ -136,7 +135,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   private InitialSearch() {
     // todo: uncomment
-    // this.search(null, null, null);
+    // this.search();
     this.professionalList = [
       {
         id: 1,

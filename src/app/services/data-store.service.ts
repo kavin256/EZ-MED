@@ -59,7 +59,7 @@ export enum DataKey {
   availableAppointmentsForProfessional
 }
 
-export enum SessionStorageKeys {
+export enum LocalStorageKeys {
   loggedInUser = 'loggedInUser',
   userId = 'userId',
   userName = 'userName'

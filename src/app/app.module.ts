@@ -16,7 +16,6 @@ import {
 } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { CommonBodyComponent } from './components/common-body/common-body.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
@@ -24,7 +23,6 @@ import { DoctorProfileComponent } from './components/doctor-profile/doctor-profi
 import { SearchProfessionalsMainComponent } from './components/search-professionals-main/search-professionals-main.component';
 import { DoctorSideBookingListComponent } from './components/doctor-side-booking-list/doctor-side-booking-list.component';
 import { DoctorSideBookingComponent } from './components/doctor-side-booking/doctor-side-booking.component';
-import { SearchProfessionalsComponent } from './components/search-professionals/search-professionals.component';
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
@@ -50,7 +48,6 @@ export function initialize(app: AppService) {
         await app.loadModuleConfigurations();
         await app.loadPermissions();
         await app.userLogin();
-        // await app.loadUserDetails();
     };
 }
 
@@ -60,13 +57,11 @@ export function initialize(app: AppService) {
         SignUpComponent,
         HeaderComponent,
         FooterComponent,
-        CommonBodyComponent,
         LandingPageComponent,
         DoctorScheduleComponent,
         DoctorProfileComponent,
         DoctorSideBookingListComponent,
         DoctorSideBookingComponent,
-        SearchProfessionalsComponent,
         ContactPageComponent,
         FaqsComponent,
         PrescriptionComponent,

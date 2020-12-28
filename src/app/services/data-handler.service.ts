@@ -4,7 +4,7 @@ import {startCase, camelCase} from 'lodash';
 import {Router} from '@angular/router';
 import {UserData} from '../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {SessionStorageKeys} from './data-store.service';
+import {LocalStorageKeys} from './data-store.service';
 import {DataLoaderService} from './data-loader.service';
 
 @Injectable({
@@ -65,8 +65,8 @@ export class DataHandlerService {
       .then((data: any) => {
         if (data && data.status && data.status.code === 1) {
           userData = data.data[0];
-          localStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(userData));
-          const user = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+          localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(userData));
+          const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
           if (user && user.doctor) {
             this.router.navigate(['doctor/dashboard']).then(r => {
               location.reload();
@@ -77,7 +77,7 @@ export class DataHandlerService {
             });
           }
         } else if (data && data.status && data.status.code === -1) {
-          localStorage.setItem(SessionStorageKeys.loggedInUser, null);
+          localStorage.setItem(LocalStorageKeys.loggedInUser, null);
           return null;
 
           return {

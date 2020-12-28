@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material';
-import {SessionStorageKeys} from '../../services/data-store.service';
+import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
@@ -148,7 +148,7 @@ export class DoctorSideBookingListComponent implements OnInit {
   ngOnInit() {
     this.selectedSlot = this.bookingListSlot2;
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
   }
 
   selectBooking($event: string) {

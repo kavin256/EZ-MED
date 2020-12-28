@@ -10,12 +10,11 @@ export enum Constants {
     GET_USER_DATA = '/user/user-data/',
     AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
-    // UPDATE_PROFESSIONAL_WORK_DATA = '/user/test?username=dfg',
 
     // modal types
     MODAL_TYPE_SIGN_UP = 'SIGN_UP',
     MODAL_TYPE_PROFILE = 'PROFILE',
-    EZMED_AUTH = 'EZMED_AUTH'
+    EZ_MED_AUTH = 'EZ_MED_AUTH'
 }
 
 export enum DoctorTitles {

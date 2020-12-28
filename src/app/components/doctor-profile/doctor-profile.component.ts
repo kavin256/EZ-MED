@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, currencyCodes, DoctorTitles, DoctorType, specializations} from '../../utils/Constants';
-import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
+import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
@@ -44,14 +44,14 @@ export class DoctorProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loggedInUser = JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser));
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     // todo: resolve this commented
     // if (this.loggedInUser && this.loggedInUser.doctorData) {
     //   this.userData = this.loggedInUser.doctorData;
     // }
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(SessionStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
     if (this.loggedInUser && this.loggedInUser) {
       this.userData = this.loggedInUser;
     }
@@ -87,7 +87,7 @@ export class DoctorProfileComponent implements OnInit {
             // console.log(data.data);
             // todo: check the following data[0]
             // todo: data format from BE should be updated / changed
-            localStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data));
+            localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data));
             this.toggleEditable(false);
 
           } else if (data && data.status && data.status.code === -1) {

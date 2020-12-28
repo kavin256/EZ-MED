@@ -4,7 +4,6 @@ import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthModel} from '../../models/auth-model';
 import {DataKey, DataStoreService} from '../../services/data-store.service';
 import {RequestOptions} from '../../models/request-options';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {AuthResponse} from '../../models/auth-response';
 import {Constants} from '../../utils/Constants';
 

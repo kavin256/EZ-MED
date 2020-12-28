@@ -6,42 +6,73 @@
     <br>
 
     <ng-container *ngIf="editable">
-        <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Title</mat-label>
-            <mat-select [(value)]="patient.title">
-                <ng-container *ngFor="let title of titles" >
-                    <mat-option value="{{title}}">
-                        {{title}}
+        <div>
+            <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-label>Title</mat-label>
+                <mat-select required [(value)]="patient.title">
+                    <ng-container *ngFor="let title of titles" >
+                        <mat-option value="{{title}}">
+                            {{title}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-label>First Name</mat-label>
+                <input required matInput #input1 [(ngModel)]='patient.firstName' [formControl]="firstNameFormControl">
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-label>Last Name</mat-label>
+                <input required matInput [(ngModel)]='patient.lastName' [formControl]="lastNameFormControl">
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 240px"  appearance="legacy">
+                <mat-label>Email</mat-label>
+                <input readonly matInput [(ngModel)]='patient.userName' [formControl]="emailFormControl">
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 240px"  appearance="legacy">
+                <mat-label>Gender * ({{gender}})</mat-label>
+                <mat-select [(value)]='gender'>
+                    <mat-option required *ngFor="let gender of genders" value="{{gender}}">
+                        {{gender | titlecase}}
                     </mat-option>
-                </ng-container>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>First Name: {{patient.firstName}}</mat-label>
-            <input matInput placeholder="" [value]="patient.firstName">
-        </mat-form-field>
-
-        <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Last Name: {{patient.lastName}}</mat-label>
-            <input matInput placeholder="" [value]="patient.lastName">
-        </mat-form-field>
-
-        <mat-form-field style="width: 240px" >
-            <input matInput required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="dateFormControl">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker  #picker1></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Allergies:</mat-label>
-            <textarea matInput placeholder="" value="{{patient.allergies}}"></textarea>
-        </mat-form-field>
-
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Medical History:</mat-label>
-            <textarea matInput placeholder="" value="{{patient.medicalHistory}}"></textarea>
-        </mat-form-field>
-
+                </mat-select>
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field style="width: 240px" >
+                <input matInput required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="dateFormControl">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker  #picker1></mat-datepicker>
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-label>Contact Number<br>(Could be the WhatsApp Number)</mat-label>
+                <br>
+                <input required matInput [(ngModel)]='patient.contactNumber' [formControl]="contactNumberFormControl">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field style="width: 240px"  appearance="legacy">
+                <mat-label>WhatsApp Number</mat-label>
+                <input required matInput #input7 [(ngModel)]='patient.whatsAppNumber' [formControl]="whatsAppNumberFormControl">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field style="width: 240px"  appearance="legacy">
+                <mat-label>Known Allergies</mat-label>
+                <textarea type="text" matInput #input8 [(ngModel)]='patient.userAllergies'></textarea>
+            </mat-form-field>
+            <br>
+        </div>
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>

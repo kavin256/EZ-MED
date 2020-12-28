@@ -45,12 +45,11 @@
                             <mat-label>Title</mat-label>
                             <mat-select required [(value)]="title" [formControl]="titleFormControl">
                                 <ng-container *ngFor="let title of titles" >
-                                    <mat-option value="{{title.value}}">
-                                        {{title.value}}
+                                    <mat-option value="{{title}}">
+                                        {{title}}
                                     </mat-option>
                                 </ng-container>
                             </mat-select>
-<!--                            <input matInput required #input3 [(ngModel)]='title'>-->
                         </mat-form-field>
                         <br>
                     </div>
@@ -81,9 +80,10 @@
                         <br>
                     </div>
                     <div [hidden]="isDoctor">
-                        <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Birthday</mat-label>
-                            <input matInput required [(ngModel)]='birthday' [formControl]="bDayFormControl">
+                        <mat-form-field style="width: 240px" >
+                            <input matInput required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="bDayFormControl">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker  #picker1></mat-datepicker>
                         </mat-form-field>
                         <br>
                     </div>

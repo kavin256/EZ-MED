@@ -7,8 +7,5 @@ import './app.component.css';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'WellBeey-FE';
-  onActivate(event) {
-    // window.scroll(0, 0);
-  }
+  title = 'Ez-Med';
 }
