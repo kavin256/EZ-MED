@@ -37,7 +37,7 @@ export class DataHandlerService {
     return camelCase(str);
   }
 
-  redirectToSignUpIfNotLoggedIn(loggedInUser: any) {
+  redirectToSignUpIfNotLoggedIn(loggedInUser: UserData) {
     if (loggedInUser && loggedInUser.userName) {
     } else {
       this.router.navigate(['signup']).then(r => {});

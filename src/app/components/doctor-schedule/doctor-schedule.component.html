@@ -9,7 +9,6 @@
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion>
         <div *ngFor="let schedule of doctorScheduleData.fixedDoctorDates;">
-<!--            <mat-expansion-panel [disabled]="!(schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0)" style="width: 320px">-->
             <mat-expansion-panel style="width: 320px">
                 <mat-expansion-panel-header>
                     <mat-panel-title style="font-family: 'Arial Black'"><b>{{schedule.title}}</b></mat-panel-title>
@@ -51,6 +50,6 @@
     <br>
     <button *ngIf="!isConfirmationActive" (click)="goToProfessionalDashboard()" style="width: 320px" mat-raised-button color="secondary">Back</button>
     <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
-    <button *ngIf="isConfirmationActive" (click)="save()" style="width: 150px" mat-raised-button color="primary">Send Request</button>
+    <button *ngIf="isConfirmationActive" (click)="save(professional.userName)" style="width: 150px" mat-raised-button color="primary">Send Request</button>
     <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button color="secondary">Cancel</button></span>
 </div>

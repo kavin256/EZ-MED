@@ -87,7 +87,7 @@ export class DoctorProfileComponent implements OnInit {
             // console.log(data.data);
             // todo: check the following data[0]
             // todo: data format from BE should be updated / changed
-            localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data));
+            localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
             this.toggleEditable(false);
 
           } else if (data && data.status && data.status.code === -1) {

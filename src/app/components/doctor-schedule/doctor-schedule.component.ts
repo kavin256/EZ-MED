@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
-import {DoctorScheduleData, UserData} from '../../models/user-data';
+import {DoctorScheduleData, DoctorSpecificData, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
 import {Constants} from '../../utils/Constants';
@@ -13,8 +13,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
   styleUrls: ['./doctor-schedule.component.css']
 })
 export class DoctorScheduleComponent implements OnInit {
-  profileUsername = 'dfg';
-  availableForAppointment = true;
+  professional: DoctorSpecificData;
 
   constructor(
       private router: Router,
@@ -34,25 +33,25 @@ export class DoctorScheduleComponent implements OnInit {
         [7, 'Saturday'],
       ]
   );
-  DEFAULT_AVERAGE_TIME_FOR_APPOINTMENT = 20;
   meridian = true;
   changeRequestSent = false;
   isConfirmationActive = false;
   doctorScheduleData: DoctorScheduleData;
 
   ngOnInit() {
-    // this.populateDoctorScheduleData();
-    this.populateDoctorScheduleDataByMock();
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+
+    this.professional = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (this.professional && this.professional.userName) { this.populateDoctorScheduleData(this.professional.userName); }
   }
 
-  save() {
+  save(userName: string) {
     this.updateSchedule();
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + this.profileUsername;
-    if (this.availableForAppointment) {
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+    if (this.professional.availableForAppointment) {
       this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
-          DataKey.uploadImage, this.doctorScheduleData)
+          DataKey.doctorScheduleData, this.doctorScheduleData)
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
               // console.log('data');
@@ -66,16 +65,13 @@ export class DoctorScheduleComponent implements OnInit {
           });
     } else {
       this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(),
-          DataKey.uploadImage, this.doctorScheduleData)
+          DataKey.doctorScheduleData, this.doctorScheduleData)
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
-              // console.log('data');
-              // console.log(data.data);
+              this.dataHandlerService.loadUserData(userName, this.dataLoaderService);
               this.isConfirmationActive = false;
               this.changeRequestSent = true;
             } else if (data && data.status && data.status.code === -1) {
-              // console.log('data null');
-              // console.log(data.data);
             }
           });
     }
@@ -86,22 +82,21 @@ export class DoctorScheduleComponent implements OnInit {
     this.changeRequestSent = false;
   }
 
-  private populateDoctorScheduleData() {
-    this.doctorScheduleData = this.dataStore.get(DataKey.doctorScheduleData).getValue() as DoctorScheduleData;
-    if (this.doctorScheduleData) {
-      this.doctorScheduleData.averageTimeForAppointment = this.doctorScheduleData.averageTimeForAppointment ?
-          this.doctorScheduleData.averageTimeForAppointment : this.DEFAULT_AVERAGE_TIME_FOR_APPOINTMENT;
-      this.doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
-        doctorDate.title = this.DAY_TITLES.get(doctorDate.day);
-        if (doctorDate.workingTimePeriods) {
-          doctorDate.workingTimePeriods.forEach((workingTimePeriod) => {
-            workingTimePeriod.endTimeSelected = this.dataHandlerService.convertTimeToHoursAndMinutes(
-                workingTimePeriod.endTime);
-            workingTimePeriod.startTimeSelected = this.dataHandlerService.convertTimeToHoursAndMinutes(
-                workingTimePeriod.startTime);
+  private populateDoctorScheduleData(userName: string) {
+    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+    if (!this.professional.availableForAppointment) {
+      this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              this.doctorScheduleData = data.data[0];
+              if (this.doctorScheduleData) {
+                this.prepareDisplayData(this.doctorScheduleData);
+              }
+              localStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
+            } else if (data && data.status && data.status.code === -1) {
+              localStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
+            }
           });
-        }
-      });
     }
   }
 
@@ -172,22 +167,7 @@ export class DoctorScheduleComponent implements OnInit {
         }
       ]
     };
-
-    if (this.doctorScheduleData) {
-      this.doctorScheduleData.averageTimeForAppointment = this.doctorScheduleData.averageTimeForAppointment ?
-          this.doctorScheduleData.averageTimeForAppointment : this.DEFAULT_AVERAGE_TIME_FOR_APPOINTMENT;
-      this.doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
-        doctorDate.title = this.DAY_TITLES.get(doctorDate.day);
-        if (doctorDate.workingTimePeriods) {
-          doctorDate.workingTimePeriods.forEach((workingTimePeriod) => {
-            workingTimePeriod.endTimeSelected = this.dataHandlerService.convertTimeToHoursAndMinutes(
-                workingTimePeriod.endTime);
-            workingTimePeriod.startTimeSelected = this.dataHandlerService.convertTimeToHoursAndMinutes(
-                workingTimePeriod.startTime);
-          });
-        }
-      });
-    }
+    this.prepareDisplayData(this.doctorScheduleData);
   }
 
   private updateSchedule() {
@@ -212,6 +192,20 @@ export class DoctorScheduleComponent implements OnInit {
 
   goToProfessionalDashboard() {
     this.router.navigate(['doctor/dashboard']).then(r => {
+    });
+  }
+
+  private prepareDisplayData(doctorScheduleData: DoctorScheduleData) {
+    doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
+      doctorDate.title = this.DAY_TITLES.get(doctorDate.day);
+      if (doctorDate.workingTimePeriods) {
+        doctorDate.workingTimePeriods.forEach((workingTimePeriod) => {
+          workingTimePeriod.endTimeSelected = this.dataHandlerService.convertTimeToHoursAndMinutes(
+              workingTimePeriod.endTime);
+          workingTimePeriod.startTimeSelected = this.dataHandlerService.convertTimeToHoursAndMinutes(
+              workingTimePeriod.startTime);
+        });
+      }
     });
   }
 }
