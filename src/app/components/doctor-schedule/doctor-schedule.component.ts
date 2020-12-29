@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
-import {DoctorScheduleData, DoctorSpecificData, UserData} from '../../models/user-data';
+import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
 import {Constants} from '../../utils/Constants';
@@ -14,6 +14,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 })
 export class DoctorScheduleComponent implements OnInit {
   professional: DoctorSpecificData;
+  isScheduleEmpty = true;
 
   constructor(
       private router: Router,
@@ -84,20 +85,19 @@ export class DoctorScheduleComponent implements OnInit {
 
   private populateDoctorScheduleData(userName: string) {
     const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
-    if (!this.professional.availableForAppointment) {
-      this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-              this.doctorScheduleData = data.data[0];
-              if (this.doctorScheduleData) {
-                this.prepareDisplayData(this.doctorScheduleData);
-              }
-              localStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
-            } else if (data && data.status && data.status.code === -1) {
-              localStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
+    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            this.doctorScheduleData = data.data[0];
+            this.isScheduleEmpty = this.isScheduleDataEmpty(this.doctorScheduleData.fixedDoctorDates);
+            if (this.doctorScheduleData) {
+              this.prepareDisplayData(this.doctorScheduleData);
             }
-          });
-    }
+            localStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
+          } else if (data && data.status && data.status.code === -1) {
+            localStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
+          }
+        });
   }
 
   private populateDoctorScheduleDataByMock() {
@@ -207,5 +207,14 @@ export class DoctorScheduleComponent implements OnInit {
         });
       }
     });
+  }
+
+  private isScheduleDataEmpty(fixedDoctorDates: FixedDoctorDate[]) {
+    let isScheduleDataAvailable = false;
+    fixedDoctorDates.forEach((fixedDoctorDate) => {
+      isScheduleDataAvailable = isScheduleDataAvailable ||
+          fixedDoctorDate && fixedDoctorDate.workingTimePeriods && fixedDoctorDate.workingTimePeriods.length > 0;
+    });
+    return !isScheduleDataAvailable;
   }
 }
