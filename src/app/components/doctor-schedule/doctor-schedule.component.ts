@@ -3,7 +3,7 @@ import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-s
 import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
-import {Constants} from '../../utils/Constants';
+import {Constants, MODAL_TYPES} from '../../utils/Constants';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataLoaderService} from '../../services/data-loader.service';
 
@@ -38,6 +38,7 @@ export class DoctorScheduleComponent implements OnInit {
   changeRequestSent = false;
   isConfirmationActive = false;
   doctorScheduleData: DoctorScheduleData;
+  showMoreInfo = false;
 
   ngOnInit() {
     // if not logged In this page should not be able to access
@@ -50,7 +51,8 @@ export class DoctorScheduleComponent implements OnInit {
   save(userName: string) {
     this.updateSchedule();
     const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
-    if (this.professional.availableForAppointment) {
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+    if (!this.isScheduleEmpty) {
       this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
           DataKey.doctorScheduleData, this.doctorScheduleData)
           .then((data: any) => {
@@ -59,9 +61,13 @@ export class DoctorScheduleComponent implements OnInit {
               // console.log(data.data);
               this.isConfirmationActive = false;
               this.changeRequestSent = true;
+              this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+              this.router.navigate(['doctor/dashboard']).then(r => {});
             } else if (data && data.status && data.status.code === -1) {
               // console.log('data null');
               // console.log(data.data);
+              this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+              // Todo: show error
             }
           });
     } else {
@@ -84,18 +90,24 @@ export class DoctorScheduleComponent implements OnInit {
   }
 
   private populateDoctorScheduleData(userName: string) {
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
     const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
     this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
             this.doctorScheduleData = data.data[0];
             this.isScheduleEmpty = this.isScheduleDataEmpty(this.doctorScheduleData.fixedDoctorDates);
-            if (this.doctorScheduleData) {
-              this.prepareDisplayData(this.doctorScheduleData);
-            }
+            // if (this.isScheduleEmpty) {
+            this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
+                JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
+            );
+            // }
+            this.prepareDisplayData(this.doctorScheduleData);
             localStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
+            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
           } else if (data && data.status && data.status.code === -1) {
             localStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
+            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
           }
         });
   }
@@ -175,12 +187,18 @@ export class DoctorScheduleComponent implements OnInit {
     if (this.doctorScheduleData) {
       this.doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
         if (doctorDate.workingTimePeriods) {
-          doctorDate.workingTimePeriods.forEach((workingTimePeriod) => {
+          // filter out inactive slots
+          const filtered = doctorDate.workingTimePeriods.filter((workingTimePeriod, index, arr) => {
+            return workingTimePeriod.isActive;
+          });
+
+          filtered.forEach((workingTimePeriod) => {
             workingTimePeriod.endTime = this.dataHandlerService.convertHoursAndMinutesToTime(
                 workingTimePeriod.endTimeSelected);
             workingTimePeriod.startTime = this.dataHandlerService.convertHoursAndMinutesToTime(
                 workingTimePeriod.startTimeSelected);
           });
+          doctorDate.workingTimePeriods = filtered;
         }
       });
     }
@@ -216,5 +234,9 @@ export class DoctorScheduleComponent implements OnInit {
           fixedDoctorDate && fixedDoctorDate.workingTimePeriods && fixedDoctorDate.workingTimePeriods.length > 0;
     });
     return !isScheduleDataAvailable;
+  }
+
+  private addDummyData(fixedDoctorDate: FixedDoctorDate []) {
+    return this.dataHandlerService.createNewDummyAppointmentSlotArrayForWeek(fixedDoctorDate);
   }
 }

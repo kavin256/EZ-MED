@@ -61,7 +61,10 @@ export enum DataKey {
 
 export enum LocalStorageKeys {
   loggedInUser = 'loggedInUser',
+  selectedProfessionalUsername = 'selectedProfessionalUsername',
+  selectedProfessional = 'selectedProfessional',
   userId = 'userId',
+  AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = 'AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL',
   professionalScheduleData = 'professionalScheduleData',
   userName = 'userName'
 }

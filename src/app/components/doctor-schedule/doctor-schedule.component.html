@@ -37,15 +37,23 @@
     </mat-accordion>
 
     <br>
-    <ng-container *ngIf="!changeRequestSent">
-        <p style="font-size: small; color: crimson">** Once you send the change request, changes will be activated only after 7 days because already available bookings will be affected by these changes.<br><br>
-        ** You will not be able to send another change request till 7 days.</p>
+    <ng-container>
+        <p style="font-size: small; color: crimson">
+            <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated after a week, because the already booked appointments will be affected.<br>
+        </p>
+        <ng-container *ngIf="showMoreInfo">
+            <p style="font-size: small; color: crimson">
+                <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated after a week, because the already booked appointments will be affected.<br>
+            </p>
+        </ng-container>
+        <button *ngIf="showMoreInfo" (click)="showMoreInfo = !showMoreInfo" mat-raised-button color="warn">More Info</button>
+        <button *ngIf="showMoreInfo"  (click)="showMoreInfo = !showMoreInfo"  mat-raised-button color="warn">Hide Info</button>
     </ng-container>
     <ng-container *ngIf="changeRequestSent">
         <p style="font-size: small; color: crimson">** You can not save above details temporarily. You have made a change request already and it takes 7 days before you can send another change request.
             Contact us for more clarifications.</p>
     </ng-container>
-    <button *ngIf="!isConfirmationActive" (click)="userConsent()"  [disabled]="changeRequestSent" style="width: 320px" mat-raised-button color="primary">Send Request to Change Details</button>
+    <button *ngIf="!isConfirmationActive" (click)="userConsent()"  [disabled]="changeRequestSent" style="width: 320px" mat-raised-button color="primary">Save</button>
     <br>
     <br>
     <button *ngIf="!isConfirmationActive" (click)="goToProfessionalDashboard()" style="width: 320px" mat-raised-button color="secondary">Back</button>

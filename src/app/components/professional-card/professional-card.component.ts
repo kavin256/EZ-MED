@@ -8,7 +8,7 @@ import {currencyCodes} from '../../utils/Constants';
 })
 export class ProfessionalCardComponent implements OnInit {
   @Input() professional: any;
-  @Output() selectProfessional: EventEmitter<string> = new EventEmitter<string>();
+  @Output() selectProfessional: EventEmitter<any> = new EventEmitter<any>();
 
   overTheDoctorCard = null;
   currency = currencyCodes.LKR;
@@ -29,7 +29,7 @@ export class ProfessionalCardComponent implements OnInit {
     return $event === this.overTheDoctorCard;
   }
 
-  selectProfessional_($event: string) {
+  selectProfessional_($event: any) {
     this.selectProfessional.emit($event);
   }
 }

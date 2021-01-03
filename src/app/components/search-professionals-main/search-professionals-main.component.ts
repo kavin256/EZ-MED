@@ -4,7 +4,7 @@ import {specializations, Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {PageEvent} from '@angular/material';
 
@@ -107,10 +107,11 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.selectedSpecialization = null;
   }
 
-  selectProfessional($event: string) {
+  selectProfessional($event: any) {
     this.PAGINATION_START = 0;
     this.PAGINATION_END = this.RESULTS_PER_PAGE;
-    this.loadProfessionalData($event);
+    localStorage.setItem(LocalStorageKeys.selectedProfessionalUsername, $event.userName);
+    // localStorage.setItem(LocalStorageKeys.selectedProfessional, JSON.stringify($event));
     this.router.navigate(['appointmentTime']).then(r => {
     });
   }
@@ -118,19 +119,6 @@ export class SearchProfessionalsMainComponent implements OnInit {
   goToPage($event: PageEvent) {
     this.PAGINATION_START = $event.pageIndex * $event.pageSize;
     this.PAGINATION_END = this.PAGINATION_START + $event.pageSize;
-  }
-
-  private loadProfessionalData($event: string) {
-    // create url and send request
-    const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
-    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
-        .then((data: any) => {
-          if (data && data.status && data.status.code === 1) {
-            this.dataStore.set(DataKey.availableAppointmentsForProfessional, data.data[0]);
-          } else if (data && data.status && data.status.code === -1) {
-            this.dataStore.set(DataKey.availableAppointmentsForProfessional, null);
-          }
-        });
   }
 
   private InitialSearch() {

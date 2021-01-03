@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Constants, DoctorType} from '../utils/Constants';
 import {startCase, camelCase} from 'lodash';
 import {Router} from '@angular/router';
-import {UserData} from '../models/user-data';
+import {FixedDoctorDate, UserData} from '../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {LocalStorageKeys} from './data-store.service';
 import {DataLoaderService} from './data-loader.service';
@@ -44,6 +44,33 @@ export class DataHandlerService {
     }
   }
 
+  createNewDummyAppointmentSlotArrayForWeek(fixedDoctorDates: FixedDoctorDate [])  {
+    const dummyAppointmentSlotArray = [];
+    for (let i = 1; i < 8; i++) {
+      dummyAppointmentSlotArray.push(this.fillDummyAppointmentSlot(i, 3));
+    }
+    // if (dummyAppointmentSlotArray.length > 0 && dummyAppointmentSlotArray.length === fixedDoctorDates.length) {
+      this.loadAvailableSlots(dummyAppointmentSlotArray, fixedDoctorDates);
+    // }
+    return dummyAppointmentSlotArray;
+  }
+
+  fillDummyAppointmentSlot(dayNo: number, numberOfTimeSlots: number) {
+    const workingTimePeriods = [];
+    for (let i = 0; i < numberOfTimeSlots; i ++) {
+      workingTimePeriods.push(
+          {
+            startTime: '10:00:00',
+            endTime: '11:00:00'
+          }
+      );
+    }
+    return {
+      day: dayNo,
+      workingTimePeriods
+    };
+  }
+
   redirectFromSignUpIfLoggedIn(loggedInUser: UserData) {
     if (loggedInUser && loggedInUser.doctor) {
       this.router.navigate(['doctor/dashboard']).then(r => {});
@@ -79,43 +106,18 @@ export class DataHandlerService {
         } else if (data && data.status && data.status.code === -1) {
           localStorage.setItem(LocalStorageKeys.loggedInUser, null);
           return null;
-
-          return {
-            "patientData": null,
-            "doctorData": {
-              "userName": "dfg",
-              "title": "Dr",
-              "firstName": "John",
-              "lastName": "Doe",
-              "professionalType": "CON",
-              "specialityA": "Pulmonologist",
-              "specialityB": "Dermatologist",
-              "specialityC": "",
-              "regNo": "reg/34234235",
-              "qualifications": "MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India",
-              "priceForAppointment": '',
-              "availableForAppointment": false
-            },
-            "doctor": true
-          };
-          return {
-            "patientData": {
-              "userName": "kavin88@abc.com",
-              "title": "Mr",
-              "firstName": "Milinda",
-              "lastName": "Sandaruwan",
-              "birthday": "1994-12-31T00:00:00.000+0000",
-              "address": null,
-              "contactNumber": "0123456789",
-              "whatsAppNumber": "0123456789",
-              "userAllergies": "mata allergies nehe",
-              "male": false
-            },
-            "doctorData": null,
-            "doctor": false
-          };
         }
       });
+  }
+
+  loadUserDataSimple(userName: string, dataLoaderService: DataLoaderService): any {
+    return new Promise(resolve => {
+      const url = Constants.BASE_URL + Constants.GET_USER_DATA + userName;
+      dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
+          .then((data: any) => {
+            resolve(data.data[0]);
+          });
+    });
   }
 
   convertProfessionalTypeToDBFormat(professionalType: string) {
@@ -169,5 +171,19 @@ export class DataHandlerService {
     }
     const age = today.getFullYear() - birthdayD.getFullYear() - thisYear;
     return age;
+  }
+
+  private loadAvailableSlots(dummyAppointmentSlotArray: FixedDoctorDate [], fixedDoctorDates: FixedDoctorDate[]) {
+    dummyAppointmentSlotArray.forEach((dummyAppointmentSlot, index) => {
+      dummyAppointmentSlot.workingTimePeriods.forEach((workingTimePeriod, j) => {
+        if (fixedDoctorDates[index] &&
+            fixedDoctorDates[index].workingTimePeriods &&
+            fixedDoctorDates[index].workingTimePeriods[j]) {
+          workingTimePeriod.isActive = true;
+          workingTimePeriod.startTime = fixedDoctorDates[index].workingTimePeriods[j].startTime;
+          workingTimePeriod.endTime = fixedDoctorDates[index].workingTimePeriods[j].endTime;
+        }
+      });
+    });
   }
 }

@@ -1,6 +1,9 @@
 <div class="mat-card-style" align="center">
     <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
-
+        <app-professional-card
+            [professional]="doctor"
+        >
+        </app-professional-card>
         <h4>Select Your Convenient Date and Time</h4>
         <mat-form-field  style="width: 240px" >
             <mat-label>Date</mat-label>

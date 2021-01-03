@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {DoctorType, MODAL_TYPES, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {Constants, DoctorType, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
+import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DatePipe} from '@angular/common';
-import {timeout} from 'rxjs/operators';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {UserData} from '../../models/user-data';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-booking-enter-time',
@@ -14,6 +16,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 export class BookingEnterTimeComponent implements OnInit {
 
   transitionType = null;
+  selectedProfessionalUsername = null;
   doctor = {
     id: 1,
     name: 'Dr. Nuwan Chinthaka',
@@ -78,14 +81,32 @@ export class BookingEnterTimeComponent implements OnInit {
       private router: Router,
       private datePipe: DatePipe,
       private dataStore: DataStoreService,
+      private dataHandlerService: DataHandlerService,
       private dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {
-    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
-    this.loadProfessional();
-    this.loadAvailableAppointmentsForProfessional();
+    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
+    // this.availableAppointmentsForProfessional = this.dataStore.get(DataKey.availableAppointmentsForProfessional).getValue();
+    // this.doctor = JSON.parse(localStorage.getItem(LocalStorageKeys.selectedProfessional));
+    this.loadProfessionalData(this.selectedProfessionalUsername);
+    this.loadAvailableAppointments(this.selectedProfessionalUsername);
+
+    // this.loadAvailableAppointments(this.loggedInUser.email);
   }
+
+  // private loadAvailableAppointments($event: string) {
+  //   // create url and send request
+  //   const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
+  //   this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
+  //       .then((data: any) => {
+  //         if (data && data.status && data.status.code === 1) {
+  //           this.availableAppointmentsForProfessional = data.data[0];
+  //         } else if (data && data.status && data.status.code === -1) {
+  //           this.availableAppointmentsForProfessional = [];
+  //         }
+  //       });
+  // }
 
   getDate(apart: number) {
     const today = new Date();
@@ -170,47 +191,18 @@ export class BookingEnterTimeComponent implements OnInit {
     this.summaryShown = $event;
   }
 
-  private loadAvailableAppointmentsForProfessional() {
-    this.availableAppointmentsForProfessional = [
-      {
-        date: '2020-12-26T20:30:00.000+0000',
-        dummyAppointments: [
-          {
-            appointmentId: 16,
-            appointmentTime: '08:00:00',
-            timeSlotId: null
+  private loadAvailableAppointments(email: string) {
+    // create url and send request
+    const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + email;
+    this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            this.availableAppointmentsForProfessional = data.data[0];
+            this.filterOutUnavailableDays(this.days);
+          } else if (data && data.status && data.status.code === -1) {
+            this.availableAppointmentsForProfessional = [];
           }
-        ]
-      },
-      {
-        date: '2020-12-27T20:30:00.000+0000',
-        dummyAppointments: [
-          {
-            appointmentId: 21,
-            appointmentTime: '10:00:00',
-            timeSlotId: null
-          }
-        ]
-      },
-      {
-        date: '2020-12-25T20:30:00.000+0000',
-        dummyAppointments: [
-          {
-            appointmentId: 12,
-            appointmentTime: '10:00:00',
-            timeSlotId: null
-          }
-        ]
-      }
-    ];
-    if (this.dataStore.get(DataKey.availableAppointmentsForProfessional).getValue()) {
-      this.availableAppointmentsForProfessional = this.dataStore.get(DataKey.availableAppointmentsForProfessional).getValue();
-    }
-    this.filterOutUnavailableDays(this.days);
-  }
-
-  // Todo: complete
-  private loadProfessional() {
+        });
   }
 
   private filterOutUnavailableDays(days: any[]) {
@@ -259,5 +251,12 @@ export class BookingEnterTimeComponent implements OnInit {
         this.showRedirectionMessage = false;
         break;
     }
+  }
+
+  private loadProfessionalData(selectedProfessionalUsername: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+        .then((data: any) => {
+          this.doctor = data;
+        });
   }
 }
