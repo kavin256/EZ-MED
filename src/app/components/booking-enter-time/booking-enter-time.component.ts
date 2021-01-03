@@ -87,12 +87,9 @@ export class BookingEnterTimeComponent implements OnInit {
 
   ngOnInit() {
     this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
-    // this.availableAppointmentsForProfessional = this.dataStore.get(DataKey.availableAppointmentsForProfessional).getValue();
-    // this.doctor = JSON.parse(localStorage.getItem(LocalStorageKeys.selectedProfessional));
     this.loadProfessionalData(this.selectedProfessionalUsername);
     this.loadAvailableAppointments(this.selectedProfessionalUsername);
-
-    // this.loadAvailableAppointments(this.loggedInUser.email);
+    this.loggedInUser = localStorage.getItem(LocalStorageKeys.loggedInUser);
   }
 
   // private loadAvailableAppointments($event: string) {

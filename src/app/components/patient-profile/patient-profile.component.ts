@@ -6,6 +6,7 @@ import {PatientTitles} from '../../utils/Constants';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {UserData} from '../../models/user-data';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -17,6 +18,7 @@ export class PatientProfileComponent implements OnInit {
   patient;
   patientAge;
   gender;
+  searchedProfessionalName;
 
   // form controls
   firstNameFormControl = new FormControl('');
@@ -30,10 +32,12 @@ export class PatientProfileComponent implements OnInit {
   title = 'MY PROFILE';
   editable = false;
   genders = ['male', 'female'];
+  selectedProfessionalUsername: string;
 
   constructor(
       private router: Router,
       private datePipe: DatePipe,
+      private dataLoaderService: DataLoaderService,
       private dataHandlerService: DataHandlerService
   ) {
     this.datePipe = new DatePipe('en-US');
@@ -42,6 +46,9 @@ export class PatientProfileComponent implements OnInit {
   ngOnInit() {
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+    // this.searchedProfessionalName = localStorage.getItem(LocalStorageKeys.)
+    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
+    this.loadProfessionalData(this.selectedProfessionalUsername);
 
     this.patient = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     if (this.patient) {
@@ -49,9 +56,20 @@ export class PatientProfileComponent implements OnInit {
     }
   }
 
+  private loadProfessionalData(selectedProfessionalUsername: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+        .then((data: any) => {
+          this.searchedProfessionalName = data.title + '. ' + data.firstName + ' ' + data.lastName;
+        });
+  }
+
   goToMyAppointments() {
     this.router.navigate(['user/appointments']).then(r => {
     });
+  }
+
+  goToPrePaymentSummary() {
+    this.router.navigate(['confirmation']).then(r => {});
   }
 
   setGender(value: any) {

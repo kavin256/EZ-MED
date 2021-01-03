@@ -21,7 +21,7 @@ export class BookingEnterComponent implements OnInit {
       'Consultant Neurologist',
       'Consultant Pediatrician'
     ],
-    consultationPrice: 'Rs. 2000.00',
+    priceForAppointment: 'Rs. 2000.00',
     isSkypePreferred: true,
     isWhatsAppPreferred: false
   };
@@ -32,15 +32,27 @@ export class BookingEnterComponent implements OnInit {
     {value: 'skype', viewValue: 'Skype'},
     {value: 'whatsapp', viewValue: 'Whatsapp'}
   ];
+  private selectedProfessionalUsername: string;
 
   constructor(
       private router: Router,
+      private dataLoaderService: DataLoaderService,
       private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
+    this.loadProfessionalData(this.selectedProfessionalUsername);
+
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+  }
+
+  private loadProfessionalData(selectedProfessionalUsername: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+        .then((data: any) => {
+          this.doctor = data;
+        });
   }
 
   scheduleVisibilityToggle($event: boolean) {

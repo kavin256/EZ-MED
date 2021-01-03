@@ -31,7 +31,7 @@
     <mat-divider></mat-divider>
     <br>
     <p style="font-size: x-large">Search Results:</p>
-    <ng-container *ngIf="professionalList.length === 0">
+    <ng-container *ngIf="professionalList && professionalList.length === 0">
         <br>
         <br>
 
@@ -47,7 +47,7 @@
             ></app-professional-card>
         </ng-container>
     </ng-container>
-    <ng-container *ngIf="professionalList.length > 0">
+    <ng-container *ngIf="professionalList && professionalList.length > 0">
         <mat-paginator [length]="professionalList.length"
                        [pageSize]="RESULTS_PER_PAGE"
                        (page)="goToPage($event)"

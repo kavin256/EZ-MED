@@ -1,85 +1,14 @@
 <div class="mat-card-style">
     <div *ngIf="doctor">
-        <div style="width: 320px; height: auto;">
-            <table>
-                <tr>
-                    <th style="width: 115px; height: 115px; align-content: center">
-                        <img src="./assets/img/doctor2.jpg" width="115px" height="115px">
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                        <table>
-                            <tr>
-                                <th style="font-size: medium; text-align: left">
-                                    {{doctor.name | uppercase}}
-                                </th>
-                            </tr>
-                            <tr>
-                                <td style="font-size: x-small; text-align: left">
-                                    {{doctor.bio}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <mat-divider style="left: inherit; width: 180px"></mat-divider>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td style="font-size: small; text-align: left">
-                                    Specializations:
-                                </td>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <div *ngFor="let speciality of doctor.specialities">
-                                <tr>
-                                    <td style="font-size: x-small; text-align: left">
-                                        {{speciality}}
-                                    </td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <mat-divider style="left: inherit; width: 180px"></mat-divider>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td style="font-size: small; text-align: left">
-                                    Charge per consultation:
-                                </td>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td style="font-size: x-small; text-align: left">
-                                    {{doctor.consultationPrice}}
-                                </td>
-                            </tr>
-                            <tr>
-                        </table>
-                    </th>
-                </tr>
-            </table>
-        </div>
-        <br>
+        <app-professional-card
+            [professional]="doctor"
+            ></app-professional-card>
     </div>
 
     <div>
-        <br>
-
-        <span>Total amount: </span><span>{{doctor.consultationPrice}}</span>
+        <span>Total amount: </span><span>LKR {{doctor.priceForAppointment}}</span>
         <br>
         <br>
-<!--        <h5>{{doctor.consultationPrice}}</h5>-->
     </div>
     <button mat-raised-button color="primary" style="width: 320px">Continue to payment</button>
     <br>

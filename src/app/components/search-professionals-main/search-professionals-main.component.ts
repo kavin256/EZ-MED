@@ -4,7 +4,7 @@ import {specializations, Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {PageEvent} from '@angular/material';
 
@@ -48,6 +48,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
     this.InitialSearch();
   }
 
@@ -123,50 +124,5 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   private InitialSearch() {
     // todo: uncomment
-    // this.search();
-    this.professionalList = [
-      {
-        id: 1,
-        title: 'Dr.',
-        firstName: 'Dummy',
-        lastName: 'One',
-        professionalType: DoctorType.CON,
-        qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
-        specialityA: 'Neurologist',
-        specialityB: 'Pediatrician',
-        specialityC: '',
-        priceForAppointment: '2000',
-        isSkypePreferred: true,
-        isWhatsAppPreferred: true
-      },
-      {
-        id: 2,
-        title: 'Dr.',
-        firstName: 'Dummy',
-        lastName: 'Two',
-        professionalType: DoctorType.GEN,
-        qualifications: 'MBBS [COLOMBO](1998)',
-        specialityA: 'Pathologist',
-        specialityB: '',
-        specialityC: '',
-        priceForAppointment: '1500',
-        isSkypePreferred: false,
-        isWhatsAppPreferred: true
-      },
-      {
-        id: 3,
-        title: 'Dr.',
-        firstName: 'Dummy',
-        lastName: 'Three',
-        professionalType: DoctorType.OTH,
-        qualifications: 'MBBS [RUHUNA](2000)',
-        specialityA: 'Clinical Nutritionist',
-        specialityB: '',
-        specialityC: '',
-        priceForAppointment: '2500',
-        isSkypePreferred: true,
-        isWhatsAppPreferred: false
-      }
-    ];
   }
 }
