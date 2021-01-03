@@ -1,6 +1,6 @@
 export enum Constants {
     // endpoints
-    BASE_URL = 'http://localhost:8080',
+    BASE_URL = 'http://TestApp-env.eba-j2nv42tb.ap-south-1.elasticbeanstalk.com:80',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     UPLOAD_USER_IMAGE = '/user/upload/image',
