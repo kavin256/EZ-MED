@@ -29,7 +29,6 @@ export class PatientProfileComponent implements OnInit {
   contactNumberFormControl = new FormControl('');
 
   titles = PatientTitles;
-  title = 'MY PROFILE';
   editable = false;
   genders = ['male', 'female'];
   selectedProfessionalUsername: string;
