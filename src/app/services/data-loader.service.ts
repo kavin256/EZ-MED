@@ -124,7 +124,7 @@ export class DataLoaderService {
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.http.post<T>(url, data, {
                 headers: options.headers,
                 params: options.params

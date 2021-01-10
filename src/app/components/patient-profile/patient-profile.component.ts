@@ -68,8 +68,8 @@ export class PatientProfileComponent implements OnInit {
     });
   }
 
-  goToPrePaymentSummary() {
-    this.router.navigate(['confirmation']).then(r => {});
+  goToAppointmentTimeSelection() {
+    this.router.navigate(['appointmentTime']).then(r => {});
   }
 
   setGender(value: any) {

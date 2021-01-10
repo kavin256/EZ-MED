@@ -40,7 +40,6 @@ export class DoctorSpecificData {
     whatsAppNumber: string;
     regNo: string;
     priceForAppointment: string;
-    priceCurrency: string;
     qualifications: string;
     professionalType?: string;
     specialityA?: string;

@@ -17,6 +17,7 @@ export class DoctorProfileComponent implements OnInit {
   // profileUsername = 'dfg';
   editable = false;
   loggedInUser = null;
+  priceCurrency = 'LKR';
   userData: DoctorSpecificData;
 
   titles = [

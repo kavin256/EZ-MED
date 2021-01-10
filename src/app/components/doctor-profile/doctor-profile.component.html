@@ -57,8 +57,8 @@
             <mat-label>Specialization #2 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityB">
                 <ng-container *ngFor="let specialization of specializations" >
-                    <mat-option value="{{specialization.value}}">
-                        {{specialization.value}}
+                    <mat-option value="{{specialization}}">
+                        {{specialization}}
                     </mat-option>
                 </ng-container>
             </mat-select>
@@ -67,8 +67,8 @@
             <mat-label>Specialization #3 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityC">
                 <ng-container *ngFor="let specialization of specializations" >
-                    <mat-option value="{{specialization.value}}">
-                        {{specialization.value}}
+                    <mat-option value="{{specialization}}">
+                        {{specialization}}
                     </mat-option>
                 </ng-container>
             </mat-select>
@@ -85,7 +85,7 @@
         </mat-form-field>
         <br>
         <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Price per consultation ({{userData.priceCurrency}}):</mat-label>
+            <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
         </mat-form-field>
         <br>
