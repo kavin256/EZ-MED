@@ -209,7 +209,7 @@ export class DoctorScheduleComponent implements OnInit {
     if (this.doctorScheduleData.averageTimeForAppointment && this.doctorScheduleData.averageTimeForAppointment > 0) {
       this.isConfirmationActive = !this.isConfirmationActive;
     } else {
-      // show error
+      // Todo: show a proper error
       alert('Average time cannot be zero');
     }
   }
