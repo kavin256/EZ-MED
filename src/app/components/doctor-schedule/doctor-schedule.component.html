@@ -1,13 +1,13 @@
 <div class="mat-card-style">
-    <mat-form-field style="width: 240px"  appearance="legacy">
+    <mat-form-field *ngIf="doctorScheduleData"  style="width: 240px"  appearance="legacy">
         <mat-label>Average Time For Consultation (minutes):</mat-label>
-        <input required matInput #input7 [(ngModel)]='doctorScheduleData.averageTimeForAppointment'>
+        <input required onlyNumber matInput #input7 [(ngModel)]='doctorScheduleData.averageTimeForAppointment'>
     </mat-form-field>
     <br>
     <br>
 
     <p>Weekly Schedule for consultations:</p>
-    <mat-accordion>
+    <mat-accordion *ngIf="doctorScheduleData">
         <div *ngFor="let schedule of doctorScheduleData.fixedDoctorDates;">
             <mat-expansion-panel style="width: 320px">
                 <mat-expansion-panel-header>

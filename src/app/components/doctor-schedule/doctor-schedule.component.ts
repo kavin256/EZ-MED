@@ -206,11 +206,12 @@ export class DoctorScheduleComponent implements OnInit {
 
   userConsent() {
 
-    if (this.doctorScheduleData.averageTimeForAppointment && this.doctorScheduleData.averageTimeForAppointment > 0) {
+    if (this.doctorScheduleData.averageTimeForAppointment &&
+        this.doctorScheduleData.averageTimeForAppointment > 0) {
       this.isConfirmationActive = !this.isConfirmationActive;
     } else {
       // Todo: show a proper error
-      alert('Average time cannot be zero');
+      alert('Please enter a valid average time');
     }
   }
 

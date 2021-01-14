@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthModel} from '../../models/auth-model';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {RequestOptions} from '../../models/request-options';
 import {AuthResponse} from '../../models/auth-response';
 import {Constants} from '../../utils/Constants';
@@ -44,5 +44,14 @@ export class LandingPageComponent implements OnInit, OnChanges {
           console.log(data);
         }
     );
+  }
+
+  isDoctorLoggedIn() {
+    if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      const loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+      return loggedInUser && loggedInUser.doctor;
+    } else {
+      return false;
+    }
   }
 }

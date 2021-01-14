@@ -105,6 +105,8 @@
     </ng-container>
 
     <ng-container *ngIf="!editable">
+        <app-page-title [title]="'My Profile'"></app-page-title>
+
         <ng-container *ngIf="!userData?.availableForAppointment">
             <p>
                 <ngb-alert [dismissible]="false">

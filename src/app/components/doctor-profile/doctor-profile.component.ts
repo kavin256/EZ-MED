@@ -73,29 +73,37 @@ export class DoctorProfileComponent implements OnInit {
   }
 
   saveData() {
-    // converting professionalType to a database readable format
-    if (this.userData && this.userData.professionalType) {
-      this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
-          JSON.parse(JSON.stringify(this.userData.professionalType)));
-    }
-    // todo: change this in the backend
-    this.userData.doctorType = this.userData.professionalType;
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.userName;
-    this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData )
-        .then((data: any) => {
-          if (data && data.status && data.status.code === 1) {
-            // console.log('data');
-            // console.log(data.data);
-            // todo: check the following data[0]
-            // todo: data format from BE should be updated / changed
-            localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
-            this.toggleEditable(false);
+    if (this.userData.professionalType &&
+        this.userData.priceForAppointment &&
+        parseInt(this.userData.priceForAppointment, 10) > 0 &&
+        this.userData.professionalType) {
+      // converting professionalType to a database readable format
+      if (this.userData && this.userData.professionalType) {
+        this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
+            JSON.parse(JSON.stringify(this.userData.professionalType)));
+      }
+      // todo: change this in the backend
+      this.userData.doctorType = this.userData.professionalType;
+      const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.userName;
+      this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData )
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              // console.log('data');
+              // console.log(data.data);
+              // todo: check the following data[0]
+              // todo: data format from BE should be updated / changed
+              localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+              this.toggleEditable(false);
 
-          } else if (data && data.status && data.status.code === -1) {
-            // console.log('data null');
-            // console.log(data.data);
-          }
-        });
+            } else if (data && data.status && data.status.code === -1) {
+              // console.log('data null');
+              // console.log(data.data);
+            }
+          });
+    } else {
+      // Todo: show a proper error
+      alert('Please fill mandatory fields. Price per consultation should be more than LKR 0');
+    }
   }
 
   isConsultant(type: string) {
