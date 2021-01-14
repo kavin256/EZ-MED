@@ -7,6 +7,8 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {PageEvent} from '@angular/material';
+import csc from 'country-state-city';
+import { ICountry, IState, ICity } from 'country-state-city';
 
 @Component({
   selector: 'app-search-professionals-main',
@@ -22,6 +24,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
   PAGINATION_END = this.RESULTS_PER_PAGE;
   selectedCategory: any = null;
   selectedSpecialization: any = null;
+  country = 'LK';
+  selectedRegion: IState = null;
+  selectedCity: ICity = null;
 
   categories = [
     {
@@ -39,6 +44,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ];
 
   specializations = specializations;
+  regions;
 
   constructor(
       private router: Router,
@@ -50,6 +56,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ngOnInit() {
     localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
     this.InitialSearch();
+    // console.log(csc.getAllCountries());
+    this.regions = csc.getStatesOfCountry(this.country);
+    // console.log(csc.getStatesOfCountry(this.country));
+    // console.log(csc.getCitiesOfState(this.country, '1'));
   }
 
   search() {
@@ -124,5 +134,18 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   private InitialSearch() {
     // todo: uncomment
+  }
+
+  filterProvinces(regions: any []) {
+    regions = regions.filter((region) => {
+      return region.name.match(/Province/g);
+    });
+    return regions;
+  }
+
+  getCities(selectedRegion) {
+    if (selectedRegion) {
+      return csc.getCitiesOfState(this.country, selectedRegion);
+    }
   }
 }

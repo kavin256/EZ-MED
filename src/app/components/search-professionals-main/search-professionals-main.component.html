@@ -4,7 +4,7 @@
 
     <div align="center">
     <mat-form-field style="width: 250px">
-        <input matInput type="text" placeholder="Search by name (Optional)" [(ngModel)]="searchString">
+        <input matInput type="text" placeholder="Search by name" [(ngModel)]="searchString">
     </mat-form-field>
 
     <br>
@@ -22,6 +22,26 @@
             <mat-select [(value)]="selectedSpecialization">
                 <ng-container *ngFor="let subCategory of specializations">
                     <mat-option value="{{subCategory}}">{{dataHandlerService.convertCamelCaseToSentence(subCategory)}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+    <ng-container>
+        <mat-form-field  style="width: 240px" >
+            <mat-label>Region</mat-label>
+            <mat-select [(value)]="selectedRegion">
+                <ng-container *ngFor="let region of filterProvinces(regions)">
+                    <mat-option value="{{region?.isoCode}}">{{region.name}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="selectedRegion !== undefined && selectedRegion !== null">
+        <mat-form-field  style="width: 240px" >
+            <mat-label>City</mat-label>
+            <mat-select [(value)]="selectedCity">
+                <ng-container *ngFor="let city of getCities(selectedRegion)">
+                    <mat-option value="{{city.stateCode}}">{{city.name}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>

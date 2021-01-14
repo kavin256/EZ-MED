@@ -205,7 +205,13 @@ export class DoctorScheduleComponent implements OnInit {
   }
 
   userConsent() {
-    this.isConfirmationActive = !this.isConfirmationActive;
+
+    if (this.doctorScheduleData.averageTimeForAppointment && this.doctorScheduleData.averageTimeForAppointment > 0) {
+      this.isConfirmationActive = !this.isConfirmationActive;
+    } else {
+      // show error
+      alert('Average time cannot be zero');
+    }
   }
 
   goToProfessionalDashboard() {
