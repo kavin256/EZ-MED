@@ -4,4 +4,15 @@
         <br>
         <h5>Loading...</h5>
     </ng-container>
+    <ng-container *ngIf="modalType === 'ENTER_VACATION_MODE'">
+        <div class="alert alert-primary" role="alert">
+            Note:
+            When you enter vacation mode, you will not be visible to the patients in the search list from now onwards
+            until you disable vacation mode. And your already booked appointments will be cancelled automatically.
+            Want to continue entering vacation mode?
+            <br>
+            <button style="margin:5px;" style="width: 100px" (click)="startVacationMode()" mat-stroked-button color="primary">Yes</button>
+            &nbsp;<button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">No</button>
+        </div>
+    </ng-container>
 </div>

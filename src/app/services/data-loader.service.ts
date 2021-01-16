@@ -142,7 +142,7 @@ export class DataLoaderService {
         localStorage.removeItem(Constants.EZ_MED_AUTH);
     }
 
-    public activateLoader(activate: boolean, MODAL_TYPE: MODAL_TYPES, disableClose?: boolean) {
+    public activateLoader(activate: boolean, MODAL_TYPE: MODAL_TYPES, disableClose?: boolean, callBackFunction?) {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.data = {
@@ -155,7 +155,7 @@ export class DataLoaderService {
         if (activate) {
             dialogRef = this.dialog.open(ModalComponent, dialogConfig);
             dialogRef.afterClosed().subscribe(result => {
-                // console.log('dialogRef.afterClosed().subscribe');
+                callBackFunction(result);
             });
         } else {
             dialogRef = this.dialog.closeAll();

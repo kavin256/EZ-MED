@@ -36,7 +36,8 @@ export const PatientTitles = [
 ];
 
 export enum MODAL_TYPES {
-    LOADING = 'LOADING'
+    LOADING = 'LOADING',
+    ENTER_VACATION_MODE = 'ENTER_VACATION_MODE'
 }
 
 export enum TRANSITION_PAGE_TYPE {

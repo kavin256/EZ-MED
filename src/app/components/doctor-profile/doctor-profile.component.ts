@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {Constants, currencyCodes, DoctorTitles, DoctorType, specializations} from '../../utils/Constants';
+import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES, specializations} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
@@ -18,8 +18,10 @@ export class DoctorProfileComponent implements OnInit {
   editable = false;
   loggedInUser = null;
   priceCurrency = 'LKR';
+  onVacation = false;
   userData: DoctorSpecificData;
-
+  vacationModeTitle = 'Enter Vacation Mode';
+  vacationModePopUpActive = false;
   titles = [
     {value: DoctorTitles.DR},
     {value: DoctorTitles.MR},
@@ -148,5 +150,20 @@ export class DoctorProfileComponent implements OnInit {
         userData.priceForAppointment !== '' &&
         parseInt(userData.priceForAppointment, 10) &&
         parseInt(userData.priceForAppointment, 10) > 0;
+  }
+
+  goToVacationMode() {
+    this.vacationModePopUpActive = true;
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true, (result) => this.callBackFromVacationPopUp(result));
+  }
+
+  callBackFromVacationPopUp($event) {
+    if ($event === 'start_vacation') {
+      this.onVacation = true;
+      this.vacationModeTitle = 'Exit Vacation Mode';
+    } else if ($event === 'dismiss') {
+      this.onVacation = false;
+      this.vacationModeTitle = 'Enter Vacation Mode';
+    }
   }
 }

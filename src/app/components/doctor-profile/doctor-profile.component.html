@@ -107,9 +107,16 @@
     <ng-container *ngIf="!editable">
         <app-page-title [title]="'My Profile'"></app-page-title>
 
-        <ng-container *ngIf="userData?.availableForAppointment">
+        <ng-container *ngIf="userData?.availableForAppointment && !onVacation">
             <ngb-alert [type]="'success'" [dismissible]="false">
                 Profile Status: <b>Active</b>
+            </ngb-alert>
+        </ng-container>
+
+        <ng-container *ngIf="userData?.availableForAppointment && onVacation">
+            <ngb-alert [type]="'danger'" [dismissible]="false">
+                <b>Profile Status:</b> Not Visible in searches and there are no any active appointments since you are in vacation mode. You can appear in searches and
+            continue consultations by exiting vacation mode.
             </ngb-alert>
         </ng-container>
 
@@ -132,6 +139,9 @@
         <br>
         <br>
         <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-raised-button>Edit Schedule</button>
+        <br>
+        <br>
+        <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px" mat-stroked-button>{{vacationModeTitle}}</button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
