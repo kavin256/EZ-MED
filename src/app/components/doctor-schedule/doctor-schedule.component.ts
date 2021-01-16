@@ -14,7 +14,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 })
 export class DoctorScheduleComponent implements OnInit {
   professional: DoctorSpecificData;
-  isScheduleEmpty = true;
+  availableForAppointment = true;
 
   constructor(
       private router: Router,
@@ -38,7 +38,6 @@ export class DoctorScheduleComponent implements OnInit {
   changeRequestSent = false;
   isConfirmationActive = false;
   doctorScheduleData: DoctorScheduleData;
-  showMoreInfo = false;
 
   ngOnInit() {
     // if not logged In this page should not be able to access
@@ -52,22 +51,19 @@ export class DoctorScheduleComponent implements OnInit {
     this.updateSchedule();
     const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
     this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    if (!this.isScheduleEmpty) {
+    if (this.availableForAppointment) {
       this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
           DataKey.doctorScheduleData, this.doctorScheduleData)
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
-              // console.log('data');
-              // console.log(data.data);
               this.isConfirmationActive = false;
               this.changeRequestSent = true;
               this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
               this.router.navigate(['doctor/dashboard']).then(r => {});
             } else if (data && data.status && data.status.code === -1) {
-              // console.log('data null');
-              // console.log(data.data);
               this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
               // Todo: show error
+              alert('Something went wrong!');
             }
           });
     } else {
@@ -96,12 +92,10 @@ export class DoctorScheduleComponent implements OnInit {
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
             this.doctorScheduleData = data.data[0];
-            this.isScheduleEmpty = this.isScheduleDataEmpty(this.doctorScheduleData.fixedDoctorDates);
-            // if (this.isScheduleEmpty) {
+            this.availableForAppointment = JSON.parse(this.professional.availableForAppointment);
             this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
                 JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
             );
-            // }
             this.prepareDisplayData(this.doctorScheduleData);
             localStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
@@ -112,81 +106,12 @@ export class DoctorScheduleComponent implements OnInit {
         });
   }
 
-  private populateDoctorScheduleDataByMock() {
-    this.doctorScheduleData = {
-      averageTimeForAppointment: 30,
-      fixedDoctorDates: [
-        {
-          day: 1,
-          workingTimePeriods: [
-            {
-              startTime: '08:00:00',
-              endTime: '10:00:00',
-              isActive: true
-            },
-            {
-              startTime: '14:00:00',
-              endTime: '16:00:00',
-              isActive: false
-            },
-            {
-              startTime: '17:00:00',
-              endTime: '18:00:00',
-              isActive: true
-            }
-          ]
-        },
-        {
-          day: 2,
-          workingTimePeriods: [
-            {
-              startTime: '10:00:00',
-              endTime: '11:45:00',
-              isActive: true
-            }
-          ]
-        },
-        {
-          day: 3,
-          workingTimePeriods: null
-        },
-        {
-          day: 4,
-          workingTimePeriods: null
-        },
-        {
-          day: 5,
-          workingTimePeriods: null
-        },
-        {
-          day: 6,
-          workingTimePeriods: null
-        },
-        {
-          day: 7,
-          workingTimePeriods: [
-            {
-              startTime: '10:00:00',
-              endTime: '12:10:00',
-              isActive: true
-            },
-            {
-              startTime: '13:00:00',
-              endTime: '15:10:00',
-              isActive: false
-            }
-          ]
-        }
-      ]
-    };
-    this.prepareDisplayData(this.doctorScheduleData);
-  }
-
   private updateSchedule() {
     // from hours and minutes to date
     if (this.doctorScheduleData) {
       this.doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
         if (doctorDate.workingTimePeriods) {
+
           // filter out inactive slots
           const filtered = doctorDate.workingTimePeriods.filter((workingTimePeriod, index, arr) => {
             return workingTimePeriod.isActive;
@@ -232,15 +157,6 @@ export class DoctorScheduleComponent implements OnInit {
         });
       }
     });
-  }
-
-  private isScheduleDataEmpty(fixedDoctorDates: FixedDoctorDate[]) {
-    let isScheduleDataAvailable = false;
-    fixedDoctorDates.forEach((fixedDoctorDate) => {
-      isScheduleDataAvailable = isScheduleDataAvailable ||
-          fixedDoctorDate && fixedDoctorDate.workingTimePeriods && fixedDoctorDate.workingTimePeriods.length > 0;
-    });
-    return !isScheduleDataAvailable;
   }
 
   private addDummyData(fixedDoctorDate: FixedDoctorDate []) {

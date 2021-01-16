@@ -107,12 +107,22 @@
     <ng-container *ngIf="!editable">
         <app-page-title [title]="'My Profile'"></app-page-title>
 
+        <ng-container *ngIf="userData?.availableForAppointment">
+            <ngb-alert [type]="'success'" [dismissible]="false">
+                <strong>Profile Status: Active</strong>
+            </ngb-alert>
+        </ng-container>
+
         <ng-container *ngIf="!userData?.availableForAppointment">
-            <p>
-                <ngb-alert [dismissible]="false">
-                    <strong>Note!</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
-                </ngb-alert>
-            </p>
+            <ngb-alert [type]="'danger'" [dismissible]="false">
+                <strong>Profile Status: Not Active</strong>
+            </ngb-alert>
+        </ng-container>
+
+        <ng-container *ngIf="!userData?.availableForAppointment">
+            <ngb-alert [dismissible]="false">
+                <strong>Note:</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
+            </ngb-alert>
         </ng-container>
 
         <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
@@ -130,7 +140,6 @@
         <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut()">Log Out</button>
         <br>
         <br>
-
         <br>
         <ng-container  *ngIf="userData?.availableForAppointment">
             <p>What the patients see:</p>

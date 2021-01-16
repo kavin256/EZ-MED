@@ -37,17 +37,12 @@
     </mat-accordion>
 
     <br>
-    <ng-container>
+    <ng-container *ngIf="availableForAppointment">
         <p style="font-size: small; color: crimson">
-            <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated after a week, because the already booked appointments will be affected.<br>
+            <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated from the 7th day onwards. Because the already booked appointments will be affected.<br>
+            For example, if you save the changes on 5th January 20XX, the new schedule will be appearing to the patients from 12th January 20XX. And until then, you will be working with the
+            original schedule.
         </p>
-        <ng-container *ngIf="showMoreInfo">
-            <p style="font-size: small; color: crimson">
-                <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated after a week, because the already booked appointments will be affected.<br>
-            </p>
-        </ng-container>
-        <button *ngIf="showMoreInfo" (click)="showMoreInfo = !showMoreInfo" mat-raised-button color="warn">More Info</button>
-        <button *ngIf="showMoreInfo"  (click)="showMoreInfo = !showMoreInfo"  mat-raised-button color="warn">Hide Info</button>
     </ng-container>
     <ng-container *ngIf="changeRequestSent">
         <p style="font-size: small; color: crimson">** You can not save above details temporarily. You have made a change request already and it takes 7 days before you can send another change request.
