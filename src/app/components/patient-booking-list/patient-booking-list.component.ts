@@ -42,7 +42,6 @@ export class PatientBookingListComponent implements OnInit {
     }
   ];
 
-  title = 'MY BOOKINGS';
   titleBooking = 'BOOKING';
   selectedBookingId = null;
   showBookings = 'all'; // 'new' or 'all'

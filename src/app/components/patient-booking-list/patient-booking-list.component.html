@@ -1,21 +1,12 @@
 <div class="mat-card-style">
     <ng-container *ngIf="!selectedBookingId">
 
-        <app-page-title [title]="title"></app-page-title>
+        <app-page-title [title]="'My Bookings'"></app-page-title>
 
-<!--        <mat-radio-group aria-label="Select an option">-->
-<!--            <mat-radio-button value="all">All</mat-radio-button>-->
-<!--            <mat-radio-button value="new">New</mat-radio-button>-->
-<!--        </mat-radio-group>-->
-<!--        <br>-->
-        <button (click)="goToUserDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
-         <br>
-         <br>
         <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
         <br>
         <br>
         <p style="font-size: large;">Bookings:</p>
-<!--        <mat-divider></mat-divider>-->
         <div *ngFor="let booking of bookings; let i=index">
             <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
                 <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
@@ -39,6 +30,7 @@
                        (page)="goToPage($event)"
         >
         </mat-paginator>
+        <button (click)="goToUserDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
 
     </ng-container>
 
