@@ -5,17 +5,26 @@
         <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
         <br>
         <br>
+        <br>
     </ng-container>
+
+    <mat-form-field appearance="outline">
+        <mat-label>From</mat-label>
+        <input readonly matInput [matDatepicker]="picker1" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>To</mat-label>
+        <input readonly matInput [matDatepicker]="picker3" [value]="toDate">
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+
+    <br>
     <p style="font-size: large;">Bookings:</p>
-<!--    <mat-form-field appearance="fill">-->
-<!--        <mat-label>Enter a date range</mat-label>-->
-<!--        <mat-date-range-input [rangePicker]="picker">-->
-<!--            <input matStartDate placeholder="Start date">-->
-<!--            <input matEndDate placeholder="End date">-->
-<!--        </mat-date-range-input>-->
-<!--        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--        <mat-date-range-picker #picker></mat-date-range-picker>-->
-<!--    </mat-form-field>-->
+
     <div *ngFor="let booking of bookings; let i=index">
         <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
             <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
