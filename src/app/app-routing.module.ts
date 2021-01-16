@@ -11,7 +11,7 @@ import {PatientBookingListComponent} from './components/patient-booking-list/pat
 import {DoctorProfileComponent} from './components/doctor-profile/doctor-profile.component';
 import {DoctorScheduleComponent} from './components/doctor-schedule/doctor-schedule.component';
 import {DoctorSideBookingListComponent} from './components/doctor-side-booking-list/doctor-side-booking-list.component';
-import {DoctorSideBookingComponent} from './components/doctor-side-booking/doctor-side-booking.component';
+import {AppointmentComponent} from './components/appointment/appointment.component';
 import {PrescriptionComponent} from './components/prescription/prescription.component';
 import {PrescriptionListComponent} from './components/prescription-list/prescription-list.component';
 
@@ -28,7 +28,7 @@ const routes: Routes = [
     { path: 'doctor/dashboard', component: DoctorProfileComponent },
     { path: 'doctor/schedule', component: DoctorScheduleComponent },
     { path: 'doctor/appointments', component: DoctorSideBookingListComponent },
-    { path: 'appointment', component: DoctorSideBookingComponent },
+    { path: 'appointment', component: AppointmentComponent },
     { path: 'appointment/prescriptionList', component: PrescriptionListComponent },
     { path: 'appointment/prescription', component: PrescriptionComponent }
     ];

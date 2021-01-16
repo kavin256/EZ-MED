@@ -49,9 +49,9 @@
         </div>
         <div>
             <mat-form-field style="width: 240px" >
-                <input matInput required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="dateFormControl">
+                <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="dateFormControl">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker  #picker1></mat-datepicker>
+                <mat-datepicker disabled="false" #picker1></mat-datepicker>
             </mat-form-field>
             <br>
         </div>

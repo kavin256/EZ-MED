@@ -70,9 +70,9 @@
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px"  appearance="legacy">
-                            <mat-label>Gender *</mat-label>
-                            <mat-select (selectionChange)="setGender($event.value)" [formControl]="genderFormControl">
-                                <mat-option required *ngFor="let gender of genders" [value]="gender.value">
+                            <mat-label>Gender</mat-label>
+                            <mat-select required (selectionChange)="setGender($event.value)" [formControl]="genderFormControl">
+                                <mat-option *ngFor="let gender of genders" [value]="gender.value">
                                     {{gender.viewValue}}
                                 </mat-option>
                             </mat-select>
@@ -81,9 +81,9 @@
                     </div>
                     <div [hidden]="isDoctor">
                         <mat-form-field style="width: 240px" >
-                            <input matInput required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="bDayFormControl">
+                            <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="bDayFormControl">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker  #picker1></mat-datepicker>
+                            <mat-datepicker disabled="false" #picker1></mat-datepicker>
                         </mat-form-field>
                         <br>
                     </div>

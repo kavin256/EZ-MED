@@ -22,7 +22,7 @@ import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-sch
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
 import { SearchProfessionalsMainComponent } from './components/search-professionals-main/search-professionals-main.component';
 import { DoctorSideBookingListComponent } from './components/doctor-side-booking-list/doctor-side-booking-list.component';
-import { DoctorSideBookingComponent } from './components/doctor-side-booking/doctor-side-booking.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
@@ -61,7 +61,7 @@ export function initialize(app: AppService) {
         DoctorScheduleComponent,
         DoctorProfileComponent,
         DoctorSideBookingListComponent,
-        DoctorSideBookingComponent,
+        AppointmentComponent,
         ContactPageComponent,
         FaqsComponent,
         PrescriptionComponent,
