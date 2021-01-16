@@ -1,5 +1,4 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {BookingStatus} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import jsPDF from 'jspdf';
@@ -7,6 +6,7 @@ import html2canvas from 'html2canvas';
 import {$} from 'protractor';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {BookingStatus} from '../appointment-list/appointment-list.component';
 
 @Component({
   selector: 'app-prescription',

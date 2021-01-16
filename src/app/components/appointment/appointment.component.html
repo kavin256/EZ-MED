@@ -1,34 +1,17 @@
 <div class="mat-card-style">
+    <app-page-title [title]="'Booking'"></app-page-title>
+
+    <ng-container>
+        <ngb-alert [dismissible]="false">
+            <h1 style="font-size: x-large"># {{booking.id}}</h1>
+        </ngb-alert>
+    </ng-container>
     <ng-container *ngIf="!doctorSide">
         <app-professional-card
                 [professional]="doctor"
         ></app-professional-card>
-        <h1 style="font-size: x-large"># {{booking.id}}</h1>
-        <br>
-        <p style="font-size: small">WhatApp: <b>{{patient.whatsAppNumber}}</b></p>
-        <p style="font-size: small">Booking Status: {{booking.status}}</p>
-        <ng-container *ngIf="!isPatientDetailsShown">
-            <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Show Patient Details</button>    <br>
-        </ng-container>
-        <ng-container *ngIf="isPatientDetailsShown">
-            <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Hide Patient Details</button>    <br>
-        </ng-container>
-        <br>
-        <ng-container *ngIf="isPatientDetailsShown">
-            <p style="font-size: small">Booking Number: {{patient.patientName}}</p>
-            <p style="font-size: small">Patient Ref. No: {{patient.patientId}}</p>
-            <p style="font-size: small">Contact number: {{patient.contactNumber}}</p>
-            <p style="font-size: small">Email: {{patient.email}}</p>
-            <p style="font-size: small">Birthday: {{patient.birthday}}</p>
-            <p style="font-size: small">Age: {{patient.age}}</p>
-            <p style="font-size: small">Known Allergies: {{patient.knownAllergies}}</p>
-        </ng-container>
-        <mat-divider></mat-divider>
-        <br>
     </ng-container>
     <ng-container *ngIf="doctorSide">
-        <h1 style="font-size: x-large"># {{booking.id}}</h1>
-        <br>
         <p style="font-size: small">WhatApp: <b>{{patient.whatsAppNumber}}</b></p>
         <p style="font-size: small">Booking Status: {{booking.status}}</p>
         <ng-container *ngIf="!isPatientDetailsShown">
@@ -47,9 +30,9 @@
             <p style="font-size: small">Age: {{patient.age}}</p>
             <p style="font-size: small">Known Allergies: {{patient.knownAllergies}}</p>
         </ng-container>
-        <mat-divider></mat-divider>
-        <br>
     </ng-container>
+<!--        <mat-divider></mat-divider>-->
+        <br>
 
     <ng-container  *ngIf="!inProgress" >
     <button [disabled]="booking.status === 'BOOKING_CANCELLED'"  style="width: 320px" color="primary" (click)="inProgress = !inProgress" mat-flat-button>Start Consultation</button>
@@ -90,4 +73,7 @@
     <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
     <button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button  color="warn">Cancel Booking</button>
     <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="dismiss()" style="width: 150px" mat-raised-button color="secondary">Dismiss</button></span>
+    <br>
+    <button *ngIf="!isConfirmationActive"  (click)="goBack()" style="width: 320px" mat-raised-button color="secondary">Back</button>
+
 </div>

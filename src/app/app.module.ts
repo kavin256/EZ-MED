@@ -21,7 +21,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DoctorScheduleComponent } from './components/doctor-schedule/doctor-schedule.component';
 import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
 import { SearchProfessionalsMainComponent } from './components/search-professionals-main/search-professionals-main.component';
-import { DoctorSideBookingListComponent } from './components/doctor-side-booking-list/doctor-side-booking-list.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
@@ -33,7 +32,7 @@ import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finan
 import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
-import { PatientBookingListComponent } from './components/patient-booking-list/patient-booking-list.component';
+import { AppointmentListComponent } from './components/appointment-list/appointment-list.component';
 import { ModalComponent } from './components/modal/modal.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ProfessionalCardComponent } from './components/professional-card/professional-card.component';
@@ -60,7 +59,6 @@ export function initialize(app: AppService) {
         LandingPageComponent,
         DoctorScheduleComponent,
         DoctorProfileComponent,
-        DoctorSideBookingListComponent,
         AppointmentComponent,
         ContactPageComponent,
         FaqsComponent,
@@ -72,7 +70,7 @@ export function initialize(app: AppService) {
         PatientProfileComponent,
         SearchProfessionalsMainComponent,
         PageTitleComponent,
-        PatientBookingListComponent,
+        AppointmentListComponent,
         ModalComponent,
         ProfessionalCardComponent,
         ChatSectionComponent,

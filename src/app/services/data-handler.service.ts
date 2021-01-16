@@ -115,7 +115,9 @@ export class DataHandlerService {
       const url = Constants.BASE_URL + Constants.GET_USER_DATA + userName;
       dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
           .then((data: any) => {
-            resolve(data.data[0]);
+            if (data.data && data.data[0]) {
+              resolve(data.data[0]);
+            }
           });
     });
   }

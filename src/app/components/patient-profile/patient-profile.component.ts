@@ -63,7 +63,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   goToMyAppointments() {
-    this.router.navigate(['user/appointments']).then(r => {
+    this.router.navigate(['appointments']).then(r => {
     });
   }
 

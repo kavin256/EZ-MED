@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {BookingStatus} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DoctorType} from '../../utils/Constants';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
+import {Router} from '@angular/router';
+import {BookingStatus} from '../appointment-list/appointment-list.component';
 
 @Component({
   selector: 'app-appointment',
@@ -68,6 +69,7 @@ export class AppointmentComponent implements OnInit {
   private selectedProfessionalUsername: string;
 
   constructor(
+      private router: Router,
       private dataHandlerService: DataHandlerService,
       private dataLoaderService: DataLoaderService
   ) { }
@@ -105,4 +107,9 @@ export class AppointmentComponent implements OnInit {
       this.isConfirmationActive = false;
       this.changeRequestSent = false;
   }
+
+    goBack() {
+        this.router.navigate(['appointments']).then(r => {
+        });
+    }
 }

@@ -111,7 +111,7 @@ export class DoctorProfileComponent implements OnInit {
   }
 
   goToMyAppointments() {
-    this.router.navigate(['doctor/appointments']).then(r => {
+    this.router.navigate(['appointments']).then(r => {
     });
   }
 

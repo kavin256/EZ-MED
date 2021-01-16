@@ -7,10 +7,9 @@ import {BookingEnterTimeComponent} from './components/booking-enter-time/booking
 import {BookingEnterComponent} from './components/booking-enter/booking-enter.component';
 import {PaymentSuccessComponent} from './components/payment-success/payment-success.component';
 import {PatientProfileComponent} from './components/patient-profile/patient-profile.component';
-import {PatientBookingListComponent} from './components/patient-booking-list/patient-booking-list.component';
+import {AppointmentListComponent} from './components/appointment-list/appointment-list.component';
 import {DoctorProfileComponent} from './components/doctor-profile/doctor-profile.component';
 import {DoctorScheduleComponent} from './components/doctor-schedule/doctor-schedule.component';
-import {DoctorSideBookingListComponent} from './components/doctor-side-booking-list/doctor-side-booking-list.component';
 import {AppointmentComponent} from './components/appointment/appointment.component';
 import {PrescriptionComponent} from './components/prescription/prescription.component';
 import {PrescriptionListComponent} from './components/prescription-list/prescription-list.component';
@@ -24,10 +23,9 @@ const routes: Routes = [
     { path: 'confirmation', component: BookingEnterComponent },
     { path: 'success', component: PaymentSuccessComponent },
     { path: 'user/dashboard', component: PatientProfileComponent },
-    { path: 'user/appointments', component: PatientBookingListComponent },
+    { path: 'appointments', component: AppointmentListComponent },
     { path: 'doctor/dashboard', component: DoctorProfileComponent },
     { path: 'doctor/schedule', component: DoctorScheduleComponent },
-    { path: 'doctor/appointments', component: DoctorSideBookingListComponent },
     { path: 'appointment', component: AppointmentComponent },
     { path: 'appointment/prescriptionList', component: PrescriptionListComponent },
     { path: 'appointment/prescription', component: PrescriptionComponent }

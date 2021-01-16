@@ -109,13 +109,13 @@
 
         <ng-container *ngIf="userData?.availableForAppointment">
             <ngb-alert [type]="'success'" [dismissible]="false">
-                <strong>Profile Status: Active</strong>
+                Profile Status: <b>Active</b>
             </ngb-alert>
         </ng-container>
 
         <ng-container *ngIf="!userData?.availableForAppointment">
             <ngb-alert [type]="'danger'" [dismissible]="false">
-                <strong>Profile Status: Not Active</strong>
+                Profile Status: <b>Not Active</b>
             </ngb-alert>
         </ng-container>
 

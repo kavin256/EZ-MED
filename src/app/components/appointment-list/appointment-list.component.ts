@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
+// import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {PageEvent} from '@angular/material';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {UserData} from '../../models/user-data';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
-  selector: 'app-patient-booking-list',
-  templateUrl: './patient-booking-list.component.html',
-  styleUrls: ['./patient-booking-list.component.css']
+  selector: 'app-appointment-list',
+  templateUrl: './appointment-list.component.html',
+  styleUrls: ['./appointment-list.component.css']
 })
-export class PatientBookingListComponent implements OnInit {
+export class AppointmentListComponent implements OnInit {
 
   currentDate = new Date();
   RESULTS_PER_PAGE = 5;
@@ -42,6 +44,7 @@ export class PatientBookingListComponent implements OnInit {
     }
   ];
 
+  doctorSide = false;
   titleBooking = 'BOOKING';
   selectedBookingId = null;
   showBookings = 'all'; // 'new' or 'all'
@@ -127,19 +130,36 @@ export class PatientBookingListComponent implements OnInit {
   ];
   isPrescriptionsVisible = false;
   selectedPrescription = null;
+  loggedInUser: UserData = null;
+  private selectedProfessionalUsername: string;
 
   constructor(
       private router: Router,
-      private dataHandlerService: DataHandlerService
+      private dataHandlerService: DataHandlerService,
+      private dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+    if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+      this.doctorSide = this.loggedInUser.doctor;
+    }
+    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
+    this.loadProfessionalData(this.selectedProfessionalUsername);
+  }
+
+  private loadProfessionalData(selectedProfessionalUsername: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+        .then((data: any) => {
+          this.doctor = data;
+        });
   }
 
   selectBooking($event: string) {
     this.selectedBookingId = $event;
+    this.router.navigate(['appointment']).then(r => {});
   }
 
   getColor($event) {
@@ -175,11 +195,16 @@ export class PatientBookingListComponent implements OnInit {
     this.isPrescriptionsVisible = action;
   }
 
-  goToUserDashboard() {
+  goToDashboard() {
     this.PAGINATION_START = 0;
     this.PAGINATION_END = this.RESULTS_PER_PAGE;
-    this.router.navigate(['user/dashboard']).then(r => {
-    });
+    if (this.doctorSide) {
+      this.router.navigate(['doctor/dashboard']).then(r => {
+      });
+    } else {
+      this.router.navigate(['user/dashboard']).then(r => {
+      });
+    }
   }
 
   goToPage($event: PageEvent) {
@@ -191,4 +216,18 @@ export class PatientBookingListComponent implements OnInit {
     this.router.navigate(['searchProfessionals']).then(r => {
     });
   }
+}
+
+export enum BookingStatus {
+  BOOKING_CANCELLED = 'BOOKING_CANCELLED',
+  BOOKING_COMPLETED = 'BOOKING_COMPLETED',
+  BOOKING_CURRENT = 'BOOKING_CURRENT',
+  BOOKING_NOT_STARTED = 'BOOKING_NOT_STARTED'
+}
+
+export enum Colors {
+  BOOKING_CANCELLED = '#ff6666',
+  BOOKING_COMPLETED = '#e6e6e6',
+  BOOKING_CURRENT = '#99ccff',
+  BOOKING_NOT_STARTED = '#d5ff80'
 }

@@ -20,6 +20,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   user = null;
   firstName: string;
   isSignUp = true;
+  overTheProfilePic = null;
+  overTheLogo = null;
 
   userType;
 
@@ -69,6 +71,30 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   goToHomePage() {
     this.router.navigate(['/']).then(r => {
     });
+  }
+
+  onMouseEnterProfilePic($event: number) {
+    this.overTheProfilePic = $event;
+  }
+
+  onMouseLeaveProfilePic() {
+    this.overTheProfilePic = null;
+  }
+
+  isOverTheProfilePic($event: number) {
+    return $event === this.overTheProfilePic;
+  }
+
+  onMouseEnterLogo() {
+    this.overTheLogo = true;
+  }
+
+  onMouseLeaveLogo() {
+    this.overTheLogo = false;
+  }
+
+  isOverTheLogo() {
+    // return $event === this.overTheLogo;
   }
 
   private setFirstName(loggedInUser: any): string {
