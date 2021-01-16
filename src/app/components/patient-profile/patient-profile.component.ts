@@ -101,4 +101,10 @@ export class PatientProfileComponent implements OnInit {
     this.dateFormControl = new FormControl(new Date(patient.birthday));
     this.gender = patient.male ? 'male' : 'female';
   }
+
+  dismiss() {
+    localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
+    this.selectedProfessionalUsername = null;
+    this.searchedProfessionalName = null;
+  }
 }

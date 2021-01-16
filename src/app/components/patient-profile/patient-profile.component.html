@@ -89,7 +89,8 @@
             <div class="alert alert-primary" role="alert">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">error_outline</mat-icon>Want to continue your booking with {{searchedProfessionalName}}?
                 <br>
-                <button (click)="goToAppointmentTimeSelection()" style="width: 100px" mat-stroked-button color="primary">Yes</button>
+                <button style="margin:5px;" (click)="goToAppointmentTimeSelection()" style="width: 100px" mat-stroked-button color="primary">Yes</button>
+                &nbsp;<button style="margin:5px;" (click)="dismiss()" style="width: 100px" mat-stroked-button color="primary">No</button>
             </div>
         </ng-container>
         <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings</button>
