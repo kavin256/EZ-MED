@@ -1,40 +1,45 @@
 <div class="mat-card-style">
-    <ng-container *ngIf="!selectedBookingId">
+    <app-page-title [title]="'My Bookings'"></app-page-title>
 
-        <app-page-title [title]="'My Bookings'"></app-page-title>
-
-        <ng-container *ngIf="!doctorSide">
-            <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
-            <br>
+    <ng-container *ngIf="!doctorSide">
+        <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
+        <br>
+        <br>
+    </ng-container>
+    <p style="font-size: large;">Bookings:</p>
+<!--    <mat-form-field appearance="fill">-->
+<!--        <mat-label>Enter a date range</mat-label>-->
+<!--        <mat-date-range-input [rangePicker]="picker">-->
+<!--            <input matStartDate placeholder="Start date">-->
+<!--            <input matEndDate placeholder="End date">-->
+<!--        </mat-date-range-input>-->
+<!--        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--        <mat-date-range-picker #picker></mat-date-range-picker>-->
+<!--    </mat-form-field>-->
+    <div *ngFor="let booking of bookings; let i=index">
+        <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
+            <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
+                <table>
+                    <tr>
+                        <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.doctorName}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: small">Date: {{booking.date}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: x-small">Booking ID: {{booking.bookingId}}</td>
+                    </tr>
+                </table>
+            </mat-card>
             <br>
         </ng-container>
-        <p style="font-size: large;">Bookings:</p>
-        <div *ngFor="let booking of bookings; let i=index">
-            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
-                <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
-                    <table>
-                        <tr>
-                            <td style="font-size: large" [ngClass]="booking.bookingStatus === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.doctorName}}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: small">Date: {{booking.date}}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: x-small">Booking ID: {{booking.bookingId}}</td>
-                        </tr>
-                    </table>
-                </mat-card>
-                <br>
-            </ng-container>
-        </div>
-        <mat-paginator [length]="bookings.length"
-                       [pageSize]="RESULTS_PER_PAGE"
-                       (page)="goToPage($event)"
-        >
-        </mat-paginator>
-        <button (click)="goToDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
-
-    </ng-container>
+    </div>
+    <mat-paginator [length]="bookings.length"
+                   [pageSize]="RESULTS_PER_PAGE"
+                   (page)="goToPage($event)"
+    >
+    </mat-paginator>
+    <button (click)="goToDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
 
     <ng-container *ngIf="isPrescriptionsVisible && !selectedPrescription">
         <div *ngFor="let prescription of prescriptionList; index as index">

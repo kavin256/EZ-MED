@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 // import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
-import {PageEvent} from '@angular/material';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-appointment-list',

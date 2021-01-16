@@ -9,11 +9,11 @@ import {RequestOptions} from '../../models/request-options';
 import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {MatRadioChange} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {AuthModel} from '../../models/auth-model';
 import {DatePipe} from '@angular/common';
+import {MatRadioChange} from '@angular/material/radio';
 
 @Component({
   selector: 'app-signup',

@@ -6,9 +6,9 @@ import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {PageEvent} from '@angular/material';
 import csc from 'country-state-city';
 import { ICountry, IState, ICity } from 'country-state-city';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-search-professionals-main',

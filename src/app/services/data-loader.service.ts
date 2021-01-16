@@ -4,9 +4,8 @@ import {RequestOptions} from '../models/request-options';
 import {DataKey, DataStoreService} from './data-store.service';
 import {BehaviorSubject} from 'rxjs';
 import {Constants, MODAL_TYPES} from '../utils/Constants';
-import {MatDialogConfig} from '@angular/material';
 import {ModalComponent} from '../components/modal/modal.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'
