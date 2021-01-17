@@ -21,7 +21,6 @@ export class DoctorProfileComponent implements OnInit {
   onVacation = false;
   userData: DoctorSpecificData;
   vacationModeTitle = 'Enter Vacation Mode';
-  vacationModePopUpActive = false;
   titles = [
     {value: DoctorTitles.DR},
     {value: DoctorTitles.MR},
@@ -153,17 +152,24 @@ export class DoctorProfileComponent implements OnInit {
   }
 
   goToVacationMode() {
-    this.vacationModePopUpActive = true;
-    this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true, (result) => this.callBackFromVacationPopUp(result));
+    if (!this.onVacation) {
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true,
+          (result) => this.callBackFromVacationPopUp(result));
+    } else {
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.EXIT_VACATION_MODE, true,
+          (result) => this.callBackFromVacationPopUp(result));
+    }
   }
 
   callBackFromVacationPopUp($event) {
-    if ($event === 'start_vacation') {
-      this.onVacation = true;
-      this.vacationModeTitle = 'Exit Vacation Mode';
-    } else if ($event === 'dismiss') {
-      this.onVacation = false;
-      this.vacationModeTitle = 'Enter Vacation Mode';
+    switch ($event) {
+      case 'start_vacation':
+        this.onVacation = true;
+        this.vacationModeTitle = 'Exit Vacation Mode';
+        break;
+      case 'stop_vacation':
+        this.onVacation = false;
+        this.vacationModeTitle = 'Enter Vacation Mode';
     }
   }
 }

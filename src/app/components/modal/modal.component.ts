@@ -26,6 +26,10 @@ export class ModalComponent implements OnInit {
     this.dialogRef.close('start_vacation');
   }
 
+  stopVacationMode() {
+    this.dialogRef.close('stop_vacation');
+  }
+
   dismiss() {
     this.dialogRef.close('dismiss');
   }
