@@ -91,10 +91,9 @@
         <br>
         <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
         <br>
-        <input #imageInput
-               type="file"
+        <input type="file"
                accept="image/*"
-               (change)="uploadImage(imageInput)">
+               (change)="uploadImage($event)">
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="primary" (click)="saveData()">Save</button>

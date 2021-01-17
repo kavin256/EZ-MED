@@ -3,6 +3,9 @@ import './header.component.css';
 import {Router} from '@angular/router';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {Constants} from '../../utils/Constants';
+import {HttpClient, HttpRequest} from '@angular/common/http';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +14,8 @@ import {DataHandlerService} from '../../services/data-handler.service';
 })
 
 export class HeaderComponent implements OnInit, AfterViewInit {
+
+  profileImageURL = Constants.BASE_URL + Constants.DOWNLOAD_USER_IMAGE;
 
   signUpResultObject = {
     isSignUp: undefined,
@@ -28,7 +33,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(
               private dataHandlerService: DataHandlerService,
               private router: Router,
-              private dataStore: DataStoreService
+              private dataStore: DataStoreService,
+              private dataLoaderService: DataLoaderService,
+              private https: HttpClient
   ) {}
 
   ngOnInit() {
@@ -44,10 +51,34 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.userType = this.signUpResultObject.userType;
       this.isSignUp = this.signUpResultObject.isSignUp;
     }
+    this.setProfileImageSource();
   }
 
   ngAfterViewInit() {
     setTimeout(() => { window.scroll(0, 0); }, 1000);
+  }
+
+  /**
+   * Set profile image source. If there is no image, set default avatar
+   */
+  setProfileImageSource() {
+    if (this.loggedInUser) {
+      this.profileImageURL += this.loggedInUser.userName;
+      // get image and verify that it is in the storage
+      const req = new HttpRequest('GET', this.profileImageURL, {
+        reportProgress: true
+      });
+      this.https.request(req).subscribe(
+          data => {},
+          error => {
+            if (error.status !== 200) {
+              this.profileImageURL = './assets/img/profile_blue1.png';
+            }
+          }
+      );
+    } else {
+      this.profileImageURL = './assets/img/profile_blue1.png';
+    }
   }
 
   logoClick(): void {
