@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
-import {PatientTitles} from '../../utils/Constants';
+import {Constants, PatientTitles} from '../../utils/Constants';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {HttpClient, HttpRequest} from '@angular/common/http';
 
 @Component({
   selector: 'app-patient-profile',
@@ -15,6 +16,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 })
 export class PatientProfileComponent implements OnInit {
 
+  selectedImage: File;
   patient;
   patientAge;
   gender;
@@ -37,7 +39,8 @@ export class PatientProfileComponent implements OnInit {
       private router: Router,
       private datePipe: DatePipe,
       private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      private dataHandlerService: DataHandlerService,
+      private https: HttpClient
   ) {
     this.datePipe = new DatePipe('en-US');
   }
@@ -106,5 +109,28 @@ export class PatientProfileComponent implements OnInit {
     localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
     this.selectedProfessionalUsername = null;
     this.searchedProfessionalName = null;
+  }
+
+  /**
+   * Upload user image handling
+   * @param event selected image
+   */
+  uploadImage(event) {
+    this.selectedImage = event.target.files[0];
+    const formData: FormData = new FormData();
+    formData.append('file', this.selectedImage);
+
+    // sent request
+    const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE + this.patient.userName;
+    const req = new HttpRequest('POST', url, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    this.https.request(req).subscribe(
+        data => {
+          if (data) {
+          }
+        }
+    );
   }
 }
