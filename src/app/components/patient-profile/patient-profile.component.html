@@ -75,6 +75,11 @@
             </mat-form-field>
             <br>
         </div>
+        <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
+        <br>
+        <input type="file"
+               accept="image/*"
+               (change)="uploadImage($event)">
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>

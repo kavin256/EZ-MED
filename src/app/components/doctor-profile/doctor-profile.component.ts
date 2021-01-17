@@ -123,7 +123,11 @@ export class DoctorProfileComponent implements OnInit {
         });
     }
 
-    uploadImage(event) {
+  /**
+   * Upload user image handling
+   * @param event selected image
+   */
+  uploadImage(event) {
         this.selectedImage = event.target.files[0];
         const formData: FormData = new FormData();
         formData.append('file', this.selectedImage);
