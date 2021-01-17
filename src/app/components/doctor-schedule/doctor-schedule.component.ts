@@ -81,7 +81,7 @@ export class DoctorScheduleComponent implements OnInit {
     } else {
       this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
       // Todo: show error
-      alert('Please check your time slots. Might have an overlap!');
+      alert('Please check your time slots. Might have an overlap or start time might be after the end time in a time slot!');
     }
   }
 
@@ -190,6 +190,13 @@ export class DoctorScheduleComponent implements OnInit {
 
   private validateSchedule(workingTimePeriods: WorkingTimePeriod[]) {
     let success = true;
+
+    // check for start time being higher than the end time
+    workingTimePeriods.forEach((tp, index) => {
+      if (tp.endTime && tp.endTime && tp.endTime < tp.startTime) {
+        success = false;
+      }
+    });
 
     // check for timeslot overlaps
     workingTimePeriods.forEach((tp, index) => {
