@@ -20,7 +20,7 @@ export class DoctorProfileComponent implements OnInit {
   priceCurrency = 'LKR';
   onVacation = false;
   userData: DoctorSpecificData;
-  vacationModeTitle = 'Enter Vacation Mode';
+  vacationModeTitle = 'Enable Vacation Mode';
   titles = [
     {value: DoctorTitles.DR},
     {value: DoctorTitles.MR},
@@ -169,7 +169,7 @@ export class DoctorProfileComponent implements OnInit {
         break;
       case 'stop_vacation':
         this.onVacation = false;
-        this.vacationModeTitle = 'Enter Vacation Mode';
+        this.vacationModeTitle = 'Enable Vacation Mode';
     }
   }
 }
