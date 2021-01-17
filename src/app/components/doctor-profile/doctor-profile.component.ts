@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {Constants, currencyCodes, DoctorTitles, DoctorType, specializations} from '../../utils/Constants';
+import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES, specializationsCON} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
@@ -13,20 +13,21 @@ import {DataHandlerService} from '../../services/data-handler.service';
     styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent implements OnInit {
-    selectedImage: File;
-    // profileUsername = 'dfg';
-    editable = false;
-    loggedInUser = null;
-    priceCurrency = 'LKR';
-    userData: DoctorSpecificData;
-
-    titles = [
-        {value: DoctorTitles.DR},
-        {value: DoctorTitles.MR},
-        {value: DoctorTitles.MRS},
-        {value: DoctorTitles.MS},
-        {value: DoctorTitles.PROF},
-    ];
+  selectedImage: File;
+  // profileUsername = 'dfg';
+  editable = false;
+  loggedInUser = null;
+  priceCurrency = 'LKR';
+  onVacation = false;
+  userData: DoctorSpecificData;
+  vacationModeTitle = 'Enable Vacation Mode';
+  titles = [
+    {value: DoctorTitles.DR},
+    {value: DoctorTitles.MR},
+    {value: DoctorTitles.MRS},
+    {value: DoctorTitles.MS},
+    {value: DoctorTitles.PROF},
+  ];
 
     doctorTypes = [
         {value: DoctorType.CON},
@@ -34,8 +35,8 @@ export class DoctorProfileComponent implements OnInit {
         {value: DoctorType.OTH}
     ];
 
-    // todo: find a better solution. this is just a duplication. So not good
-    specializations = specializations;
+  // todo: find a better solution. this is just a duplication. So not good
+  specializationsCON = specializationsCON;
 
     constructor(
         private router: Router,
@@ -141,13 +142,35 @@ export class DoctorProfileComponent implements OnInit {
         );
     }
 
-    checkForMandatoryFieldsToActivateProfile(userData: DoctorSpecificData) {
-        // currently only the userData.priceForAppointment is checked as a requirement
-        return userData &&
-            userData.priceForAppointment !== null &&
-            userData.priceForAppointment !== undefined &&
-            userData.priceForAppointment !== '' &&
-            parseInt(userData.priceForAppointment, 10) &&
-            parseInt(userData.priceForAppointment, 10) > 0;
+  checkForMandatoryFieldsToActivateProfile(userData: DoctorSpecificData) {
+    // currently only the userData.priceForAppointment is checked as a requirement
+    return userData &&
+        userData.priceForAppointment !== null &&
+        userData.priceForAppointment !== undefined &&
+        userData.priceForAppointment !== '' &&
+        parseInt(userData.priceForAppointment, 10) &&
+        parseInt(userData.priceForAppointment, 10) > 0;
+  }
+
+  goToVacationMode() {
+    if (!this.onVacation) {
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true,
+          (result) => this.callBackFromVacationPopUp(result));
+    } else {
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.EXIT_VACATION_MODE, true,
+          (result) => this.callBackFromVacationPopUp(result));
     }
+  }
+
+  callBackFromVacationPopUp($event) {
+    switch ($event) {
+      case 'start_vacation':
+        this.onVacation = true;
+        this.vacationModeTitle = 'Exit Vacation Mode';
+        break;
+      case 'stop_vacation':
+        this.onVacation = false;
+        this.vacationModeTitle = 'Enable Vacation Mode';
+    }
+  }
 }

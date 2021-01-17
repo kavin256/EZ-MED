@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
-import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData} from '../../models/user-data';
+import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData, WorkingTimePeriod} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
 import {Constants, MODAL_TYPES} from '../../utils/Constants';
@@ -48,35 +48,38 @@ export class DoctorScheduleComponent implements OnInit {
   }
 
   save(userName: string) {
-    this.updateSchedule();
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
-    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    if (this.availableForAppointment) {
-      this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
-          DataKey.doctorScheduleData, this.doctorScheduleData)
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-              this.isConfirmationActive = false;
-              this.changeRequestSent = true;
-              this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-              this.router.navigate(['doctor/dashboard']).then(r => {});
-            } else if (data && data.status && data.status.code === -1) {
-              this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-              // Todo: show error
-              alert('Something went wrong!');
-            }
-          });
+    if (this.updateSchedule()) {
+      const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+      if (this.availableForAppointment) {
+        this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
+            DataKey.doctorScheduleData, this.doctorScheduleData)
+            .then((data: any) => {
+              if (data && data.status && data.status.code === 1) {
+                this.isConfirmationActive = false;
+                this.changeRequestSent = true;
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                this.router.navigate(['doctor/dashboard']).then(r => {});
+              } else if (data && data.status && data.status.code === -1) {
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '2', false);
+              }
+            });
+      } else {
+        this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(),
+            DataKey.doctorScheduleData, this.doctorScheduleData)
+            .then((data: any) => {
+              if (data && data.status && data.status.code === 1) {
+                this.dataHandlerService.loadUserData(userName, this.dataLoaderService);
+                this.isConfirmationActive = false;
+                this.changeRequestSent = true;
+              } else if (data && data.status && data.status.code === -1) {
+              }
+            });
+      }
     } else {
-      this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(),
-          DataKey.doctorScheduleData, this.doctorScheduleData)
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-              this.dataHandlerService.loadUserData(userName, this.dataLoaderService);
-              this.isConfirmationActive = false;
-              this.changeRequestSent = true;
-            } else if (data && data.status && data.status.code === -1) {
-            }
-          });
+      this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '1', false);
     }
   }
 
@@ -107,6 +110,9 @@ export class DoctorScheduleComponent implements OnInit {
   }
 
   private updateSchedule() {
+    let success = true;
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
+
     // from hours and minutes to date
     if (this.doctorScheduleData) {
       this.doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
@@ -124,9 +130,14 @@ export class DoctorScheduleComponent implements OnInit {
                 workingTimePeriod.startTimeSelected);
           });
           doctorDate.workingTimePeriods = filtered;
+          this.sortTheSchedule(doctorDate.workingTimePeriods);
+          if (!this.validateSchedule(doctorDate.workingTimePeriods)) {
+            success = false;
+          }
         }
       });
     }
+    return success;
   }
 
   userConsent() {
@@ -135,8 +146,7 @@ export class DoctorScheduleComponent implements OnInit {
         this.doctorScheduleData.averageTimeForAppointment > 0) {
       this.isConfirmationActive = !this.isConfirmationActive;
     } else {
-      // Todo: show a proper error
-      alert('Please enter a valid average time');
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '3', false);
     }
   }
 
@@ -161,5 +171,37 @@ export class DoctorScheduleComponent implements OnInit {
 
   private addDummyData(fixedDoctorDate: FixedDoctorDate []) {
     return this.dataHandlerService.createNewDummyAppointmentSlotArrayForWeek(fixedDoctorDate);
+  }
+
+  private sortTheSchedule(workingTimePeriods: WorkingTimePeriod[]) {
+    workingTimePeriods.sort((a, b) => {
+      if (a.startTime < b.startTime) {
+        return -1;
+      }
+      if (a.startTime > b.startTime) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  private validateSchedule(workingTimePeriods: WorkingTimePeriod[]) {
+    let success = true;
+
+    // check for start time being higher than the end time
+    workingTimePeriods.forEach((tp, index) => {
+      if (tp.endTime && tp.endTime && tp.endTime <= tp.startTime) {
+        success = false;
+      }
+    });
+
+    // check for timeslot overlaps
+    workingTimePeriods.forEach((tp, index) => {
+      if (tp.endTime && workingTimePeriods[index + 1] && workingTimePeriods[index + 1].startTime &&
+          tp.endTime > workingTimePeriods[index + 1].startTime) {
+        success = false;
+      }
+    });
+    return success;
   }
 }

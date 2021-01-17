@@ -37,7 +37,10 @@ export const PatientTitles = [
 ];
 
 export enum MODAL_TYPES {
-    LOADING = 'LOADING'
+    LOADING = 'LOADING',
+    ERROR = 'ERROR_',
+    ENTER_VACATION_MODE = 'ENTER_VACATION_MODE',
+    EXIT_VACATION_MODE = 'EXIT_VACATION_MODE'
 }
 
 export enum TRANSITION_PAGE_TYPE {
@@ -59,7 +62,7 @@ export enum DoctorType {
     OTH = 'Other Medical Practitioner'
 }
 
-export const specializations = [
+export const specializationsCON = [
     'Any',
     'Immunologist',
     'Cardiologist',
@@ -68,4 +71,26 @@ export const specializations = [
     'Dermatologist',
     'ClinicalNutritionist',
     'Endocrinologist'
+    ];
+
+export const specializationsCOUN = [
+    'Any',
+    'Immunologist',
+    'Cardiologist',
+    'Pulmonologist',
+    'Radiologist',
+    'Dermatologist',
+    'ClinicalNutritionist',
+    'Endocrinologist'
+    ];
+
+export const specializationsOTH = [
+    'Any',
+    'Nutritionist',
+    'Dieticians',
+    'Psychologist',
+    'Occupational Therapist',
+    'Physiotherapist',
+    'SpeechAndLanguageTherapist',
+    'Clinical Audiologist'
     ];

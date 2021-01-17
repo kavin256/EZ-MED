@@ -74,6 +74,12 @@
     <button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button  color="warn">Cancel Booking</button>
     <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="dismiss()" style="width: 150px" mat-raised-button color="secondary">Dismiss</button></span>
     <br>
+    <ng-container *ngIf="isConfirmationActive">
+        <br>
+        <ngb-alert [dismissible]="false">
+            <strong>Note:</strong> You will not get any refund if you cancel this appointment!
+        </ngb-alert>
+    </ng-container>
     <button *ngIf="!isConfirmationActive"  (click)="goBack()" style="width: 320px" mat-raised-button color="secondary">Back</button>
 
 </div>

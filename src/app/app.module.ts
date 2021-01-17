@@ -4,16 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/signup/sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-    MatBadgeModule,
-    MatButtonModule, MatButtonToggleModule,
-    MatCardModule,
-    MatChipsModule, MatDatepickerModule,
-    MatDividerModule, MatExpansionModule,
-    MatIconModule, MatNativeDateModule,
-    MatInputModule, MatListModule, MatOptionModule, MatRadioModule, MatSelectModule,
-    MatTabsModule, MatCheckboxModule, MatDialogModule, MatPaginatorModule, MatSlideToggleModule, MatProgressSpinnerModule
-} from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -41,6 +31,27 @@ import { PrescriptionListComponent } from './components/prescription-list/prescr
 import {AppService} from './app.service';
 import {DatePipe} from '@angular/common';
 import { TransitionPageComponent } from './components/transition-page/transition-page.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
+import {MatListModule} from '@angular/material/list';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 export function initialize(app: AppService) {
     return async () => {
@@ -106,7 +117,12 @@ export function initialize(app: AppService) {
         HttpClientModule,
         MatPaginatorModule,
         MatSlideToggleModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatTabsModule
     ],
   providers: [
       DatePipe,

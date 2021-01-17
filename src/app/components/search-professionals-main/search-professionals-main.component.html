@@ -20,7 +20,7 @@
         <mat-form-field  style="width: 240px" >
             <mat-label>Specialization</mat-label>
             <mat-select [(value)]="selectedSpecialization">
-                <ng-container *ngFor="let subCategory of specializations">
+                <ng-container *ngFor="let subCategory of specializationsCON">
                     <mat-option value="{{subCategory}}">{{dataHandlerService.convertCamelCaseToSentence(subCategory)}}</mat-option>
                 </ng-container>
             </mat-select>

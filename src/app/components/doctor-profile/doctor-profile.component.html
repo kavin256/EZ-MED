@@ -46,7 +46,7 @@
         <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #1</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityA">
-                <ng-container *ngFor="let specialization of specializations" >
+                <ng-container *ngFor="let specialization of specializationsCON" >
                     <mat-option value="{{specialization}}">
                         {{specialization}}
                     </mat-option>
@@ -56,7 +56,7 @@
         <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityB">
-                <ng-container *ngFor="let specialization of specializations" >
+                <ng-container *ngFor="let specialization of specializationsCON" >
                     <mat-option value="{{specialization}}">
                         {{specialization}}
                     </mat-option>
@@ -66,7 +66,7 @@
         <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityC">
-                <ng-container *ngFor="let specialization of specializations" >
+                <ng-container *ngFor="let specialization of specializationsCON" >
                     <mat-option value="{{specialization}}">
                         {{specialization}}
                     </mat-option>
@@ -106,9 +106,16 @@
     <ng-container *ngIf="!editable">
         <app-page-title [title]="'My Profile'"></app-page-title>
 
-        <ng-container *ngIf="userData?.availableForAppointment">
+        <ng-container *ngIf="userData?.availableForAppointment && !onVacation">
             <ngb-alert [type]="'success'" [dismissible]="false">
                 Profile Status: <b>Active</b>
+            </ngb-alert>
+        </ng-container>
+
+        <ng-container *ngIf="userData?.availableForAppointment && onVacation">
+            <ngb-alert [type]="'danger'" [dismissible]="false">
+                <b>Profile Status:</b> Not Visible in searches and there are no any active appointments since you are in vacation mode. You can appear in searches again and
+            continue consultations by exiting vacation mode.
             </ngb-alert>
         </ng-container>
 
@@ -131,6 +138,9 @@
         <br>
         <br>
         <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-raised-button>Edit Schedule</button>
+        <br>
+        <br>
+        <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px" mat-stroked-button>{{vacationModeTitle}}</button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>

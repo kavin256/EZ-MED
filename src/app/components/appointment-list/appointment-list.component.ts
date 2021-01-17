@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 // import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
-import {PageEvent} from '@angular/material';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {PageEvent} from '@angular/material/paginator';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-appointment-list',
@@ -132,6 +133,10 @@ export class AppointmentListComponent implements OnInit {
   selectedPrescription = null;
   loggedInUser: UserData = null;
   private selectedProfessionalUsername: string;
+  date = new FormControl(new Date());
+  fromDate = this.date.value;
+  toDate: Date;
+  serializedDate = new FormControl((new Date()).toISOString());
 
   constructor(
       private router: Router,
@@ -140,12 +145,19 @@ export class AppointmentListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
     if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
       this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
       this.doctorSide = this.loggedInUser.doctor;
     }
+
+    // setting the to date of the default filter dates
+    if (this.loggedInUser) {
+      this.toDate = this.setToDate(this.fromDate, this.doctorSide ? 1 : 7);
+    }
+
     this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
     this.loadProfessionalData(this.selectedProfessionalUsername);
   }
@@ -160,6 +172,12 @@ export class AppointmentListComponent implements OnInit {
   selectBooking($event: string) {
     this.selectedBookingId = $event;
     this.router.navigate(['appointment']).then(r => {});
+  }
+
+  setToDate(fromDate: Date, days) {
+    const date = new Date();
+    date.setDate(fromDate.getDate() + days);
+    return date;
   }
 
   getColor($event) {
