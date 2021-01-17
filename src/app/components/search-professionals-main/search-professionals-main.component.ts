@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {specializations, Constants, DoctorType} from '../../utils/Constants';
+import {specializationsCON, Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
@@ -43,7 +43,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     }
   ];
 
-  specializations = specializations;
+  specializationsCON = specializationsCON;
   regions;
 
   constructor(

@@ -61,7 +61,7 @@ export enum DoctorType {
     OTH = 'Other Medical Practitioner'
 }
 
-export const specializations = [
+export const specializationsCON = [
     'Any',
     'Immunologist',
     'Cardiologist',
@@ -70,4 +70,26 @@ export const specializations = [
     'Dermatologist',
     'ClinicalNutritionist',
     'Endocrinologist'
+    ];
+
+export const specializationsCOUN = [
+    'Any',
+    'Immunologist',
+    'Cardiologist',
+    'Pulmonologist',
+    'Radiologist',
+    'Dermatologist',
+    'ClinicalNutritionist',
+    'Endocrinologist'
+    ];
+
+export const specializationsOTH = [
+    'Any',
+    'Nutritionist',
+    'Dieticians',
+    'Psychologist',
+    'Occupational Therapist',
+    'Physiotherapist',
+    'SpeechAndLanguageTherapist',
+    'Clinical Audiologist'
     ];

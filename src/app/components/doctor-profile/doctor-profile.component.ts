@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES, specializations} from '../../utils/Constants';
+import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES, specializationsCON} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DoctorSpecificData, UserData} from '../../models/user-data';
@@ -36,7 +36,7 @@ export class DoctorProfileComponent implements OnInit {
   ];
 
   // todo: find a better solution. this is just a duplication. So not good
-  specializations = specializations;
+  specializationsCON = specializationsCON;
 
   constructor(
       private router: Router,

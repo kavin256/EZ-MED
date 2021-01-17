@@ -190,7 +190,7 @@ export class DoctorScheduleComponent implements OnInit {
 
     // check for start time being higher than the end time
     workingTimePeriods.forEach((tp, index) => {
-      if (tp.endTime && tp.endTime && tp.endTime < tp.startTime) {
+      if (tp.endTime && tp.endTime && tp.endTime <= tp.startTime) {
         success = false;
       }
     });
