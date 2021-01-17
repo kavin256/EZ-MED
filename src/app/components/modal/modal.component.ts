@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class ModalComponent implements OnInit {
 
   @Input() modalType;
+  // @Input() errorMessage?: string;
   @Output() clickEmitter = new EventEmitter<string>();
 
   constructor(

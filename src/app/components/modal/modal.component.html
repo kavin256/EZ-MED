@@ -25,4 +25,22 @@
             &nbsp;<button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">No</button>
         </div>
     </ng-container>
+    <ng-container *ngIf="modalType === 'ERROR_1'">
+        <div class="alert alert-primary" role="alert">
+            Please check your time slots. Might have an overlap or start time might be after the end time in a time slot!<br>
+            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'ERROR_2'">
+        <div class="alert alert-primary" role="alert">
+            Something went wrong!<br>
+            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'ERROR_3'">
+        <div class="alert alert-primary" role="alert">
+            Please enter a valid average time!<br>
+            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+        </div>
+    </ng-container>
 </div>

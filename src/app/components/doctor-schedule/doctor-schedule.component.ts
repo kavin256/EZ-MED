@@ -62,8 +62,7 @@ export class DoctorScheduleComponent implements OnInit {
                 this.router.navigate(['doctor/dashboard']).then(r => {});
               } else if (data && data.status && data.status.code === -1) {
                 this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-                // Todo: show error
-                alert('Something went wrong!');
+                this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '2', false);
               }
             });
       } else {
@@ -80,8 +79,7 @@ export class DoctorScheduleComponent implements OnInit {
       }
     } else {
       this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-      // Todo: show error
-      alert('Please check your time slots. Might have an overlap or start time might be after the end time in a time slot!');
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '1', false);
     }
   }
 
@@ -148,8 +146,7 @@ export class DoctorScheduleComponent implements OnInit {
         this.doctorScheduleData.averageTimeForAppointment > 0) {
       this.isConfirmationActive = !this.isConfirmationActive;
     } else {
-      // Todo: show a proper error
-      alert('Please enter a valid average time');
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '3', false);
     }
   }
 
