@@ -21,12 +21,11 @@ export class DataLoaderService {
     // make a GET request
     public get<T>(url: string, param: HttpParams, headers: HttpHeaders) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.http.get<T>(url, {
                 headers: options.headers,
                 params: options.params
             }).subscribe(
-                // tslint:disable-next-line:no-shadowed-variable
                 ( data) => {
                     resolve(data);
                 });
@@ -36,13 +35,11 @@ export class DataLoaderService {
     // make a POST request
     public post<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey, data: any) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        this.dataStore.set(DataKey.error, {});
-
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
 
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.http.post<T>(url, data, {
                 headers: options.headers,
                 params: options.params
@@ -59,12 +56,10 @@ export class DataLoaderService {
     // make a PUT request
     public put<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey, data: any) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        this.dataStore.set(DataKey.error, {});
-
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.http.put<T>(url, data, {
                 headers: options.headers,
                 params: options.params
@@ -81,8 +76,6 @@ export class DataLoaderService {
     // make a DELETE request
     public delete<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        this.dataStore.set(DataKey.error, {});
-
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
@@ -118,8 +111,6 @@ export class DataLoaderService {
 
     // user login and get JWT token
     public login<T>(url: string, options: RequestOptions, data: any, dataKey: DataKey) {
-        this.dataStore.set(DataKey.error, {});
-
         if (this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
