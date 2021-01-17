@@ -48,35 +48,40 @@ export class DoctorScheduleComponent implements OnInit {
   }
 
   save(userName: string) {
-    this.updateSchedule();
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
-    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    if (this.availableForAppointment) {
-      this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
-          DataKey.doctorScheduleData, this.doctorScheduleData)
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-              this.isConfirmationActive = false;
-              this.changeRequestSent = true;
-              this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-              this.router.navigate(['doctor/dashboard']).then(r => {});
-            } else if (data && data.status && data.status.code === -1) {
-              this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-              // Todo: show error
-              alert('Something went wrong!');
-            }
-          });
+    if (this.updateSchedule()) {
+      const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+      if (this.availableForAppointment) {
+        this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
+            DataKey.doctorScheduleData, this.doctorScheduleData)
+            .then((data: any) => {
+              if (data && data.status && data.status.code === 1) {
+                this.isConfirmationActive = false;
+                this.changeRequestSent = true;
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                this.router.navigate(['doctor/dashboard']).then(r => {});
+              } else if (data && data.status && data.status.code === -1) {
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                // Todo: show error
+                alert('Something went wrong!');
+              }
+            });
+      } else {
+        this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(),
+            DataKey.doctorScheduleData, this.doctorScheduleData)
+            .then((data: any) => {
+              if (data && data.status && data.status.code === 1) {
+                this.dataHandlerService.loadUserData(userName, this.dataLoaderService);
+                this.isConfirmationActive = false;
+                this.changeRequestSent = true;
+              } else if (data && data.status && data.status.code === -1) {
+              }
+            });
+      }
     } else {
-      this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(),
-          DataKey.doctorScheduleData, this.doctorScheduleData)
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-              this.dataHandlerService.loadUserData(userName, this.dataLoaderService);
-              this.isConfirmationActive = false;
-              this.changeRequestSent = true;
-            } else if (data && data.status && data.status.code === -1) {
-            }
-          });
+      this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+      // Todo: show error
+      alert('Please check your time slots. Might have an overlap!');
     }
   }
 
@@ -107,6 +112,9 @@ export class DoctorScheduleComponent implements OnInit {
   }
 
   private updateSchedule() {
+    let success = true;
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
+
     // from hours and minutes to date
     if (this.doctorScheduleData) {
       this.doctorScheduleData.fixedDoctorDates.forEach((doctorDate) => {
@@ -125,9 +133,13 @@ export class DoctorScheduleComponent implements OnInit {
           });
           doctorDate.workingTimePeriods = filtered;
           this.sortTheSchedule(doctorDate.workingTimePeriods);
+          if (!this.validateSchedule(doctorDate.workingTimePeriods)) {
+            success = false;
+          }
         }
       });
     }
+    return success;
   }
 
   userConsent() {
@@ -174,5 +186,18 @@ export class DoctorScheduleComponent implements OnInit {
       }
       return 0;
     });
+  }
+
+  private validateSchedule(workingTimePeriods: WorkingTimePeriod[]) {
+    let success = true;
+
+    // check for timeslot overlaps
+    workingTimePeriods.forEach((tp, index) => {
+      if (tp.endTime && workingTimePeriods[index + 1] && workingTimePeriods[index + 1].startTime &&
+          tp.endTime > workingTimePeriods[index + 1].startTime) {
+        success = false;
+      }
+    });
+    return success;
   }
 }
