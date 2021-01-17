@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
-import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData} from '../../models/user-data';
+import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData, WorkingTimePeriod} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
 import {Constants, MODAL_TYPES} from '../../utils/Constants';
@@ -124,6 +124,7 @@ export class DoctorScheduleComponent implements OnInit {
                 workingTimePeriod.startTimeSelected);
           });
           doctorDate.workingTimePeriods = filtered;
+          this.sortTheSchedule(doctorDate.workingTimePeriods);
         }
       });
     }
@@ -161,5 +162,17 @@ export class DoctorScheduleComponent implements OnInit {
 
   private addDummyData(fixedDoctorDate: FixedDoctorDate []) {
     return this.dataHandlerService.createNewDummyAppointmentSlotArrayForWeek(fixedDoctorDate);
+  }
+
+  private sortTheSchedule(workingTimePeriods: WorkingTimePeriod[]) {
+    workingTimePeriods.sort((a, b) => {
+      if (a.startTime < b.startTime) {
+        return -1;
+      }
+      if (a.startTime > b.startTime) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }
