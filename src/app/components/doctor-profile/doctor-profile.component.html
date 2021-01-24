@@ -140,10 +140,10 @@
         <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-raised-button>Edit Schedule</button>
         <br>
         <br>
-        <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px" mat-stroked-button>{{vacationModeTitle}}</button>
-        <br>
-        <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
+        <br>
+        <br>
+        <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px" mat-stroked-button>{{vacationModeTitle}}</button>
         <br>
         <br>
         <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut()">Log Out</button>
