@@ -133,14 +133,16 @@ export class DataLoaderService {
         localStorage.removeItem(Constants.EZ_MED_AUTH);
     }
 
-    public activateLoader(activate: boolean, MODAL_TYPE: string, disableClose?: boolean, callBackFunction?) {
+    public activateLoader(activate: boolean, MODAL_TYPE: string, disableClose?: boolean, callBackFunction?,
+                          size = {height: 300, width: 300}) {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.data = {
             modalType: MODAL_TYPE
         };
         dialogConfig.disableClose = disableClose;
-        dialogConfig.width = '300px';
+        dialogConfig.width = size.width.toString() + 'px';
+        dialogConfig.height = size.height.toString() + 'px';
 
         let dialogRef;
         if (activate) {

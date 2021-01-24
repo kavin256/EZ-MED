@@ -15,7 +15,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 
 export class HeaderComponent implements OnInit, AfterViewInit {
 
-  profileImageURL = Constants.BASE_URL + Constants.DOWNLOAD_USER_IMAGE;
+  profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_IMAGE;
 
   signUpResultObject = {
     isSignUp: undefined,

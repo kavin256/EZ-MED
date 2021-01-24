@@ -121,7 +121,7 @@ export class PatientProfileComponent implements OnInit {
     formData.append('file', this.selectedImage);
 
     // sent request
-    const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE + this.patient.userName;
+    const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_IMAGE + this.patient.userName;
     const req = new HttpRequest('POST', url, formData, {
       reportProgress: true,
       responseType: 'json'

@@ -94,7 +94,7 @@ export class BookingEnterTimeComponent implements OnInit {
 
   // private loadAvailableAppointments($event: string) {
   //   // create url and send request
-  //   const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
+  //   const url = Constants.API_BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
   //   this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
   //       .then((data: any) => {
   //         if (data && data.status && data.status.code === 1) {
@@ -190,7 +190,7 @@ export class BookingEnterTimeComponent implements OnInit {
 
   private loadAvailableAppointments(email: string) {
     // create url and send request
-    const url = Constants.BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + email;
+    const url = Constants.API_BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + email;
     this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {

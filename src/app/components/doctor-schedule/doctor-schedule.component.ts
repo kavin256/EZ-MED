@@ -49,7 +49,7 @@ export class DoctorScheduleComponent implements OnInit {
 
   save(userName: string) {
     if (this.updateSchedule()) {
-      const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+      const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
       this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
       if (this.availableForAppointment) {
         this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
@@ -90,7 +90,7 @@ export class DoctorScheduleComponent implements OnInit {
 
   private populateDoctorScheduleData(userName: string) {
     this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    const url = Constants.BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+    const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
     this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {

@@ -89,7 +89,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
       }
 
       // create url and send request
-      const url = Constants.BASE_URL + Constants.PROFESSIONAL_SEARCH;
+      const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_SEARCH;
       let httpParams = new HttpParams();
       if (this.searchString) {
         httpParams = httpParams.append('name', this.searchString);

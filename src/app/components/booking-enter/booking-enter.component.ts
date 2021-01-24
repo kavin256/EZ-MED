@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {DoctorType} from '../../utils/Constants';
+import {Constants, DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {LocalStorageKeys} from '../../services/data-store.service';
+import {config} from 'rxjs';
 
 @Component({
   selector: 'app-booking-enter',
@@ -63,8 +64,11 @@ export class BookingEnterComponent implements OnInit {
     //
   }
 
-    goBack() {
-      this.router.navigate(['appointmentTime']).then(r => {
-      });
-    }
+  goBack() {
+    this.router.navigate(['appointmentTime']).then(r => {});
+  }
+
+  payment() {
+    window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
+  }
 }

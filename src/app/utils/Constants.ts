@@ -1,7 +1,8 @@
 export enum Constants {
     // endpoints
-    // BASE_URL = 'http://TestApp-env.eba-j2nv42tb.ap-south-1.elasticbeanstalk.com:80',
-    BASE_URL = 'http://localhost:5000',
+    // API_BASE_URL = 'http://TestApp-env.eba-j2nv42tb.ap-south-1.elasticbeanstalk.com:80',
+    API_BASE_URL = 'http://localhost:5000',
+    FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     UPLOAD_USER_IMAGE = '/image/upload/',
@@ -13,6 +14,9 @@ export enum Constants {
     GET_USER_DATA = '/user/user-data/',
     AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
+
+    // payment
+    CLI_ID = 14004356,
 
     // modal types
     MODAL_TYPE_SIGN_UP = 'SIGN_UP',

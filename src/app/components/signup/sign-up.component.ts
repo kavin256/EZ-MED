@@ -76,7 +76,7 @@ export class SignUpComponent implements OnInit {
     user.birthday = this.datePipe.transform(this.bDayFormControl.value, 'yyyy-MM-dd');
 
     // create url and send request
-    const url = Constants.BASE_URL + Constants.CREATE_NEW_USER;
+    const url = Constants.API_BASE_URL + Constants.CREATE_NEW_USER;
     this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
@@ -198,7 +198,7 @@ export class SignUpComponent implements OnInit {
     this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
 
     // create url and send request
-    const url = Constants.BASE_URL + Constants.AUTHENTICATE;
+    const url = Constants.API_BASE_URL + Constants.AUTHENTICATE;
     const obj: AuthModel = new AuthModel();
 
     // Todo: handle

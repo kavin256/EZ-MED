@@ -1,0 +1,18 @@
+<script type="text/javascript" src="https://sampath.paycorp.lk/webinterface/qw/paycorp_payments.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        loadPaycorpPayment(buildPayment(), 'paycorp-payment');
+    });
+
+    function buildPayment() {
+        return {
+            clientId: 14004356,// supplied by paycorp
+            paymentAmount: 1010,
+            currency: 'LKR',
+            returnUrl: 'http://localhost:4200/',
+            clientRef: 'CREF-12345',
+            comment: 'This is a demo payment'
+        };
+    }
+</script>
+<div style="align-content: center" id="paycorp-payment" class="paycorp-payment"></div>

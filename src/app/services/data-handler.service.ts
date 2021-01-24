@@ -87,7 +87,7 @@ export class DataHandlerService {
 
   loadUserData(userName: string, dataLoaderService: DataLoaderService): any {
     let userData = null;
-    const url = Constants.BASE_URL + Constants.GET_USER_DATA + userName;
+    const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
     dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
       .then((data: any) => {
         if (data && data.status && data.status.code === 1) {
@@ -112,7 +112,7 @@ export class DataHandlerService {
 
   loadUserDataSimple(userName: string, dataLoaderService: DataLoaderService): any {
     return new Promise(resolve => {
-      const url = Constants.BASE_URL + Constants.GET_USER_DATA + userName;
+      const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
       dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
           .then((data: any) => {
             if (data.data && data.data[0]) {
