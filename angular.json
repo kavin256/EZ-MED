@@ -23,7 +23,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/static-pages/error.html",
-              "src/static-pages/payment.html"
+              "src/static-pages/payment.html",
+              "src/static-pages/payment.css"
             ],
             "styles": [
               "node_modules/angular-calendar/css/angular-calendar.css",

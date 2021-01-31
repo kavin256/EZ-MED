@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-payment-success',
@@ -10,6 +11,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class PaymentSuccessComponent implements OnInit {
 
   constructor(
+      private router: Router,
       private dataHandlerService: DataHandlerService
   ) { }
 
@@ -18,4 +20,8 @@ export class PaymentSuccessComponent implements OnInit {
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
   }
 
+    goToDashboard() {
+      this.router.navigate(['user/dashboard']).then(r => {
+      });
+    }
 }
