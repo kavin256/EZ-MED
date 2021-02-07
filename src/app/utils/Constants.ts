@@ -11,7 +11,7 @@ export enum Constants {
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
     UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/specific-data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
-    APPOINTMENT_PAYMENT = '/appointment/payment/',
+    APPOINTMENT_PAYMENT = '/user/appointment/payment/',
     GET_USER_DATA = '/user/user-data/',
     AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',

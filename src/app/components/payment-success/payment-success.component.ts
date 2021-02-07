@@ -7,6 +7,7 @@ import {Constants, MODAL_TYPES} from '../../utils/Constants';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {HttpClient} from '@angular/common/http'
 
 @Component({
   selector: 'app-payment-success',
@@ -19,6 +20,7 @@ export class PaymentSuccessComponent implements OnInit {
   clientRef: string;
 
   constructor(
+      private httpClient: HttpClient,
       private route: ActivatedRoute,
       private router: Router,
       private dataLoaderService: DataLoaderService,
@@ -37,24 +39,21 @@ export class PaymentSuccessComponent implements OnInit {
   }
 
   private processPaymentRequest() {
-    // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    // const url = Constants.API_BASE_URL + Constants.APPOINTMENT_PAYMENT;
-    // this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
-    //     .then((data: any) => {
-    //       if (data && data.status && data.status.code === 1) {
-    //         this.doctorScheduleData = data.data[0];
-    //         this.availableForAppointment = JSON.parse(this.professional.availableForAppointment);
-    //         this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
-    //             JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
-    //         );
-    //         this.prepareDisplayData(this.doctorScheduleData);
-    //         localStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
-    //         this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-    //       } else if (data && data.status && data.status.code === -1) {
-    //         localStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
-    //         this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-    //       }
-    //     });
+    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+    const url = Constants.API_BASE_URL + Constants.APPOINTMENT_PAYMENT;
+    let params = new HttpParams();
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    params = params.append('clientRef', urlParams.get('clientRef'));
+    params = params.append('reqid', urlParams.get('reqid'));
+    this.dataLoaderService.get<UserData>(url, params, new HttpHeaders())
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+          } else if (data && data.status && data.status.code === -1) {
+            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+          }
+        });
   }
 
   goToDashboard() {

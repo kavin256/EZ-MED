@@ -17,17 +17,7 @@ export class BookingEnterTimeComponent implements OnInit {
 
   transitionType = null;
   selectedProfessionalUsername = null;
-  doctor = {
-    id: 1,
-    name: 'Dr. Nuwan Chinthaka',
-    professionalType: DoctorType.CON,
-    bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
-    specialities: [
-      'Consultant Neurologist',
-      'Consultant Pediatrician'
-    ],
-    consultationPrice: 'Rs. 2000.00'
-  };
+  doctor: UserData;
   availableAppointmentsForProfessional = [];
 
   isScheduleVisible = false;
@@ -72,7 +62,6 @@ export class BookingEnterTimeComponent implements OnInit {
 
   selectedDate: any;
   selectedAppointmentId = '';
-  consultationTime = '8.00 P.M.';
   summaryShown = false;
   loggedInUser = null;
   showRedirectionMessage = false;
@@ -91,19 +80,6 @@ export class BookingEnterTimeComponent implements OnInit {
     this.loadAvailableAppointments(this.selectedProfessionalUsername);
     this.loggedInUser = localStorage.getItem(LocalStorageKeys.loggedInUser);
   }
-
-  // private loadAvailableAppointments($event: string) {
-  //   // create url and send request
-  //   const url = Constants.API_BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + $event;
-  //   this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
-  //       .then((data: any) => {
-  //         if (data && data.status && data.status.code === 1) {
-  //           this.availableAppointmentsForProfessional = data.data[0];
-  //         } else if (data && data.status && data.status.code === -1) {
-  //           this.availableAppointmentsForProfessional = [];
-  //         }
-  //       });
-  // }
 
   getDate(apart: number) {
     const today = new Date();
