@@ -15,7 +15,7 @@ import { AppointmentComponent } from './components/appointment/appointment.compo
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
-import { BookingEnterComponent } from './components/booking-enter/booking-enter.component';
+import { PaymentConfirmationComponent } from './components/payment-confirmation/payment-confirmation.component';
 import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
@@ -74,7 +74,7 @@ export function initialize(app: AppService) {
         ContactPageComponent,
         FaqsComponent,
         PrescriptionComponent,
-        BookingEnterComponent,
+        PaymentConfirmationComponent,
         BookingEnterTimeComponent,
         PaymentSuccessComponent,
         DoctorFinanceComponent,

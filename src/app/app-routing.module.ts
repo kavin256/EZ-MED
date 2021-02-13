@@ -4,7 +4,7 @@ import {SignUpComponent} from './components/signup/sign-up.component';
 import {LandingPageComponent} from './components/landing-page/landing-page.component';
 import {SearchProfessionalsMainComponent} from './components/search-professionals-main/search-professionals-main.component';
 import {BookingEnterTimeComponent} from './components/booking-enter-time/booking-enter-time.component';
-import {BookingEnterComponent} from './components/booking-enter/booking-enter.component';
+import {PaymentConfirmationComponent} from './components/payment-confirmation/payment-confirmation.component';
 import {PaymentSuccessComponent} from './components/payment-success/payment-success.component';
 import {PatientProfileComponent} from './components/patient-profile/patient-profile.component';
 import {AppointmentListComponent} from './components/appointment-list/appointment-list.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
     { path: 'signup', component: SignUpComponent },
     { path: 'searchProfessionals', component: SearchProfessionalsMainComponent },
     { path: 'appointmentTime', component: BookingEnterTimeComponent },
-    { path: 'confirmation', component: BookingEnterComponent },
+    { path: 'confirmation', component: PaymentConfirmationComponent },
     { path: 'success', component: PaymentSuccessComponent },
     { path: 'user/dashboard', component: PatientProfileComponent },
     { path: 'appointments', component: AppointmentListComponent },

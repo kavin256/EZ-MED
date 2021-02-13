@@ -4,14 +4,13 @@ import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {LocalStorageKeys} from '../../services/data-store.service';
-import {config} from 'rxjs';
 
 @Component({
   selector: 'app-booking-enter',
-  templateUrl: './booking-enter.component.html',
-  styleUrls: ['./booking-enter.component.css']
+  templateUrl: './payment-confirmation.component.html',
+  styleUrls: ['./payment-confirmation.component.css']
 })
-export class BookingEnterComponent implements OnInit {
+export class PaymentConfirmationComponent implements OnInit {
 
   doctor = {
     id: 1,

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "WellBeey-FE": {
+    "EXMED-FE": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/WellBeey-FE",
+            "outputPath": "dist/EXMED-FE",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "WellBeey-FE:build"
+            "browserTarget": "EXMED-FE:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "WellBeey-FE:build:production"
+              "browserTarget": "EXMED-FE:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "WellBeey-FE:build"
+            "browserTarget": "EXMED-FE:build"
           }
         },
         "test": {
@@ -119,16 +119,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "WellBeey-FE:serve"
+            "devServerTarget": "EXMED-FE:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "WellBeey-FE:serve:production"
+              "devServerTarget": "EXMED-FE:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "WellBeey-FE"
+  "defaultProject": "EXMED-FE"
 }

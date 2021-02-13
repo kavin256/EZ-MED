@@ -2,6 +2,7 @@ export enum Constants {
     // endpoints
     // API_BASE_URL = 'http://TestApp-env.eba-j2nv42tb.ap-south-1.elasticbeanstalk.com:80',
     API_BASE_URL = 'http://localhost:5000',
+    // FE_BASE_URL = 'http://www.ezmed.lk.s3-website.ap-south-1.amazonaws.com',
     FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
@@ -11,7 +12,7 @@ export enum Constants {
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
     UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/specific-data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
-    APPOINTMENT_PAYMENT = '/user/appointment/payment/',
+    APPOINTMENT_PAYMENT = '/payment/',
     GET_USER_DATA = '/user/user-data/',
     AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
