@@ -28,6 +28,8 @@ export class DataLoaderService {
             }).subscribe(
                 ( data) => {
                     resolve(data);
+                }, (data) => {
+                    reject(data);
                 });
         });
     }

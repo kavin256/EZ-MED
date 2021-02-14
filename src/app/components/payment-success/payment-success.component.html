@@ -1,13 +1,45 @@
 <div class="mat-card-style">
     <br>
     <div align="center">
-        <img src="./assets/img/successfulPayment.png" width="300px"/>
+        <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
+            <img src="./assets/img/successfulPayment.png" width="300px"/>
+        </ng-container>
+        <ng-container *ngIf="paymentResponseData && !isPaymentSuccessful">
+            <img src="./assets/img/failedPayment.png" width="300px"/>
+        </ng-container>
+        <ng-container *ngIf="!paymentResponseData">
+            <img src="./assets/img/pageLoadError.png" width="300px"/>
+        </ng-container>
         <br>
         <br>
+        <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
+<!--        <ng-container>-->
+            <div align="left">
+                <p>Card No.: {{paymentResponseData?.cardNo}}</p>
+                <p>Name on card: {{paymentResponseData?.cardHolder}}</p>
+                <p>Amount: {{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>
+                <p>Comment: {{paymentResponseData?.respTxt }}</p>
+                <p>Ref. number: {{paymentResponseData?.txnRef}}</p>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="paymentResponseData && !isPaymentSuccessful">
+<!--        <ng-container>-->
+            <div align="left">
+                <p>Card No.: {{paymentResponseData?.cardNo}}</p>
+                <p>Name on card: {{paymentResponseData?.cardHolder}}</p>
+<!--                <p>Amount: {{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>-->
+                <p>Reason: {{paymentResponseData?.respTxt}}</p>
+                <p>Ref. number: {{paymentResponseData?.txnRef}}</p>
+            </div>
+        </ng-container>
         <br>
         <br>
-
-        <button (click)="goToDashboard()" mat-raised-button color="secondary" style="width: 240px" >Go to Profile</button>
+        <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
+            <button (click)="goToBooking()" mat-raised-button color="secondary" style="width: 240px" >Go to my bookings</button>
+            <br>
+            <br>
+        </ng-container>
+        <button (click)="goToDashboard()" mat-raised-button color="secondary" style="width: 240px" >Go to my profile</button>
 
     </div>
 

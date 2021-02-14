@@ -18,6 +18,8 @@ export class PaymentSuccessComponent implements OnInit {
 
   reqid: string;
   clientRef: string;
+  isPaymentSuccessful = false;
+  paymentResponseData: any;
 
   constructor(
       private httpClient: HttpClient,
@@ -49,15 +51,32 @@ export class PaymentSuccessComponent implements OnInit {
     this.dataLoaderService.get<UserData>(url, params, new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
-            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
-          } else if (data && data.status && data.status.code === -1) {
-            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+            this.paymentResponseData = data.data[0];
+            if (
+                this.paymentResponseData.responseCode === '00' ||
+                this.paymentResponseData.responseCode === '11' ||
+                this.paymentResponseData.responseCode === '08'
+            ) {
+              this.isPaymentSuccessful = true;
+              localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
+            } else {
+              this.isPaymentSuccessful = false;
+            }
           }
-        });
+        }).catch((e) => {
+      console.log(e.message);
+    }).finally(() => {
+      this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+    });
   }
 
   goToDashboard() {
     this.router.navigate(['user/dashboard']).then(r => {
+    });
+  }
+
+  goToBooking() {
+    this.router.navigate(['appointments']).then(r => {
     });
   }
 }

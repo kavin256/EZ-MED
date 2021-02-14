@@ -68,6 +68,8 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   payment() {
+    document.cookie = 'amount=' + parseInt(this.doctor.priceForAppointment, 10) * 10;
+    // document.cookie = 'amount=150000';
     window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
   }
 }

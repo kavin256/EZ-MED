@@ -15,15 +15,22 @@
     <main>
 
         <script>
+            function readCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                }
+                return null;
+            }
             function buildPayment() {
+                var value4 = readCookie('amount');
                 // Build the payment object
                 return {
-                    // NOTE: this is the QuickWeb DEMO client ID.
-                    // You may use it for initial setup
-                    // but replace with the Client ID
-                    // provided by Paycorp for final testing.
                     clientId: 14004356,
-                    paymentAmount: 1000,
+                    paymentAmount: parseFloat(value4),
                     currency: 'LKR',
                     // returnUrl: 'http://www.ezmed.lk.s3-website.ap-south-1.amazonaws.com' +'/success',
                     returnUrl: 'http://localhost:4200' +'/success',
