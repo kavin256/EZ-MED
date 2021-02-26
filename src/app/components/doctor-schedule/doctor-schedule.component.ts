@@ -44,12 +44,12 @@ export class DoctorScheduleComponent implements OnInit {
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
 
     this.professional = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
-    if (this.professional && this.professional.userName) { this.populateDoctorScheduleData(this.professional.userName); }
+    if (this.professional && this.professional.userId) { this.populateDoctorScheduleData(this.professional.userId); }
   }
 
-  save(userName: string) {
+  save(userId: string) {
     if (this.updateSchedule()) {
-      const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+      const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userId;
       this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
       if (this.availableForAppointment) {
         this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
@@ -70,7 +70,7 @@ export class DoctorScheduleComponent implements OnInit {
             DataKey.doctorScheduleData, this.doctorScheduleData)
             .then((data: any) => {
               if (data && data.status && data.status.code === 1) {
-                this.dataHandlerService.loadUserData(userName, this.dataLoaderService);
+                this.dataHandlerService.loadUserData(userId, this.dataLoaderService);
                 this.isConfirmationActive = false;
                 this.changeRequestSent = true;
               } else if (data && data.status && data.status.code === -1) {
@@ -88,9 +88,9 @@ export class DoctorScheduleComponent implements OnInit {
     this.changeRequestSent = false;
   }
 
-  private populateDoctorScheduleData(userName: string) {
+  private populateDoctorScheduleData(userId: string) {
     this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
-    const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userName;
+    const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userId;
     this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {

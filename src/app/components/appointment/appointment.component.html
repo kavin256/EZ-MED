@@ -12,7 +12,7 @@
         ></app-professional-card>
     </ng-container>
     <ng-container *ngIf="doctorSide">
-        <p style="font-size: small">WhatApp: <b>{{patient.whatsAppNumber}}</b></p>
+        <p style="font-size: small">WhatsApp: <b>{{patient.whatsAppNumber}}</b></p>
         <p style="font-size: small">Booking Status: {{booking.status}}</p>
         <ng-container *ngIf="!isPatientDetailsShown">
             <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Show Patient Details</button>    <br>
@@ -22,13 +22,13 @@
         </ng-container>
         <br>
         <ng-container *ngIf="isPatientDetailsShown">
-            <p style="font-size: small">Booking Number: {{patient.patientName}}</p>
-            <p style="font-size: small">Patient Ref. No: {{patient.patientId}}</p>
+            <p style="font-size: small">Patient Name: {{patient.title}}. {{patient.firstName}} {{patient.lastName}}</p>
+            <p style="font-size: small">Patient Ref. No: {{patient.userId}}</p>
             <p style="font-size: small">Contact number: {{patient.contactNumber}}</p>
             <p style="font-size: small">Email: {{patient.email}}</p>
             <p style="font-size: small">Birthday: {{patient.birthday}}</p>
             <p style="font-size: small">Age: {{patient.age}}</p>
-            <p style="font-size: small">Known Allergies: {{patient.knownAllergies}}</p>
+            <p style="font-size: small">Known Allergies: {{patient.userAllergies}}</p>
         </ng-container>
     </ng-container>
 <!--        <mat-divider></mat-divider>-->

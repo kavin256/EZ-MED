@@ -40,6 +40,7 @@ export class SignUpComponent implements OnInit {
   firstName: string;
   lastName: string;
   email: string;
+  userId: string;
   isSignUp = true;
   title: any;
   birthday: any;
@@ -82,12 +83,12 @@ export class SignUpComponent implements OnInit {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
             localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
             if (data.data[0].doctor) {
-              localStorage.setItem(LocalStorageKeys.userName, JSON.stringify(data.data[0].userName));
+              localStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
               this.router.navigate(['doctor/dashboard']).then(r => {
                 location.reload();
               });
             } else if (!data.data[0].doctor) {
-              localStorage.setItem(LocalStorageKeys.userName, JSON.stringify(data.data[0].userName));
+              localStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
               this.router.navigate(['user/dashboard']).then(r => {
                 location.reload();
               });
@@ -152,7 +153,8 @@ export class SignUpComponent implements OnInit {
       this.conPass = null;
     } else {
       const userObj = new UserData();
-      userObj.userName = this.email;
+      userObj.userId = this.userId;
+      userObj.email = this.email;
       userObj.password = this.pass;
       userObj.firstName = this.firstName;
       userObj.lastName = this.lastName;
@@ -202,8 +204,8 @@ export class SignUpComponent implements OnInit {
     const obj: AuthModel = new AuthModel();
 
     // Todo: handle
-    // obj.username = this.email;
-    obj.username = 'foo12345';
+    // obj.userId = this.email;
+    obj.userId = 'foo12345';
     // obj.password = this.pass;
     obj.password = 'foo';
 

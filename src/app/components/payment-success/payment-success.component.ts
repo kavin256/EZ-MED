@@ -58,7 +58,7 @@ export class PaymentSuccessComponent implements OnInit {
                 this.paymentResponseData.responseCode === '08'
             ) {
               this.isPaymentSuccessful = true;
-              localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
+              localStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
             } else {
               this.isPaymentSuccessful = false;
             }

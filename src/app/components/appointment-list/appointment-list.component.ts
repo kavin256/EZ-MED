@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import {BookingStatus, Colors} from '../doctor-side-booking-list/doctor-side-booking-list.component';
 import {DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {LocalStorageKeys} from '../../services/data-store.service';
@@ -133,7 +132,7 @@ export class AppointmentListComponent implements OnInit {
   isPrescriptionsVisible = false;
   selectedPrescription = null;
   loggedInUser: UserData = null;
-  private selectedProfessionalUsername: string;
+  private selectedProfessionalUserId: string;
   date = new FormControl(new Date());
   fromDate = this.date.value;
   toDate: Date;
@@ -158,21 +157,27 @@ export class AppointmentListComponent implements OnInit {
       this.toDate = this.setToDate(this.fromDate, this.doctorSide ? 1 : 7);
     }
 
-    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
-    this.loadProfessionalData(this.selectedProfessionalUsername);
+    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.loadProfessionalData(this.selectedProfessionalUserId);
 
     // loadUserAppointments
-    this.loadUserAppointments(this.loggedInUser.userName, this.fromDate, this.toDate);
+    this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
+
+    if (this.doctorSide) {
+      // doctor specific tasks
+    } else {
+      // patient specific tasks
+    }
   }
 
-  private loadProfessionalData(selectedProfessionalUsername: any) {
-    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+  private loadProfessionalData(selectedProfessionalUserId: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.doctor = data;
         });
   }
 
-  private loadUserAppointments(username: string, fromDate: Date, toDate: Date) {
+  private loadUserAppointments(userid: string, fromDate: Date, toDate: Date) {
 
     // date formatting
     const toDateObj = this.dataHandlerService.convertDateFormat(toDate);
@@ -180,7 +185,7 @@ export class AppointmentListComponent implements OnInit {
     const toDateFormatted = toDateObj.yyyy + '-' + toDateObj.mm + '-' + toDateObj.dd;
     const fromDateFormatted = fromDateObj.yyyy + '-' + fromDateObj.mm + '-' + fromDateObj.dd;
 
-    this.dataHandlerService.loadUserAppointments(username, this.dataLoaderService, fromDateFormatted, toDateFormatted)
+    this.dataHandlerService.loadUserAppointments(userid, this.dataLoaderService, fromDateFormatted, toDateFormatted)
         .then((data: any) => {
           this.bookings = data;
         });
@@ -254,12 +259,12 @@ export class AppointmentListComponent implements OnInit {
 
   startDateChange($event: MatDatepickerInputEvent<any>) {
     this.fromDate = $event.value;
-    this.loadUserAppointments(this.loggedInUser.userName, this.fromDate, this.toDate);
+    this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
   }
 
   endDateChange($event: MatDatepickerInputEvent<Date>) {
     this.toDate = $event.value;
-    this.loadUserAppointments(this.loggedInUser.userName, this.fromDate, this.toDate);
+    this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
   }
 }
 

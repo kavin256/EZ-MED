@@ -32,7 +32,7 @@ export class PaymentConfirmationComponent implements OnInit {
     {value: 'skype', viewValue: 'Skype'},
     {value: 'whatsapp', viewValue: 'Whatsapp'}
   ];
-  private selectedProfessionalUsername: string;
+  private selectedProfessionalUserId: string;
 
   constructor(
       private router: Router,
@@ -41,15 +41,15 @@ export class PaymentConfirmationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
-    this.loadProfessionalData(this.selectedProfessionalUsername);
+    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.loadProfessionalData(this.selectedProfessionalUserId);
 
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
   }
 
-  private loadProfessionalData(selectedProfessionalUsername: any) {
-    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+  private loadProfessionalData(selectedProfessionalUserId: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.doctor = data;
         });

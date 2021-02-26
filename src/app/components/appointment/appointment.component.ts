@@ -44,16 +44,23 @@ export class AppointmentComponent implements OnInit {
               }
           ]
   };
-  patient = {patientId: '76531', patientName: 'Mr. John Doe',
+  patient: UserData = {
+      userId: '76531',
+      title: 'Mr',
+      firstName: 'John',
+      lastName: 'Doe',
       contactNumber: '0773092511', whatsAppNumber: '0773092511', email: 'kavin256@gmail.com',
       birthday: new Date(1993, 4, 21).toLocaleDateString('en-US'),
-      age: 33,
-      knownAllergies: 'allergic to bad music, allergic to negative people'};
+      age: this.dataHandlerService.calculateAgeFromJavaBirthdayDate('1995/03/04'),
+      doctor: false,
+      userAllergies: 'allergic to bad music, allergic to negative people'
+  };
+
   doctor: DoctorSpecificData = {
       contactNumber: '0773092511',
       regNo: '4352545235',
       whatsAppNumber: '0773092511',
-      userName: 'nuwanchinthaka@gmail.com',
+      email: 'nuwanchinthaka@gmail.com',
       title: 'Dr.',
       firstName: 'Nuwan',
       lastName: 'Chinthaka',
@@ -66,7 +73,7 @@ export class AppointmentComponent implements OnInit {
     };
   loggedInUser: UserData = null;
   isPatientDetailsShown = true;
-  private selectedProfessionalUsername: string;
+  private selectedProfessionalUserId: string;
 
   constructor(
       private router: Router,
@@ -81,16 +88,16 @@ export class AppointmentComponent implements OnInit {
           this.doctorSide = this.loggedInUser.doctor;
       }
       this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
-      this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
-      this.loadProfessionalData(this.selectedProfessionalUsername);
+      this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+      this.loadProfessionalData(this.selectedProfessionalUserId);
   }
 
   userConsent() {
       this.isConfirmationActive = !this.isConfirmationActive;
   }
 
-  private loadProfessionalData(selectedProfessionalUsername: any) {
-      this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+  private loadProfessionalData(selectedProfessionalUserId: any) {
+      this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
           .then((data: any) => {
               this.doctor = data;
           });

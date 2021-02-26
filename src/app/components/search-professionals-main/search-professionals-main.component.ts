@@ -54,7 +54,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
+    localStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
     this.InitialSearch();
     // console.log(csc.getAllCountries());
     this.regions = csc.getStatesOfCountry(this.country);
@@ -121,7 +121,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
   selectProfessional($event: any) {
     this.PAGINATION_START = 0;
     this.PAGINATION_END = this.RESULTS_PER_PAGE;
-    localStorage.setItem(LocalStorageKeys.selectedProfessionalUsername, $event.userName);
+    localStorage.setItem(LocalStorageKeys.selectedProfessionalUserId, $event.userId);
     // localStorage.setItem(LocalStorageKeys.selectedProfessional, JSON.stringify($event));
     this.router.navigate(['appointmentTime']).then(r => {
     });

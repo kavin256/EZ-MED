@@ -1,15 +1,17 @@
 export class UserData {
-    userName: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+    userId?: string;
+    password?: string;
     title: string;
-    male: boolean;
-    birthday: any;
+    firstName: string;
+    lastName?: string;
+    male?: boolean;
+    birthday?: any;
+    age?: any;
     contactNumber: string;
-    whatsAppNumber: string;
+    whatsAppNumber?: string;
+    email?: string;
     doctor: boolean;
-    userAllergies: string;
+    userAllergies?: string;
 }
 
 export class WorkingTimePeriod {
@@ -32,13 +34,14 @@ export class DoctorScheduleData {
 }
 
 export class DoctorSpecificData {
-    userName?: string;
+    userId?: string;
     id?: string;
     title: string;
     firstName: string;
     lastName: string;
     contactNumber: string;
     whatsAppNumber: string;
+    email: string;
     regNo: string;
     priceForAppointment: string;
     qualifications: string;

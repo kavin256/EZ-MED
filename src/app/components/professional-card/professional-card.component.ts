@@ -43,7 +43,7 @@ export class ProfessionalCardComponent implements OnInit {
    * Set profile image source. If there is no image, set default avatar
    */
   setProfileImageSource() {
-    this.profileImageURL += this.professional.userName;
+    this.profileImageURL += this.professional.userId;
 
     // get image and verify that it is in the storage
     const req = new HttpRequest('GET', this.profileImageURL, {

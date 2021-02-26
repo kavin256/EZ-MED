@@ -38,7 +38,7 @@ export class DataHandlerService {
   }
 
   redirectToSignUpIfNotLoggedIn(loggedInUser: UserData) {
-    if (loggedInUser && loggedInUser.userName) {
+    if (loggedInUser && loggedInUser.userId) {
     } else {
       this.router.navigate(['signup']).then(r => {});
     }
@@ -92,9 +92,9 @@ export class DataHandlerService {
     this.router.navigate(['signup']).then(r => {});
   }
 
-  loadUserData(userName: string, dataLoaderService: DataLoaderService): any {
+  loadUserData(userId: string, dataLoaderService: DataLoaderService): any {
     let userData = null;
-    const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
+    const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userId;
     dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
       .then((data: any) => {
         if (data && data.status && data.status.code === 1) {
@@ -117,9 +117,9 @@ export class DataHandlerService {
       });
   }
 
-  loadUserDataSimple(userName: string, dataLoaderService: DataLoaderService): any {
+  loadUserDataSimple(userId: string, dataLoaderService: DataLoaderService): any {
     return new Promise(resolve => {
-      const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
+      const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userId;
       dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
           .then((data: any) => {
             if (data.data && data.data[0]) {
@@ -129,9 +129,9 @@ export class DataHandlerService {
     });
   }
 
-  loadUserAppointments(userName: string, dataLoaderService: DataLoaderService, startDate: string, endDate: string): any {
+  loadUserAppointments(userId: string, dataLoaderService: DataLoaderService, startDate: string, endDate: string): any {
     return new Promise(resolve => {
-      const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENTS + userName;
+      const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENTS + userId;
       let httpParams = new HttpParams();
       httpParams = httpParams.append('startDate', startDate);
       httpParams = httpParams.append('endDate', endDate);

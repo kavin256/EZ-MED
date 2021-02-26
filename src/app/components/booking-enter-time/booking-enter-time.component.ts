@@ -16,7 +16,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class BookingEnterTimeComponent implements OnInit {
 
   transitionType = null;
-  selectedProfessionalUsername = null;
+  selectedProfessionalUserId = null;
   doctor: UserData;
   availableAppointmentsForProfessional = [];
 
@@ -75,9 +75,9 @@ export class BookingEnterTimeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
-    this.loadProfessionalData(this.selectedProfessionalUsername);
-    this.loadAvailableAppointments(this.selectedProfessionalUsername);
+    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.loadProfessionalData(this.selectedProfessionalUserId);
+    this.loadAvailableAppointments(this.selectedProfessionalUserId);
     this.loggedInUser = localStorage.getItem(LocalStorageKeys.loggedInUser);
   }
 
@@ -226,8 +226,8 @@ export class BookingEnterTimeComponent implements OnInit {
     }
   }
 
-  private loadProfessionalData(selectedProfessionalUsername: any) {
-    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+  private loadProfessionalData(selectedProfessionalUserId: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.doctor = data;
         });

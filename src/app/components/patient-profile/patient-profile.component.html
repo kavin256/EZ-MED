@@ -4,7 +4,7 @@
     <br>
     <h6 *ngIf="!editable">Allergies: {{patient.userAllergies}}</h6>
     <h6 *ngIf="!editable">Contact number: {{patient.contactNumber}}</h6>
-    <h6 *ngIf="!editable">Email: {{patient.userName}}</h6>
+    <h6 *ngIf="!editable">Email: {{patient.email}}</h6>
     <br>
 
     <ng-container *ngIf="editable">
@@ -34,7 +34,7 @@
             <br>
             <mat-form-field style="width: 240px"  appearance="legacy">
                 <mat-label>Email</mat-label>
-                <input readonly matInput [(ngModel)]='patient.userName' [formControl]="emailFormControl">
+                <input readonly matInput [(ngModel)]='patient.email' [formControl]="emailFormControl">
             </mat-form-field>
             <br>
             <mat-form-field style="width: 240px"  appearance="legacy">

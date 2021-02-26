@@ -33,7 +33,7 @@ export class PatientProfileComponent implements OnInit {
   titles = PatientTitles;
   editable = false;
   genders = ['male', 'female'];
-  selectedProfessionalUsername: string;
+  selectedProfessionalUserId: string;
 
   constructor(
       private router: Router,
@@ -49,8 +49,8 @@ export class PatientProfileComponent implements OnInit {
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
     // this.searchedProfessionalName = localStorage.getItem(LocalStorageKeys.)
-    this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
-    this.loadProfessionalData(this.selectedProfessionalUsername);
+    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.loadProfessionalData(this.selectedProfessionalUserId);
 
     this.patient = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     if (this.patient) {
@@ -58,8 +58,8 @@ export class PatientProfileComponent implements OnInit {
     }
   }
 
-  private loadProfessionalData(selectedProfessionalUsername: any) {
-    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
+  private loadProfessionalData(selectedProfessionalUserId: any) {
+    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.searchedProfessionalName = data.title + '. ' + data.firstName + ' ' + data.lastName;
         });
@@ -106,8 +106,8 @@ export class PatientProfileComponent implements OnInit {
   }
 
   dismiss() {
-    localStorage.removeItem(LocalStorageKeys.selectedProfessionalUsername);
-    this.selectedProfessionalUsername = null;
+    localStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = null;
     this.searchedProfessionalName = null;
   }
 
@@ -121,7 +121,7 @@ export class PatientProfileComponent implements OnInit {
     formData.append('file', this.selectedImage);
 
     // sent request
-    const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_IMAGE + this.patient.userName;
+    const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_IMAGE + this.patient.userId;
     const req = new HttpRequest('POST', url, formData, {
       reportProgress: true,
       responseType: 'json'

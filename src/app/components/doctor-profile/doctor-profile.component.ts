@@ -14,7 +14,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
 })
 export class DoctorProfileComponent implements OnInit {
   selectedImage: File;
-  // profileUsername = 'dfg';
+  // profileUserId = 'dfg';
   editable = false;
   loggedInUser = null;
   priceCurrency = 'LKR';
@@ -56,7 +56,7 @@ export class DoctorProfileComponent implements OnInit {
 
         // if not logged In this page should not be able to access
         this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
-        if (this.loggedInUser && this.loggedInUser) {
+        if (this.loggedInUser) {
             this.userData = this.loggedInUser;
         }
 
@@ -87,7 +87,7 @@ export class DoctorProfileComponent implements OnInit {
             }
             // todo: change this in the backend
             this.userData.doctorType = this.userData.professionalType;
-            const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.userName;
+            const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.userId;
             this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData)
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1) {
@@ -133,7 +133,7 @@ export class DoctorProfileComponent implements OnInit {
         formData.append('file', this.selectedImage);
 
         // sent request
-        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_IMAGE + this.userData.userName;
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_IMAGE + this.userData.userId;
         const req = new HttpRequest('POST', url, formData, {
             reportProgress: true,
             responseType: 'json'

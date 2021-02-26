@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    */
   setProfileImageSource() {
     if (this.loggedInUser) {
-      this.profileImageURL += this.loggedInUser.userName;
+      this.profileImageURL += this.loggedInUser.userId;
       // get image and verify that it is in the storage
       const req = new HttpRequest('GET', this.profileImageURL, {
         reportProgress: true
