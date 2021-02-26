@@ -44,6 +44,13 @@ export class DataHandlerService {
     }
   }
 
+  public convertDateFormat(date: Date) {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = date.getFullYear();
+    return {dd, mm, yyyy};
+  }
+
   createNewDummyAppointmentSlotArrayForWeek(fixedDoctorDates: FixedDoctorDate [])  {
     const dummyAppointmentSlotArray = [];
     for (let i = 1; i < 8; i++) {
@@ -114,6 +121,21 @@ export class DataHandlerService {
     return new Promise(resolve => {
       const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
       dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
+          .then((data: any) => {
+            if (data.data && data.data[0]) {
+              resolve(data.data[0]);
+            }
+          });
+    });
+  }
+
+  loadUserAppointments(userName: string, dataLoaderService: DataLoaderService, startDate: string, endDate: string): any {
+    return new Promise(resolve => {
+      const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENTS + userName;
+      let httpParams = new HttpParams();
+      httpParams = httpParams.append('startDate', startDate);
+      httpParams = httpParams.append('endDate', endDate);
+      dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
           .then((data: any) => {
             if (data.data && data.data[0]) {
               resolve(data.data[0]);

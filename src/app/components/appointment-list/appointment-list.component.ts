@@ -21,29 +21,29 @@ export class AppointmentListComponent implements OnInit {
   PAGINATION_START = 0;
   PAGINATION_END = this.RESULTS_PER_PAGE;
 
-  bookings = [
-    {
-      bookingId: 2387,
-      doctorId: '76531',
-      date: '03-04-2020',
-      doctorName: 'Dr. John Doe',
-      bookingStatus: BookingStatus.BOOKING_COMPLETED
-    },
-    {
-      bookingId: 1196,
-      doctorId: '65456',
-      date: '18-05-2020',
-      doctorName: 'Dr. Sumanasiri',
-      bookingStatus: BookingStatus.BOOKING_CANCELLED
-    },
-    {
-      bookingId: 5729,
-      doctorId: '76537',
-      date: '02-05-2020',
-      doctorName: 'Dr. Tom Harrison',
-      bookingStatus: BookingStatus.BOOKING_NOT_STARTED
-    }
-  ];
+  bookings = [];
+  //   {
+  //     bookingId: 2387,
+  //     doctorId: '76531',
+  //     date: '03-04-2020',
+  //     doctorName: 'Dr. John Doe',
+  //     bookingStatus: BookingStatus.BOOKING_COMPLETED
+  //   },
+  //   {
+  //     bookingId: 1196,
+  //     doctorId: '65456',
+  //     date: '18-05-2020',
+  //     doctorName: 'Dr. Sumanasiri',
+  //     bookingStatus: BookingStatus.BOOKING_CANCELLED
+  //   },
+  //   {
+  //     bookingId: 5729,
+  //     doctorId: '76537',
+  //     date: '02-05-2020',
+  //     doctorName: 'Dr. Tom Harrison',
+  //     bookingStatus: BookingStatus.BOOKING_NOT_STARTED
+  //   }
+  // ];
 
   doctorSide = false;
   titleBooking = 'BOOKING';
@@ -136,7 +136,6 @@ export class AppointmentListComponent implements OnInit {
   date = new FormControl(new Date());
   fromDate = this.date.value;
   toDate: Date;
-  serializedDate = new FormControl((new Date()).toISOString());
 
   constructor(
       private router: Router,
@@ -160,12 +159,27 @@ export class AppointmentListComponent implements OnInit {
 
     this.selectedProfessionalUsername = localStorage.getItem(LocalStorageKeys.selectedProfessionalUsername);
     this.loadProfessionalData(this.selectedProfessionalUsername);
+
+    // date formatting
+    const toDateObj = this.dataHandlerService.convertDateFormat(this.toDate);
+    const fromDateObj = this.dataHandlerService.convertDateFormat(this.fromDate);
+    const toDateFormatted = toDateObj.yyyy + '-' + toDateObj.mm + '-' + toDateObj.dd;
+    const fromDateFormatted = fromDateObj.yyyy + '-' + fromDateObj.mm + '-' + fromDateObj.dd;
+
+    this.loadUserAppointments(this.loggedInUser.userName, fromDateFormatted, toDateFormatted);
   }
 
   private loadProfessionalData(selectedProfessionalUsername: any) {
     this.dataHandlerService.loadUserDataSimple(selectedProfessionalUsername, this.dataLoaderService)
         .then((data: any) => {
           this.doctor = data;
+        });
+  }
+
+  private loadUserAppointments(username: string, startDate: string, endDate: string) {
+    this.dataHandlerService.loadUserAppointments(username, this.dataLoaderService, startDate, endDate)
+        .then((data: any) => {
+          this.bookings = data;
         });
   }
 

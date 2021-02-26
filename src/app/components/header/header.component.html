@@ -11,7 +11,7 @@
                 </div>
                 <div *ngIf="loggedInUser && firstName" align="center">
                     <img (click)="logoClick()" [src]="profileImageURL" width="60px"/>
-                    <p style="align-content: center; padding-top: 5px; font-size: small">{{firstName}}</p>
+                    <p (click)="logoClick()" style="align-content: center; padding-top: 5px; font-size: small">{{firstName}}</p>
                 </div>
             </th>
         </tr>
