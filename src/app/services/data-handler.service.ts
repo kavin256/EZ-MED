@@ -119,7 +119,7 @@ export class DataHandlerService {
 
   loadUserDataSimple(userId: string, dataLoaderService: DataLoaderService): any {
     return new Promise(resolve => {
-      const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userId;
+      const url = Constants.API_BASE_URL + Constants.GET_USER_DATA_BY_ID + userId;
       dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
           .then((data: any) => {
             if (data.data && data.data[0]) {

@@ -106,6 +106,8 @@ export class DoctorScheduleComponent implements OnInit {
             localStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
           }
+        }).finally(() => {
+          this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
   }
 

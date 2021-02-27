@@ -14,6 +14,7 @@ export enum Constants {
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
     APPOINTMENT_PAYMENT = '/payment/',
     GET_USER_DATA = '/user/user-data/',
+    GET_USER_DATA_BY_ID = '/user/user-data-by-id/',
     AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
 

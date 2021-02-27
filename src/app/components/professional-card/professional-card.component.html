@@ -1,4 +1,4 @@
-<div [ngClass]="isOverTheDoctorCard(professional.userId) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional.userId)" (mouseleave)="onMouseLeave()">
+<div [ngClass]="isOverTheDoctorCard(professional?.userId) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional?.userId)" (mouseleave)="onMouseLeave()">
     <mat-card (click)="selectProfessional_(professional)" style="width: 320px; height: auto">
         <table>
             <tr>
@@ -11,7 +11,7 @@
                     <table>
                         <tr>
                             <th style="font-size: medium; text-align: left">
-                                {{professional.title}} {{professional.firstName}} {{professional.lastName}}
+                                {{professional?.title}} {{professional?.firstName}} {{professional?.lastName}}
                             </th>
                         </tr>
                         <tr>
@@ -68,7 +68,7 @@
                         </tr>
                         <tr>
                             <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                {{currency}} {{professional.priceForAppointment}}
+                                {{currency}} {{professional?.priceForAppointment}}
                             </td>
                         </tr>
                         <tr>
@@ -82,10 +82,10 @@
 
                 </th>
                 <th>
-                    <ng-container *ngIf="false && professional.isSkypePreferred">
+                    <ng-container *ngIf="false && professional?.isSkypePreferred">
                         <img src="./assets/img/Icon-Skype.jpg" width="12px" height="12px">
                     </ng-container>
-                    <ng-container *ngIf="false && professional.isWhatsAppPreferred">
+                    <ng-container *ngIf="false && professional?.isWhatsAppPreferred">
                         <span style="padding-left: 7px"><img src="./assets/img/whatsapp.jpg" width="15px" height="15px"></span>
                     </ng-container>
                 </th>
