@@ -49,7 +49,7 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   private loadProfessionalData(selectedProfessionalUserId: any) {
-    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
+    this.dataHandlerService.loadUserDataUsingUserId(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.doctor = data;
         });

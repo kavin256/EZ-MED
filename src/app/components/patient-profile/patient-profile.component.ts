@@ -61,7 +61,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   private loadProfessionalData(selectedProfessionalUserId: any) {
-    this.dataHandlerService.loadUserDataSimple(selectedProfessionalUserId, this.dataLoaderService)
+    this.dataHandlerService.loadUserDataUsingUserId(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.searchedProfessionalName = data.title + '. ' + data.firstName + ' ' + data.lastName;
         });
