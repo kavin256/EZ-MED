@@ -35,7 +35,7 @@ export class LandingPageComponent implements OnInit, OnChanges {
     });
 
     const obj: AuthModel = new AuthModel();
-    obj.userId = 'foo12345';
+    obj.userName = 'foo12345';
     obj.password = 'foo';
     this.dataLoader.login<AuthResponse>(Constants.API_BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
 

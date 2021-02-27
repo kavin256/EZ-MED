@@ -57,7 +57,7 @@ export class DataHandlerService {
       dummyAppointmentSlotArray.push(this.fillDummyAppointmentSlot(i, 3));
     }
     // if (dummyAppointmentSlotArray.length > 0 && dummyAppointmentSlotArray.length === fixedDoctorDates.length) {
-      this.loadAvailableSlots(dummyAppointmentSlotArray, fixedDoctorDates);
+    this.loadAvailableSlots(dummyAppointmentSlotArray, fixedDoctorDates);
     // }
     return dummyAppointmentSlotArray;
   }
@@ -79,9 +79,9 @@ export class DataHandlerService {
   }
 
   redirectFromSignUpIfLoggedIn(loggedInUser: UserData) {
-    if (loggedInUser && loggedInUser.doctor) {
+    if (loggedInUser && loggedInUser.userId && loggedInUser.doctor) {
       this.router.navigate(['doctor/dashboard']).then(r => {});
-    } else if (loggedInUser && !loggedInUser.doctor) {
+    } else if (loggedInUser && loggedInUser.userId && !loggedInUser.doctor) {
       this.router.navigate(['user/dashboard']).then(r => {});
     }
   }
@@ -92,9 +92,9 @@ export class DataHandlerService {
     this.router.navigate(['signup']).then(r => {});
   }
 
-  loadUserData(userId: string, dataLoaderService: DataLoaderService): any {
+  loadUserData(userName: string, dataLoaderService: DataLoaderService): any {
     let userData = null;
-    const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userId;
+    const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
     dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
       .then((data: any) => {
         if (data && data.status && data.status.code === 1) {

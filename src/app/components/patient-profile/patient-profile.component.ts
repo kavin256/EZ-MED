@@ -48,9 +48,11 @@ export class PatientProfileComponent implements OnInit {
   ngOnInit() {
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
-    // this.searchedProfessionalName = localStorage.getItem(LocalStorageKeys.)
+
     this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
-    this.loadProfessionalData(this.selectedProfessionalUserId);
+    if (this.selectedProfessionalUserId) {
+      this.loadProfessionalData(this.selectedProfessionalUserId);
+    }
 
     this.patient = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     if (this.patient) {
