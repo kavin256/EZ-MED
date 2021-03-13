@@ -26,37 +26,37 @@ export class BookingEnterTimeComponent implements OnInit {
     {
       date: this.getDate(0).date,
       day: this.getDate(0).day,
-      available: true
+      available: false
     },
     {
       date: this.getDate(1).date,
       day: this.getDate(1).day,
-      available: true
+      available: false
     },
     {
       date: this.getDate(2).date,
       day: this.getDate(2).day,
-      available: true
+      available: false
     },
     {
       date: this.getDate(3).date,
       day: this.getDate(3).day,
-      available: true
+      available: false
     },
     {
       date: this.getDate(4).date,
       day: this.getDate(4).day,
-      available: true
+      available: false
     },
     {
       date: this.getDate(5).date,
       day: this.getDate(5).day,
-      available: true
+      available: false
     },
     {
       date: this.getDate(6).date,
       day: this.getDate(6).day,
-      available: true
+      available: false
     },
   ];
 
@@ -174,6 +174,8 @@ export class BookingEnterTimeComponent implements OnInit {
             this.filterOutUnavailableDays(this.days);
           } else if (data && data.status && data.status.code === -1) {
             this.availableAppointmentsForProfessional = [];
+          } else {
+            alert('something wrong when loading the appointment times');
           }
         });
   }

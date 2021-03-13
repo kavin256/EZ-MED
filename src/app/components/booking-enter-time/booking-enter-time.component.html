@@ -57,7 +57,7 @@
     </ng-container>
     <ng-container *ngIf="summaryShown && !showRedirectionMessage">
         <div style="width: 240px">
-            <p>** You are about to book a consultation with <b>{{doctor.name}}</b> on <b>{{selectedDate}}</b>. Wait for the Skype call from him/her at around <b>{{getDisplaySelectedTime(selectedAppointmentId)}}</b><br><br>
+            <p>** You are about to book a consultation with <b>{{doctor?.title}}. {{doctor?.firstName}} {{doctor?.lastName}}</b> on <b>{{selectedDate}}</b>. Wait for the Skype call from him/her at around <b>{{getDisplaySelectedTime(selectedAppointmentId)}}</b><br><br>
                 Make sure your Skype call notifications are switched on.<br><br>
             (Note that the time might change due to different reasons)</p>
         </div>

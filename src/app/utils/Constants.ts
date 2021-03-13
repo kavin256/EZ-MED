@@ -9,6 +9,7 @@ export enum Constants {
     UPLOAD_USER_IMAGE = '/image/upload/',
     DOWNLOAD_USER_IMAGE = '/image/download/',
     USER_APPOINTMENTS = '/appointment/user-appointments/',
+    ADD_APPOINTMENT = '/appointment/add-appointment/',
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
     UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/specific-data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
