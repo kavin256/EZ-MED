@@ -33,17 +33,17 @@ export class LandingPageComponent implements OnInit, OnChanges {
   goToSearchPage() {
     this.router.navigate(['searchProfessionals']).then(r => {
     });
-
-    const obj: AuthModel = new AuthModel();
-    obj.username = 'foo12345';
-    obj.password = 'foo';
-    this.dataLoader.login<AuthResponse>(Constants.API_BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
-
-    this.dataStore.get(DataKey.authKey, true).subscribe(
-        (data) => {
-          console.log(data);
-        }
-    );
+    //
+    // const obj: AuthModel = new AuthModel();
+    // obj.username = 'foo12345';
+    // obj.password = 'foo';
+    // this.dataLoader.login<AuthResponse>(Constants.API_BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
+    //
+    // this.dataStore.get(DataKey.authKey, true).subscribe(
+    //     (data) => {
+    //       console.log(data);
+    //     }
+    // );
   }
 
   isDoctorLoggedIn() {

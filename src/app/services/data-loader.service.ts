@@ -122,10 +122,13 @@ export class DataLoaderService {
                 params: options.params
             }).subscribe(
                 // tslint:disable-next-line:no-shadowed-variable
-                ( data) => {
-                    resolve(data);
+                (data) => {
                     // @ts-ignore
                     this.dataStore.set(dataKey, data.data, true);
+                    resolve(data);
+                    // tslint:disable-next-line:no-shadowed-variable
+                }, (data) => {
+                    reject(data);
                 });
         });
     }

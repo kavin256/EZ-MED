@@ -16,6 +16,7 @@
                         <input matInput [(ngModel)]="pass" [type]="hide ? 'password' : 'text'">
                     </mat-form-field>
                     <br>
+                    <p style="color: crimson" *ngIf="logInError && logInError !== ''">{{logInError}}</p>
                     <br>
                     <button [disabled]="!(email && pass)" (click)="logIn()" style="width: 240px" mat-flat-button color="primary">Log In</button>
                     <br>

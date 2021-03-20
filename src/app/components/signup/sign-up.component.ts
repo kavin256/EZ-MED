@@ -7,7 +7,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthResponse} from '../../models/auth-response';
 import {RequestOptions} from '../../models/request-options';
 import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {FormControl} from '@angular/forms';
 import {DataHandlerService} from '../../services/data-handler.service';
@@ -15,6 +15,7 @@ import {AuthModel} from '../../models/auth-model';
 import {DatePipe} from '@angular/common';
 import {MatRadioChange} from '@angular/material/radio';
 import {DataEncryptionService} from '../../services/data-encryption.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-signup',
@@ -35,6 +36,7 @@ export class SignUpComponent implements OnInit {
   passFormControl = new FormControl('');
   conPassFormControl = new FormControl('');
 
+  logInError = '';
   isDoctor = false;
   encryptionKey = 'ezmed';
   hide = true;
@@ -60,6 +62,7 @@ export class SignUpComponent implements OnInit {
   titles = PatientTitles;
 
   constructor(
+      private _snackBar: MatSnackBar,
       private dataEncryptionService: DataEncryptionService,
       private router: Router,
       private datePipe: DatePipe,
@@ -72,6 +75,12 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
   registerNewUser(user: UserData) {
@@ -199,6 +208,7 @@ export class SignUpComponent implements OnInit {
   }
 
   logIn() {
+    this.logInError = '';
     this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
 
     // create url and send request
@@ -227,6 +237,17 @@ export class SignUpComponent implements OnInit {
           } else {
             alert('Something went wrong. Please contact support !!');
           }
+          this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+        })
+        .catch((e) => {
+          if (e instanceof HttpErrorResponse) {
+            this.logInError = e.error.message + '!';
+          } else {
+            this.logInError = 'Login failed!';
+          }
+          this.openSnackBar(this.logInError, null);
+        })
+        .finally(() => {
           this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
   }

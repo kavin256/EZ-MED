@@ -52,6 +52,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSnackBarModule} from '@angular/material';
 
 export function initialize(app: AppService) {
     return async () => {
@@ -122,7 +123,8 @@ export function initialize(app: AppService) {
         MatDatepickerModule,
         MatSelectModule,
         MatRadioModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSnackBarModule
     ],
   providers: [
       DatePipe,
