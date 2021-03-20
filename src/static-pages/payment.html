@@ -26,7 +26,8 @@
                 return null;
             }
             function buildPayment() {
-                var value4 = readCookie('amount');
+                const value4 = readCookie('amount');
+                const value5 = readCookie('clientRef');
                 // Build the payment object
                 return {
                     clientId: 14004356,
@@ -34,7 +35,7 @@
                     currency: 'LKR',
                     // returnUrl: 'http://www.ezmed.lk.s3-website.ap-south-1.amazonaws.com' +'/success',
                     returnUrl: 'http://localhost:4200' +'/success',
-                    clientRef: 'CREF-12345777',
+                    clientRef: value5,
                     comment: 'This is a demo payment'
                 };
             }

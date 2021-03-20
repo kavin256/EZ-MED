@@ -147,6 +147,7 @@ export class AppointmentListComponent implements OnInit {
 
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+
     if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
       this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
       this.doctorSide = this.loggedInUser.doctor;
@@ -158,7 +159,9 @@ export class AppointmentListComponent implements OnInit {
     }
 
     this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
-    this.loadProfessionalData(this.selectedProfessionalUserId);
+    if (this.selectedProfessionalUserId) {
+      this.loadProfessionalData(this.selectedProfessionalUserId);
+    }
 
     // loadUserAppointments
     this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);

@@ -125,6 +125,8 @@ export class BookingEnterTimeComponent implements OnInit {
   }
 
   navigateToPaymentOrLogIn() {
+    // set the bookingId in localStorage
+    localStorage.setItem(LocalStorageKeys.selectedAppointmentId, this.selectedAppointmentId);
     if (!this.loggedInUser) {
       this.transitionType = TRANSITION_PAGE_TYPE.LOGIN_REDIRECT;
       this.showRedirectionMessage = true;
@@ -164,9 +166,9 @@ export class BookingEnterTimeComponent implements OnInit {
     this.summaryShown = $event;
   }
 
-  private loadAvailableAppointments(email: string) {
+  private loadAvailableAppointments(id: string) {
     // create url and send request
-    const url = Constants.API_BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + email;
+    const url = Constants.API_BASE_URL + Constants.AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL + id;
     this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {

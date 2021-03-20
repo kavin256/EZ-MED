@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
-import {DoctorScheduleData, DoctorSpecificData, FixedDoctorDate, UserData, WorkingTimePeriod} from '../../models/user-data';
+import {DoctorScheduleData, FixedDoctorDate, UserData, WorkingTimePeriod} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
 import {Constants, MODAL_TYPES} from '../../utils/Constants';
@@ -13,7 +13,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
   styleUrls: ['./doctor-schedule.component.css']
 })
 export class DoctorScheduleComponent implements OnInit {
-  professional: DoctorSpecificData;
+  professional: UserData;
   availableForAppointment = true;
 
   constructor(
@@ -73,8 +73,14 @@ export class DoctorScheduleComponent implements OnInit {
                 this.dataHandlerService.loadUserData(userId, this.dataLoaderService);
                 this.isConfirmationActive = false;
                 this.changeRequestSent = true;
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
               } else if (data && data.status && data.status.code === -1) {
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '2', false);
               }
+            })
+            .finally(() => {
+                this.router.navigate(['doctor/dashboard']).then(r => {location.reload();});
             });
       }
     } else {

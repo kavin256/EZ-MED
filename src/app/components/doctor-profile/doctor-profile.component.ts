@@ -4,7 +4,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES, specializationsCON} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
-import {DoctorSpecificData, UserData} from '../../models/user-data';
+import {UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class DoctorProfileComponent implements OnInit {
   loggedInUser = null;
   priceCurrency = 'LKR';
   onVacation = false;
-  userData: DoctorSpecificData;
+  userData: UserData;
   vacationModeTitle = 'Enable Vacation Mode';
   titles = [
     {value: DoctorTitles.DR},
@@ -146,7 +146,7 @@ export class DoctorProfileComponent implements OnInit {
         );
     }
 
-  checkForMandatoryFieldsToActivateProfile(userData: DoctorSpecificData) {
+  checkForMandatoryFieldsToActivateProfile(userData: UserData) {
     // currently only the userData.priceForAppointment is checked as a requirement
     return userData &&
         userData.priceForAppointment !== null &&

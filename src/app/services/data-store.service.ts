@@ -65,5 +65,6 @@ export enum LocalStorageKeys {
   selectedProfessional = 'selectedProfessional',
   AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = 'AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL',
   professionalScheduleData = 'professionalScheduleData',
+  selectedAppointmentId = 'selectedAppointmentId',
   userId = 'userId'
 }

@@ -3,7 +3,7 @@ import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DoctorType} from '../../utils/Constants';
-import {DoctorSpecificData, UserData} from '../../models/user-data';
+import {UserData} from '../../models/user-data';
 import {Router} from '@angular/router';
 import {BookingStatus} from '../appointment-list/appointment-list.component';
 
@@ -56,7 +56,7 @@ export class AppointmentComponent implements OnInit {
       userAllergies: 'allergic to bad music, allergic to negative people'
   };
 
-  doctor: DoctorSpecificData = {
+  doctor: UserData = {
       contactNumber: '0773092511',
       regNo: '4352545235',
       whatsAppNumber: '0773092511',

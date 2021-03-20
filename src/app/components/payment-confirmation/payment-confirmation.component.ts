@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Constants, DoctorType} from '../../utils/Constants';
+import {Constants} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {LocalStorageKeys} from '../../services/data-store.service';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-booking-enter',
@@ -12,26 +13,10 @@ import {LocalStorageKeys} from '../../services/data-store.service';
 })
 export class PaymentConfirmationComponent implements OnInit {
 
-  doctor = {
-    id: 1,
-    name: 'Dr. Nuwan chinthaka',
-    professionalType: DoctorType.CON,
-    bio: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
-    specialities: [
-      'Consultant Neurologist',
-      'Consultant Pediatrician'
-    ],
-    priceForAppointment: 'Rs. 2000.00',
-    isSkypePreferred: true,
-    isWhatsAppPreferred: false
-  };
-
+  doctor: UserData;
   isScheduleVisible = false;
-  isPatientSkypeAvailable = false;
-  media = [
-    {value: 'skype', viewValue: 'Skype'},
-    {value: 'whatsapp', viewValue: 'Whatsapp'}
-  ];
+  selectedAppointmentId = '';
+  loggedInUser: UserData;
   private selectedProfessionalUserId: string;
 
   constructor(
@@ -43,6 +28,8 @@ export class PaymentConfirmationComponent implements OnInit {
   ngOnInit() {
     this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
     this.loadProfessionalData(this.selectedProfessionalUserId);
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+    this.selectedAppointmentId = localStorage.getItem(LocalStorageKeys.selectedAppointmentId);
 
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
@@ -59,17 +46,17 @@ export class PaymentConfirmationComponent implements OnInit {
       this.isScheduleVisible = $event;
   }
 
-  saveSkype(b: boolean) {
-    //
-  }
-
   goBack() {
     this.router.navigate(['appointmentTime']).then(r => {});
   }
 
   payment() {
-    document.cookie = 'amount=' + parseInt(this.doctor.priceForAppointment, 10) * 10;
-    // document.cookie = 'amount=150000';
+    document.cookie = 'amount=' + parseInt(this.doctor.priceForAppointment, 10) * 100;
+    document.cookie = 'clientRef=' + this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId);
     window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
+  }
+
+  private generateRefKey(bookingId: string, patientId: string) {
+    return bookingId + '~~' + patientId;
   }
 }
