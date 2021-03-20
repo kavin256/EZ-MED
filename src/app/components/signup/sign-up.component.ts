@@ -84,7 +84,7 @@ export class SignUpComponent implements OnInit {
   }
 
   registerNewUser(user: UserData) {
-    user.password = this.encryptPassword(user.password);
+    user.password = this.dataEncryptionService.set('123456$#@$^@1ERF', user.password);
     user.birthday = this.datePipe.transform(this.bDayFormControl.value, 'yyyy-MM-dd');
 
     // create url and send request
