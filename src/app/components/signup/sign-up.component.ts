@@ -14,6 +14,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
 import {AuthModel} from '../../models/auth-model';
 import {DatePipe} from '@angular/common';
 import {MatRadioChange} from '@angular/material/radio';
+import {DataEncryptionService} from '../../services/data-encryption.service';
 
 @Component({
   selector: 'app-signup',
@@ -59,6 +60,7 @@ export class SignUpComponent implements OnInit {
   titles = PatientTitles;
 
   constructor(
+      private dataEncryptionService: DataEncryptionService,
       private router: Router,
       private datePipe: DatePipe,
       private dataLoaderService: DataLoaderService,
@@ -203,13 +205,9 @@ export class SignUpComponent implements OnInit {
     const url = Constants.API_BASE_URL + Constants.AUTHENTICATE;
     const obj: AuthModel = new AuthModel();
 
-    // Todo: handle
-    // obj.userId = this.userId;
-    // obj.userName = 'foo12345';
+    const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.pass);
     obj.userName = this.email;
-    // obj.password = this.pass;
-    obj.password = 'foo';
-
+    obj.password = encrypted;
     this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
         .then((data: any) => {
           if (data && data.jwt) {
