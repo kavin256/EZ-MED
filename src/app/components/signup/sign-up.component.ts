@@ -206,7 +206,7 @@ export class SignUpComponent implements OnInit {
     const obj: AuthModel = new AuthModel();
 
     const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.pass);
-    obj.userName = this.email;
+    obj.username = this.email;
     obj.password = encrypted;
     this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
         .then((data: any) => {
