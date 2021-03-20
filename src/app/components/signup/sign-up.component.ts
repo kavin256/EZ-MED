@@ -206,15 +206,15 @@ export class SignUpComponent implements OnInit {
     // Todo: handle
     // obj.userId = this.userId;
     // obj.userName = 'foo12345';
-    obj.userName = this.email;
-    // obj.password = this.pass;
-    obj.password = 'foo';
+    obj.username = this.email;
+    obj.password = this.pass;
+    // obj.password = 'foo';
 
     this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
         .then((data: any) => {
           if (data && data.jwt) {
             localStorage.setItem(Constants.EZ_MED_AUTH, data.jwt);
-            if (this.dataHandlerService.loadUserData(obj.userName, this.dataLoaderService)) {
+            if (this.dataHandlerService.loadUserData(obj.username, this.dataLoaderService)) {
               const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
               if (user && user.doctor) {
                 this.router.navigate(['doctor/dashboard']).then(r => {

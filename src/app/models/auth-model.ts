@@ -1,4 +1,4 @@
 export class AuthModel {
-    userName: string;
+    username: string;
     password: string;
 }
