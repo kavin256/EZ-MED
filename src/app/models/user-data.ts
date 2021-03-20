@@ -10,8 +10,17 @@ export class UserData {
     contactNumber: string;
     whatsAppNumber?: string;
     email?: string;
-    doctor: boolean;
+    doctor?: boolean;
     userAllergies?: string;
+    regNo?: string;
+    priceForAppointment?: string;
+    qualifications?: string;
+    professionalType?: string;
+    specialityA?: string;
+    specialityB?: string;
+    specialityC?: string;
+    availableForAppointment?: string;
+    doctorType?: string;
 }
 
 export class WorkingTimePeriod {
