@@ -212,7 +212,7 @@ export class SignUpComponent implements OnInit {
         .then((data: any) => {
           if (data && data.jwt) {
             localStorage.setItem(Constants.EZ_MED_AUTH, data.jwt);
-            if (this.dataHandlerService.loadUserData(obj.userName, this.dataLoaderService)) {
+            if (this.dataHandlerService.loadUserData(obj.username, this.dataLoaderService)) {
               const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
               if (user && user.doctor) {
                 this.router.navigate(['doctor/dashboard']).then(r => {
