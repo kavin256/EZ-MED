@@ -5,6 +5,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {UserData} from '../../models/user-data';
+import {isNumber} from 'util';
 
 @Component({
   selector: 'app-booking-enter',
@@ -51,9 +52,20 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   payment() {
-    document.cookie = 'amount=' + parseInt(this.doctor.priceForAppointment, 10) * 100;
-    document.cookie = 'clientRef=' + this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId);
-    window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
+    // document.cookie = 'amount=' + parseInt(this.doctor.priceForAppointment, 10) * 100;
+    localStorage.setItem(LocalStorageKeys.chargeAmount, String(this.doctor.priceForAppointment) + '00');
+    localStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
+    // document.cookie = 'clientRef=' + this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId);
+    if (
+        localStorage.getItem(LocalStorageKeys.chargeAmount)
+        && localStorage.getItem(LocalStorageKeys.chargeAmount)
+        && isNumber(parseInt(localStorage.getItem(LocalStorageKeys.chargeAmount), 10))
+        && parseInt(localStorage.getItem(LocalStorageKeys.chargeAmount), 10) > 0
+    ) {
+      window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
+    } else {
+      window.alert('Something wrong with the payment amount!');
+    }
   }
 
   private generateRefKey(bookingId: string, patientId: string) {
