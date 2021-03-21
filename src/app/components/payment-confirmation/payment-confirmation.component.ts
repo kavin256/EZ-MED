@@ -52,18 +52,18 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   payment() {
-    // document.cookie = 'amount=' + parseInt(this.doctor.priceForAppointment, 10) * 100;
     localStorage.setItem(LocalStorageKeys.chargeAmount, String(this.doctor.priceForAppointment) + '00');
     localStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
-    // document.cookie = 'clientRef=' + this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId);
     if (
-        localStorage.getItem(LocalStorageKeys.chargeAmount)
+        localStorage.getItem(LocalStorageKeys.clientRef)
         && localStorage.getItem(LocalStorageKeys.chargeAmount)
         && isNumber(parseInt(localStorage.getItem(LocalStorageKeys.chargeAmount), 10))
         && parseInt(localStorage.getItem(LocalStorageKeys.chargeAmount), 10) > 0
     ) {
       window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
     } else {
+      localStorage.removeItem('chargeAmount');
+      localStorage.removeItem('clientRef');
       window.alert('Something wrong with the payment amount!');
     }
   }

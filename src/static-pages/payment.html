@@ -27,13 +27,11 @@
                 return null;
             }
             function buildPayment() {
-                // const value4 = readCookie('amount');
                 const value4 = localStorage.getItem('chargeAmount');
                 const value5 = localStorage.getItem('clientRef');
                 localStorage.removeItem('chargeAmount');
                 localStorage.removeItem('clientRef');
-                // const value5 = readCookie('clientRef');
-                // const value5 = readCookie('clientRef');
+
                 // Build the payment object
                 return {
                     clientId: 14004356,
