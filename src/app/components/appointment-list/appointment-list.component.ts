@@ -8,6 +8,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 import {PageEvent} from '@angular/material/paginator';
 import {FormControl, FormGroup} from '@angular/forms';
 import {MatDatepickerInputEvent} from '@angular/material';
+import {AppointmentData} from '../../models/appointment-data';
 
 @Component({
   selector: 'app-appointment-list',
@@ -21,7 +22,7 @@ export class AppointmentListComponent implements OnInit {
   PAGINATION_START = 0;
   PAGINATION_END = this.RESULTS_PER_PAGE;
 
-  bookings = [];
+  bookings: AppointmentData [] = [];
   //   {
   //     bookingId: 2387,
   //     doctorId: '76531',
@@ -196,9 +197,9 @@ export class AppointmentListComponent implements OnInit {
         });
   }
 
-  selectBooking($event: string) {
+  selectBooking($event: number) {
     this.selectedBookingId = $event;
-    this.router.navigate(['appointment']).then(r => {});
+    this.router.navigate(['appointment'], { queryParams: { id: this.selectedBookingId } }).then(r => {});
   }
 
   setToDate(fromDate: Date, days) {

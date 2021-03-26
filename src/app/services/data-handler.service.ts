@@ -7,6 +7,7 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {LocalStorageKeys} from './data-store.service';
 import {DataLoaderService} from './data-loader.service';
 import {ConfigModel} from '../models/config';
+import {AppointmentData} from '../models/appointment-data';
 
 @Injectable({
   providedIn: 'root'
@@ -187,6 +188,19 @@ export class DataHandlerService {
       let httpParams = new HttpParams();
       httpParams = httpParams.append('startDate', startDate);
       httpParams = httpParams.append('endDate', endDate);
+      dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
+          .then((data: any) => {
+            if (data.data && data.data[0]) {
+              resolve(data.data[0]);
+            }
+          });
+    });
+  }
+
+  loadUserAppointmentById(appointmentId: number, dataLoaderService: DataLoaderService): Promise<unknown> {
+    return new Promise(resolve => {
+      const url = Constants.API_BASE_URL + Constants.APPOINTMENT_BY_ID + appointmentId;
+      const httpParams = new HttpParams();
       dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
           .then((data: any) => {
             if (data.data && data.data[0]) {

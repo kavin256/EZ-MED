@@ -40,23 +40,3 @@ export class DoctorScheduleData {
     averageTimeForAppointment: number;
     fixedDoctorDates: FixedDoctorDate [];
 }
-
-export class DoctorSpecificData {
-    userId?: string;
-    id?: string;
-    title: string;
-    firstName: string;
-    lastName: string;
-    contactNumber: string;
-    whatsAppNumber: string;
-    email: string;
-    regNo: string;
-    priceForAppointment: string;
-    qualifications: string;
-    professionalType?: string;
-    specialityA?: string;
-    specialityB?: string;
-    specialityC?: string;
-    availableForAppointment?: string;
-}
-
