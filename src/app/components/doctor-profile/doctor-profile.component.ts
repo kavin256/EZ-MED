@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES, specializationsCON} from '../../utils/Constants';
+import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {UserData} from '../../models/user-data';
@@ -35,8 +35,7 @@ export class DoctorProfileComponent implements OnInit {
         {value: DoctorType.OTH}
     ];
 
-  // todo: find a better solution. this is just a duplication. So not good
-  specializationsCON = specializationsCON;
+  specializationsCON;
 
     constructor(
         private router: Router,
@@ -48,6 +47,8 @@ export class DoctorProfileComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+
         this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
         // todo: resolve this commented
         // if (this.loggedInUser && this.loggedInUser.doctorData) {

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Constants} from './utils/Constants';
-import {DataLoaderService} from './services/data-loader.service';
 import {DataStoreService} from './services/data-store.service';
 import {DataHandlerService} from './services/data-handler.service';
 

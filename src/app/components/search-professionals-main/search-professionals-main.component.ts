@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {specializationsCON, Constants, DoctorType} from '../../utils/Constants';
+import {Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
