@@ -64,7 +64,7 @@ export class AppointmentComponent implements OnInit {
       title: 'Dr.',
       firstName: 'Nuwan',
       lastName: 'Chinthaka',
-      doctorType: DoctorType.CON,
+      professionalType: DoctorType.CON,
       qualifications: 'MD [NIZHNY NOVGOROD STATE MED ACA] RUSSIA(2008)',
       specialityA: 'Consultant Neurologist',
       specialityB: 'Consultant Neurologist',
@@ -87,7 +87,7 @@ export class AppointmentComponent implements OnInit {
           this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
           this.doctorSide = this.loggedInUser.doctor;
       }
-      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
       this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
       this.loadProfessionalData(this.selectedProfessionalUserId);
   }

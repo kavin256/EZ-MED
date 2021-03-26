@@ -4,7 +4,7 @@ import {specializationsCON, Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import csc from 'country-state-city';
 import { ICountry, IState, ICity } from 'country-state-city';
@@ -42,8 +42,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
       category: DoctorType.OTH
     }
   ];
-
-  specializationsCON = specializationsCON;
+  specializationsCON;
   regions;
 
   constructor(
@@ -54,12 +53,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
     localStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
     this.InitialSearch();
-    // console.log(csc.getAllCountries());
     this.regions = csc.getStatesOfCountry(this.country);
-    // console.log(csc.getStatesOfCountry(this.country));
-    // console.log(csc.getCitiesOfState(this.country, '1'));
   }
 
   search() {

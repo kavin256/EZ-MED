@@ -33,7 +33,7 @@ export class PaymentConfirmationComponent implements OnInit {
     this.selectedAppointmentId = localStorage.getItem(LocalStorageKeys.selectedAppointmentId);
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
   }
 
   private loadProfessionalData(selectedProfessionalUserId: any) {
@@ -52,6 +52,7 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   payment() {
+    // todo: validate the price in the backend too !!!!
     localStorage.setItem(LocalStorageKeys.chargeAmount, String(this.doctor.priceForAppointment) + '00');
     localStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
     if (

@@ -82,7 +82,7 @@
                (change)="uploadImage($event)">
         <br>
         <br>
-        <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
+        <button style="width: 240px" mat-raised-button color="primary" (click)="save()">Save</button>
         <br>
         <br>
         <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
@@ -98,12 +98,15 @@
                 &nbsp;<button style="margin:5px;" (click)="dismiss()" style="width: 100px" mat-stroked-button color="primary">No</button>
             </div>
         </ng-container>
+        <button style="width: 320px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
+        <br>
+        <br>
         <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
         <button style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut()">Log Out</button>
+        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out</button>
     </ng-container>
 </div>

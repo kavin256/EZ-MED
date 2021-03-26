@@ -20,7 +20,6 @@ export class UserData {
     specialityB?: string;
     specialityC?: string;
     availableForAppointment?: string;
-    doctorType?: string;
 }
 
 export class WorkingTimePeriod {
@@ -59,6 +58,5 @@ export class DoctorSpecificData {
     specialityB?: string;
     specialityC?: string;
     availableForAppointment?: string;
-    doctorType?: string;
 }
 

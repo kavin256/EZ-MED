@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
-import {Constants, PatientTitles} from '../../utils/Constants';
+import {Constants, MODAL_TYPES, PatientTitles} from '../../utils/Constants';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 
 @Component({
   selector: 'app-patient-profile',
@@ -47,7 +47,7 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
 
     this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
     if (this.selectedProfessionalUserId) {
@@ -72,6 +72,11 @@ export class PatientProfileComponent implements OnInit {
     });
   }
 
+  newBooking() {
+    this.router.navigate(['searchProfessionals']).then(r => {
+    });
+  }
+
   goToAppointmentTimeSelection() {
     this.router.navigate(['appointmentTime']).then(r => {});
   }
@@ -90,14 +95,31 @@ export class PatientProfileComponent implements OnInit {
   }
 
   save() {
-    this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'yyyy-MM-dd');
-    this.setGender(this.gender);
+    if (this.dataHandlerService.isMandatoryDetailsFilled(this.patient)) {
+      this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'yyyy-MM-dd');
+      this.setGender(this.gender);
+      this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+      const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.patient.userId;
+      this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.patient)
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              this.patient = data.data[0];
+              localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+              this.toggleEditable(false);
+            } else if (data && data.status && data.status.code === -1) {
+              alert('Something went wrong when saving the data!');
+            }
+          }).catch(() => {
+            alert('Something went wrong when saving the data!');
+          }).finally(() => {
+            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+          });
+    } else {
+      alert('Please fill mandatory fields.');
+    }
   }
 
   toggleEditable(editable: boolean) {
-    if (!editable) {
-      this.save();
-    }
     this.editable = editable;
   }
 

@@ -147,7 +147,7 @@
         <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px" mat-stroked-button>{{vacationModeTitle}}</button>
         <br>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut()">Log Out</button>
+        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out</button>
         <br>
         <br>
         <br>

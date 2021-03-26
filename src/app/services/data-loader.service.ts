@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {RequestOptions} from '../models/request-options';
 import {DataKey, DataStoreService} from './data-store.service';
 import {BehaviorSubject} from 'rxjs';
-import {Constants, MODAL_TYPES} from '../utils/Constants';
+import {Constants} from '../utils/Constants';
 import {ModalComponent} from '../components/modal/modal.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
@@ -96,7 +96,7 @@ export class DataLoaderService {
     }
 
     // make request params and headers for request
-    private makeOptions(param: HttpParams, headers: HttpHeaders): RequestOptions {
+    public makeOptions(param: HttpParams, headers: HttpHeaders): RequestOptions {
         const options: RequestOptions = new RequestOptions();
         options.params = param;
         options.headers = headers;

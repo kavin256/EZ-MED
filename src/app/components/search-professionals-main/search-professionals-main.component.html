@@ -19,7 +19,7 @@
     <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== null && selectedCategory !== 'General Practitioner'">
         <mat-form-field  style="width: 240px" >
             <mat-label>Specialization</mat-label>
-            <mat-select [(value)]="selectedSpecialization">
+            <mat-select panelClass="example-long-panel" [(value)]="selectedSpecialization">
                 <ng-container *ngFor="let subCategory of specializationsCON">
                     <mat-option value="{{subCategory}}">{{dataHandlerService.convertCamelCaseToSentence(subCategory)}}</mat-option>
                 </ng-container>

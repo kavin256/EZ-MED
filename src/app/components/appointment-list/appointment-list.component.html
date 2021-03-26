@@ -1,12 +1,12 @@
 <div class="mat-card-style">
     <app-page-title [title]="'My Bookings'"></app-page-title>
 
-    <ng-container *ngIf="!doctorSide">
-        <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
-        <br>
-        <br>
-        <br>
-    </ng-container>
+<!--    <ng-container *ngIf="!doctorSide">-->
+<!--        <button style="width: 300px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--    </ng-container>-->
 
     <mat-form-field appearance="outline">
         <mat-label>From</mat-label>
@@ -24,7 +24,7 @@
 
     <br>
     <p style="font-size: large;">Bookings:</p>
-
+    <p style="color: crimson" *ngIf="bookings && bookings.length === 0">No bookings that matches the criteria!</p>
     <div *ngFor="let booking of bookings; let i=index">
         <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
             <mat-card (click)="selectBooking(booking.bookingId)" style="width: 300px; height: 90px;" [ngStyle]="{background: getColor(booking.bookingStatus)}">
@@ -43,7 +43,8 @@
             <br>
         </ng-container>
     </div>
-    <mat-paginator [length]="bookings.length"
+    <mat-paginator  *ngIf="!(bookings && bookings.length === 0)"
+                    [length]="bookings.length"
                    [pageSize]="RESULTS_PER_PAGE"
                    (page)="goToPage($event)"
     >

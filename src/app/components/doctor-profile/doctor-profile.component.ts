@@ -55,7 +55,7 @@ export class DoctorProfileComponent implements OnInit {
         // }
 
         // if not logged In this page should not be able to access
-        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
         if (this.loggedInUser) {
             this.userData = this.loggedInUser;
         }
@@ -86,8 +86,8 @@ export class DoctorProfileComponent implements OnInit {
                     JSON.parse(JSON.stringify(this.userData.professionalType)));
             }
             // todo: change this in the backend
-            this.userData.doctorType = this.userData.professionalType;
-            const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_SPECIFIC_DATA + this.userData.userId;
+            this.userData.professionalType = this.userData.professionalType;
+            const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.userData.userId;
             this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData)
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1) {
@@ -103,9 +103,11 @@ export class DoctorProfileComponent implements OnInit {
                         // console.log(data.data);
                     }
                 });
-        } else {
+        } else if (parseInt(this.userData.priceForAppointment, 10) <= 0) {
             // Todo: show a proper error
-            alert('Please fill mandatory fields. Price per consultation should be more than LKR 0');
+            alert('Price per consultation should be more than LKR 0');
+        } else {
+            alert('Please fill mandatory fields.');
         }
     }
 

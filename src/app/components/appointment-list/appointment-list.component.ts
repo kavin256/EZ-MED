@@ -136,6 +136,8 @@ export class AppointmentListComponent implements OnInit {
   date = new FormControl(new Date());
   fromDate = this.date.value;
   toDate: Date;
+  logInError = 'No bookings found that matches the criteria';
+
 
   constructor(
       private router: Router,
@@ -146,7 +148,7 @@ export class AppointmentListComponent implements OnInit {
   ngOnInit() {
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
 
     if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
       this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));

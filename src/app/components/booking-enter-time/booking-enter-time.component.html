@@ -1,12 +1,8 @@
 <div class="mat-card-style" align="center">
+    <app-page-title [title]="(!summaryShown && !showRedirectionMessage) ? 'Select Convenient Time' : (summaryShown && !showRedirectionMessage) ? 'Appointment Summary' : ''"></app-page-title>
+    <app-professional-card [professional]="doctor"></app-professional-card>
     <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
-        <app-page-title [title]="'Select Convenient Time'"></app-page-title>
 
-        <app-professional-card
-            [professional]="doctor"
-        >
-        </app-professional-card>
-<!--        <h4>Select Your Convenient Date and Time</h4>-->
         <mat-form-field  style="width: 240px" >
             <mat-label>Date</mat-label>
             <mat-select [(value)]="selectedDate">

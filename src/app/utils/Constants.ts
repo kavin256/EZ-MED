@@ -6,12 +6,13 @@ export enum Constants {
     FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
+    LOAD_CONFIGURATIONS = '/admin/configs',
     UPLOAD_USER_IMAGE = '/image/upload/',
     DOWNLOAD_USER_IMAGE = '/image/download/',
     USER_APPOINTMENTS = '/appointment/user-appointments/',
     ADD_APPOINTMENT = '/appointment/add-appointment/',
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
-    UPDATE_PROFESSIONAL_SPECIFIC_DATA = '/user/specific-data/',
+    UPDATE_USER_SPECIFIC_DATA = '/user/specific-data/',
     UPDATE_PROFESSIONAL_WORK_DATA = '/user/doctor/work-data/',
     APPOINTMENT_PAYMENT = '/payment/',
     GET_USER_DATA = '/user/user-data/',
@@ -78,7 +79,19 @@ export const specializationsCON = [
     'Radiologist',
     'Dermatologist',
     'ClinicalNutritionist',
-    'Endocrinologist'
+    'EyeSurgeon',
+    'Gastroenterologist',
+    'Urologist',
+    'ObstetricianAndGynecologists',
+    'Endocrinologist',
+    'Neurologist',
+    'Pediatrician',
+    'Physician',
+    'Pathologist',
+    'Microbiologist',
+    'Psychiatric',
+    'Rheumatologist',
+    'Venerologist'
     ];
 
 export const specializationsCOUN = [

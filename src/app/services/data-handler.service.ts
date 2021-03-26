@@ -6,15 +6,16 @@ import {FixedDoctorDate, UserData} from '../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {LocalStorageKeys} from './data-store.service';
 import {DataLoaderService} from './data-loader.service';
+import {ConfigModel} from '../models/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataHandlerService {
 
-  constructor(
-      private router: Router
-  ) { }
+  configurationsMap: Map<string, string>;
+
+  constructor() { }
 
   convertTimeToHoursAndMinutes(time: string) {
     const timeObj = {
@@ -37,14 +38,54 @@ export class DataHandlerService {
     return camelCase(str);
   }
 
-  redirectToSignUpIfNotLoggedIn(loggedInUser: UserData) {
+  isMandatoryDetailsFilled(user: UserData) {
+    let result = false;
+    if (user) {
+      result = true;
+      if (user.doctor) {
+        // doc specific
+        if (!(
+            user.qualifications && user.qualifications !== ''
+            && user.professionalType && user.professionalType !== ''
+            && user.priceForAppointment && user.priceForAppointment !== '' && parseInt(user.priceForAppointment, 10) > 0
+            && user.regNo && user.regNo !== ''
+            && user.specialityA && user.specialityA !== ''
+        )) {
+          result = false;
+        }
+      } else {
+        // patient specific
+        if (!(
+            user.birthday && user.birthday !== ''
+        )) {
+          result = false;
+        }
+      }
+      // common
+      if (!(
+          user.title && user.title !== ''
+          && user.firstName && user.firstName !== ''
+          && user.lastName && user.lastName !== ''
+          && user.male !== null && user.male !== undefined
+          && user.birthday && user.birthday !== ''
+          && user.contactNumber && user.contactNumber !== ''
+          && user.whatsAppNumber && user.whatsAppNumber !== ''
+      )) {
+        result = false;
+      }
+    }
+
+    return result;
+  }
+
+  redirectToSignUpIfNotLoggedIn(loggedInUser: UserData, router) {
     if (loggedInUser && loggedInUser.userId) {
     } else {
-      this.router.navigate(['signup']).then(r => {});
+      router.navigate(['signup']).then(r => {});
     }
   }
 
-  public convertDateFormat(date: Date) {
+  convertDateFormat(date: Date) {
     const dd = String(date.getDate()).padStart(2, '0');
     const mm = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
     const yyyy = date.getFullYear();
@@ -78,21 +119,32 @@ export class DataHandlerService {
     };
   }
 
-  redirectFromSignUpIfLoggedIn(loggedInUser: UserData) {
+  redirectFromSignUpIfLoggedIn(loggedInUser: UserData, router: Router) {
     if (loggedInUser && loggedInUser.userId && loggedInUser.doctor) {
-      this.router.navigate(['doctor/dashboard']).then(r => {});
+      router.navigate(['doctor/dashboard']).then(r => {});
     } else if (loggedInUser && loggedInUser.userId && !loggedInUser.doctor) {
-      this.router.navigate(['user/dashboard']).then(r => {});
+      router.navigate(['user/dashboard']).then(r => {});
     }
   }
 
-  logOut() {
+  logOut(router: Router) {
     localStorage.clear();
     location.reload();
-    this.router.navigate(['signup']).then(r => {});
+    router.navigate(['signup']).then(r => {});
   }
 
-  loadUserData(userName: string, dataLoaderService: DataLoaderService): any {
+  setConfigs(configurations: ConfigModel []) {
+    this.configurationsMap = new Map<string, string>();
+    configurations.forEach((configuration) => {
+      this.configurationsMap.set(configuration.name, configuration.value);
+    });
+  }
+
+  loadConfig(configurationName: string) {
+    return this.configurationsMap.get(configurationName);
+  }
+
+  loadUserData(userName: string, dataLoaderService: DataLoaderService, router: Router): any {
     let userData = null;
     const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
     dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
@@ -102,11 +154,11 @@ export class DataHandlerService {
           localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(userData));
           const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
           if (user && user.doctor) {
-            this.router.navigate(['doctor/dashboard']).then(r => {
+            router.navigate(['doctor/dashboard']).then(r => {
               location.reload();
             });
           } else if (user && !user.doctor) {
-            this.router.navigate(['user/dashboard']).then(r => {
+            router.navigate(['user/dashboard']).then(r => {
               location.reload();
             });
           }

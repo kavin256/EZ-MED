@@ -20,7 +20,7 @@ export class PrescriptionListComponent implements OnInit {
 
   ngOnInit() {
       // if not logged In this page should not be able to access
-      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
       this.isDoctor = true;
       // this.isDoctor = false;
 

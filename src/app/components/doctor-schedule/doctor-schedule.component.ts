@@ -41,7 +41,7 @@ export class DoctorScheduleComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
 
     this.professional = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
     if (this.professional && this.professional.userId) { this.populateDoctorScheduleData(this.professional.userId); }
@@ -70,7 +70,7 @@ export class DoctorScheduleComponent implements OnInit {
             DataKey.doctorScheduleData, this.doctorScheduleData)
             .then((data: any) => {
               if (data && data.status && data.status.code === 1) {
-                this.dataHandlerService.loadUserData(userId, this.dataLoaderService);
+                this.dataHandlerService.loadUserData(userId, this.dataLoaderService, this.router);
                 this.isConfirmationActive = false;
                 this.changeRequestSent = true;
                 this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
