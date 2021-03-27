@@ -114,7 +114,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     isNew(status: APPOINTMENT_STATUS) {
-        return status === APPOINTMENT_STATUS.NEW;
+        return status === APPOINTMENT_STATUS.BOOKED;
     }
 
     isInProgress(status: APPOINTMENT_STATUS) {
@@ -127,11 +127,11 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     private updateAppointmentStatus() {
         this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
-        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS;
-        this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, this.booking)
+        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS + this.booking.appointmentId + '/' + this.booking.status;
+        this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, null)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1) {
-                    this.booking.status = data.data[0];
+                    this.booking = data.data[0];
                 } else if (data && data.status && data.status.code === -1) {
                     this.booking.status = this.previousStatus;
                     alert('Cannot update the appointment status right now. Please check your internet connection!');

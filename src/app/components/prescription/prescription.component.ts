@@ -39,7 +39,7 @@ export class PrescriptionComponent implements OnInit {
     patientName: 'John Doe',
     skypeID: 'kafkjnf34',
     phoneNumber: '0773092511',
-    bookingStatus: APPOINTMENT_STATUS.NEW,
+    bookingStatus: APPOINTMENT_STATUS.BOOKED,
     messageThread: [
       {
         sender: 'patient',
