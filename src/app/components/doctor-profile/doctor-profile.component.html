@@ -85,6 +85,11 @@
         </mat-form-field>
         <br>
         <mat-form-field  style="width: 240px" class="example-full-width">
+            <mat-label>Email:</mat-label>
+            <input disabled required matInput placeholder="" [(ngModel)]="userData.email">
+        </mat-form-field>
+        <br>
+        <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
         </mat-form-field>

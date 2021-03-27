@@ -5,21 +5,25 @@
         <ngb-alert [dismissible]="false">
             <ng-container *ngIf="doctorSide">
                 <tr>
-                    <h1 style="font-size: x-large">Booking ID: {{booking?.appointmentId}}</h1>
+                    <h1 style="font-size: x-large">WhatsApp: {{patient?.whatsAppNumber}}</h1>
                 </tr>
             </ng-container>
             <ng-container *ngIf="!doctorSide">
                 <tr>
                     <h1 style="font-size: x-large" [ngClass]="booking?.status === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking?.patientData?.title}}. {{booking?.patientData?.firstName}} {{booking?.patientData?.lastName}}</h1>
-                    <h1 style="font-size: large">Booking ID: {{booking?.appointmentId}}</h1>
                 </tr>
             </ng-container>
-
+            <tr>
+                <td style="font-size: large">Booking ID: {{booking?.appointmentId}}</td>
+            </tr>
             <tr>
                 <td style="font-size: small">Date: {{booking?.appointmentDate}}</td>
             </tr>
             <tr>
                 <td style="font-size: small">Time: {{booking?.appointmentTime}}</td>
+            </tr>
+            <tr>
+                <td style="font-size: small">Booking Status: {{booking?.status}}</td>
             </tr>
         </ngb-alert>
     </ng-container>
@@ -29,8 +33,6 @@
         ></app-professional-card>
     </ng-container>
     <ng-container *ngIf="doctorSide">
-        <p style="font-size: small">WhatsApp: <b>{{patient?.whatsAppNumber}}</b></p>
-        <p style="font-size: small">Booking Status: {{booking?.status}}</p>
         <ng-container *ngIf="!isPatientDetailsShown">
             <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Show Patient Details</button>    <br>
         </ng-container>
@@ -38,18 +40,16 @@
             <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Hide Patient Details</button>    <br>
         </ng-container>
         <br>
-        <ng-container *ngIf="isPatientDetailsShown && patient">
+        <ngb-alert *ngIf="isPatientDetailsShown && patient" [dismissible]="false">
             <p style="font-size: small">Patient Name: {{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</p>
             <p style="font-size: small">Patient Ref. No: {{patient?.userId}}</p>
             <p style="font-size: small">Contact number: {{patient?.contactNumber}}</p>
             <p style="font-size: small">Email: {{patient?.email}}</p>
-            <p style="font-size: small">Birthday: {{patient?.birthday}}</p>
             <p style="font-size: small">Age: {{patient?.age}}</p>
             <p style="font-size: small">Known Allergies: {{patient?.userAllergies}}</p>
-        </ng-container>
+        </ngb-alert>
     </ng-container>
-<!--        <mat-divider></mat-divider>-->
-        <br>
+    <br>
 
     <ng-container  *ngIf="!inProgress" >
     <button [disabled]="booking?.status === 'BOOKING_CANCELLED'"  style="width: 320px" color="primary" (click)="inProgress = !inProgress" mat-flat-button>Start Consultation</button>
@@ -64,7 +64,7 @@
     <br>
     <br>
 
-    <button style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>
+    <button disabled style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>
     <br>
     <br>
 

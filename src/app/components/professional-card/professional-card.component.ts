@@ -1,14 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Constants, currencyCodes} from '../../utils/Constants';
 import {HttpClient, HttpRequest} from '@angular/common/http';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-professional-card',
   templateUrl: './professional-card.component.html',
   styleUrls: ['./professional-card.component.css']
 })
-export class ProfessionalCardComponent implements OnInit {
-  @Input() professional: any;
+export class ProfessionalCardComponent implements OnInit, OnChanges {
+  @Input() professional: UserData;
   @Output() selectProfessional: EventEmitter<any> = new EventEmitter<any>();
 
   overTheDoctorCard = null;
@@ -20,7 +21,12 @@ export class ProfessionalCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setProfileImageSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.professional && changes.professional.currentValue) {
+      this.setProfileImageSource();
+    }
   }
 
   onMouseEnter($event: number) {
