@@ -27,10 +27,10 @@
                 return null;
             }
             function buildPayment() {
-                const value4 = localStorage.getItem('chargeAmount');
-                const value5 = localStorage.getItem('clientRef');
-                localStorage.removeItem('chargeAmount');
-                localStorage.removeItem('clientRef');
+                const value4 = sessionStorage.getItem('chargeAmount');
+                const value5 = sessionStorage.getItem('clientRef');
+                sessionStorage.removeItem('chargeAmount');
+                sessionStorage.removeItem('clientRef');
 
                 // Build the payment object
                 return {

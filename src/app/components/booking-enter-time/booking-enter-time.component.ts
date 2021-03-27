@@ -75,10 +75,10 @@ export class BookingEnterTimeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
     this.loadProfessionalData(this.selectedProfessionalUserId);
     this.loadAvailableAppointments(this.selectedProfessionalUserId);
-    this.loggedInUser = localStorage.getItem(LocalStorageKeys.loggedInUser);
+    this.loggedInUser = sessionStorage.getItem(LocalStorageKeys.loggedInUser);
   }
 
   getDate(apart: number) {
@@ -126,7 +126,7 @@ export class BookingEnterTimeComponent implements OnInit {
 
   navigateToPaymentOrLogIn() {
     // set the bookingId in localStorage
-    localStorage.setItem(LocalStorageKeys.selectedAppointmentId, this.selectedAppointmentId);
+    sessionStorage.setItem(LocalStorageKeys.selectedAppointmentId, this.selectedAppointmentId);
     if (!this.loggedInUser) {
       this.transitionType = TRANSITION_PAGE_TYPE.LOGIN_REDIRECT;
       this.showRedirectionMessage = true;

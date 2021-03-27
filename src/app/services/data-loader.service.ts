@@ -103,9 +103,9 @@ export class DataLoaderService {
         options.headers = options.headers.append('Content-Type', 'application/json');
 
         // get auth key for authorization
-        if (localStorage.getItem(Constants.EZ_MED_AUTH) != null) {
+        if (sessionStorage.getItem(Constants.EZ_MED_AUTH) != null) {
             let authKey = 'Bearer ';
-            authKey = authKey + localStorage.getItem(Constants.EZ_MED_AUTH);
+            authKey = authKey + sessionStorage.getItem(Constants.EZ_MED_AUTH);
             options.headers = options.headers.append('Authorization', authKey);
         }
         return options;
@@ -135,7 +135,7 @@ export class DataLoaderService {
 
     // logout from the app
     public logOut() {
-        localStorage.removeItem(Constants.EZ_MED_AUTH);
+        sessionStorage.removeItem(Constants.EZ_MED_AUTH);
     }
 
     public activateLoader(activate: boolean, MODAL_TYPE: string, disableClose?: boolean, callBackFunction?,

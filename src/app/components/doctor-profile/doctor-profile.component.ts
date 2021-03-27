@@ -49,14 +49,14 @@ export class DoctorProfileComponent implements OnInit {
     ngOnInit() {
         this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
 
-        this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+        this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
         // todo: resolve this commented
         // if (this.loggedInUser && this.loggedInUser.doctorData) {
         //   this.userData = this.loggedInUser.doctorData;
         // }
 
         // if not logged In this page should not be able to access
-        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
         if (this.loggedInUser) {
             this.userData = this.loggedInUser;
         }
@@ -96,7 +96,7 @@ export class DoctorProfileComponent implements OnInit {
                         // console.log(data.data);
                         // todo: check the following data[0]
                         // todo: data format from BE should be updated / changed
-                        localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+                        sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
                         this.toggleEditable(false);
 
                     } else if (data && data.status && data.status.code === -1) {

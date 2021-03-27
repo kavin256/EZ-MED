@@ -74,7 +74,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectFromSignUpIfLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
   }
 
   openSnackBar(message: string, action: string) {
@@ -92,14 +92,14 @@ export class SignUpComponent implements OnInit {
     this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user )
         .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-            localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+            sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
             if (data.data[0].doctor) {
-              localStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
+              sessionStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
               this.router.navigate(['doctor/dashboard']).then(r => {
                 location.reload();
               });
             } else if (!data.data[0].doctor) {
-              localStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
+              sessionStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
               this.router.navigate(['user/dashboard']).then(r => {
                 location.reload();
               });
@@ -221,9 +221,9 @@ export class SignUpComponent implements OnInit {
     this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
         .then((data: any) => {
           if (data && data.jwt) {
-            localStorage.setItem(Constants.EZ_MED_AUTH, data.jwt);
+            sessionStorage.setItem(Constants.EZ_MED_AUTH, data.jwt);
             if (this.dataHandlerService.loadUserData(obj.username, this.dataLoaderService, this.router)) {
-              const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+              const user = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
               if (user && user.doctor) {
                 this.router.navigate(['doctor/dashboard']).then(r => {
                   location.reload();

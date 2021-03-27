@@ -10,7 +10,7 @@
             </ng-container>
             <ng-container *ngIf="!doctorSide">
                 <tr>
-                    <h1 style="font-size: x-large" [ngClass]="booking?.status === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking?.patientData?.title}}. {{booking?.patientData?.firstName}} {{booking?.patientData?.lastName}}</h1>
+                    <h1 style="font-size: x-large" [ngClass]="booking?.status === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking?.doctorData?.title}}. {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}</h1>
                 </tr>
             </ng-container>
             <tr>
@@ -20,7 +20,7 @@
                 <td style="font-size: small">Date: {{booking?.appointmentDate}}</td>
             </tr>
             <tr>
-                <td style="font-size: small">Time: {{booking?.appointmentTime}}</td>
+                <td style="font-size: small">Time (24h): {{booking?.appointmentTime}}</td>
             </tr>
         </ngb-alert>
     </ng-container>

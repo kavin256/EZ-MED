@@ -47,8 +47,8 @@ export class LandingPageComponent implements OnInit, OnChanges {
   }
 
   isDoctorLoggedIn() {
-    if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      const loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      const loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
       return loggedInUser && loggedInUser.doctor;
     } else {
       return false;

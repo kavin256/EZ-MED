@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {APPOINTMENT_STATUS, DoctorType} from '../../utils/Constants';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {APPOINTMENT_STATUS} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {FormControl} from '@angular/forms';
 import {MatDatepickerInputEvent} from '@angular/material';
 import {AppointmentData} from '../../models/appointment-data';
@@ -17,11 +17,11 @@ import {AppointmentData} from '../../models/appointment-data';
 })
 export class AppointmentListComponent implements OnInit {
 
+  @ViewChild('paginator', null) paginator: MatPaginator;
   currentDate = new Date();
   RESULTS_PER_PAGE = 5;
   PAGINATION_START = 0;
   PAGINATION_END = this.RESULTS_PER_PAGE;
-
   bookings: AppointmentData [] = [];
 
   doctorSide = false;
@@ -66,10 +66,10 @@ export class AppointmentListComponent implements OnInit {
   ngOnInit() {
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
 
-    if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
       this.doctorSide = this.loggedInUser.doctor;
     }
 
@@ -78,7 +78,7 @@ export class AppointmentListComponent implements OnInit {
       this.toDate = this.setToDate(this.fromDate, this.doctorSide ? 0 : 7);
     }
 
-    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
     if (this.selectedProfessionalUserId) {
       this.loadProfessionalData(this.selectedProfessionalUserId);
     }
@@ -186,6 +186,7 @@ export class AppointmentListComponent implements OnInit {
     if (this.fromDate > this.toDate) {
       this.toDate = this.fromDate;
     }
+    if (this.paginator) { this.paginator.firstPage(); }
     this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
   }
 
@@ -194,7 +195,12 @@ export class AppointmentListComponent implements OnInit {
     if (this.fromDate > this.toDate) {
       this.fromDate = this.toDate;
     }
+    if (this.paginator) { this.paginator.firstPage(); }
     this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
+  }
+
+  getStatusName(status: APPOINTMENT_STATUS) {
+    return this.dataHandlerService.convertCamelCaseToSentence(APPOINTMENT_STATUS[status]);
   }
 }
 

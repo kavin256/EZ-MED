@@ -36,7 +36,7 @@ export class PaymentSuccessComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
     this.processPaymentRequest();
   }
 
@@ -58,7 +58,7 @@ export class PaymentSuccessComponent implements OnInit {
                 this.paymentResponseData.responseCode === '08'
             ) {
               this.isPaymentSuccessful = true;
-              localStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
+              sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
             } else {
               this.isPaymentSuccessful = false;
             }

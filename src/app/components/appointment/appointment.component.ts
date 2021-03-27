@@ -46,6 +46,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
               this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
                   .then((data: AppointmentData) => {
                       this.booking = data;
+                      // let time = new Time
                       this.patient = this.booking.patientData;
                       this.doctor = this.booking.doctorData;
                   }).catch((e) => {
@@ -53,12 +54,12 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                   }).finally(() => {});
           });
       // if not logged In this page should not be able to access
-      if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
-          this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+      if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+          this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
           this.doctorSide = this.loggedInUser.doctor;
       }
-      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
-      this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+      this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
     }
 
     userConsent() {

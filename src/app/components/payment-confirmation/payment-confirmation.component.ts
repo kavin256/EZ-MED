@@ -27,13 +27,13 @@ export class PaymentConfirmationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
     this.loadProfessionalData(this.selectedProfessionalUserId);
-    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
-    this.selectedAppointmentId = localStorage.getItem(LocalStorageKeys.selectedAppointmentId);
+    this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    this.selectedAppointmentId = sessionStorage.getItem(LocalStorageKeys.selectedAppointmentId);
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
   }
 
   private loadProfessionalData(selectedProfessionalUserId: any) {
@@ -53,18 +53,18 @@ export class PaymentConfirmationComponent implements OnInit {
 
   payment() {
     // todo: validate the price in the backend too !!!!
-    localStorage.setItem(LocalStorageKeys.chargeAmount, String(this.doctor.priceForAppointment) + '00');
-    localStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
+    sessionStorage.setItem(LocalStorageKeys.chargeAmount, String(this.doctor.priceForAppointment) + '00');
+    sessionStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
     if (
-        localStorage.getItem(LocalStorageKeys.clientRef)
-        && localStorage.getItem(LocalStorageKeys.chargeAmount)
-        && isNumber(parseInt(localStorage.getItem(LocalStorageKeys.chargeAmount), 10))
-        && parseInt(localStorage.getItem(LocalStorageKeys.chargeAmount), 10) > 0
+        sessionStorage.getItem(LocalStorageKeys.clientRef)
+        && sessionStorage.getItem(LocalStorageKeys.chargeAmount)
+        && isNumber(parseInt(sessionStorage.getItem(LocalStorageKeys.chargeAmount), 10))
+        && parseInt(sessionStorage.getItem(LocalStorageKeys.chargeAmount), 10) > 0
     ) {
       window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
     } else {
-      localStorage.removeItem('chargeAmount');
-      localStorage.removeItem('clientRef');
+      sessionStorage.removeItem('chargeAmount');
+      sessionStorage.removeItem('clientRef');
       window.alert('Something wrong with the payment amount!');
     }
   }

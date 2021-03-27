@@ -129,7 +129,7 @@ export class DataHandlerService {
   }
 
   logOut(router: Router) {
-    localStorage.clear();
+    sessionStorage.clear();
     location.reload();
     router.navigate(['signup']).then(r => {});
   }
@@ -152,8 +152,8 @@ export class DataHandlerService {
       .then((data: any) => {
         if (data && data.status && data.status.code === 1) {
           userData = data.data[0];
-          localStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(userData));
-          const user = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+          sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(userData));
+          const user = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
           if (user && user.doctor) {
             router.navigate(['doctor/dashboard']).then(r => {
               location.reload();
@@ -164,7 +164,7 @@ export class DataHandlerService {
             });
           }
         } else if (data && data.status && data.status.code === -1) {
-          localStorage.setItem(LocalStorageKeys.loggedInUser, null);
+          sessionStorage.setItem(LocalStorageKeys.loggedInUser, null);
           return null;
         }
       });

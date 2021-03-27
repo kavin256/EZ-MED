@@ -39,8 +39,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    if (localStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
     }
     this.firstName = null;
     if (this.loggedInUser) {
