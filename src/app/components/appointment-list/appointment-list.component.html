@@ -20,7 +20,7 @@
     <p style="color: crimson" *ngIf="bookings && bookings.length === 0">No bookings that matches the criteria!</p>
     <div *ngFor="let booking of bookings; let i=index">
         <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
-            <mat-card (click)="selectBooking(booking.appointmentId)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(booking.status)}">
+            <mat-card (click)="selectBooking(booking)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(booking.status)}">
                 <table>
                     <ng-container *ngIf="doctorSide">
                         <tr>

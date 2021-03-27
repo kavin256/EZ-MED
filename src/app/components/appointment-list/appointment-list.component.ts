@@ -93,6 +93,10 @@ export class AppointmentListComponent implements OnInit {
     }
   }
 
+  isDummy(status: APPOINTMENT_STATUS) {
+    return status === APPOINTMENT_STATUS.DUMMY;
+  }
+
   private loadProfessionalData(selectedProfessionalUserId: any) {
     this.dataHandlerService.loadUserDataUsingUserId(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
@@ -114,9 +118,11 @@ export class AppointmentListComponent implements OnInit {
         });
   }
 
-  selectBooking($event: number) {
-    this.selectedBookingId = $event;
-    this.router.navigate(['appointment'], { queryParams: { id: this.selectedBookingId } }).then(r => {});
+  selectBooking($event: AppointmentData) {
+    if (!this.isDummy($event.status)) {
+      this.selectedBookingId = $event.appointmentId;
+      this.router.navigate(['appointment'], { queryParams: { id: this.selectedBookingId } }).then(r => {});
+    }
   }
 
   setToDate(fromDate: Date, days) {

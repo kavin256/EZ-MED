@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
+import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {APPOINTMENT_STATUS, Constants, MODAL_TYPES} from '../../utils/Constants';
