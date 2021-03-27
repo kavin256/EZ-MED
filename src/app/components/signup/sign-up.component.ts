@@ -60,6 +60,7 @@ export class SignUpComponent implements OnInit {
   isIncompleteErrorAvailable = false;
   passwordMissMatch = false;
   titles = PatientTitles;
+  whatsappAndPhoneAreSame = false;
 
   constructor(
       private _snackBar: MatSnackBar,
@@ -250,5 +251,12 @@ export class SignUpComponent implements OnInit {
         .finally(() => {
           this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
+  }
+
+  setSimilarity() {
+    this.whatsappAndPhoneAreSame = !this.whatsappAndPhoneAreSame;
+    if (this.whatsappAndPhoneAreSame) {
+      this.contactNumber = this.whatsAppNumber;
+    }
   }
 }

@@ -10,29 +10,30 @@
         <ng-container *ngIf="!paymentResponseData">
             <img src="./assets/img/pageLoadError.png" width="300px"/>
         </ng-container>
-        <br>
-        <br>
         <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
-<!--        <ng-container>-->
             <div align="left">
-                <p>Card No.: {{paymentResponseData?.cardNo}}</p>
-                <p>Name on card: {{paymentResponseData?.cardHolder}}</p>
-                <p>Amount: {{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>
-                <p>Comment: {{paymentResponseData?.respTxt }}</p>
-                <p>Ref. number: {{paymentResponseData?.txnRef}}</p>
+                <span>Card No.: {{paymentResponseData?.cardNo}}</span><br>
+                <span>Name on card: {{paymentResponseData?.cardHolder}}</span><br>
+                <span>Amount: {{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</span><br>
+                <span>Comment: {{paymentResponseData?.respTxt }}</span><br>
+                <span>Ref. number: {{paymentResponseData?.txnRef}}</span>
             </div>
+            <br>
+            <ngb-alert align="left" [dismissible]="false">
+                <span>Appointment Id: {{paymentResponseData?.appointment?.appointmentId}}</span><br>
+                <span>Professional: {{paymentResponseData?.appointment?.doctorData?.title}}. {{paymentResponseData?.appointment?.doctorData?.firstName}} {{paymentResponseData?.appointment?.doctorData?.lastName}}</span><br>
+                <span>Date: {{paymentResponseData?.appointment?.appointmentDate}}</span><br>
+                <span>Time: {{getTime(paymentResponseData?.appointment?.appointmentTime)}}</span>
+            </ngb-alert>
         </ng-container>
         <ng-container *ngIf="paymentResponseData && !isPaymentSuccessful">
-<!--        <ng-container>-->
             <div align="left">
-                <p>Card No.: {{paymentResponseData?.cardNo}}</p>
-                <p>Name on card: {{paymentResponseData?.cardHolder}}</p>
-<!--                <p>Amount: {{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>-->
-                <p>Reason: {{paymentResponseData?.respTxt}}</p>
-                <p>Ref. number: {{paymentResponseData?.txnRef}}</p>
+                <span>Card No: {{paymentResponseData?.cardNo}}</span><br>
+                <span>Name on card: {{paymentResponseData?.cardHolder}}</span><br>
+                <span>Reason: {{paymentResponseData?.respTxt}}</span><br>
+                <span>Ref. number: {{paymentResponseData?.txnRef}}</span>
             </div>
         </ng-container>
-        <br>
         <br>
         <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
             <button (click)="goToBooking()" mat-raised-button color="secondary" style="width: 240px" >Go to my bookings</button>
@@ -40,7 +41,5 @@
             <br>
         </ng-container>
         <button (click)="goToDashboard()" mat-raised-button color="secondary" style="width: 240px" >Go to my profile</button>
-
     </div>
-
 </div>

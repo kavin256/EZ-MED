@@ -58,6 +58,7 @@ export class AppointmentListComponent implements OnInit {
   date = new FormControl(new Date());
   fromDate = this.date.value;
   toDate: Date;
+  checked = 1;
 
   constructor(
       private router: Router,
@@ -207,6 +208,10 @@ export class AppointmentListComponent implements OnInit {
 
   getTime(appointmentTime: Time) {
     return moment(appointmentTime, ['HH.mm.ss']).format('hh:mm a');
+  }
+
+  setFilter($number: number) {
+    this.checked = $number;
   }
 }
 

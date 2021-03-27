@@ -89,16 +89,23 @@
                         <br>
                     </div>
                     <div>
-                        <mat-form-field style="width: 240px" appearance="legacy">
-                            <mat-label>Contact Number<br>(Could be the WhatsApp Number)</mat-label>
-                            <br>
-                            <input required matInput [(ngModel)]='contactNumber' [formControl]="contactNumberFormControl">
-                        </mat-form-field>
-                    </div>
-                    <div>
                         <mat-form-field style="width: 240px"  appearance="legacy">
                             <mat-label>WhatsApp Number</mat-label>
                             <input required matInput #input7 [(ngModel)]='whatsAppNumber' [formControl]="whatsAppNumberFormControl">
+                        </mat-form-field>
+                    </div>
+                    <ng-container *ngIf="whatsAppNumber && whatsAppNumber !== ''">
+                        <ngb-alert [dismissible]="false" style="width: 250px; max-height: 80px">
+                            <section class="example-section">
+                                <mat-checkbox class="example-margin" (change)="setSimilarity()"><p style="font-size: small">Fill phone number with<br>WhatsApp number</p></mat-checkbox>
+                            </section>
+                        </ngb-alert>
+                    </ng-container>
+                    <div>
+                        <mat-form-field style="width: 240px" appearance="legacy">
+                            <mat-label>Phone Number<br>(Could be the WhatsApp No.)</mat-label>
+                            <br>
+                            <input required matInput [(ngModel)]='contactNumber' [formControl]="contactNumberFormControl">
                         </mat-form-field>
                     </div>
                     <div [hidden]="isDoctor">

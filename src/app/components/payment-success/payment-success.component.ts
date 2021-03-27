@@ -8,6 +8,8 @@ import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {HttpClient} from '@angular/common/http'
+import {Time} from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-payment-success',
@@ -78,5 +80,9 @@ export class PaymentSuccessComponent implements OnInit {
   goToBooking() {
     this.router.navigate(['appointments']).then(r => {
     });
+  }
+
+  getTime(appointmentTime: Time) {
+    return moment(appointmentTime, ['HH.mm.ss']).format('hh:mm a');
   }
 }
