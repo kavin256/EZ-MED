@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "EXMED-FE": {
+    "EZMED-FE": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/EXMED-FE",
+            "outputPath": "dist/EZMED-FE",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "EXMED-FE:build"
+            "browserTarget": "EZMED-FE:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "EXMED-FE:build:production"
+              "browserTarget": "EZMED-FE:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "EXMED-FE:build"
+            "browserTarget": "EZMED-FE:build"
           }
         },
         "test": {
@@ -119,16 +119,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "EXMED-FE:serve"
+            "devServerTarget": "EZMED-FE:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "EXMED-FE:serve:production"
+              "devServerTarget": "EZMED-FE:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "EXMED-FE"
+  "defaultProject": "EZMED-FE"
 }

@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'EXMED-FE'`, () => {
+  it(`should have as title 'EZMED-FE'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('EXMED-FE');
+    expect(app.title).toEqual('EZMED-FE');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('EXMED-FE app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('EZMED-FE app is running!');
   });
 });
