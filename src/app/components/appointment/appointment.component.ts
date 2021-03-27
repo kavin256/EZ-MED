@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AppointmentData} from '../../models/appointment-data';
 import {Subscription} from 'rxjs';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointment',
@@ -16,6 +17,7 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 })
 export class AppointmentComponent implements OnInit, OnDestroy {
 
+    appointmentTime: string;
     isConfirmationActive = false;
     changeRequestSent = false;
     doctorSide = false;
@@ -47,6 +49,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                   .then((data: AppointmentData) => {
                       this.booking = data;
                       // let time = new Time
+                      this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
                       this.patient = this.booking.patientData;
                       this.doctor = this.booking.doctorData;
                   }).catch((e) => {

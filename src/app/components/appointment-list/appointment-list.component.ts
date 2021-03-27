@@ -9,6 +9,8 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {FormControl} from '@angular/forms';
 import {MatDatepickerInputEvent} from '@angular/material';
 import {AppointmentData} from '../../models/appointment-data';
+import {Time} from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointment-list',
@@ -201,6 +203,10 @@ export class AppointmentListComponent implements OnInit {
 
   getStatusName(status: APPOINTMENT_STATUS) {
     return this.dataHandlerService.convertCamelCaseToSentence(APPOINTMENT_STATUS[status]);
+  }
+
+  getTime(appointmentTime: Time) {
+    return moment(appointmentTime, ['HH.mm.ss']).format('hh:mm a');
   }
 }
 

@@ -35,7 +35,7 @@
                         </ng-container>
 
                         <tr>
-                            <td style="font-size: small">{{booking?.appointmentDate}} / {{booking?.appointmentTime}} (24h)</td>
+                            <td style="font-size: small">{{booking?.appointmentDate}} / {{getTime(booking?.appointmentTime)}}</td>
                         </tr>
                         <tr>
                             <td style="font-size: small">Status: {{getStatusName(booking?.status)}}</td>
