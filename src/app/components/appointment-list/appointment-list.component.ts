@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {DoctorType} from '../../utils/Constants';
+import {Component, OnInit} from '@angular/core';
+import {APPOINTMENT_STATUS, DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {PageEvent} from '@angular/material/paginator';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {MatDatepickerInputEvent} from '@angular/material';
 import {AppointmentData} from '../../models/appointment-data';
 
@@ -23,92 +23,11 @@ export class AppointmentListComponent implements OnInit {
   PAGINATION_END = this.RESULTS_PER_PAGE;
 
   bookings: AppointmentData [] = [];
-  //   {
-  //     bookingId: 2387,
-  //     doctorId: '76531',
-  //     date: '03-04-2020',
-  //     doctorName: 'Dr. John Doe',
-  //     bookingStatus: BookingStatus.BOOKING_COMPLETED
-  //   },
-  //   {
-  //     bookingId: 1196,
-  //     doctorId: '65456',
-  //     date: '18-05-2020',
-  //     doctorName: 'Dr. Sumanasiri',
-  //     bookingStatus: BookingStatus.BOOKING_CANCELLED
-  //   },
-  //   {
-  //     bookingId: 5729,
-  //     doctorId: '76537',
-  //     date: '02-05-2020',
-  //     doctorName: 'Dr. Tom Harrison',
-  //     bookingStatus: BookingStatus.BOOKING_NOT_STARTED
-  //   }
-  // ];
 
   doctorSide = false;
-  titleBooking = 'BOOKING';
   selectedBookingId = null;
   showBookings = 'all'; // 'new' or 'all'
-
-  doctor = {
-    id: 2,
-    name: 'Dr. Punya Anupama',
-    professionalType: DoctorType.GEN,
-    bio: 'MBBS [COLOMBO](1998)',
-    specialities: [
-      'Consultant Pathologist'
-    ],
-    consultationPrice: 'Rs. 1500.00'
-  };
-
-  booking = {
-    bookingId: 2387,
-    doctorId: '4352545235',
-    patientId: '76531',
-    doctorName: 'Dr. Tim Cook',
-    patientName: 'John Doe',
-    patientAge: 29,
-    skypeID: 'kafkjnf34',
-    phoneNumber: '0773092511',
-    bookingStatus: BookingStatus.BOOKING_NOT_STARTED,
-    messageThread: [
-      {
-        sender: 'patient',
-        message: 'Hi doctor, I have a headache and a cough.'
-      },
-      {
-        sender: 'doctor',
-        message: 'Hi John, do you have any allergies?'
-      },
-      {
-        sender: 'patient',
-        message: 'I\'m allergic to panadol'
-      },
-      {
-        sender: 'doctor',
-        message: 'Thanks.'
-      },
-      {
-        sender: 'patient',
-        message: 'THANK YOU DOC!.'
-      },
-      {
-        sender: 'patient',
-        message: 'Can you send me a prescription btw?'
-      },
-      {
-        sender: 'doctor',
-        message: 'Sure. I will send you.'
-      },
-      {
-        sender: 'patient',
-        message: 'Awesome. Thanks'
-      }
-    ],
-    bookingPrice: 'Rs. 2000.00',
-    doctorCharge: 'Rs. 1800.00'
-  };
+  doctor: UserData;
   isConfirmationActive = false;
   changeRequestSent = false;
 
@@ -137,8 +56,6 @@ export class AppointmentListComponent implements OnInit {
   date = new FormControl(new Date());
   fromDate = this.date.value;
   toDate: Date;
-  logInError = 'No bookings found that matches the criteria';
-
 
   constructor(
       private router: Router,
@@ -158,7 +75,7 @@ export class AppointmentListComponent implements OnInit {
 
     // setting the to date of the default filter dates
     if (this.loggedInUser) {
-      this.toDate = this.setToDate(this.fromDate, this.doctorSide ? 1 : 7);
+      this.toDate = this.setToDate(this.fromDate, this.doctorSide ? 0 : 7);
     }
 
     this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
@@ -210,27 +127,22 @@ export class AppointmentListComponent implements OnInit {
 
   getColor($event) {
     switch ($event) {
-      case BookingStatus.BOOKING_CANCELLED:
+      case APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR || APPOINTMENT_STATUS.CANCELLED_BY_PATIENT:
         return Colors.BOOKING_CANCELLED;
-      case BookingStatus.BOOKING_NOT_STARTED:
+      case APPOINTMENT_STATUS.NEW:
         return Colors.BOOKING_NOT_STARTED;
-      case BookingStatus.BOOKING_COMPLETED:
+      case APPOINTMENT_STATUS.COMPLETED:
         return Colors.BOOKING_COMPLETED;
-      case BookingStatus.BOOKING_CURRENT:
+      case APPOINTMENT_STATUS.IN_PROGRESS:
         return Colors.BOOKING_CURRENT;
       default:
-        return Colors.BOOKING_NOT_STARTED;
+        return Colors.BOOKING_DUMMY;
     }
   }
 
   save() {
     this.isConfirmationActive = false;
     this.changeRequestSent = true;
-  }
-
-  cancel() {
-    this.isConfirmationActive = false;
-    this.changeRequestSent = false;
   }
 
   selectPrescription(prescription: string[]) {
@@ -265,25 +177,25 @@ export class AppointmentListComponent implements OnInit {
 
   startDateChange($event: MatDatepickerInputEvent<any>) {
     this.fromDate = $event.value;
+    if (this.fromDate > this.toDate) {
+      this.toDate = this.fromDate;
+    }
     this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
   }
 
   endDateChange($event: MatDatepickerInputEvent<Date>) {
     this.toDate = $event.value;
+    if (this.fromDate > this.toDate) {
+      this.fromDate = this.toDate;
+    }
     this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
   }
-}
-
-export enum BookingStatus {
-  BOOKING_CANCELLED = 'BOOKING_CANCELLED',
-  BOOKING_COMPLETED = 'BOOKING_COMPLETED',
-  BOOKING_CURRENT = 'BOOKING_CURRENT',
-  BOOKING_NOT_STARTED = 'BOOKING_NOT_STARTED'
 }
 
 export enum Colors {
   BOOKING_CANCELLED = '#ff6666',
   BOOKING_COMPLETED = '#e6e6e6',
   BOOKING_CURRENT = '#99ccff',
-  BOOKING_NOT_STARTED = '#d5ff80'
+  BOOKING_NOT_STARTED = '#d5ff80',
+  BOOKING_DUMMY = '#727171'
 }

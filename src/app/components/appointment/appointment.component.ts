@@ -1,14 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {DoctorType} from '../../utils/Constants';
+import {APPOINTMENT_STATUS, Constants, MODAL_TYPES} from '../../utils/Constants';
 import {UserData} from '../../models/user-data';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BookingStatus} from '../appointment-list/appointment-list.component';
 import {AppointmentData} from '../../models/appointment-data';
-import {SubscriptionLog} from 'rxjs/internal/testing/SubscriptionLog';
 import {Subscription} from 'rxjs';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-appointment',
@@ -17,7 +16,6 @@ import {Subscription} from 'rxjs';
 })
 export class AppointmentComponent implements OnInit, OnDestroy {
 
-    inProgress = false;
     isConfirmationActive = false;
     changeRequestSent = false;
     doctorSide = false;
@@ -29,6 +27,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     isPatientDetailsShown = true;
     selectedProfessionalUserId: string;
     sub = new Subscription();
+    previousStatus: APPOINTMENT_STATUS;
 
     constructor(
       private router: Router,
@@ -60,8 +59,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       }
       this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(localStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
       this.selectedProfessionalUserId = localStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
-
-      // this.loadProfessionalData(this.selectedProfessionalUserId);
     }
 
     userConsent() {
@@ -79,20 +76,67 @@ export class AppointmentComponent implements OnInit, OnDestroy {
           });
     }
 
-    cancel() {
-      // this.updateSchedule();
-      this.isConfirmationActive = false;
-      this.changeRequestSent = true;
-      this.booking.status = BookingStatus.BOOKING_CANCELLED;
-    }
-
     dismiss() {
       this.isConfirmationActive = false;
       this.changeRequestSent = false;
     }
 
     goBack() {
-        this.router.navigate(['appointments']).then(r => {
+        this.router.navigate(['appointments']).then(r => {});
+    }
+
+    cancel() {
+        this.isConfirmationActive = false;
+        this.changeRequestSent = true;
+        this.previousStatus = this.booking.status;
+        if (this.doctorSide) {
+          this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR;
+        } else {
+          this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_PATIENT;
+        }
+        this.updateAppointmentStatus();
+    }
+
+    start() {
+        this.previousStatus = this.booking.status;
+        this.booking.status = APPOINTMENT_STATUS.IN_PROGRESS;
+        this.updateAppointmentStatus();
+    }
+
+    end() {
+        this.previousStatus = this.booking.status;
+        this.booking.status = APPOINTMENT_STATUS.COMPLETED;
+        this.updateAppointmentStatus();
+    }
+
+    isNew(status: APPOINTMENT_STATUS) {
+        return status === APPOINTMENT_STATUS.NEW;
+    }
+
+    isInProgress(status: APPOINTMENT_STATUS) {
+        return status === APPOINTMENT_STATUS.IN_PROGRESS;
+    }
+
+    getStatusName(status: APPOINTMENT_STATUS) {
+        return this.dataHandlerService.convertCamelCaseToSentence(APPOINTMENT_STATUS[status]);
+    }
+
+    private updateAppointmentStatus() {
+        this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
+        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS;
+        this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, this.booking)
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1) {
+                    this.booking.status = data.data[0];
+                } else if (data && data.status && data.status.code === -1) {
+                    this.booking.status = this.previousStatus;
+                    alert('Cannot update the appointment status right now. Please check your internet connection!');
+                }
+            }).catch(() => {
+                this.booking.status = this.previousStatus;
+                alert('Cannot update the appointment status right now. Please check your internet connection!');
+            }).finally(() => {
+                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
     }
 }

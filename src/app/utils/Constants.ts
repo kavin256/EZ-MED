@@ -10,6 +10,7 @@ export enum Constants {
     UPLOAD_USER_IMAGE = '/image/upload/',
     DOWNLOAD_USER_IMAGE = '/image/download/',
     USER_APPOINTMENTS = '/appointment/appointments/',
+    USER_APPOINTMENT_SET_STATUS = '/appointment/set-status',
     APPOINTMENT_BY_ID = '/appointment/appointmentById/',
     ADD_APPOINTMENT = '/appointment/add-appointment/',
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
@@ -70,6 +71,15 @@ export enum DoctorType {
     COUN = 'Counselor',
     GEN = 'General Practitioner',
     OTH = 'Other Medical Practitioner'
+}
+
+export enum APPOINTMENT_STATUS {
+    DUMMY,
+    NEW ,
+    IN_PROGRESS,
+    COMPLETED,
+    CANCELLED_BY_PATIENT,
+    CANCELLED_BY_DOCTOR
 }
 
 export const specializationsCON = [

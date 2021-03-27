@@ -58,7 +58,7 @@ export class DataLoaderService {
     // make a PUT request
     public put<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey, data: any) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        if (this.dataStore.has(dataKey, true)) {
+        if (dataKey && this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
         return new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ export class DataLoaderService {
                 ( data) => {
                     resolve(data);
                     // @ts-ignore
-                    this.dataStore.set(dataKey, data.data, true);
+                    if (dataKey) {this.dataStore.set(dataKey, data.data, true)}
                 });
         });
     }

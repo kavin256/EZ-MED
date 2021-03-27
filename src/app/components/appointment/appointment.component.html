@@ -22,9 +22,6 @@
             <tr>
                 <td style="font-size: small">Time: {{booking?.appointmentTime}}</td>
             </tr>
-            <tr>
-                <td style="font-size: small">Booking Status: {{booking?.status}}</td>
-            </tr>
         </ngb-alert>
     </ng-container>
     <ng-container *ngIf="!doctorSide">
@@ -49,21 +46,23 @@
             <p style="font-size: small">Known Allergies: {{patient?.userAllergies}}</p>
         </ngb-alert>
     </ng-container>
-    <br>
 
-    <ng-container  *ngIf="!inProgress" >
-    <button [disabled]="booking?.status === 'BOOKING_CANCELLED'"  style="width: 320px" color="primary" (click)="inProgress = !inProgress" mat-flat-button>Start Consultation</button>
-<!--    <button [disabled]="booking?.status !== 'BOOKING_NOT_STARTED'" style="width: 320px" color="primary" mat-flat-button>Start Consultation</button>    <br>-->
+    <ngb-alert style="height: 42px;outline-color: white ;background-color: yellow" [dismissible]="false">
+        <p style="font-size: small">Booking Status: {{getStatusName(booking?.status)}}</p>
+    </ngb-alert>
+    <ng-container *ngIf="doctorSide">
+        <ng-container *ngIf="!isInProgress(booking?.status)" >
+            <button [disabled]="!isNew(booking?.status)" style="width: 320px" color="primary" (click)="start()" mat-flat-button>Start Consultation</button>
+            <br>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="isInProgress(booking?.status)">
+            <button (click)="end()" color="warn" style="width: 320px" mat-stroked-button>End Consultation</button>
+            <br>
+            <br>
+        </ng-container>
+
     </ng-container>
-    <ng-container *ngIf="inProgress">
-
-    <button [disabled]="booking?.status === 'BOOKING_CANCELLED'" (click)="inProgress = !inProgress" color="warn" style="width: 320px" mat-stroked-button>
-        End Consultation</button>
-<!--    <button [disabled]="booking?.status === 'BOOKING_NOT_STARTED' || booking?.status === 'BOOKING_CANCELLED'" style="width: 320px" mat-stroked-button>End Consultation</button>-->
-    </ng-container>
-    <br>
-    <br>
-
     <button disabled style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>
     <br>
     <br>
@@ -87,13 +86,13 @@
 
         <br>
     </ng-container>
-    <button *ngIf="!isConfirmationActive" [disabled]="booking?.status === 'BOOKING_CANCELLED'" (click)="userConsent()" style="width: 320px" mat-flat-button color="warn" >Cancel Booking</button>
+    <button [disabled]="!isNew(booking?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()" style="width: 320px" mat-flat-button color="warn" >Cancel Booking</button>
 
     <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
     <button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button  color="warn">Cancel Booking</button>
     <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="dismiss()" style="width: 150px" mat-raised-button color="secondary">Dismiss</button></span>
     <br>
-    <ng-container *ngIf="isConfirmationActive">
+    <ng-container *ngIf="isConfirmationActive && !doctorSide">
         <br>
         <ngb-alert [dismissible]="false">
             <strong>Note:</strong> You will not get any refund if you cancel this appointment!

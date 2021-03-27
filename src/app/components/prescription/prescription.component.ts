@@ -1,12 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DoctorType} from '../../utils/Constants';
+import {APPOINTMENT_STATUS, DoctorType} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {$} from 'protractor';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
-import {BookingStatus} from '../appointment-list/appointment-list.component';
 
 @Component({
   selector: 'app-prescription',
@@ -40,7 +39,7 @@ export class PrescriptionComponent implements OnInit {
     patientName: 'John Doe',
     skypeID: 'kafkjnf34',
     phoneNumber: '0773092511',
-    bookingStatus: BookingStatus.BOOKING_NOT_STARTED,
+    bookingStatus: APPOINTMENT_STATUS.NEW,
     messageThread: [
       {
         sender: 'patient',
