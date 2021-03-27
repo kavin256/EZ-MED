@@ -1,10 +1,4 @@
 <div class="mat-card-style">
-    <mat-form-field *ngIf="doctorScheduleData"  style="width: 240px"  appearance="legacy">
-        <mat-label>Average Time For Consultation (minutes):</mat-label>
-        <input required onlyNumber matInput #input7 [(ngModel)]='doctorScheduleData.averageTimeForAppointment'>
-    </mat-form-field>
-    <br>
-    <br>
 
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion *ngIf="doctorScheduleData">
@@ -35,8 +29,13 @@
             <br>
         </div>
     </mat-accordion>
-
     <br>
+    <mat-form-field *ngIf="doctorScheduleData"  style="width: 240px"  appearance="legacy">
+        <mat-label>Average Time For Consultation (minutes):</mat-label>
+        <input required onlyNumber matInput #input7 [(ngModel)]='doctorScheduleData.averageTimeForAppointment'>
+    </mat-form-field>
+    <br>
+
     <ng-container *ngIf="availableForAppointment">
         <p style="font-size: small; color: crimson">
             <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated from the 7th day onwards. Because the already booked appointments will be affected.<br>

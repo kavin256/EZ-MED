@@ -35,6 +35,20 @@ export class DoctorProfileComponent implements OnInit {
         {value: DoctorType.OTH}
     ];
 
+    categories = [
+        {
+            category: DoctorType.CON
+        },
+        {
+            category: DoctorType.GEN
+        },
+        {
+            category: DoctorType.COUN
+        },
+        {
+            category: DoctorType.OTH
+        }
+    ];
   specializationsCON;
 
     constructor(

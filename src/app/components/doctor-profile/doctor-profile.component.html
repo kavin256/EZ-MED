@@ -25,10 +25,8 @@
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Professional Level</mat-label>
             <mat-select required [(value)]="userData.professionalType">
-                <ng-container *ngFor="let professionalType of doctorTypes" >
-                    <mat-option value="{{professionalType.value}}">
-                        {{professionalType.value}}
-                    </mat-option>
+                <ng-container *ngFor="let category of categories">
+                    <mat-option value="{{category.category}}">{{category.category}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
