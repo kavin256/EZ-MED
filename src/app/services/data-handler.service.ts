@@ -182,12 +182,15 @@ export class DataHandlerService {
     });
   }
 
-  loadUserAppointments(userId: string, dataLoaderService: DataLoaderService, startDate: string, endDate: string): any {
+  loadUserAppointments(userId: string, dataLoaderService: DataLoaderService, startDate: string, endDate: string,
+                       dummyAvailable?: boolean, completedAvailable?: boolean ): any {
     return new Promise(resolve => {
       const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENTS + userId;
       let httpParams = new HttpParams();
       httpParams = httpParams.append('startDate', startDate);
       httpParams = httpParams.append('endDate', endDate);
+      httpParams = httpParams.append('dummyAvailable', String(dummyAvailable));
+      httpParams = httpParams.append('completedAvailable', String(completedAvailable));
       dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
           .then((data: any) => {
             if (data.data && data.data[0]) {

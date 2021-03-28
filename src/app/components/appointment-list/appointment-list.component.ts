@@ -59,6 +59,7 @@ export class AppointmentListComponent implements OnInit {
   fromDate = this.date.value;
   toDate: Date;
   checked = 1;
+  completedAvailable;
 
   constructor(
       private router: Router,
@@ -74,6 +75,7 @@ export class AppointmentListComponent implements OnInit {
     if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
       this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
       this.doctorSide = this.loggedInUser.doctor;
+      this.completedAvailable = !this.doctorSide;
     }
 
     // setting the to date of the default filter dates
@@ -114,8 +116,10 @@ export class AppointmentListComponent implements OnInit {
     const fromDateObj = this.dataHandlerService.convertDateFormat(fromDate);
     const toDateFormatted = toDateObj.yyyy + '-' + toDateObj.mm + '-' + toDateObj.dd;
     const fromDateFormatted = fromDateObj.yyyy + '-' + fromDateObj.mm + '-' + fromDateObj.dd;
+    const dummyAvailable = false;
 
-    this.dataHandlerService.loadUserAppointments(userid, this.dataLoaderService, fromDateFormatted, toDateFormatted)
+    this.dataHandlerService.loadUserAppointments(userid, this.dataLoaderService, fromDateFormatted, toDateFormatted,
+        dummyAvailable, this.completedAvailable)
         .then((data: any) => {
           this.bookings = data;
         });
@@ -212,6 +216,12 @@ export class AppointmentListComponent implements OnInit {
 
   setFilter($number: number) {
     this.checked = $number;
+  }
+
+  toggleCompletedAvailable() {
+    this.completedAvailable = !this.completedAvailable;
+    if (this.paginator) { this.paginator.firstPage(); }
+    this.loadUserAppointments(this.loggedInUser.userId, this.fromDate, this.toDate);
   }
 }
 

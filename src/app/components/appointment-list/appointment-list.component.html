@@ -14,14 +14,11 @@
         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
         <mat-datepicker #picker3></mat-datepicker>
     </mat-form-field>
-<!--    <ng-container *ngIf="doctorSide">-->
-<!--        <br>-->
-<!--        <mat-radio-group aria-label="Select an option">-->
-<!--            <mat-radio-button (change)="setFilter(1)" checked value="1">Hide free slots</mat-radio-button>-->
-<!--            <mat-radio-button (change)="setFilter(2)"  value="2">Show All</mat-radio-button>-->
-<!--        </mat-radio-group>-->
-<!--        <br>-->
-<!--    </ng-container>-->
+    <ng-container>
+        <section class="example-section">
+            <mat-checkbox [checked]="completedAvailable" (change)="toggleCompletedAvailable()" class="example-margin">Include completed appointments</mat-checkbox>
+        </section>
+    </ng-container>
     <br>
     <p style="font-size: large;">Bookings:</p>
     <p style="max-width: 320px;color: crimson" *ngIf="bookings && bookings.length === 0">No active bookings that matches the criteria!</p>
