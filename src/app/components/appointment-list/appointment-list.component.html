@@ -14,20 +14,20 @@
         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
         <mat-datepicker #picker3></mat-datepicker>
     </mat-form-field>
-    <ng-container *ngIf="doctorSide">
-        <br>
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button (change)="setFilter(1)" checked value="1">Hide free slots</mat-radio-button>
-            <mat-radio-button (change)="setFilter(2)"  value="2">Show All</mat-radio-button>
-        </mat-radio-group>
-        <br>
-    </ng-container>
+<!--    <ng-container *ngIf="doctorSide">-->
+<!--        <br>-->
+<!--        <mat-radio-group aria-label="Select an option">-->
+<!--            <mat-radio-button (change)="setFilter(1)" checked value="1">Hide free slots</mat-radio-button>-->
+<!--            <mat-radio-button (change)="setFilter(2)"  value="2">Show All</mat-radio-button>-->
+<!--        </mat-radio-group>-->
+<!--        <br>-->
+<!--    </ng-container>-->
     <br>
     <p style="font-size: large;">Bookings:</p>
-    <p style="color: crimson" *ngIf="bookings && bookings.length === 0">No bookings that matches the criteria!</p>
+    <p style="max-width: 320px;color: crimson" *ngIf="bookings && bookings.length === 0">No active bookings that matches the criteria!</p>
     <ng-container>
         <div *ngFor="let booking of bookings; let i=index">
-            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END && !(booking.status === 0 && checked === 1)">
+            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
                 <mat-card (click)="selectBooking(booking)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(booking.status)}">
                     <table>
                         <ng-container *ngIf="doctorSide">

@@ -14,6 +14,12 @@ import {isNumber} from 'util';
 })
 export class PaymentConfirmationComponent implements OnInit {
 
+  // charges
+  taxAmount = 0;
+  serviceCharge = 0;
+  serviceChargeRate = 0.1;
+  totalCharge = 0;
+
   doctor: UserData;
   isScheduleVisible = false;
   selectedAppointmentId = '';
@@ -40,6 +46,10 @@ export class PaymentConfirmationComponent implements OnInit {
     this.dataHandlerService.loadUserDataUsingUserId(selectedProfessionalUserId, this.dataLoaderService)
         .then((data: any) => {
           this.doctor = data;
+
+          // calculate charging amounts
+          this.serviceCharge = parseInt(this.doctor.priceForAppointment, 10) * this.serviceChargeRate;
+          this.totalCharge = parseInt(this.doctor.priceForAppointment, 10) + this.serviceCharge;
         });
   }
 
@@ -52,8 +62,8 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   payment() {
-    // todo: validate the price in the backend too !!!!
-    sessionStorage.setItem(LocalStorageKeys.chargeAmount, String(this.doctor.priceForAppointment) + '00');
+    // todo: get the charge values from backend !!!!
+    sessionStorage.setItem(LocalStorageKeys.chargeAmount, (this.totalCharge * 100).toString());
     sessionStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
     if (
         sessionStorage.getItem(LocalStorageKeys.clientRef)

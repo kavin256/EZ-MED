@@ -1,11 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {DataLoaderService} from '../../services/data-loader.service';
-import {AuthModel} from '../../models/auth-model';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
-import {RequestOptions} from '../../models/request-options';
-import {AuthResponse} from '../../models/auth-response';
-import {Constants} from '../../utils/Constants';
+import {LocalStorageKeys} from '../../services/data-store.service';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,11 +13,14 @@ export class LandingPageComponent implements OnInit, OnChanges {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
 
-  constructor(private router: Router,
-              private dataLoader: DataLoaderService,
-              private dataStore: DataStoreService) {}
+  loggedInUser: UserData = null;
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
+    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -31,19 +30,9 @@ export class LandingPageComponent implements OnInit, OnChanges {
   }
 
   goToSearchPage() {
-    this.router.navigate(['searchProfessionals']).then(r => {
-    });
-    //
-    // const obj: AuthModel = new AuthModel();
-    // obj.username = 'foo12345';
-    // obj.password = 'foo';
-    // this.dataLoader.login<AuthResponse>(Constants.API_BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
-    //
-    // this.dataStore.get(DataKey.authKey, true).subscribe(
-    //     (data) => {
-    //       console.log(data);
-    //     }
-    // );
+    if (!this.isDoctorLoggedIn()) {
+      this.router.navigate(['searchProfessionals']).then(r => {});
+    }
   }
 
   isDoctorLoggedIn() {
@@ -52,6 +41,19 @@ export class LandingPageComponent implements OnInit, OnChanges {
       return loggedInUser && loggedInUser.doctor;
     } else {
       return false;
+    }
+  }
+
+  logIn(): void {
+    this.router.navigate(['signup']).then(r => {});
+  }
+  dashboard(): void {
+    if (this.loggedInUser && this.loggedInUser.doctor !== null && this.loggedInUser.doctor) {
+      this.router.navigate(['doctor/dashboard']).then(r => {
+      });
+    } else if (this.loggedInUser && this.loggedInUser.doctor !== null && !this.loggedInUser.doctor) {
+      this.router.navigate(['user/dashboard']).then(r => {
+      });
     }
   }
 }

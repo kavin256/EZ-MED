@@ -23,6 +23,10 @@
                 <td style="font-size: small">Time: {{appointmentTime}}</td>
             </tr>
         </ngb-alert>
+        <ngb-alert *ngIf="!doctorSide && getStatusName(booking?.status) === 'Cancelled By Doctor'" [dismissible]="false" type="danger">
+            Your appointment has been cancelled by {{booking?.doctorData?.title}}. {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}. Please contact EZMED with the appointment details and payment details for your refund.<br>
+            Email: ezmedltd@gmail.com
+        </ngb-alert>
     </ng-container>
     <ng-container *ngIf="!doctorSide">
         <app-professional-card
@@ -95,7 +99,7 @@
     <ng-container *ngIf="isConfirmationActive && !doctorSide">
         <br>
         <ngb-alert [dismissible]="false">
-            <strong>Note:</strong> You will not get any refund if you cancel this appointment!
+            <strong>Note:</strong> You will not be refunded if you cancel the appointment!
         </ngb-alert>
     </ng-container>
     <button *ngIf="!isConfirmationActive"  (click)="goBack()" style="width: 320px" mat-raised-button color="secondary">Back</button>

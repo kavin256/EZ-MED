@@ -1,27 +1,40 @@
 <div align="center" class="mat-card-style">
-    <p style="font-size: medium; line-height:1.6; padding-bottom: 60px;  padding-right: 30px;  padding-left: 30px;">
+    <p style="max-width: 350px;font-size: medium; line-height:1.6; padding-bottom: 40px;  padding-right: 30px;  padding-left: 30px;"><b>
         Ez Med is the platform in Sri Lanka that allows you to book an appointment with your doctor online and get your consultation done via video / audio call.
-    </p>
-    <img src="/assets/img/search-doctor.png" width="100px">
+    </b></p>
+    <button [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()" style="width: 250px; height: 50px" mat-raised-button color="primary"><b>Make an Appointment</b></button>
+    <br>
+    <br>
+    <ng-container *ngIf="!(loggedInUser)">
+        <button (click)="logIn()" style="width: 200px; height: 35px" mat-raised-button color="primary"><b>LogIn/Register</b></button>
+        <br>
+        <br>
+    </ng-container>
+    <ng-container *ngIf="(loggedInUser)">
+        <button (click)="dashboard()" style="width: 200px; height: 35px" mat-raised-button color="primary"><b>Go to my dashboard</b></button>
+        <br>
+        <br>
+    </ng-container>
+    <br>
+    <img (click)="goToSearchPage()"  src="/assets/img/search-doctor.png" width="100px">
     <p style="font-size: medium; padding-bottom: 40px;">
         1. Search for a Doctor
     </p>
-    <img src="./assets/img/booking.png" width="100px">
+    <img (click)="goToSearchPage()"  src="./assets/img/booking.png" width="100px">
 
     <p style="font-size: medium; padding-bottom: 40px;">
         2. Schedule the appointment
     </p>
-    <img src="./assets/img/video-chat.png" width="100px">
+    <img (click)="goToSearchPage()"  src="./assets/img/video-chat.png" width="100px">
 
     <p style="font-size: medium;">
         3. Wait for the doctor's call
-
     </p>
     <p style="font-size: small; padding-bottom: 40px; max-width: 300px">
         Once your booking is up, doctor (/professional) will contact you. After several attempts to contact you,
         your booking will be automatically cancelled and you will be refunded (cancellation charges apply*).<br>
     </p>
 
-    <button [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()" style="width: 250px; height: 60px" mat-raised-button color="primary"><b>Make an Appointment</b></button>
+    <button [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()" style="width: 250px; height: 50px" mat-raised-button color="primary"><b>Make an Appointment</b></button>
     <br>
 </div>

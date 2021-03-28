@@ -1,6 +1,11 @@
 <div class="mat-card-style">
     <app-page-title [title]="'Payment Summary'"></app-page-title>
-
+    <style>
+        table, th, td {
+            border: 0.25px darkgray;
+            font-size: small;
+        }
+    </style>
     <div *ngIf="doctor">
         <app-professional-card
             [professional]="doctor"
@@ -8,9 +13,67 @@
     </div>
 
     <div>
-        <span>Total amount: </span><span>LKR {{doctor?.priceForAppointment}}</span>
         <br>
+
+        <table style="width:320px;">
+            <tr>
+                <td style="width: 65%; text-align:left">
+                    Professional charge
+                </td>
+                <td style="width: 15%; text-align:left">
+                    LKR
+                </td>
+                <td style="text-align:right">
+                    {{ doctor?.priceForAppointment | currency:'LKR':'' }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Service charge
+                </td>
+                <td>
+                    LKR
+                </td>
+                <td style="text-align:right">
+                    {{ serviceCharge | currency:'LKR':'' }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Taxes/Charges
+                </td>
+                <td>
+                    LKR
+                </td>
+                <td style="text-align:right">
+                    {{ taxAmount | currency:'LKR':'' }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-divider style="width: 200px"></mat-divider>
+                </td>
+                <td>
+                    <mat-divider style="width: 40px"></mat-divider>
+                </td>
+                <td style="text-align:right">
+                    <mat-divider style="width: 60px"></mat-divider>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Total</b>
+                </td>
+                <td>
+                    <b>LKR</b>
+                </td>
+                <td style="text-align:right">
+                    <b>{{ totalCharge | currency:'LKR':'' }}</b>
+                </td>
+            </tr>
+        </table>
         <br>
+        <p style="font-size: x-small"><b>*Conditions & terms:</b> <br>You will NOT be refunded if you cancel the appointment.</p>
     </div>
     <button (click)="payment()" mat-raised-button color="primary" style="width: 320px">Continue to payment</button>
     <br>

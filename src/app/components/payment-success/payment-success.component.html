@@ -35,6 +35,10 @@
             </div>
         </ng-container>
         <br>
+        <ngb-alert *ngIf="paymentResponseData" type="primary" [dismissible]="false">
+            Please make sure you have the ref. number of the payment with you for future reference!
+        </ngb-alert>
+        <br>
         <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
             <button (click)="goToBooking()" mat-raised-button color="secondary" style="width: 240px" >Go to my bookings</button>
             <br>
