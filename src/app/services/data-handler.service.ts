@@ -201,7 +201,7 @@ export class DataHandlerService {
   }
 
   loadUserAppointmentById(appointmentId: number, dataLoaderService: DataLoaderService): Promise<unknown> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const url = Constants.API_BASE_URL + Constants.APPOINTMENT_BY_ID + appointmentId;
       const httpParams = new HttpParams();
       dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
@@ -209,7 +209,9 @@ export class DataHandlerService {
             if (data.data && data.data[0]) {
               resolve(data.data[0]);
             }
-          });
+          }).catch((data) => {
+            reject(data);
+      });
     });
   }
 

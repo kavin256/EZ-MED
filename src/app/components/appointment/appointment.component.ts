@@ -30,6 +30,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     selectedProfessionalUserId: string;
     sub = new Subscription();
     previousStatus: APPOINTMENT_STATUS;
+    networkError: boolean;
 
     constructor(
       private router: Router,
@@ -48,6 +49,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
               this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
                   .then((data: AppointmentData) => {
                       this.booking = data;
+
+                      // repeated call to check status change
+                      this.repeatedStatusChecker();
+
                       // let time = new Time
                       this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
                       this.patient = this.booking.patientData;
@@ -63,6 +68,36 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       }
       this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
       this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    }
+
+    repeatedStatusChecker() {
+        setTimeout(() => {
+            if (!this.networkError && !this.doctorSide
+                && (this.booking.status === APPOINTMENT_STATUS.BOOKED || this.booking.status === APPOINTMENT_STATUS.IN_PROGRESS)
+            ) {
+                this.liteStatusChecker();
+                this.repeatedStatusChecker();
+            }
+        }, 60000);
+    }
+
+    liteStatusChecker() {
+        this.networkError = false;
+        this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
+            .then((data: AppointmentData) => {
+                console.log('status checked');
+                if (data.status !== this.booking.status) {
+                    this.booking = data;
+                    // let time = new Time
+                    this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
+                    this.patient = this.booking.patientData;
+                    this.doctor = this.booking.doctorData;
+                }
+            }).catch((e) => {
+                this.networkError = true;
+            alert('Something is not right. Please check your internet connection!');
+        }).finally(() => {
+        });
     }
 
     userConsent() {
