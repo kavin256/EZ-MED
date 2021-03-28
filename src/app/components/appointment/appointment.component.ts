@@ -95,7 +95,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                 }
             }).catch((e) => {
                 this.networkError = true;
-            alert('Something is not right. Please check your internet connection!');
+                alert('Something is not right. Please check your internet connection!');
         }).finally(() => {
         });
     }
