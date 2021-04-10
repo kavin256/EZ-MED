@@ -70,7 +70,10 @@ export class DataLoaderService {
                 ( data) => {
                     resolve(data);
                     // @ts-ignore
-                    if (dataKey) {this.dataStore.set(dataKey, data.data, true)}
+                    if (dataKey) { this.dataStore.set(dataKey, data.data, true); }
+                    // tslint:disable-next-line:no-shadowed-variable
+                }, (data) => {
+                    reject(data);
                 });
         });
     }

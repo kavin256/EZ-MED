@@ -11,6 +11,7 @@ export enum Constants {
     DOWNLOAD_USER_IMAGE = '/image/download/',
     LOAD_PRESCRIPTION = '/appointment/prescriptionById/',
     ADD_PRESCRIPTION = '/appointment/add-prescription',
+    CANCEL_PRESCRIPTION = '/appointment/cancel-prescription',
     LOAD_PRESCRIPTION_LIST = '/appointment/prescriptionList/',
     USER_APPOINTMENTS = '/appointment/appointments/',
     USER_APPOINTMENT_SET_STATUS = '/appointment/set-status/',

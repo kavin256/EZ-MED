@@ -79,18 +79,16 @@
         to any pharmacy or other medical institute as a valid prescription/note.<br>For any inquiries, please contact ezmedltd@gmail.com<br>
         - EZMED PVT LTD -
     </ngb-alert>
-    <button (click)="previewToggle('')" *ngIf="false && !isNewPrescription && doctorSide" style="width: 320px" color="primary" mat-flat-button>Exit Preview</button>
-    <button *ngIf="!isNewPrescription" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList()">Back</button>
-
     <input *ngIf="false && !isNewPrescription && !doctorSide" type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
-    <button (click)="previewToggle('preview')" *ngIf="false && isNewPrescription" style="width: 320px" color="secondary" mat-raised-button>Preview Prescription</button>
-
-    <br>
-    <br>
-
     <button (click)="savePrescription()" *ngIf="isNewPrescription" style="width: 320px" color="primary" mat-raised-button>Save</button>
+    <ng-container *ngIf="!isNewPrescription && doctorSide">
+        <br>
+        <button *ngIf="!isConfirmationActive" mat-raised-button color="warn" style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription</button>
+        <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
+        <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px" mat-raised-button color="primary">Yes</button>
+        <span *ngIf="isConfirmationActive" >&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="isConfirmationActive = !isConfirmationActive" style="width: 150px" mat-raised-button color="secondary">No, don't cancel</button></span>
     <br>
+    </ng-container>
     <br>
-    <button  *ngIf="isNewPrescription" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList()">Cancel</button>
-
+    <button *ngIf="true" mat-raised-button color="secondary" style="width: 320px" (click)="goToPrescriptionList()">Back</button>
 </div>

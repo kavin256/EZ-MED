@@ -87,6 +87,7 @@ export class PrescriptionComponent implements OnInit {
       'Fexofenadine 180mg 1 night - 5 days'
   ];
 
+  isConfirmationActive: boolean;
   ngbAlertVisible = true;
   prescription: Prescription;
   appointment: AppointmentData;
@@ -183,7 +184,7 @@ export class PrescriptionComponent implements OnInit {
     }).finally(() => {});
   }
 
-  goToAppointmentList() {
+  goToPrescriptionList() {
       this.router.navigate(['appointment/prescriptionList'], { queryParams: { appointmentId: this.appointmentId } }).then(r => {});
   }
 
@@ -201,10 +202,30 @@ export class PrescriptionComponent implements OnInit {
       .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
               console.log('Prescription successfully saved');
-              this.goToAppointmentList();
+              this.goToPrescriptionList();
           } else if (data && data.status && data.status.code === -1) {
               alert('Something went wrong. Please contact support !!');
           }
       });
   }
+
+    cancelPrescription() {
+        const prescription = new Prescription();
+        prescription.status = PrescriptionStatus.cancelled;
+        prescription.id = this.prescriptionId;
+
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.CANCEL_PRESCRIPTION;
+        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, prescription )
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    console.log('Prescription successfully cancelled');
+                    this.goToPrescriptionList();
+                } else if (data && data.status && data.status.code === -1) {
+                    alert('Something went wrong. Please check your internet connection !!');
+                }
+            }).catch((e) => {
+            alert('Something went wrong. Please check your internet connection !!');
+        });
+    }
 }
