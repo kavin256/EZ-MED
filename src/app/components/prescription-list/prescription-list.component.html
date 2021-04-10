@@ -8,9 +8,17 @@
     </ng-container>
     <p *ngIf="prescriptionList && prescriptionList.length > 0" style="font-size: x-large">List of Prescriptions:</p>
     <ng-container *ngFor="let prescription of prescriptionList; let i = index">
-        <button (click)="selectPrescription(prescription.prescriptionId)" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
+        <button (click)="selectPrescription(prescription.id)" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
         <br>
         <br>
+    </ng-container>
+    <ng-container *ngIf="prescriptionList && prescriptionList.length === 0">
+        <br>
+        <br>
+
+        <p style="color: crimson"><b>------   Sorry, No results found   ------</b></p>
+        <br>
+
     </ng-container>
     <br>
 </div>

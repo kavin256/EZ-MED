@@ -9,9 +9,11 @@ import {Constants} from '../../utils/Constants';
 import html2canvas from 'html2canvas';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {$} from 'protractor';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, LocalStorageKeys, PrescriptionStatus} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppointmentData} from '../../models/appointment-data';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-prescription',
@@ -24,67 +26,60 @@ export class PrescriptionComponent implements OnInit {
 
   sub = new Subscription();
   currentDate = new Date();
+  prescriptionStatus: PrescriptionStatus;
   prescriptionId: number;
   appointmentId: number;
-  doctor = {
-    id: 2,
-    name: 'Dr. Punya Anupama',
-    professionalType: DoctorType.GEN,
-    bio: 'MBBS [COLOMBO](1998)',
-    specialities: [
-      'Consultant Pathologist'
-    ],
-    consultationPrice: 'Rs. 1500.00'
-  };
-
-  booking = {
-    bookingId: 2387,
-    doctorId: '4352545235',
-    patientId: '76531',
-    doctorName: 'Dr. Tim Cook',
-    patientTitle: 'Mr',
-    patientAge: 29,
-    patientName: 'John Doe',
-    skypeID: 'kafkjnf34',
-    phoneNumber: '0773092511',
-    bookingStatus: APPOINTMENT_STATUS.BOOKED,
-    messageThread: [
-      {
-        sender: 'patient',
-        message: 'Hi doctor, I have a headache and a cough.'
-      },
-      {
-        sender: 'doctor',
-        message: 'Hi John, do you have any allergies?'
-      },
-      {
-        sender: 'patient',
-        message: 'I\'m allergic to panadol'
-      },
-      {
-        sender: 'doctor',
-        message: 'Thanks.'
-      },
-      {
-        sender: 'patient',
-        message: 'THANK YOU DOC!.'
-      },
-      {
-        sender: 'patient',
-        message: 'Can you send me a prescription btw?'
-      },
-      {
-        sender: 'doctor',
-        message: 'Sure. I will send you.'
-      },
-      {
-        sender: 'patient',
-        message: 'Awesome. Thanks'
-      }
-    ],
-    bookingPrice: 'Rs. 2000.00',
-    doctorCharge: 'Rs. 1800.00'
-  };
+  patient: UserData;
+  doctor: UserData;
+  //
+  // booking = {
+  //   bookingId: 2387,
+  //   doctorId: '4352545235',
+  //   patientId: '76531',
+  //   doctorName: 'Dr. Tim Cook',
+  //   patientTitle: 'Mr',
+  //   patientAge: 29,
+  //   patientName: 'John Doe',
+  //   skypeID: 'kafkjnf34',
+  //   phoneNumber: '0773092511',
+  //   bookingStatus: APPOINTMENT_STATUS.BOOKED,
+  //   messageThread: [
+  //     {
+  //       sender: 'patient',
+  //       message: 'Hi doctor, I have a headache and a cough.'
+  //     },
+  //     {
+  //       sender: 'doctor',
+  //       message: 'Hi John, do you have any allergies?'
+  //     },
+  //     {
+  //       sender: 'patient',
+  //       message: 'I\'m allergic to panadol'
+  //     },
+  //     {
+  //       sender: 'doctor',
+  //       message: 'Thanks.'
+  //     },
+  //     {
+  //       sender: 'patient',
+  //       message: 'THANK YOU DOC!.'
+  //     },
+  //     {
+  //       sender: 'patient',
+  //       message: 'Can you send me a prescription btw?'
+  //     },
+  //     {
+  //       sender: 'doctor',
+  //       message: 'Sure. I will send you.'
+  //     },
+  //     {
+  //       sender: 'patient',
+  //       message: 'Awesome. Thanks'
+  //     }
+  //   ],
+  //   bookingPrice: 'Rs. 2000.00',
+  //   doctorCharge: 'Rs. 1800.00'
+  // };
 
   items = [
       'Augmentine 625mg bd - 5 days',
@@ -94,11 +89,8 @@ export class PrescriptionComponent implements OnInit {
 
   ngbAlertVisible = true;
   prescription: Prescription;
+  appointment: AppointmentData;
   isNewPrescription = true;
-  prescriptionList: any [] = [
-      '',
-      ''
-  ];
   loggedInUser: UserData = null;
   doctorSide = false;
 
@@ -171,13 +163,48 @@ export class PrescriptionComponent implements OnInit {
             }
           });
     } else {
+      this.prescription = new Prescription();
       this.isNewPrescription = true;
-
-      console.log('new');
+      this.loadAppointment();
     }
   }
 
-  goToAppointmentList(b: boolean) {
+  loadAppointment() {
+    this.dataHandlerService.loadUserAppointmentById(this.appointmentId, this.dataLoaderService)
+        .then((data: AppointmentData) => {
+          this.appointment = data;
+
+          // set up init values
+          this.prescription.lightPatient = this.appointment.patientData;
+          this.prescription.lightDoctor = this.appointment.doctorData;
+          this.prescription.description = '';
+        }).catch((e) => {
+      console.log(e);
+    }).finally(() => {});
+  }
+
+  goToAppointmentList() {
       this.router.navigate(['appointment/prescriptionList'], { queryParams: { appointmentId: this.appointmentId } }).then(r => {});
+  }
+
+  savePrescription() {
+    const prescription = new Prescription();
+    prescription.description = this.prescription.description;
+    prescription.status = PrescriptionStatus.active;
+    prescription.bookingId = this.appointmentId;
+    prescription.patientId = this.prescription.lightPatient.userId;
+    prescription.professionalId = this.prescription.lightDoctor.userId;
+
+    // create url and send request
+    const url = Constants.API_BASE_URL + Constants.ADD_PRESCRIPTION;
+    this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, prescription )
+      .then((data: any) => {
+          if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+              console.log('Prescription successfully saved');
+              this.goToAppointmentList();
+          } else if (data && data.status && data.status.code === -1) {
+              alert('Something went wrong. Please contact support !!');
+          }
+      });
   }
 }

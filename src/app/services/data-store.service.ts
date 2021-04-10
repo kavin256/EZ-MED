@@ -60,6 +60,11 @@ export enum DataKey {
   availableAppointmentsForProfessional
 }
 
+export enum PrescriptionStatus {
+  active,
+  cancelled
+}
+
 export enum LocalStorageKeys {
   loggedInUser = 'loggedInUser',
   chargeAmount = 'chargeAmount',

@@ -1,9 +1,12 @@
 <div class="mat-card-style">
     <div class="container" id="test" #test>
         <br>
+        <ng-container *ngIf="prescription.status === 1">
+            <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+        </ng-container>
         <p style="font-size: small; text-align: center"><b><u>PROFESSIONAL'S NOTE</u></b></p>
         <br>
-        <p style="font-size: small">Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</p>
+        <p *ngIf="!isNewPrescription" style="font-size: small">Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</p>
 
         <p style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}. {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></p>
         <p style="font-size: small">Age: {{prescription?.lightPatient?.age}} yrs</p>
@@ -13,8 +16,13 @@
 
         <div *ngIf="!isNewPrescription">
             <br>
-
+            <ng-container *ngIf="prescription.status === 1">
+                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+            </ng-container>
             <p>{{prescription?.description}}</p>
+            <ng-container *ngIf="prescription.status === 1">
+                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+            </ng-container>
             <br>
             <!-- <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li> -->
 
@@ -36,18 +44,16 @@
                     </td>
                 </tr>
             </table>
-
-    <!--        <mat-divider></mat-divider>-->
-    <!--        <mat-divider></mat-divider>-->
             <br>
         </div>
     </div>
-    <div *ngIf="!!isNewPrescription">
-        <mat-form-field  style="width: 320px" class="example-full-width">
+    <div *ngIf="isNewPrescription">
+        <mat-form-field  style="width: 240px" class="example-full-width">
             <mat-label>Add prescriptions:</mat-label>
-            <textarea *ngIf="prescription?.description" [(ngModel)]='prescription.description' rows="10" cols="50" matInput placeholder="Start typing.."></textarea>
+            <textarea matInput placeholder="" [(ngModel)]="prescription.description"></textarea>
         </mat-form-field>
-<!--        <p>Start adding items below</p>-->
+
+        <!--        <p>Start adding items below</p>-->
 <!--        <div *ngFor="let item of prescriptionList">-->
 <!--            <table align="center">-->
 <!--                <tr>-->
@@ -74,7 +80,7 @@
         - EZMED PVT LTD -
     </ngb-alert>
     <button (click)="previewToggle('')" *ngIf="false && !isNewPrescription && doctorSide" style="width: 320px" color="primary" mat-flat-button>Exit Preview</button>
-    <button *ngIf="!isNewPrescription" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList(false)">Back</button>
+    <button *ngIf="!isNewPrescription" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList()">Back</button>
 
     <input *ngIf="false && !isNewPrescription && !doctorSide" type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
     <button (click)="previewToggle('preview')" *ngIf="false && isNewPrescription" style="width: 320px" color="secondary" mat-raised-button>Preview Prescription</button>
@@ -82,9 +88,9 @@
     <br>
     <br>
 
-    <button *ngIf="isNewPrescription" style="width: 320px" color="primary" mat-raised-button>Save</button>
+    <button (click)="savePrescription()" *ngIf="isNewPrescription" style="width: 320px" color="primary" mat-raised-button>Save</button>
     <br>
     <br>
-    <button  *ngIf="isNewPrescription" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList(false)">Cancel</button>
+    <button  *ngIf="isNewPrescription" mat-raised-button color="secondary" style="width: 320px" (click)="goToAppointmentList()">Cancel</button>
 
 </div>
