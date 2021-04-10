@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-prescription-list',
@@ -12,13 +13,23 @@ export class PrescriptionListComponent implements OnInit {
 
   isDoctor: boolean;
   prescriptionList: any [];
+  prescriptionId: number;
+  sub = new Subscription();
 
   constructor(
       private router: Router,
+      private route: ActivatedRoute,
       private dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
+      this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+          // Defaults to 0 if no query param provided.
+          this.prescriptionId = +params.id;
+          // load Appointment by ID;
+      });
       // if not logged In this page should not be able to access
       this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
       this.isDoctor = true;
@@ -46,7 +57,7 @@ export class PrescriptionListComponent implements OnInit {
   }
 
     selectPrescription() {
-      this.router.navigate(['appointment/prescription']).then(r => {
-      });
+      this.router.navigate(['appointment/prescription'], { queryParams: { id: this.prescriptionId } }).then(r => {});
+
     }
 }

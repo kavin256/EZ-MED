@@ -1,11 +1,17 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {APPOINTMENT_STATUS, DoctorType} from '../../utils/Constants';
-import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 import jsPDF from 'jspdf';
+import {UserData} from '../../models/user-data';
+import {Prescription} from '../../models/prescription';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {Constants} from '../../utils/Constants';
 import html2canvas from 'html2canvas';
+import {DataLoaderService} from '../../services/data-loader.service';
 import {$} from 'protractor';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-prescription',
@@ -16,8 +22,9 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class PrescriptionComponent implements OnInit {
   @ViewChild('test', {static: true}) el: ElementRef;
 
+  sub = new Subscription();
   currentDate = new Date();
-
+  prescriptionId: number;
   doctor = {
     id: 2,
     name: 'Dr. Punya Anupama',
@@ -84,20 +91,36 @@ export class PrescriptionComponent implements OnInit {
       'Fexofenadine 180mg 1 night - 5 days'
   ];
 
+  ngbAlertVisible = true;
+  prescription: Prescription;
   preview = false;
   prescriptionList: any [] = [
       '',
       ''
   ];
+  loggedInUser: UserData = null;
+  doctorSide = false;
 
   constructor(
+      private route: ActivatedRoute,
       private router: Router,
+      private dataLoaderService: DataLoaderService,
       private dataHandlerService: DataHandlerService
-  ) { }
+  ) {
+    this.prescription = new Prescription();
+    this.prescription.description = '';
+  }
 
   ngOnInit() {
     // if not logged In this page should not be able to access
     this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+        this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+        this.doctorSide = this.loggedInUser.doctor;
+        this.preview = !this.doctorSide;
+    }
+    this.prescription.description = '';
+    this.loadPrescription();
   }
 
   copyToClipBoard() {
@@ -109,13 +132,14 @@ export class PrescriptionComponent implements OnInit {
     alert('Copied the text: ' + copyText.value);
   }
 
-    previewToggle($event: string) {
-        if ($event === 'preview') {
-          this.preview = true;
-        } else {
-          this.preview = false;
-        }
-    }
+  previewToggle($event: string) {
+      if ($event === 'preview') {
+        this.preview = true;
+      } else {
+        this.preview = false;
+      }
+  }
+
   public SavePDF(): void {
     // var pdf = new jsPDF('p','pt','a4');
     // pdf.html2pdf(document.getElementById('pdfTable'), function() {
@@ -123,8 +147,29 @@ export class PrescriptionComponent implements OnInit {
     // });
   }
 
+  loadPrescription(){
+    this.sub = this.route
+    .queryParams
+    .subscribe(params => {
+        this.prescriptionId = +params.id;
+    });
+
+    // create url and send request
+    const url = Constants.API_BASE_URL + Constants.LOAD_PRESCRIPTION + this.prescriptionId;
+    let httpParams = new HttpParams();
+    this.dataLoaderService.get<Prescription>(url, httpParams, new HttpHeaders())
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            this.prescription = data.data[0];
+            this.prescription.issuedDate = new Date(this.prescription.issuedDate);
+          } else if (data && data.status && data.status.code === -1) {
+            alert('Something is not right. Please check your internet connection!');
+          }
+        });
+  }
+
   goToAppointmentList(b: boolean) {
-      this.router.navigate(['appointment/prescriptionList']).then(r => {
-      });
-    }
+      this.router.navigate(['appointment/prescriptionList'], { queryParams: { id: 99999 } }).then(r => {});
+
+  }
 }

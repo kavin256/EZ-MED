@@ -43,8 +43,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       this.sub = this.route
           .queryParams
           .subscribe(params => {
-              // Defaults to 0 if no query param provided.
-              this.bookingId = +params.id || 0;
+              this.bookingId = +params.id;
               // load Appointment by ID
               this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
                   .then((data: AppointmentData) => {
@@ -146,6 +145,12 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.previousStatus = this.booking.status;
         this.booking.status = APPOINTMENT_STATUS.COMPLETED;
         this.updateAppointmentStatus();
+    }
+
+    goToPrescription() {
+        console.log('open prescription list');
+        this.router.navigate(['appointment/prescriptionList'], { queryParams: { id: this.bookingId } }).then(r => {});
+
     }
 
     isNew(status: APPOINTMENT_STATUS) {

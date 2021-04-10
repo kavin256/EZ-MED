@@ -53,7 +53,8 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+            // this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+        this.specializationsCON = ['Dermatologist','Pulmonologist'];
     sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
     this.InitialSearch();
     this.regions = csc.getStatesOfCountry(this.country);

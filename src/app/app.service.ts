@@ -21,7 +21,11 @@ export class AppService {
       this.http.get(url, {
       }).subscribe(
           ( data: any) => {
-            this.dataHandlerService.setConfigs(data.data[0]);
+            if (data && data.status && data.status.code === 1) {
+              this.dataHandlerService.setConfigs(data.data[0]);
+            } else {
+              reject(data);
+            }
             resolve(data);
           }, (data) => {
             reject(data);

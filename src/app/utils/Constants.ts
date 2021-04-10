@@ -9,6 +9,7 @@ export enum Constants {
     LOAD_CONFIGURATIONS = '/admin/configs',
     UPLOAD_USER_IMAGE = '/image/upload/',
     DOWNLOAD_USER_IMAGE = '/image/download/',
+    LOAD_PRESCRIPTION = '/appointment/prescriptionById/',
     USER_APPOINTMENTS = '/appointment/appointments/',
     USER_APPOINTMENT_SET_STATUS = '/appointment/set-status/',
     APPOINTMENT_BY_ID = '/appointment/appointmentById/',
