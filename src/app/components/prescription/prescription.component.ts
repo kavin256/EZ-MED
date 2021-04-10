@@ -25,6 +25,7 @@ export class PrescriptionComponent implements OnInit {
   sub = new Subscription();
   currentDate = new Date();
   prescriptionId: number;
+  appointmentId: number;
   doctor = {
     id: 2,
     name: 'Dr. Punya Anupama',
@@ -93,7 +94,7 @@ export class PrescriptionComponent implements OnInit {
 
   ngbAlertVisible = true;
   prescription: Prescription;
-  preview = false;
+  isNewPrescription = true;
   prescriptionList: any [] = [
       '',
       ''
@@ -117,7 +118,7 @@ export class PrescriptionComponent implements OnInit {
     if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
         this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
         this.doctorSide = this.loggedInUser.doctor;
-        this.preview = !this.doctorSide;
+        this.isNewPrescription = !this.doctorSide;
     }
     this.prescription.description = '';
     this.loadPrescription();
@@ -134,9 +135,9 @@ export class PrescriptionComponent implements OnInit {
 
   previewToggle($event: string) {
       if ($event === 'preview') {
-        this.preview = true;
+        this.isNewPrescription = true;
       } else {
-        this.preview = false;
+        this.isNewPrescription = false;
       }
   }
 
@@ -147,29 +148,36 @@ export class PrescriptionComponent implements OnInit {
     // });
   }
 
-  loadPrescription(){
+  loadPrescription() {
     this.sub = this.route
-    .queryParams
-    .subscribe(params => {
-        this.prescriptionId = +params.id;
-    });
-
-    // create url and send request
-    const url = Constants.API_BASE_URL + Constants.LOAD_PRESCRIPTION + this.prescriptionId;
-    let httpParams = new HttpParams();
-    this.dataLoaderService.get<Prescription>(url, httpParams, new HttpHeaders())
-        .then((data: any) => {
-          if (data && data.status && data.status.code === 1) {
-            this.prescription = data.data[0];
-            this.prescription.issuedDate = new Date(this.prescription.issuedDate);
-          } else if (data && data.status && data.status.code === -1) {
-            alert('Something is not right. Please check your internet connection!');
-          }
+        .queryParams
+        .subscribe(params => {
+          this.prescriptionId = +params.prescriptionId;
+          this.appointmentId = +params.appointmentId;
         });
+
+    if (!isNaN(this.prescriptionId) && this.prescriptionId > 0) {
+      this.isNewPrescription = false;
+      // create url and send request
+      const url = Constants.API_BASE_URL + Constants.LOAD_PRESCRIPTION + this.prescriptionId;
+      const httpParams = new HttpParams();
+      this.dataLoaderService.get<Prescription>(url, httpParams, new HttpHeaders())
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              this.prescription = data.data[0];
+              this.prescription.issuedDate = new Date(this.prescription.issuedDate);
+            } else if (data && data.status && data.status.code === -1) {
+              alert('Something is not right. Please check your internet connection!');
+            }
+          });
+    } else {
+      this.isNewPrescription = true;
+
+      console.log('new');
+    }
   }
 
   goToAppointmentList(b: boolean) {
-      this.router.navigate(['appointment/prescriptionList'], { queryParams: { id: 99999 } }).then(r => {});
-
+      this.router.navigate(['appointment/prescriptionList'], { queryParams: { appointmentId: this.appointmentId } }).then(r => {});
   }
 }

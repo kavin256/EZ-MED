@@ -1,11 +1,16 @@
 <div class="mat-card-style">
-    <p style="font-size: x-large">List of Prescriptions:</p>
+    <br>
+    <ng-container *ngIf="doctorSide" >
+        <button (click)="addPrescription()" style="width: 320px; height: 50px" color="accent" mat-raised-button>Add New Prescription</button>
+        <br>
+        <br>
+        <br>
+    </ng-container>
+    <p *ngIf="prescriptionList && prescriptionList.length > 0" style="font-size: x-large">List of Prescriptions:</p>
     <ng-container *ngFor="let prescription of prescriptionList; let i = index">
-        <button (click)="selectPrescription()" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
+        <button (click)="selectPrescription(prescription.prescriptionId)" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
         <br>
         <br>
     </ng-container>
     <br>
-    <br>
-    <button *ngIf="isDoctor" (click)="selectPrescription()" style="width: 320px; height: 50px" color="accent" mat-raised-button>Add New Prescription</button>
 </div>

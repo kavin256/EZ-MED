@@ -3,6 +3,7 @@ import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-prescription-list',
@@ -11,9 +12,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class PrescriptionListComponent implements OnInit {
 
-  isDoctor: boolean;
   prescriptionList: any [];
-  prescriptionId: number;
+    loggedInUser: UserData = null;
+    appointmentId: number;
+    doctorSide: boolean;
   sub = new Subscription();
 
   constructor(
@@ -27,37 +29,42 @@ export class PrescriptionListComponent implements OnInit {
       .queryParams
       .subscribe(params => {
           // Defaults to 0 if no query param provided.
-          this.prescriptionId = +params.id;
-          // load Appointment by ID;
+          this.appointmentId = +params.appointmentId;
+          // load Appointment list by ID;
       });
+      if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+          this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+          this.doctorSide = this.loggedInUser.doctor;
+      }
       // if not logged In this page should not be able to access
       this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
-      this.isDoctor = true;
-      // this.isDoctor = false;
 
-      this.prescriptionList = new Array<any>()
+      this.prescriptionList = new Array<any>();
       this.prescriptionList.push(
             {
-              appointmentNumber: 356,
-              prescriptionTimeStamp: new Date(2020, 3, 2, 9, 45)
+                prescriptionId: 1,
+                prescriptionTimeStamp: new Date(2020, 3, 2, 9, 45)
             }
         );
       this.prescriptionList.push(
             {
-              appointmentNumber: 423,
-              prescriptionTimeStamp: new Date(2020, 3, 2, 10, 30)
+                prescriptionId: 2,
+                prescriptionTimeStamp: new Date(2020, 3, 2, 10, 30)
             }
         );
       this.prescriptionList.push(
             {
-              appointmentNumber: 987,
-              prescriptionTimeStamp: new Date(2020, 3, 2, 11, 20)
+                prescriptionId: 3,
+                prescriptionTimeStamp: new Date(2020, 3, 2, 11, 20)
             }
         );
   }
 
-    selectPrescription() {
-      this.router.navigate(['appointment/prescription'], { queryParams: { id: this.prescriptionId } }).then(r => {});
-
+    selectPrescription(prescriptionId: any) {
+      this.router.navigate(['appointment/prescription'],
+          { queryParams: { appointmentId: this.appointmentId, prescriptionId } }).then(r => {});
+    }
+    addPrescription() {
+      this.router.navigate(['appointment/prescription'], { queryParams: { appointmentId: this.appointmentId } }).then(r => {});
     }
 }
