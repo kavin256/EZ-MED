@@ -4,7 +4,9 @@ export class Prescription {
     id: number;
     bookingId: number;
     issuedDate?: Date;
-    description?: string;
+    description?: any;
+    prescribedItems?: any;
+    prescribedNoteItems?: any;
     status?: number;
     lightPatient?: UserData;
     lightDoctor?: UserData;

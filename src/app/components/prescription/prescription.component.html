@@ -48,27 +48,47 @@
         </div>
     </div>
     <div *ngIf="isNewPrescription">
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Add prescriptions:</mat-label>
-            <textarea matInput placeholder="" [(ngModel)]="prescription.description"></textarea>
-        </mat-form-field>
+        <p>Medicine prescriptions</p>
+        <div *ngFor="let item of prescribedItems; let i = index;">
+            <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)" [dismissible]="true">
+            <table align="center">
+                <tr>
+                    <td>
+                        <mat-form-field style="width: 250px">
+                            <input style="font-size: small" matInput type="text" placeholder="Medicine" [(ngModel)]='item.title'>
+                        </mat-form-field>
+                        <mat-form-field style="width: 280px">
+                            <textarea style="font-size: small" matInput type="text" placeholder="Take" [(ngModel)]='item.take'></textarea>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+            </ngb-alert>
+        </div>
+        <div align="right">
+            <button (click)="addMoreItem()" style="width: 50px" color="primary" mat-stroked-button>+</button>
+        </div>
+        <br>
 
-        <!--        <p>Start adding items below</p>-->
-<!--        <div *ngFor="let item of prescriptionList">-->
-<!--            <table align="center">-->
-<!--                <tr>-->
-<!--                    <td>-->
-<!--                        <mat-form-field style="width: 300px">-->
-<!--                            <input style="font-size: small" matInput type="text" placeholder="Type here.." value="{{item}}">-->
-<!--                        </mat-form-field>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--        <div align="center">-->
-<!--            <button style="width: 90px" color="primary" mat-flat-button>Add more</button>-->
-<!--        </div>-->
-<!--        <br>-->
+        <p>Tests / Notes</p>
+        <div *ngFor="let item of prescribedNoteItems; let i = index;">
+            <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">
+                <table align="center">
+                    <tr>
+                        <td>
+                            <mat-form-field style="width: 250px;">
+                                <input style="height: 60px; font-size: small" matInput type="text" placeholder="Note {{i+1}}" [(ngModel)]='item.description'>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </ngb-alert>
+        </div>
+        <div align="right">
+            <button (click)="addMoreNoteItem()" style="width: 50px" color="primary" mat-stroked-button>+</button>
+        </div>
+        <br>
+
 
 <!--        <mat-divider></mat-divider>-->
 <!--        <mat-divider></mat-divider>-->
@@ -81,6 +101,7 @@
     </ngb-alert>
     <input *ngIf="false && !isNewPrescription && !doctorSide" type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
     <button (click)="savePrescription()" *ngIf="isNewPrescription" style="width: 320px" color="primary" mat-raised-button>Save</button>
+    <br>
     <ng-container *ngIf="!isNewPrescription && doctorSide">
         <br>
         <button *ngIf="!isConfirmationActive" mat-raised-button color="warn" style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription</button>

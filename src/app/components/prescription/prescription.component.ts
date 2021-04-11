@@ -1,19 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {APPOINTMENT_STATUS, DoctorType} from '../../utils/Constants';
 import {Subscription} from 'rxjs';
-import jsPDF from 'jspdf';
 import {UserData} from '../../models/user-data';
 import {Prescription} from '../../models/prescription';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Constants} from '../../utils/Constants';
-import html2canvas from 'html2canvas';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {$} from 'protractor';
-import {DataKey, LocalStorageKeys, PrescriptionStatus} from '../../services/data-store.service';
+import {LocalStorageKeys, PrescriptionStatus} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppointmentData} from '../../models/appointment-data';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-prescription',
@@ -25,62 +20,10 @@ export class PrescriptionComponent implements OnInit {
   @ViewChild('test', {static: true}) el: ElementRef;
 
   sub = new Subscription();
-  currentDate = new Date();
-  prescriptionStatus: PrescriptionStatus;
   prescriptionId: number;
   appointmentId: number;
   patient: UserData;
   doctor: UserData;
-  //
-  // booking = {
-  //   bookingId: 2387,
-  //   doctorId: '4352545235',
-  //   patientId: '76531',
-  //   doctorName: 'Dr. Tim Cook',
-  //   patientTitle: 'Mr',
-  //   patientAge: 29,
-  //   patientName: 'John Doe',
-  //   skypeID: 'kafkjnf34',
-  //   phoneNumber: '0773092511',
-  //   bookingStatus: APPOINTMENT_STATUS.BOOKED,
-  //   messageThread: [
-  //     {
-  //       sender: 'patient',
-  //       message: 'Hi doctor, I have a headache and a cough.'
-  //     },
-  //     {
-  //       sender: 'doctor',
-  //       message: 'Hi John, do you have any allergies?'
-  //     },
-  //     {
-  //       sender: 'patient',
-  //       message: 'I\'m allergic to panadol'
-  //     },
-  //     {
-  //       sender: 'doctor',
-  //       message: 'Thanks.'
-  //     },
-  //     {
-  //       sender: 'patient',
-  //       message: 'THANK YOU DOC!.'
-  //     },
-  //     {
-  //       sender: 'patient',
-  //       message: 'Can you send me a prescription btw?'
-  //     },
-  //     {
-  //       sender: 'doctor',
-  //       message: 'Sure. I will send you.'
-  //     },
-  //     {
-  //       sender: 'patient',
-  //       message: 'Awesome. Thanks'
-  //     }
-  //   ],
-  //   bookingPrice: 'Rs. 2000.00',
-  //   doctorCharge: 'Rs. 1800.00'
-  // };
-
   items = [
       'Augmentine 625mg bd - 5 days',
       'Omeprazole 20mg bd - 5 days',
@@ -90,6 +33,17 @@ export class PrescriptionComponent implements OnInit {
   isConfirmationActive: boolean;
   ngbAlertVisible = true;
   prescription: Prescription;
+  prescribedItems = [
+      {
+          title: '',
+          take: ''
+      }
+  ];
+  prescribedNoteItems = [
+      {
+          description: ''
+      }
+  ];
   appointment: AppointmentData;
   isNewPrescription = true;
   loggedInUser: UserData = null;
@@ -124,14 +78,6 @@ export class PrescriptionComponent implements OnInit {
     document.execCommand('copy');
     // @ts-ignore
     alert('Copied the text: ' + copyText.value);
-  }
-
-  previewToggle($event: string) {
-      if ($event === 'preview') {
-        this.isNewPrescription = true;
-      } else {
-        this.isNewPrescription = false;
-      }
   }
 
   public SavePDF(): void {
@@ -190,7 +136,10 @@ export class PrescriptionComponent implements OnInit {
 
   savePrescription() {
     const prescription = new Prescription();
-    prescription.description = this.prescription.description;
+    prescription.prescribedItems = this.prescribedItems;
+    prescription.prescribedNoteItems = this.prescribedNoteItems;
+    // prescription.description = this.prescription.description;
+    prescription.description = 'this is a test description';
     prescription.status = PrescriptionStatus.active;
     prescription.bookingId = this.appointmentId;
     prescription.patientId = this.prescription.lightPatient.userId;
@@ -227,5 +176,32 @@ export class PrescriptionComponent implements OnInit {
             }).catch((e) => {
             alert('Something went wrong. Please check your internet connection !!');
         });
+    }
+
+    addMoreItem() {
+        const newItem = {
+            title: '',
+            take: ''
+        };
+        this.prescribedItems.push(newItem);
+    }
+
+    addMoreNoteItem() {
+        const newNoteItem = {
+            description: ''
+        };
+        this.prescribedNoteItems.push(newNoteItem);
+    }
+
+    removeItem(i: number) {
+        if (i > -1) {
+            this.prescribedItems.splice(i, 1);
+        }
+    }
+
+    removeNoteItem(i: number) {
+        if (i > -1) {
+            this.prescribedNoteItems.splice(i, 1);
+        }
     }
 }
