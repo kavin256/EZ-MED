@@ -61,8 +61,8 @@ export class DoctorProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
-        this.specializationsCON = ['Dermatologist','Pulmonologist'];
+        this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+        // this.specializationsCON = ['Dermatologist', 'Pulmonologist'];
 
         this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
         // todo: resolve this commented
