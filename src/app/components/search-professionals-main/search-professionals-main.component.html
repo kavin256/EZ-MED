@@ -10,49 +10,31 @@
     <br>
     <mat-form-field  style="width: 240px" >
         <mat-label>Category</mat-label>
-        <mat-select [(value)]="selectedCategory">
+        <mat-select (selectionChange)="selectCategory($event)">
             <ng-container *ngFor="let category of categories">
                 <mat-option value="{{category.category}}">{{category.category}}</mat-option>
             </ng-container>
         </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== null && selectedCategory !== 'General Practitioner'">
+    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')">
         <mat-form-field  style="width: 240px" >
             <mat-label>Specialization</mat-label>
             <mat-select panelClass="example-long-panel" [(value)]="selectedSpecialization">
-                <ng-container *ngFor="let subCategory of specializationsCON">
+                <ng-container *ngFor="let subCategory of specializations">
                     <mat-option value="{{subCategory}}">{{dataHandlerService.convertCamelCaseToSentence(subCategory)}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
     </ng-container>
-<!--    <ng-container>-->
-<!--        <mat-form-field  style="width: 240px" >-->
-<!--            <mat-label>Region</mat-label>-->
-<!--            <mat-select [(value)]="selectedRegion">-->
-<!--                <ng-container *ngFor="let region of filterProvinces(regions)">-->
-<!--                    <mat-option value="{{region?.isoCode}}">{{region.name}}</mat-option>-->
-<!--                </ng-container>-->
-<!--            </mat-select>-->
-<!--        </mat-form-field>-->
-<!--    </ng-container>-->
-<!--    <ng-container *ngIf="selectedRegion !== undefined && selectedRegion !== null">-->
-<!--        <mat-form-field  style="width: 240px" >-->
-<!--            <mat-label>City</mat-label>-->
-<!--            <mat-select [(value)]="selectedCity">-->
-<!--                <ng-container *ngFor="let city of getCities(selectedRegion)">-->
-<!--                    <mat-option value="{{city.stateCode}}">{{city.name}}</mat-option>-->
-<!--                </ng-container>-->
-<!--            </mat-select>-->
-<!--        </mat-form-field>-->
-<!--    </ng-container>-->
 
         <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search</button>
     </div>
     <br>
-    <mat-divider></mat-divider>
-    <br>
-    <p style="font-size: large">Select a professional to continue:</p>
+    <ng-container *ngIf="professionalList && professionalList.length > 0">
+        <mat-divider></mat-divider>
+        <br>
+        <p style="font-size: large">Select a professional to continue:</p>
+    </ng-container>
     <ng-container *ngIf="professionalList && professionalList.length === 0">
         <br>
         <br>
@@ -60,6 +42,9 @@
         <p style="color: crimson"><b>------   Sorry, No results found   ------</b></p>
         <br>
 
+    </ng-container>
+    <ng-container *ngIf="error">
+        <p style="color: crimson"><b>------   Please fill at least one search field   ------</b></p>
     </ng-container>
     <ng-container *ngFor="let doc of professionalList; let i=index">
         <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">

@@ -24,7 +24,7 @@
 
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Professional Level</mat-label>
-            <mat-select required [(value)]="userData.professionalType">
+            <mat-select  (selectionChange)="selectCategory($event)">
                 <ng-container *ngFor="let category of categories">
                     <mat-option value="{{category.category}}">{{category.category}}</mat-option>
                 </ng-container>
@@ -41,30 +41,33 @@
             <textarea required matInput placeholder="" [(ngModel)]="userData.qualifications"></textarea>
         </mat-form-field>
 
-        <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
+                        style="width: 240px" class="example-full-width">
             <mat-label>Specialization #1</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityA">
-                <ng-container *ngFor="let specialization of specializationsCON" >
+                <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
                     </mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
+        <mat-form-field  *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
+                         style="width: 240px" class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityB">
-                <ng-container *ngFor="let specialization of specializationsCON" >
+                <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
                     </mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="isConsultant(userData.professionalType)" style="width: 240px" class="example-full-width">
+        <mat-form-field *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
+                style="width: 240px" class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityC">
-                <ng-container *ngFor="let specialization of specializationsCON" >
+                <ng-container *ngFor="let specialization of specializations" >
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
                     </mat-option>
@@ -128,9 +131,14 @@
             </ngb-alert>
         </ng-container>
 
-        <ng-container *ngIf="!userData?.availableForAppointment">
+        <ng-container *ngIf="!userData?.availableForAppointment && !logInRequired">
             <ngb-alert [dismissible]="false">
                 <strong>Note:</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
+            </ngb-alert>
+        </ng-container>
+        <ng-container *ngIf="logInRequired">
+            <ngb-alert [dismissible]="false">
+                <strong>Note:</strong> Please log out and log in again to continue with your profile
             </ngb-alert>
         </ng-container>
 
@@ -140,7 +148,7 @@
         <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button [disabled]="!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-raised-button>Edit Schedule</button>
+        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-raised-button>Edit Schedule</button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>

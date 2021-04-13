@@ -150,7 +150,6 @@ export class PrescriptionComponent implements OnInit {
     this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, prescription )
       .then((data: any) => {
           if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-              console.log('Prescription successfully saved');
               this.goToPrescriptionList();
           } else if (data && data.status && data.status.code === -1) {
               alert('Something went wrong. Please contact support !!');
@@ -168,7 +167,6 @@ export class PrescriptionComponent implements OnInit {
         this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, prescription )
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    console.log('Prescription successfully cancelled');
                     this.goToPrescriptionList();
                 } else if (data && data.status && data.status.code === -1) {
                     alert('Something went wrong. Please check your internet connection !!');

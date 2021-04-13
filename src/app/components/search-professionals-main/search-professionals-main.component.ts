@@ -4,10 +4,9 @@ import {Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import csc from 'country-state-city';
-import { ICountry, IState, ICity } from 'country-state-city';
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -19,16 +18,18 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
   searchString = null;
   professionalList = null;
+  error = false;
   RESULTS_PER_PAGE = 10;
   PAGINATION_START = 0;
   PAGINATION_END = this.RESULTS_PER_PAGE;
   selectedCategory: any = null;
   selectedSpecialization: any = null;
   country = 'LK';
-  selectedRegion: IState = null;
-  selectedCity: ICity = null;
 
   categories = [
+    {
+      category: 'Any'
+    },
     {
       category: DoctorType.CON
     },
@@ -42,8 +43,11 @@ export class SearchProfessionalsMainComponent implements OnInit {
       category: DoctorType.OTH
     }
   ];
-  specializationsCON;
+  specializations;
   regions;
+  private CONSULTANT_TYPES: any;
+  private OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
+  private COUNSELLOR_TYPES: any;
 
   constructor(
       private router: Router,
@@ -53,67 +57,66 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
-        // this.specializationsCON = ['Dermatologist','Pulmonologist'];
+    this.CONSULTANT_TYPES = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+    this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
+    this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
+
     sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
-    this.InitialSearch();
     this.regions = csc.getStatesOfCountry(this.country);
   }
 
   search() {
-    this.PAGINATION_START = 0;
-    this.PAGINATION_END = this.RESULTS_PER_PAGE;
-    if (
-        !this.searchString &&
-        !this.selectedCategory &&
-        !this.selectedSpecialization
-    ) {
-      this.InitialSearch();
-    } else {
-      // General Practitioners don't have a specialization
-      if (this.selectedCategory === DoctorType.GEN) {
-        this.selectedSpecialization = null;
-      }
-
-      // converting professionalType to a database readable format
-      if (this.selectedCategory) {
-        this.selectedCategory = this.dataHandlerService.convertProfessionalTypeToDBFormat(
-            JSON.parse(JSON.stringify(this.selectedCategory)));
-      }
-
-      // making 'Any' option null
-      if (this.selectedSpecialization === 'Any') {
-        this.selectedSpecialization = null;
-      }
-
-      // create url and send request
-      const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_SEARCH;
-      let httpParams = new HttpParams();
-      if (this.searchString) {
-        httpParams = httpParams.append('name', this.searchString);
-      }
-      if (this.selectedCategory) {
-        httpParams = httpParams.append('professionalType', this.selectedCategory);
-      }
-      if (this.selectedSpecialization && this.selectedSpecialization !== 'Any') {
-        httpParams = httpParams.append('specialization', this.selectedSpecialization);
-      }
-      this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-              this.resetVariables();
-              this.professionalList = data.data[0];
-            } else if (data && data.status && data.status.code === -1) {
-              this.resetVariables();
-            }
-          });
-    }
-  }
-
-  private resetVariables() {
     this.professionalList = [];
-    this.selectedCategory = null;
-    this.selectedSpecialization = null;
+    if (!((this.searchString && this.searchString !== '')
+        || (this.selectedCategory && this.selectedCategory !== '' && this.selectedCategory !== 'Any'))) {
+      this.error = true;
+    } else {
+      this.error = false;
+      this.PAGINATION_START = 0;
+      this.PAGINATION_END = this.RESULTS_PER_PAGE;
+      if (
+          !this.searchString &&
+          !this.selectedCategory &&
+          !this.selectedSpecialization
+      ) {
+        //
+      } else {
+        // General Practitioners don't have a specialization
+        if (this.selectedCategory === DoctorType.GEN) {
+          this.selectedSpecialization = null;
+        }
+
+        // converting professionalType to a database readable format
+        if (this.selectedCategory) {
+          this.selectedCategory = this.dataHandlerService.convertProfessionalTypeToDBFormat(
+              JSON.parse(JSON.stringify(this.selectedCategory)));
+        }
+
+        // making 'Any' option null
+        if (this.selectedSpecialization === 'Any') {
+          this.selectedSpecialization = null;
+        }
+
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_SEARCH;
+        let httpParams = new HttpParams();
+        if (this.searchString) {
+          httpParams = httpParams.append('name', this.searchString);
+        }
+        if (this.selectedCategory) {
+          httpParams = httpParams.append('professionalType', this.selectedCategory);
+        }
+        if (this.selectedSpecialization && this.selectedSpecialization !== 'Any') {
+          httpParams = httpParams.append('specialization', this.selectedSpecialization);
+        }
+        this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
+            .then((data: any) => {
+              if (data && data.status && data.status.code === 1) {
+                this.professionalList = data.data[0];
+              }
+            });
+      }
+    }
   }
 
   selectProfessional($event: any) {
@@ -130,20 +133,25 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.PAGINATION_END = this.PAGINATION_START + $event.pageSize;
   }
 
-  private InitialSearch() {
-    // todo: uncomment
-  }
-
-  filterProvinces(regions: any []) {
-    regions = regions.filter((region) => {
-      return region.name.match(/Province/g);
-    });
-    return regions;
-  }
-
-  getCities(selectedRegion) {
-    if (selectedRegion) {
-      return csc.getCitiesOfState(this.country, selectedRegion);
+  selectCategory($event) {
+    this.selectedSpecialization = null;
+    this.selectedCategory = $event.value;
+    switch (this.selectedCategory) {
+      case DoctorType.CON:
+        this.specializations = ['Any'];
+        this.specializations = this.specializations.concat(this.CONSULTANT_TYPES);
+        break;
+      case DoctorType.COUN:
+        this.specializations = ['Any'];
+        this.specializations = this.specializations.concat(this.COUNSELLOR_TYPES);
+        break;
+      case DoctorType.OTH:
+        this.specializations = ['Any'];
+        this.specializations = this.specializations.concat(this.OTHER_MEDICAL_PROFESSIONAL_TYPES);
+        break;
+      default:
+        this.specializations = [];
+        break;
     }
   }
 }

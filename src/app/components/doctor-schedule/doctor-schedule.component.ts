@@ -80,7 +80,10 @@ export class DoctorScheduleComponent implements OnInit {
               }
             })
             .finally(() => {
-                this.router.navigate(['doctor/dashboard']).then(r => {location.reload();});
+                // this.router.navigate(['doctor/dashboard']).then(r => {location.reload(); });
+                // this.router.navigate(['doctor/dashboard']).then(r => {location.reload(); });
+                this.router.navigate(['doctor/dashboard'], {
+                  queryParams: { logInRequired: true } }).then(r => {location.reload(); });
             });
       }
     } else {

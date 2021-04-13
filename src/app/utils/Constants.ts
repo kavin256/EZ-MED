@@ -74,7 +74,7 @@ export enum DoctorType {
     CON = 'Consultant',
     COUN = 'Counselor',
     GEN = 'General Practitioner',
-    OTH = 'Other Medical Practitioner'
+    OTH = 'Other Medical Professional'
 }
 
 export enum APPOINTMENT_STATUS {

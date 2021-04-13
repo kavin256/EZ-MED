@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-doctor-profile',
@@ -13,21 +14,24 @@ import {DataHandlerService} from '../../services/data-handler.service';
     styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent implements OnInit {
-  selectedImage: File;
-  // profileUserId = 'dfg';
-  editable = false;
-  loggedInUser = null;
-  priceCurrency = 'LKR';
-  onVacation = false;
-  userData: UserData;
-  vacationModeTitle = 'Enable Vacation Mode';
-  titles = [
-    {value: DoctorTitles.DR},
-    {value: DoctorTitles.MR},
-    {value: DoctorTitles.MRS},
-    {value: DoctorTitles.MS},
-    {value: DoctorTitles.PROF},
-  ];
+    selectedImage: File;
+    // profileUserId = 'dfg';
+    editable = false;
+    loggedInUser = null;
+    private CONSULTANT_TYPES: any;
+    private OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
+    private COUNSELLOR_TYPES: any;
+    priceCurrency = 'LKR';
+    onVacation = false;
+    userData: UserData;
+    vacationModeTitle = 'Enable Vacation Mode';
+    titles = [
+        {value: DoctorTitles.DR},
+        {value: DoctorTitles.MR},
+        {value: DoctorTitles.MRS},
+        {value: DoctorTitles.MS},
+        {value: DoctorTitles.PROF},
+    ];
 
     doctorTypes = [
         {value: DoctorType.CON},
@@ -49,10 +53,16 @@ export class DoctorProfileComponent implements OnInit {
             category: DoctorType.OTH
         }
     ];
-  specializationsCON;
+    specializations;
+    sub = new Subscription();
+
+    logInRequired: boolean;
+    selectedCategory: any = null;
+    selectedSpecialization: any = null;
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private dataStore: DataStoreService,
         private dataHandlerService: DataHandlerService,
         private dataLoaderService: DataLoaderService,
@@ -61,24 +71,27 @@ export class DoctorProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.specializationsCON = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
-        // this.specializationsCON = ['Dermatologist', 'Pulmonologist'];
+        this.sub = this.route
+            .queryParams
+            .subscribe(params => {
+                this.logInRequired = params.logInRequired === 'true';
+            });
+        this.CONSULTANT_TYPES = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+        this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
+        this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
 
         this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
-        // todo: resolve this commented
-        // if (this.loggedInUser && this.loggedInUser.doctorData) {
-        //   this.userData = this.loggedInUser.doctorData;
-        // }
 
         // if not logged In this page should not be able to access
-        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(
+            JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
         if (this.loggedInUser) {
             this.userData = this.loggedInUser;
         }
 
         // converting professionalType to a user friendly readable format
-        if (this.userData && this.userData.professionalType) {
-            this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
+        if (this.selectedCategory) {
+            this.selectedCategory = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
                 JSON.parse(JSON.stringify(this.userData.professionalType)));
         }
     }
@@ -87,36 +100,48 @@ export class DoctorProfileComponent implements OnInit {
         return '#000000';
     }
 
+    selectCategory($event) {
+        this.selectedSpecialization = null;
+        this.selectedCategory = $event.value;
+        switch (this.selectedCategory) {
+            case DoctorType.CON:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.CONSULTANT_TYPES);
+                break;
+            case DoctorType.COUN:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.COUNSELLOR_TYPES);
+                break;
+            case DoctorType.OTH:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.OTHER_MEDICAL_PROFESSIONAL_TYPES);
+                break;
+            default:
+                this.specializations = [];
+                break;
+        }
+    }
+
     toggleEditable(editable: boolean) {
         this.editable = editable;
     }
 
     saveData() {
-        if (this.userData.professionalType &&
+        if (this.selectedCategory &&
             this.userData.priceForAppointment &&
-            parseInt(this.userData.priceForAppointment, 10) > 0 &&
-            this.userData.professionalType) {
+            parseInt(this.userData.priceForAppointment, 10) > 0) {
+
             // converting professionalType to a database readable format
-            if (this.userData && this.userData.professionalType) {
+            if (this.selectedCategory) {
                 this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
-                    JSON.parse(JSON.stringify(this.userData.professionalType)));
+                    JSON.parse(JSON.stringify(this.selectedCategory)));
             }
-            // todo: change this in the backend
-            this.userData.professionalType = this.userData.professionalType;
             const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.userData.userId;
             this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData)
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1) {
-                        // console.log('data');
-                        // console.log(data.data);
-                        // todo: check the following data[0]
-                        // todo: data format from BE should be updated / changed
                         sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
                         this.toggleEditable(false);
-
-                    } else if (data && data.status && data.status.code === -1) {
-                        // console.log('data null');
-                        // console.log(data.data);
                     }
                 });
         } else if (parseInt(this.userData.priceForAppointment, 10) <= 0) {
@@ -125,10 +150,6 @@ export class DoctorProfileComponent implements OnInit {
         } else {
             alert('Please fill mandatory fields.');
         }
-    }
-
-    isConsultant(type: string) {
-        return type === DoctorType.CON;
     }
 
     goToMyAppointments() {
