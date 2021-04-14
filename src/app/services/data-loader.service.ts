@@ -37,7 +37,7 @@ export class DataLoaderService {
     // make a POST request
     public post<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey, data: any) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        if (this.dataStore.has(dataKey, true)) {
+        if (dataKey && this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
 
@@ -48,9 +48,11 @@ export class DataLoaderService {
             }).subscribe(
                 // tslint:disable-next-line:no-shadowed-variable
                 ( data) => {
+                    if (dataKey) {
+                        // @ts-ignore
+                        this.dataStore.set(dataKey, data.data, true);
+                    }
                     resolve(data);
-                    // @ts-ignore
-                    this.dataStore.set(dataKey, data.data, true);
                 });
         });
     }

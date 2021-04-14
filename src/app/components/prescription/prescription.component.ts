@@ -104,6 +104,8 @@ export class PrescriptionComponent implements OnInit {
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
               this.prescription = data.data[0];
+              this.prescribedItems = this.prescription.prescribedItems;
+              this.prescribedNoteItems = this.prescription.prescribedNoteItems;
               this.prescription.issuedDate = new Date(this.prescription.issuedDate);
             } else if (data && data.status && data.status.code === -1) {
               alert('Something is not right. Please check your internet connection!');
