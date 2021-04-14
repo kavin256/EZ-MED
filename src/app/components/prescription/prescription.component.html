@@ -117,7 +117,7 @@
     <br>
     <ng-container *ngIf="!isNewPrescription && doctorSide">
         <br>
-        <button *ngIf="!isConfirmationActive" mat-raised-button color="warn" style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription</button>
+        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive" mat-raised-button color="warn" style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription</button>
         <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
         <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px" mat-raised-button color="primary">Yes</button>
         <span *ngIf="isConfirmationActive" >&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="isConfirmationActive = !isConfirmationActive" style="width: 150px" mat-raised-button color="secondary">No, don't cancel</button></span>

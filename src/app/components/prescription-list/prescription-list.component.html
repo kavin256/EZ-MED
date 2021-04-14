@@ -8,7 +8,7 @@
     </ng-container>
     <p *ngIf="prescriptionList && prescriptionList.length > 0" style="font-size: x-large">List of Prescriptions:</p>
     <ng-container *ngFor="let prescription of prescriptionList; let i = index">
-        <button (click)="selectPrescription(prescription.id)" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
+        <button [ngStyle]="{'background-color': prescription.status ? '#d4d5d6' : 'white'}" (click)="selectPrescription(prescription.id)" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
         <br>
         <br>
     </ng-container>
