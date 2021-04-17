@@ -16,6 +16,8 @@
 
         <script>
 
+            import {Constants} from "../app/utils/Constants";
+
             function readCookie(name) {
                 const nameEQ = name + "=";
                 const ca = document.cookie.split(';');
@@ -38,7 +40,9 @@
                     paymentAmount: parseFloat(value4),
                     currency: 'LKR',
                     // returnUrl: 'http://www.ezmed.lk.s3-website.ap-south-1.amazonaws.com' +'/success',
-                    returnUrl: 'http://localhost:4200' +'/success',
+                    returnUrl: Constants.FE_BASE_URL +'/success',
+                    // returnUrl: 'http://www.ezmed.lk/success',
+                    // returnUrl: 'http://localhost:4200' +'/success',
                     clientRef: value5,
                     comment: 'This is a demo payment'
                 };

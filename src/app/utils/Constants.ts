@@ -1,8 +1,10 @@
 export enum Constants {
     // endpoints
     // API_BASE_URL = 'http://TestApp-env.eba-j2nv42tb.ap-south-1.elasticbeanstalk.com:80',
+    // API_BASE_URL = 'http://Ezmedprodapp-env.eba-3pxhpygk.ap-south-1.elasticbeanstalk.com:80',
     API_BASE_URL = 'http://localhost:5000',
     // FE_BASE_URL = 'http://www.ezmed.lk.s3-website.ap-south-1.amazonaws.com',
+    // FE_BASE_URL = 'http://www.ezmed.lk',
     FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
