@@ -65,6 +65,7 @@ export class PaymentConfirmationComponent implements OnInit {
     // todo: get the charge values from backend !!!!
     sessionStorage.setItem(LocalStorageKeys.chargeAmount, (this.totalCharge * 100).toString());
     sessionStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
+    sessionStorage.setItem(LocalStorageKeys.comment, 'This is a demo payment');
     if (
         sessionStorage.getItem(LocalStorageKeys.clientRef)
         && sessionStorage.getItem(LocalStorageKeys.chargeAmount)
@@ -75,6 +76,7 @@ export class PaymentConfirmationComponent implements OnInit {
     } else {
       sessionStorage.removeItem('chargeAmount');
       sessionStorage.removeItem('clientRef');
+      sessionStorage.removeItem('comment');
       window.alert('Something wrong with the payment amount!');
     }
   }
