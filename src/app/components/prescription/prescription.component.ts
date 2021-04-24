@@ -166,7 +166,7 @@ export class PrescriptionComponent implements OnInit {
 
         // create url and send request
         const url = Constants.API_BASE_URL + Constants.SET_PRESCRIPTION_STATUS + this.prescriptionId + '/' + PrescriptionStatus.cancelled;
-        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, prescription )
+        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null )
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     this.goToPrescriptionList();
