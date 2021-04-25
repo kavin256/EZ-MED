@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class ModalComponent implements OnInit {
 
   @Input() modalType;
+  @Input() dataA;
   // @Input() errorMessage?: string;
   @Output() clickEmitter = new EventEmitter<string>();
 
@@ -18,6 +19,7 @@ export class ModalComponent implements OnInit {
       private dialogRef: MatDialogRef<ModalComponent>,
       @Inject(MAT_DIALOG_DATA) data) {
     this.modalType = data.modalType;
+    this.dataA = data.dataA;
   }
 
   ngOnInit() {

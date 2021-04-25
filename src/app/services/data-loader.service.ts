@@ -144,15 +144,18 @@ export class DataLoaderService {
     }
 
     public activateLoader(activate: boolean, MODAL_TYPE: string, disableClose?: boolean, callBackFunction?,
-                          size = {height: 300, width: 300}) {
+                          size = {minHeight: 500, minWidth: 320, maxHeight: 600, maxWidth: 620}, dataA?) {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.data = {
-            modalType: MODAL_TYPE
+            modalType: MODAL_TYPE,
+            dataA
         };
         dialogConfig.disableClose = disableClose;
-        dialogConfig.width = size.width.toString() + 'px';
-        dialogConfig.height = size.height.toString() + 'px';
+        dialogConfig.maxWidth = size.maxWidth.toString() + 'px';
+        dialogConfig.minWidth = size.minWidth.toString() + 'px';
+        dialogConfig.maxHeight = size.maxHeight.toString() + 'px';
+        dialogConfig.minHeight = size.minHeight.toString() + 'px';
 
         let dialogRef;
         if (activate) {

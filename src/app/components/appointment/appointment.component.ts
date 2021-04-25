@@ -31,6 +31,82 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     sub = new Subscription();
     previousStatus: APPOINTMENT_STATUS;
     networkError: boolean;
+    medicalHistory =
+        [
+            {
+                prescribedItems: [
+                    {
+                        title: 'Augmentine 250mg',
+                        take: '5 days BD'
+                    },
+                    {
+                        title: 'Agmentine 250mg',
+                        take: '5 days BD'
+                    }
+                ],
+                prescribedNoteItems: [
+                    {
+                        description: 'FBC'
+                    },
+                    {
+                        description: 'WWE'
+                    }
+                ]
+            },
+            {
+                prescribedItems: [
+                    {
+                        title: 'Augmentine 250mg',
+                        take: '5 days BD'
+                    },
+                    {
+                        title: 'Agmentine 250mg',
+                        take: '5 days BD'
+                    }
+                ],
+                prescribedNoteItems: [
+                    {
+                        description: 'FBC'
+                    },
+                    {
+                        description: 'WWE'
+                    }
+                ]
+            },
+            {
+                prescribedItems: [
+                    {
+                        title: 'Augmentine 250mg',
+                        take: '5 days BD'
+                    },
+                    {
+                        title: 'Agmentine 250mg',
+                        take: '5 days BD'
+                    }
+                ],
+                prescribedNoteItems: [
+                    {
+                        description: 'FBC'
+                    },
+                    {
+                        description: 'WWE'
+                    }
+                ]
+            },
+            {
+                prescribedItems: [
+                    {
+                        title: 'Agmentine 250mg',
+                        take: '5 days BD'
+                    }
+                ],
+                prescribedNoteItems: [
+                    {
+                        description: 'FBC'
+                    }
+                ]
+            }
+        ];
 
     constructor(
       private router: Router,
@@ -148,9 +224,15 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     goToPrescription() {
-        console.log('open prescription list');
         this.router.navigate(['appointment/prescriptionList'], { queryParams: { appointmentId: this.bookingId } }).then(r => {});
+    }
 
+    openPastRecords(): void {
+        this.dataLoaderService.activateLoader(true, 'PAST_RECORDS',
+            false,
+            undefined,
+            {minHeight: 500, minWidth: 380, maxHeight: 800, maxWidth: 620},
+            this.medicalHistory);
     }
 
     isNew(status: APPOINTMENT_STATUS) {
