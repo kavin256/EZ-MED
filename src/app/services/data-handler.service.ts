@@ -7,7 +7,6 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {LocalStorageKeys} from './data-store.service';
 import {DataLoaderService} from './data-loader.service';
 import {ConfigModel} from '../models/config';
-import {AppointmentData} from '../models/appointment-data';
 
 @Injectable({
   providedIn: 'root'
@@ -98,22 +97,12 @@ export class DataHandlerService {
     for (let i = 1; i < 8; i++) {
       dummyAppointmentSlotArray.push(this.fillDummyAppointmentSlot(i, 3));
     }
-    // if (dummyAppointmentSlotArray.length > 0 && dummyAppointmentSlotArray.length === fixedDoctorDates.length) {
     this.loadAvailableSlots(dummyAppointmentSlotArray, fixedDoctorDates);
-    // }
     return dummyAppointmentSlotArray;
   }
 
   fillDummyAppointmentSlot(dayNo: number, numberOfTimeSlots: number) {
     const workingTimePeriods = [];
-    for (let i = 0; i < numberOfTimeSlots; i ++) {
-      workingTimePeriods.push(
-          {
-            startTime: '10:00:00',
-            endTime: '11:00:00'
-          }
-      );
-    }
     return {
       day: dayNo,
       workingTimePeriods
@@ -274,7 +263,6 @@ export class DataHandlerService {
         if (fixedDoctorDates[index] &&
             fixedDoctorDates[index].workingTimePeriods &&
             fixedDoctorDates[index].workingTimePeriods[j]) {
-          // workingTimePeriod.isActive = true;
           workingTimePeriod.startTime = fixedDoctorDates[index].workingTimePeriods[j].startTime;
           workingTimePeriod.endTime = fixedDoctorDates[index].workingTimePeriods[j].endTime;
         }

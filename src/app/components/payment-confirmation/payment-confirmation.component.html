@@ -11,7 +11,13 @@
             [professional]="doctor"
             ></app-professional-card>
     </div>
-
+    <div>
+        <mat-form-field style="width: 320px; height: 100px"  appearance="legacy">
+            <mat-label>Summary of your concern..</mat-label>
+            <textarea style="height: 100px" type="text" matInput #input8 [(ngModel)]='appointmentConcern' placeholder="eg: I have a back pain"></textarea>
+        </mat-form-field>
+    </div>
+    <br>
     <div>
         <br>
 

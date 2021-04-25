@@ -60,6 +60,8 @@ export class PaymentSuccessComponent implements OnInit {
                 this.paymentResponseData.responseCode === '08'
             ) {
               this.isPaymentSuccessful = true;
+              this.updateConcern(this.paymentResponseData, sessionStorage.getItem(LocalStorageKeys.appointmentConcern));
+              sessionStorage.removeItem(LocalStorageKeys.appointmentConcern);
               sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
             } else {
               this.isPaymentSuccessful = false;
@@ -84,5 +86,23 @@ export class PaymentSuccessComponent implements OnInit {
 
   getTime(appointmentTime: Time) {
     return moment(appointmentTime, ['HH.mm.ss']).format('hh:mm a');
+  }
+
+  private updateConcern(paymentResponseData, concern) {
+    const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_CONCERN + paymentResponseData.appointment.appointmentId;
+    this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, {concern})
+        .then((data: any) => {
+          if (data && data.status && data.status.code === 1) {
+            // this.booking = data.data[0];
+          } else if (data && data.status && data.status.code === -1) {
+            // this.booking.status = this.previousStatus;
+            // alert('Cannot update the appointment status right now. Please check your internet connection!');
+          }
+        }).catch(() => {
+      // this.booking.status = this.previousStatus;
+      // alert('Cannot update the appointment status right now. Please check your internet connection!');
+    }).finally(() => {
+      // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+    });
   }
 }

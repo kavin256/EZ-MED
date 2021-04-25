@@ -103,11 +103,13 @@ export class DoctorScheduleComponent implements OnInit {
     this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
-            this.doctorScheduleData = data.data[0];
             this.availableForAppointment = JSON.parse(this.professional.availableForAppointment);
-            // this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
-            //     JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
-            // );
+            this.doctorScheduleData = data.data[0];
+            if (!this.availableForAppointment) {
+              this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
+                  JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
+              );
+            }
             this.prepareDisplayData(this.doctorScheduleData);
             sessionStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);

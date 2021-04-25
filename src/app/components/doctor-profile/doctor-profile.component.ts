@@ -15,7 +15,6 @@ import {Subscription} from 'rxjs';
 })
 export class DoctorProfileComponent implements OnInit {
     selectedImage: File;
-    // profileUserId = 'dfg';
     editable = false;
     loggedInUser = null;
     private CONSULTANT_TYPES: any;
@@ -31,12 +30,6 @@ export class DoctorProfileComponent implements OnInit {
         {value: DoctorTitles.MRS},
         {value: DoctorTitles.MS},
         {value: DoctorTitles.PROF},
-    ];
-
-    doctorTypes = [
-        {value: DoctorType.CON},
-        {value: DoctorType.GEN},
-        {value: DoctorType.OTH}
     ];
 
     categories = [
@@ -55,7 +48,6 @@ export class DoctorProfileComponent implements OnInit {
     ];
     specializations;
     sub = new Subscription();
-
     logInRequired: boolean;
     selectedCategory: any = null;
     selectedSpecialization: any = null;
@@ -90,9 +82,10 @@ export class DoctorProfileComponent implements OnInit {
         }
 
         // converting professionalType to a user friendly readable format
-        if (this.selectedCategory) {
+        if (this.userData && this.userData.professionalType) {
             this.selectedCategory = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
                 JSON.parse(JSON.stringify(this.userData.professionalType)));
+            this.selectCategory({value: this.selectedCategory});
         }
     }
 
@@ -145,7 +138,6 @@ export class DoctorProfileComponent implements OnInit {
                     }
                 });
         } else if (parseInt(this.userData.priceForAppointment, 10) <= 0) {
-            // Todo: show a proper error
             alert('Price per consultation should be more than LKR 0');
         } else {
             alert('Please fill mandatory fields.');

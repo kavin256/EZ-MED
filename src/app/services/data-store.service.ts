@@ -69,6 +69,7 @@ export enum LocalStorageKeys {
   loggedInUser = 'loggedInUser',
   chargeAmount = 'chargeAmount',
   clientRef = 'clientRef',
+  appointmentConcern = 'appointmentConcern',
   comment = 'comment',
   selectedProfessionalUserId = 'selectedProfessionalUserId',
   selectedProfessional = 'selectedProfessional',

@@ -22,6 +22,7 @@ export class PaymentConfirmationComponent implements OnInit {
   totalCharge = 0;
 
   doctor: UserData;
+  appointmentConcern: string;
   isScheduleVisible = false;
   selectedAppointmentId = '';
   loggedInUser: UserData;
@@ -64,6 +65,9 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   payment() {
+    // set appointment concern
+    sessionStorage.setItem(LocalStorageKeys.appointmentConcern, this.appointmentConcern);
+
     // todo: get the charge values from backend !!!!
     sessionStorage.setItem(LocalStorageKeys.chargeAmount, (this.totalCharge * 100).toString());
     sessionStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));

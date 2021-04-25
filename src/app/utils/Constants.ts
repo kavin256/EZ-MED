@@ -1,9 +1,9 @@
 export enum Constants {
     // endpoints
-    // API_BASE_URL = 'http://Ezmedprodapp-env.eba-3pxhpygk.ap-south-1.elasticbeanstalk.com:80',
-    API_BASE_URL = 'http://localhost:5000',
-    // FE_BASE_URL = 'http://www.ezmed.lk',
-    FE_BASE_URL = 'http://localhost:4200',
+    API_BASE_URL = 'http://Ezmedprodapp-env.eba-3pxhpygk.ap-south-1.elasticbeanstalk.com:80',
+    // API_BASE_URL = 'http://localhost:5000',
+    FE_BASE_URL = 'http://www.ezmed.lk',
+    // FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     LOAD_CONFIGURATIONS = '/admin/configs',
@@ -15,6 +15,7 @@ export enum Constants {
     LOAD_PRESCRIPTION_LIST = '/appointment/prescriptionList/',
     USER_APPOINTMENTS = '/appointment/appointments/',
     USER_APPOINTMENT_SET_STATUS = '/appointment/set-status/',
+    USER_APPOINTMENT_CONCERN = '/appointment/set-concern/',
     APPOINTMENT_BY_ID = '/appointment/appointmentById/',
     ADD_APPOINTMENT = '/appointment/add-appointment/',
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
@@ -85,48 +86,3 @@ export enum APPOINTMENT_STATUS {
     CANCELLED_BY_PATIENT,
     CANCELLED_BY_DOCTOR
 }
-
-export const specializationsCON = [
-    'Any',
-    'Immunologist',
-    'Cardiologist',
-    'Pulmonologist',
-    'Radiologist',
-    'Dermatologist',
-    'ClinicalNutritionist',
-    'EyeSurgeon',
-    'Gastroenterologist',
-    'Urologist',
-    'ObstetricianAndGynecologists',
-    'Endocrinologist',
-    'Neurologist',
-    'Pediatrician',
-    'Physician',
-    'Pathologist',
-    'Microbiologist',
-    'Psychiatric',
-    'Rheumatologist',
-    'Venerologist'
-    ];
-
-export const specializationsCOUN = [
-    'Any',
-    'Immunologist',
-    'Cardiologist',
-    'Pulmonologist',
-    'Radiologist',
-    'Dermatologist',
-    'ClinicalNutritionist',
-    'Endocrinologist'
-    ];
-
-export const specializationsOTH = [
-    'Any',
-    'Nutritionist',
-    'Dieticians',
-    'Psychologist',
-    'Occupational Therapist',
-    'Physiotherapist',
-    'SpeechAndLanguageTherapist',
-    'Clinical Audiologist'
-    ];

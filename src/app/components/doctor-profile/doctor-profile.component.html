@@ -24,7 +24,7 @@
 
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Professional Level</mat-label>
-            <mat-select  (selectionChange)="selectCategory($event)">
+            <mat-select (selectionChange)="selectCategory($event)" [value]="selectedCategory">
                 <ng-container *ngFor="let category of categories">
                     <mat-option value="{{category.category}}">{{category.category}}</mat-option>
                 </ng-container>
