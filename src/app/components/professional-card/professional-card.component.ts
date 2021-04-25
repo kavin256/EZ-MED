@@ -10,6 +10,7 @@ import {UserData} from '../../models/user-data';
 })
 export class ProfessionalCardComponent implements OnInit, OnChanges {
   @Input() professional: UserData;
+  @Input() chargeVisible = false;
   @Output() selectProfessional: EventEmitter<any> = new EventEmitter<any>();
 
   overTheDoctorCard = null;

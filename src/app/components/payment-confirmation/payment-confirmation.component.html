@@ -18,35 +18,35 @@
         <table style="width:320px;">
             <tr>
                 <td style="width: 65%; text-align:left">
-                    Professional charge
+                    Appointment charge
                 </td>
                 <td style="width: 15%; text-align:left">
                     LKR
                 </td>
                 <td style="text-align:right">
-                    {{ doctor?.priceForAppointment | currency:'LKR':'' }}
+                    {{ preTaxTotalCharge | currency:'LKR':'' }}
                 </td>
             </tr>
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    Service charge-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    LKR-->
+<!--                </td>-->
+<!--                <td style="text-align:right">-->
+<!--                    {{ serviceCharge | currency:'LKR':'' }}-->
+<!--                </td>-->
+<!--            </tr>-->
             <tr>
                 <td>
-                    Service charge
+                    Taxes / Fees
                 </td>
                 <td>
                     LKR
                 </td>
                 <td style="text-align:right">
-                    {{ serviceCharge | currency:'LKR':'' }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Taxes/Charges
-                </td>
-                <td>
-                    LKR
-                </td>
-                <td style="text-align:right">
-                    {{ taxAmount | currency:'LKR':'' }}
+                    {{ taxesAndFees | currency:'LKR':'' }}
                 </td>
             </tr>
             <tr>

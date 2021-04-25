@@ -15,9 +15,10 @@ import {isNumber} from 'util';
 export class PaymentConfirmationComponent implements OnInit {
 
   // charges
-  taxAmount = 0;
+  taxesAndFees = 0;
   serviceCharge = 0;
   serviceChargeRate = 0.1;
+  preTaxTotalCharge = 0;
   totalCharge = 0;
 
   doctor: UserData;
@@ -49,7 +50,8 @@ export class PaymentConfirmationComponent implements OnInit {
 
           // calculate charging amounts
           this.serviceCharge = parseInt(this.doctor.priceForAppointment, 10) * this.serviceChargeRate;
-          this.totalCharge = parseInt(this.doctor.priceForAppointment, 10) + this.serviceCharge;
+          this.preTaxTotalCharge = parseInt(this.doctor.priceForAppointment, 10) + this.serviceCharge;
+          this.totalCharge = parseInt(this.doctor.priceForAppointment, 10) + this.serviceCharge + this.taxesAndFees;
         });
   }
 

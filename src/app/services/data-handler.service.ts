@@ -274,7 +274,7 @@ export class DataHandlerService {
         if (fixedDoctorDates[index] &&
             fixedDoctorDates[index].workingTimePeriods &&
             fixedDoctorDates[index].workingTimePeriods[j]) {
-          workingTimePeriod.isActive = true;
+          // workingTimePeriod.isActive = true;
           workingTimePeriod.startTime = fixedDoctorDates[index].workingTimePeriods[j].startTime;
           workingTimePeriod.endTime = fixedDoctorDates[index].workingTimePeriods[j].endTime;
         }

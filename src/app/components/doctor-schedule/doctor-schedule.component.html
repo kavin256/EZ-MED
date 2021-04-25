@@ -9,14 +9,21 @@
                 </mat-expansion-panel-header>
                 <mat-divider></mat-divider>
                 <br>
+                <p align="left"><b>
+                    <mat-checkbox
+                            (change)="disableDay($event, schedule)"
+                            [checked]="schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0"><span style="font-family: 'Arial Black'">Active</span>
+                    </mat-checkbox>
+                </b></p>
                 <ng-container *ngFor="let workingTimePeriod of schedule.workingTimePeriods; let i = index">
-                    <p align="left"><b>
-                        <mat-checkbox
-                                (change)="workingTimePeriod.isActive = !workingTimePeriod.isActive"
-                                [checked]="workingTimePeriod && workingTimePeriod.isActive"><span style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</span>
-                        </mat-checkbox>
-                    </b></p>
-                    <ng-container *ngIf="workingTimePeriod.isActive">
+
+<!--                    <p align="left"><b>-->
+<!--                        <mat-checkbox-->
+<!--                                (change)="workingTimePeriod.isActive = !workingTimePeriod.isActive"-->
+<!--                                [checked]="workingTimePeriod && workingTimePeriod.isActive"><span style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</span>-->
+<!--                        </mat-checkbox>-->
+<!--                    </b></p>-->
+                    <ng-container>
                         <mat-label>From:</mat-label>
                         <ngb-timepicker [(ngModel)]="workingTimePeriod.startTimeSelected" [meridian]="meridian"></ngb-timepicker>
                         <mat-label>To:</mat-label>
@@ -25,6 +32,10 @@
                         <br>
                     </ng-container>
                 </ng-container>
+                <div *ngIf="false" align="right">
+                    <button (click)="addMoreSlot(true, schedule)" style="width: 50px" color="primary" mat-stroked-button>+</button>&nbsp;
+                    <button (click)="removeSlot(true, schedule)" style="width: 50px" color="primary" mat-stroked-button>-</button>
+                </div>
             </mat-expansion-panel>
             <br>
         </div>

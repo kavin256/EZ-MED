@@ -105,9 +105,9 @@ export class DoctorScheduleComponent implements OnInit {
           if (data && data.status && data.status.code === 1) {
             this.doctorScheduleData = data.data[0];
             this.availableForAppointment = JSON.parse(this.professional.availableForAppointment);
-            this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
-                JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
-            );
+            // this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
+            //     JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
+            // );
             this.prepareDisplayData(this.doctorScheduleData);
             sessionStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
@@ -131,14 +131,16 @@ export class DoctorScheduleComponent implements OnInit {
 
           // filter out inactive slots
           const filtered = doctorDate.workingTimePeriods.filter((workingTimePeriod, index, arr) => {
-            return workingTimePeriod.isActive;
+            return workingTimePeriod.endTimeSelected && workingTimePeriod.startTimeSelected;
           });
 
           filtered.forEach((workingTimePeriod) => {
-            workingTimePeriod.endTime = this.dataHandlerService.convertHoursAndMinutesToTime(
-                workingTimePeriod.endTimeSelected);
-            workingTimePeriod.startTime = this.dataHandlerService.convertHoursAndMinutesToTime(
-                workingTimePeriod.startTimeSelected);
+            if (workingTimePeriod.endTimeSelected && workingTimePeriod.startTimeSelected) {
+              workingTimePeriod.endTime = this.dataHandlerService.convertHoursAndMinutesToTime(
+                  workingTimePeriod.endTimeSelected);
+              workingTimePeriod.startTime = this.dataHandlerService.convertHoursAndMinutesToTime(
+                  workingTimePeriod.startTimeSelected);
+            }
           });
           doctorDate.workingTimePeriods = filtered;
           this.sortTheSchedule(doctorDate.workingTimePeriods);
@@ -214,5 +216,31 @@ export class DoctorScheduleComponent implements OnInit {
       }
     });
     return success;
+  }
+
+  disableDay(event, schedule) {
+    if (event.checked) {
+      schedule.workingTimePeriods.push(
+          {
+            startTime: '',
+            endTime: ''
+          }
+      );
+    } else {
+      schedule.workingTimePeriods = [];
+    }
+  }
+
+  addMoreSlot(event, schedule) {
+    schedule.workingTimePeriods.push(
+        {
+          startTime: '',
+          endTime: ''
+        }
+    );
+  }
+
+  removeSlot(event, schedule) {
+    schedule.workingTimePeriods.splice(-1, 1);
   }
 }

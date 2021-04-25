@@ -50,27 +50,29 @@
                                     {{professional?.specialityC}}
                                 </td>
                             </tr>
-                        <tr>
-                            <mat-divider style=" color: #797D7F; left: inherit; width: 160px"></mat-divider>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                            <td style=" color: #797D7F; font-size: small; text-align: left">
-                                Charge per consultation:
-                            </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                            <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                {{currency}} {{professional?.priceForAppointment}}
-                            </td>
-                        </tr>
+                        <ng-container *ngIf="chargeVisible">
+                            <tr>
+                                <mat-divider style=" color: #797D7F; left: inherit; width: 160px"></mat-divider>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style=" color: #797D7F; font-size: small; text-align: left">
+                                    Charge per consultation:
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
+                                    {{currency}} {{professional?.priceForAppointment}}
+                                </td>
+                            </tr>
+                        </ng-container>
                         <tr>
                     </table>
                 </th>

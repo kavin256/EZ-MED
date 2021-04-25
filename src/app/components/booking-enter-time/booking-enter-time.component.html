@@ -1,6 +1,8 @@
 <div class="mat-card-style" align="center">
     <app-page-title [title]="(!summaryShown && !showRedirectionMessage) ? 'Select Convenient Time' : (summaryShown && !showRedirectionMessage) ? 'Appointment Summary' : ''"></app-page-title>
-    <app-professional-card [professional]="doctor"></app-professional-card>
+    <app-professional-card
+            [professional]="doctor"
+    ></app-professional-card>
     <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
 
         <mat-form-field  style="width: 240px" >

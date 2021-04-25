@@ -106,7 +106,7 @@ export class SignUpComponent implements OnInit {
               });
             }
           } else if (data && data.status && data.status.code === -1) {
-            alert('Something went wrong. Please contact support !!');
+            alert(data.status.message);
           }
         });
   }
