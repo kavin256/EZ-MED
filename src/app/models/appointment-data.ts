@@ -10,6 +10,7 @@ export class AppointmentData {
     appointmentTime: Time;
     appointmentId: number;
     status: APPOINTMENT_STATUS;
+    concern: string;
     price: any;
     prescriptions: Prescription [];
     timeSlotId: number;

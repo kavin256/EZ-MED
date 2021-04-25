@@ -33,6 +33,11 @@
                 [professional]="doctor"
         ></app-professional-card>
     </ng-container>
+    <ng-container>
+        <ngb-alert *ngIf="booking?.concern" [dismissible]="false" type="danger">
+            Patient's concern: <br>{{booking?.concern}}
+        </ngb-alert>
+    </ng-container>
     <ng-container *ngIf="doctorSide">
         <ng-container *ngIf="!isPatientDetailsShown">
             <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary" mat-flat-button>Show Patient Details</button>    <br>
