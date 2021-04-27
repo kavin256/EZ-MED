@@ -231,7 +231,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.dataLoaderService.activateLoader(true, 'PAST_RECORDS',
             false,
             undefined,
-            {minHeight: 500, minWidth: 380, maxHeight: 800, maxWidth: 620},
+            undefined,
             this.medicalHistory);
     }
 

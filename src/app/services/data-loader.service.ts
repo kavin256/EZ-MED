@@ -151,11 +151,17 @@ export class DataLoaderService {
             modalType: MODAL_TYPE,
             dataA
         };
-        dialogConfig.disableClose = disableClose;
-        dialogConfig.maxWidth = size.maxWidth.toString() + 'px';
-        dialogConfig.minWidth = size.minWidth.toString() + 'px';
-        dialogConfig.maxHeight = size.maxHeight.toString() + 'px';
-        dialogConfig.minHeight = size.minHeight.toString() + 'px';
+        if (MODAL_TYPE === 'PAST_RECORDS') {
+            dialogConfig.disableClose = disableClose;
+            dialogConfig.maxWidth = '320px';
+            dialogConfig.maxHeight = '500px';
+        } else {
+            dialogConfig.disableClose = disableClose;
+            dialogConfig.maxWidth = size.maxWidth.toString() + 'px';
+            dialogConfig.minWidth = size.minWidth.toString() + 'px';
+            dialogConfig.maxHeight = size.maxHeight.toString() + 'px';
+            dialogConfig.minHeight = size.minHeight.toString() + 'px';
+        }
 
         let dialogRef;
         if (activate) {
