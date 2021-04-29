@@ -9,6 +9,7 @@ import {AppointmentData} from '../../models/appointment-data';
 import {Subscription} from 'rxjs';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import * as moment from 'moment';
+import {Prescription} from '../../models/prescription';
 
 @Component({
   selector: 'app-appointment',
@@ -31,82 +32,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     sub = new Subscription();
     previousStatus: APPOINTMENT_STATUS;
     networkError: boolean;
-    medicalHistory =
-        [
-            {
-                prescribedItems: [
-                    {
-                        title: 'Augmentine 250mg',
-                        take: '5 days BD'
-                    },
-                    {
-                        title: 'Agmentine 250mg',
-                        take: '5 days BD'
-                    }
-                ],
-                prescribedNoteItems: [
-                    {
-                        description: 'FBC'
-                    },
-                    {
-                        description: 'WWE'
-                    }
-                ]
-            },
-            {
-                prescribedItems: [
-                    {
-                        title: 'Augmentine 250mg',
-                        take: '5 days BD'
-                    },
-                    {
-                        title: 'Agmentine 250mg',
-                        take: '5 days BD'
-                    }
-                ],
-                prescribedNoteItems: [
-                    {
-                        description: 'FBC'
-                    },
-                    {
-                        description: 'WWE'
-                    }
-                ]
-            },
-            {
-                prescribedItems: [
-                    {
-                        title: 'Augmentine 250mg',
-                        take: '5 days BD'
-                    },
-                    {
-                        title: 'Agmentine 250mg',
-                        take: '5 days BD'
-                    }
-                ],
-                prescribedNoteItems: [
-                    {
-                        description: 'FBC'
-                    },
-                    {
-                        description: 'WWE'
-                    }
-                ]
-            },
-            {
-                prescribedItems: [
-                    {
-                        title: 'Agmentine 250mg',
-                        take: '5 days BD'
-                    }
-                ],
-                prescribedNoteItems: [
-                    {
-                        description: 'FBC'
-                    }
-                ]
-            }
-        ];
+    medicalHistory: any;
 
     constructor(
       private router: Router,
@@ -132,6 +58,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                       this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
                       this.patient = this.booking.patientData;
                       this.doctor = this.booking.doctorData;
+
+                      // load Medical History
+                      this.loadMedicalHistory();
                   }).catch((e) => {
                       console.log(e);
                   }).finally(() => {});
@@ -263,6 +192,17 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                 alert('Cannot update the appointment status right now. Please check your internet connection!');
             }).finally(() => {
                 this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+        });
+    }
+
+    private loadMedicalHistory() {
+        this.dataHandlerService.loadMedicalHistory(this.bookingId, this.dataLoaderService)
+            .then((data: Prescription []) => {
+                if (data) {
+                    this.medicalHistory = data;
+                }
+            }).catch((e) => {
+        }).finally(() => {
         });
     }
 }

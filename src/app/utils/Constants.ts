@@ -1,9 +1,9 @@
 export enum Constants {
     // endpoints
-    API_BASE_URL = 'http://Ezmedprodapp-env.eba-3pxhpygk.ap-south-1.elasticbeanstalk.com:80',
-    // API_BASE_URL = 'http://localhost:5000',
-    FE_BASE_URL = 'http://www.ezmed.lk',
-    // FE_BASE_URL = 'http://localhost:4200',
+    // API_BASE_URL = 'http://Ezmedprodapp-env.eba-3pxhpygk.ap-south-1.elasticbeanstalk.com:80',
+    API_BASE_URL = 'http://localhost:5000',
+    // FE_BASE_URL = 'http://www.ezmed.lk',
+    FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     LOAD_CONFIGURATIONS = '/admin/configs',
@@ -17,6 +17,8 @@ export enum Constants {
     USER_APPOINTMENT_SET_STATUS = '/appointment/set-status/',
     USER_APPOINTMENT_CONCERN = '/appointment/set-concern/',
     APPOINTMENT_BY_ID = '/appointment/appointmentById/',
+    LOAD_MEDICAL_HISTORY_FOR_BOOKING = '/appointment/medicalHistoryForBooking/',
+    LOAD_MEDICAL_HISTORY_FOR_USER = '/appointment/medicalHistoryForUser/',
     ADD_APPOINTMENT = '/appointment/add-appointment/',
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',
     UPDATE_USER_SPECIFIC_DATA = '/user/specific-data/',

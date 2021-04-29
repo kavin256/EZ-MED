@@ -8,6 +8,7 @@ import {DatePipe} from '@angular/common';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
+import {Prescription} from '../../models/prescription';
 
 @Component({
   selector: 'app-patient-profile',
@@ -17,10 +18,11 @@ import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/
 export class PatientProfileComponent implements OnInit {
 
   selectedImage: File;
-  patient;
+  patient: UserData;
   patientAge;
   gender;
   searchedProfessionalName;
+  medicalHistory: any;
 
   // form controls
   firstNameFormControl = new FormControl('');
@@ -57,6 +59,7 @@ export class PatientProfileComponent implements OnInit {
     this.patient = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
     if (this.patient) {
       this.prepareFrontEndData(this.patient);
+      this.loadMedicalHistory(parseInt(this.patient.userId, 10));
     }
   }
 
@@ -156,5 +159,24 @@ export class PatientProfileComponent implements OnInit {
           }
         }
     );
+  }
+
+  goToMyMedicalHistory(): void {
+    this.dataLoaderService.activateLoader(true, 'PAST_RECORDS',
+        false,
+        undefined,
+        undefined,
+        this.medicalHistory);
+  }
+
+  private loadMedicalHistory(patientId: number) {
+    this.dataHandlerService.loadMedicalHistoryForPatient(patientId, this.dataLoaderService)
+        .then((data: Prescription []) => {
+          if (data) {
+            this.medicalHistory = data;
+          }
+        }).catch((e) => {
+    }).finally(() => {
+    });
   }
 }

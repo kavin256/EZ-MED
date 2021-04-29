@@ -204,6 +204,36 @@ export class DataHandlerService {
     });
   }
 
+  loadMedicalHistory(appointmentId: number, dataLoaderService: DataLoaderService): Promise<unknown> {
+    return new Promise((resolve, reject) => {
+      const url = Constants.API_BASE_URL + Constants.LOAD_MEDICAL_HISTORY_FOR_BOOKING + appointmentId;
+      const httpParams = new HttpParams();
+      dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
+          .then((data: any) => {
+            if (data.data && data.data[0]) {
+              resolve(data.data[0]);
+            }
+          }).catch((data) => {
+            reject(data);
+      });
+    });
+  }
+
+  loadMedicalHistoryForPatient(patientId: number, dataLoaderService: DataLoaderService): Promise<unknown> {
+    return new Promise((resolve, reject) => {
+      const url = Constants.API_BASE_URL + Constants.LOAD_MEDICAL_HISTORY_FOR_USER + patientId;
+      const httpParams = new HttpParams();
+      dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
+          .then((data: any) => {
+            if (data.data && data.data[0]) {
+              resolve(data.data[0]);
+            }
+          }).catch((data) => {
+            reject(data);
+      });
+    });
+  }
+
   convertProfessionalTypeToDBFormat(professionalType: string) {
     switch (professionalType) {
       case DoctorType.CON:
