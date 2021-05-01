@@ -104,9 +104,11 @@
         <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings</button>
         <br>
         <br>
-        <button style="width: 320px" *ngIf="medicalHistory && medicalHistory.length > 0" (click)="goToMyMedicalHistory()" mat-raised-button color="primary">My medical history</button>
-        <br>
-        <br>
+        <ng-container *ngIf="medicalHistory && medicalHistory.length > 0" >
+            <button style="width: 320px" (click)="goToMyMedicalHistory()" mat-raised-button color="primary">My medical history</button>
+            <br>
+            <br>
+        </ng-container>
         <button style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>

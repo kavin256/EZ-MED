@@ -15,10 +15,8 @@
     <ng-container *ngIf="prescriptionList && prescriptionList.length === 0">
         <br>
         <br>
-
         <p style="color: crimson"><b>------   Sorry, No results found   ------</b></p>
         <br>
-
     </ng-container>
-    <br>
+    <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">Go to appointment</button>
 </div>

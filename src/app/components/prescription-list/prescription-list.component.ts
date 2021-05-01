@@ -69,4 +69,9 @@ export class PrescriptionListComponent implements OnInit {
     addPrescription() {
       this.router.navigate(['appointment/prescription'], { queryParams: { appointmentId: this.appointmentId } }).then(r => {});
     }
+
+    goToMyAppointments() {
+        this.router.navigate(['appointment'], { queryParams: { id: this.appointmentId } }).then(r => {});
+    }
+
 }

@@ -22,8 +22,8 @@
             <p>Medicine prescriptions</p>
             <div class="abc" *ngFor="let item of prescribedItems; let i = index;">
                 <ngb-alert style="width: 320px; height: auto" [dismissible]="false">
-                    <p><b>{{item.title}}</b></p>
-                    <p>{{item.take}}</p>
+                    <p>{{item.title}}</p>
+<!--                    <p>{{item.take}}</p>-->
                 </ngb-alert>
             </div>
             <br>
@@ -71,11 +71,11 @@
             <table align="center">
                 <tr>
                     <td>
-                        <mat-form-field style="width: 250px">
-                            <input style="font-size: small" matInput type="text" placeholder="Medicine" [(ngModel)]='item.title'>
-                        </mat-form-field>
+<!--                        <mat-form-field style="width: 250px">-->
+<!--                            <input style="font-size: small" matInput type="text" placeholder="Medicine" [(ngModel)]='item.title'>-->
+<!--                        </mat-form-field>-->
                         <mat-form-field style="width: 280px">
-                            <textarea style="font-size: small" matInput type="text" placeholder="Take" [(ngModel)]='item.take'></textarea>
+                            <textarea style="font-size: small" matInput type="text" placeholder="Medicine" [(ngModel)]='item.title'></textarea>
                         </mat-form-field>
                     </td>
                 </tr>

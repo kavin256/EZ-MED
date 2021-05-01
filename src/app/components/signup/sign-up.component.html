@@ -8,17 +8,17 @@
                 <div class="example-container">
                     <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>Email</mat-label>
-                        <input [(ngModel)]="email" matInput>
+                        <input (keydown.enter)="logIn()" [(ngModel)]="email" matInput>
                     </mat-form-field>
                     <br>
                     <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>Password</mat-label>
-                        <input matInput [(ngModel)]="pass" [type]="hide ? 'password' : 'text'">
+                        <input (keydown.enter)="logIn()" matInput [(ngModel)]="pass" [type]="hide ? 'password' : 'text'">
                     </mat-form-field>
                     <br>
                     <p style="color: crimson" *ngIf="logInError && logInError !== ''">{{logInError}}</p>
                     <br>
-                    <button [disabled]="!(email && pass)" (click)="logIn()" style="width: 240px" mat-flat-button color="primary">Log In</button>
+                    <button type="submit" [disabled]="!(email && pass)" (click)="logIn()" style="width: 240px" mat-flat-button color="primary">Log In</button>
                     <br>
                     <br>
                     <button disabled style="width: 180px"  mat-stroked-button color="link">Forgot My Password</button>
