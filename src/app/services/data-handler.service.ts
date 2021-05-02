@@ -69,7 +69,6 @@ export class DataHandlerService {
           && user.male !== null && user.male !== undefined
           && user.birthday && user.birthday !== ''
           && user.contactNumber && user.contactNumber !== ''
-          && user.whatsAppNumber && user.whatsAppNumber !== ''
       )) {
         result = false;
       }

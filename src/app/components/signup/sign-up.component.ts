@@ -254,7 +254,6 @@ export class SignUpComponent implements OnInit {
     this.whatsappAndPhoneAreSame = !this.whatsappAndPhoneAreSame;
     if (this.whatsappAndPhoneAreSame) {
       this.whatsAppNumber = this.contactNumber;
-      // this.contactNumber = this.whatsAppNumber;
     }
   }
 }
