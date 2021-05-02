@@ -16,7 +16,7 @@
             </ng-container>
         </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')">
+    <ng-container *ngIf="specializations && specializations.length > 0">
         <mat-form-field  style="width: 240px" >
             <mat-label>Specialization</mat-label>
             <mat-select panelClass="example-long-panel" [(value)]="selectedSpecialization">
@@ -35,16 +35,13 @@
         <br>
         <p style="font-size: large">Select a professional to continue:</p>
     </ng-container>
-    <ng-container *ngIf="professionalList && professionalList.length === 0">
+    <ng-container *ngIf="!error && professionalList && professionalList.length === 0">
         <br>
-        <br>
-
-        <p style="color: crimson"><b>------   Sorry, No results found   ------</b></p>
-        <br>
-
+        <p style="color: crimson; text-align: center"><b>Sorry, No results found</b></p>
     </ng-container>
     <ng-container *ngIf="error">
-        <p style="color: crimson"><b>------   Please fill at least one search field   ------</b></p>
+        <br>
+        <p style="color: crimson; text-align: center"><b>Please fill at least one search field</b></p>
     </ng-container>
     <ng-container *ngFor="let doc of professionalList; let i=index">
         <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">

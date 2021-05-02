@@ -54,11 +54,15 @@
 
     </ng-container>
     <ng-container *ngIf="summaryShown && !showRedirectionMessage">
-        <div style="width: 240px">
-            <p>You are about to make an appointment with <b>{{doctor?.title}}. {{doctor?.firstName}} {{doctor?.lastName}}</b> on <b>{{selectedDate}}</b>. Wait for the call from him/her at around <b>{{getDisplaySelectedTime(selectedAppointmentId)}}</b><br><br>
-                Make sure your WhatsApp / Call notifications are switched on.<br><br>
-            (Note that the time might slightly change due to unavoidable reasons)</p>
+        <div style="width: 240px" align="left">
+            <b>Professional:</b> {{doctor?.title}}. {{doctor?.firstName}} {{doctor?.lastName}}<br>
+            <b>Date:</b> {{selectedDate}}<br>
+            <b>Time:</b> {{getDisplaySelectedTime(selectedAppointmentId)}}
         </div>
+        <br>
+        <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time can be slightly changed due to many reasons</p>
+        <br>
+
         <button (click)="navigateToPaymentOrLogIn()" mat-raised-button color="primary" style="width: 240px">Continue</button>
         <br>
         <br>

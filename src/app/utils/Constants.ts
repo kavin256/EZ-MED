@@ -82,7 +82,7 @@ export enum DoctorType {
 
 export enum APPOINTMENT_STATUS {
     DUMMY,
-    BOOKED ,
+    NOT_STARTED ,
     IN_PROGRESS,
     COMPLETED,
     CANCELLED_BY_PATIENT,

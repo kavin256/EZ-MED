@@ -124,7 +124,6 @@ export class SignUpComponent implements OnInit {
     this.emailFormControl.markAsTouched();
     this.genderFormControl.markAsTouched();
     this.bDayFormControl.markAsTouched();
-    this.whatsAppNumberFormControl.markAsTouched();
     this.contactNumberFormControl.markAsTouched();
     this.passFormControl.markAsTouched();
     this.conPassFormControl.markAsTouched();
@@ -135,7 +134,6 @@ export class SignUpComponent implements OnInit {
           !this.lastNameFormControl.invalid &&
           !this.emailFormControl.invalid &&
           !this.genderFormControl.invalid &&
-          !this.whatsAppNumberFormControl.invalid &&
           !this.contactNumberFormControl.invalid &&
           !this.passFormControl.invalid &&
           !this.conPassFormControl.invalid;
@@ -146,7 +144,6 @@ export class SignUpComponent implements OnInit {
           !this.emailFormControl.invalid &&
           !this.genderFormControl.invalid &&
           !this.bDayFormControl.invalid &&
-          !this.whatsAppNumberFormControl.invalid &&
           !this.contactNumberFormControl.invalid &&
           !this.passFormControl.invalid &&
           !this.conPassFormControl.invalid;
@@ -256,7 +253,8 @@ export class SignUpComponent implements OnInit {
   setSimilarity() {
     this.whatsappAndPhoneAreSame = !this.whatsappAndPhoneAreSame;
     if (this.whatsappAndPhoneAreSame) {
-      this.contactNumber = this.whatsAppNumber;
+      this.whatsAppNumber = this.contactNumber;
+      // this.contactNumber = this.whatsAppNumber;
     }
   }
 }

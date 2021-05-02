@@ -66,56 +66,61 @@ export class SearchProfessionalsMainComponent implements OnInit {
   }
 
   search() {
+
+    // making 'Any' option null
+    if (this.selectedCategory === 'Any' || this.selectedCategory === '') {
+      this.selectedCategory = null;
+      this.selectedSpecialization = null;
+    }
+
+    // General Practitioners don't have a specialization
+    if (this.selectedCategory === DoctorType.GEN) {
+      this.selectedSpecialization = null;
+    }
+
+    // making 'Any' option null
+    if (this.selectedSpecialization === 'Any' || this.selectedSpecialization === '') {
+      this.selectedSpecialization = null;
+    }
+
+    // making empty string null
+    if (this.searchString === '') {
+      this.searchString = null;
+    }
+
     this.professionalList = [];
-    if (!((this.searchString && this.searchString !== '')
-        || (this.selectedCategory && this.selectedCategory !== '' && this.selectedCategory !== 'Any'))) {
+
+    if (!(this.searchString || this.selectedCategory)) {
       this.error = true;
     } else {
       this.error = false;
       this.PAGINATION_START = 0;
       this.PAGINATION_END = this.RESULTS_PER_PAGE;
-      if (
-          !this.searchString &&
-          !this.selectedCategory &&
-          !this.selectedSpecialization
-      ) {
-        //
-      } else {
-        // General Practitioners don't have a specialization
-        if (this.selectedCategory === DoctorType.GEN) {
-          this.selectedSpecialization = null;
-        }
 
-        // converting professionalType to a database readable format
-        if (this.selectedCategory) {
-          this.selectedCategory = this.dataHandlerService.convertProfessionalTypeToDBFormat(
-              JSON.parse(JSON.stringify(this.selectedCategory)));
-        }
-
-        // making 'Any' option null
-        if (this.selectedSpecialization === 'Any') {
-          this.selectedSpecialization = null;
-        }
-
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_SEARCH;
-        let httpParams = new HttpParams();
-        if (this.searchString) {
-          httpParams = httpParams.append('name', this.searchString);
-        }
-        if (this.selectedCategory) {
-          httpParams = httpParams.append('professionalType', this.selectedCategory);
-        }
-        if (this.selectedSpecialization && this.selectedSpecialization !== 'Any') {
-          httpParams = httpParams.append('specialization', this.selectedSpecialization);
-        }
-        this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
-            .then((data: any) => {
-              if (data && data.status && data.status.code === 1) {
-                this.professionalList = data.data[0];
-              }
-            });
+      // converting professionalType to a database readable format
+      if (this.selectedCategory) {
+        this.selectedCategory = this.dataHandlerService.convertProfessionalTypeToDBFormat(
+            JSON.parse(JSON.stringify(this.selectedCategory)));
       }
+
+      // create url and send request
+      const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_SEARCH;
+      let httpParams = new HttpParams();
+      if (this.searchString) {
+        httpParams = httpParams.append('name', this.searchString);
+      }
+      if (this.selectedCategory) {
+        httpParams = httpParams.append('professionalType', this.selectedCategory);
+      }
+      if (this.selectedSpecialization) {
+        httpParams = httpParams.append('specialization', this.selectedSpecialization);
+      }
+      this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
+          .then((data: any) => {
+            if (data && data.status && data.status.code === 1) {
+              this.professionalList = data.data[0];
+            }
+          });
     }
   }
 

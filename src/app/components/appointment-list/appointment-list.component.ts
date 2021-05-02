@@ -142,7 +142,7 @@ export class AppointmentListComponent implements OnInit {
     switch ($event) {
       case APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR || APPOINTMENT_STATUS.CANCELLED_BY_PATIENT:
         return Colors.BOOKING_CANCELLED;
-      case APPOINTMENT_STATUS.BOOKED:
+      case APPOINTMENT_STATUS.NOT_STARTED:
         return Colors.BOOKING_NOT_STARTED;
       case APPOINTMENT_STATUS.COMPLETED:
         return Colors.BOOKING_COMPLETED;

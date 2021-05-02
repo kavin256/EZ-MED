@@ -50,17 +50,22 @@
                 <p>
                     ------------------- {{prescription?.issuedDate | date}} -------------------
                 </p>
-                <span style="font-size: small"><u>Medicine prescriptions</u></span>
-                <div class="abc" *ngFor="let item of prescription?.prescribedItems; let i = index;">
-                        <span style="font-size: x-small"><b>{{item.title}}</b></span><br>
-                        <span style="font-size: x-small">{{item.take}}</span><br>
-                </div>
-                <br>
-                <span style="font-size: small"><u>Tests / Notes</u></span>
-                <div class="abc" *ngFor="let item of prescription?.prescribedNoteItems; let i = index;">
-                    <span style="font-size: x-small">{{item.description}}</span><br>
-                </div>
-                <br>
+                <ng-container *ngIf="prescription?.prescribedItems && prescription?.prescribedItems.length > 0">
+                    <span style="font-size: small"><u>Medicine prescriptions</u></span>
+                    <div class="abc" *ngFor="let item of prescription?.prescribedItems; let i = index;">
+                            <span style="font-size: x-small"><b>{{item.title}}</b></span>
+    <!--                    <br>-->
+    <!--                        <span style="font-size: x-small">{{item.take}}</span><br>-->
+                    </div>
+                    <br>
+                </ng-container>
+                <ng-container *ngIf="prescription?.prescribedNoteItems && prescription?.prescribedNoteItems.length > 0">
+                    <span style="font-size: small"><u>Tests / Notes</u></span>
+                    <div class="abc" *ngFor="let item of prescription?.prescribedNoteItems; let i = index;">
+                        <span style="font-size: x-small">{{item.description}}</span><br>
+                    </div>
+                    <br>
+                </ng-container>
             </ng-container>
             <button style="margin:5px;" style="width: 100px" (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
         </div>

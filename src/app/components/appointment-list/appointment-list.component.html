@@ -16,7 +16,7 @@
     </mat-form-field>
     <ng-container>
         <section class="example-section">
-            <mat-checkbox [checked]="completedAvailable" (change)="toggleCompletedAvailable()" class="example-margin">Include completed appointments</mat-checkbox>
+            <mat-checkbox [checked]="!completedAvailable" (change)="toggleCompletedAvailable()" class="example-margin">Hide completed appointments</mat-checkbox>
         </section>
     </ng-container>
     <br>
@@ -29,12 +29,12 @@
                     <table>
                         <ng-container *ngIf="doctorSide">
                             <tr>
-                                <td style="font-size: large">#{{booking?.appointmentId}}</td>
+                                <td style="font-size: large" [ngClass]="booking?.status === 3 ? 'strikethrough':'null'">#{{booking?.appointmentId}}</td>
                             </tr>
                         </ng-container>
                         <ng-container *ngIf="!doctorSide">
                             <tr>
-                                <td style="font-size: large" [ngClass]="booking?.status === 'BOOKING_COMPLETED' ? 'strikethrough':'null'">{{booking.doctorData?.title}}. {{booking.doctorData?.firstName}} {{booking.doctorData?.lastName}}</td>
+                                <td style="font-size: large" [ngClass]="booking?.status === 3 ? 'strikethrough':'null'">{{booking.doctorData?.title}}. {{booking.doctorData?.firstName}} {{booking.doctorData?.lastName}}</td>
                             </tr>
                         </ng-container>
 
