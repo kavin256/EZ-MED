@@ -33,21 +33,14 @@ export class PrescriptionComponent implements OnInit {
   isConfirmationActive: boolean;
   ngbAlertVisible = true;
   prescription: Prescription;
-  prescribedItems = [
-      {
-          title: '',
-          take: ''
-      }
-  ];
-  prescribedNoteItems = [
-      {
-          description: ''
-      }
-  ];
+  prescribedItems = [];
+  prescribedNoteItems = [];
   appointment: AppointmentData;
   isNewPrescription = true;
   loggedInUser: UserData = null;
   doctorSide = false;
+  contactPhone: string;
+  contactEmail: string;
 
   constructor(
       private route: ActivatedRoute,
@@ -68,6 +61,8 @@ export class PrescriptionComponent implements OnInit {
         this.isNewPrescription = !this.doctorSide;
     }
     this.prescription.description = '';
+    this.contactPhone = this.dataHandlerService.loadConfig('EZMED_CONTACT_PHONE');
+    this.contactEmail = this.dataHandlerService.loadConfig('EZMED_CONTACT_EMAIL');
     this.loadPrescription();
   }
 
