@@ -7,7 +7,7 @@ import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {FormControl} from '@angular/forms';
-import {MatDatepickerInputEvent} from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {AppointmentData} from '../../models/appointment-data';
 import {Time} from '@angular/common';
 import * as moment from 'moment';

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {Constants, currencyCodes, DoctorTitles, DoctorType, MODAL_TYPES} from '../../utils/Constants';
+import {Constants, DoctorTitles, DoctorType, MODAL_TYPES} from '../../utils/Constants';
 import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs-compat/Subscription';
 
 @Component({
     selector: 'app-doctor-profile',

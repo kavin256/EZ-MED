@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {RequestOptions} from '../models/request-options';
 import {DataKey, DataStoreService} from './data-store.service';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs-compat/BehaviorSubject';
 import {Constants} from '../utils/Constants';
 import {ModalComponent} from '../components/modal/modal.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';

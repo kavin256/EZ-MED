@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Constants, DoctorType, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
+import {Constants, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
 import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DatePipe} from '@angular/common';
 import {DataLoaderService} from '../../services/data-loader.service';

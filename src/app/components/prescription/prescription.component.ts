@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs-compat/Subscription';
 import {UserData} from '../../models/user-data';
 import {Prescription} from '../../models/prescription';
 import {HttpHeaders, HttpParams} from '@angular/common/http';

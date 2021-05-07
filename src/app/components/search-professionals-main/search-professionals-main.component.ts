@@ -6,7 +6,6 @@ import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
-import csc from 'country-state-city';
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -44,7 +43,6 @@ export class SearchProfessionalsMainComponent implements OnInit {
     }
   ];
   specializations;
-  regions;
   CONSULTANT_TYPES: any;
   OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
   COUNSELLOR_TYPES: any;
@@ -62,7 +60,6 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
 
     sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
-    this.regions = csc.getStatesOfCountry(this.country);
   }
 
   search() {

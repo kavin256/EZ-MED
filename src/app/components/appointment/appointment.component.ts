@@ -6,7 +6,7 @@ import {APPOINTMENT_STATUS, Constants, MODAL_TYPES} from '../../utils/Constants'
 import {UserData} from '../../models/user-data';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppointmentData} from '../../models/appointment-data';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs-compat/Subscription';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import * as moment from 'moment';
 import {Prescription} from '../../models/prescription';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs-compat/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserData} from '../../models/user-data';
 import {Constants} from '../../utils/Constants';
