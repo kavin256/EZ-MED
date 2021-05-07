@@ -35,10 +35,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     medicalHistory: any;
 
     constructor(
-      private router: Router,
-      private route: ActivatedRoute,
-      private dataHandlerService: DataHandlerService,
-      private dataLoaderService: DataLoaderService
+      public router: Router,
+      public route: ActivatedRoute,
+      public dataHandlerService: DataHandlerService,
+      public dataLoaderService: DataLoaderService
     ) { }
 
     ngOnInit() {
@@ -77,7 +77,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     repeatedStatusChecker() {
         setTimeout(() => {
             if (!this.networkError && !this.doctorSide
-                && (this.booking.status === APPOINTMENT_STATUS.BOOKED || this.booking.status === APPOINTMENT_STATUS.IN_PROGRESS)
+                && (this.booking.status === APPOINTMENT_STATUS.NOT_STARTED || this.booking.status === APPOINTMENT_STATUS.IN_PROGRESS)
             ) {
                 this.liteStatusChecker();
                 this.repeatedStatusChecker();
@@ -165,7 +165,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     isNew(status: APPOINTMENT_STATUS) {
-        return status === APPOINTMENT_STATUS.BOOKED;
+        return status === APPOINTMENT_STATUS.NOT_STARTED;
     }
 
     isInProgress(status: APPOINTMENT_STATUS) {

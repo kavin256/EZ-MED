@@ -24,11 +24,11 @@ export class PaymentSuccessComponent implements OnInit {
   paymentResponseData: any;
 
   constructor(
-      private httpClient: HttpClient,
-      private route: ActivatedRoute,
-      private router: Router,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public httpClient: HttpClient,
+      public route: ActivatedRoute,
+      public router: Router,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) {
     this.route.queryParams.subscribe(params => {
       this.clientRef = params.clientRef;

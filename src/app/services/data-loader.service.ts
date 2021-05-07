@@ -14,8 +14,8 @@ export class DataLoaderService {
 
     constructor(
         public dialog: MatDialog,
-        private http: HttpClient,
-        private dataStore: DataStoreService
+        public http: HttpClient,
+        public dataStore: DataStoreService
     ) {}
 
     // make a GET request

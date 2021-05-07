@@ -45,15 +45,15 @@ export class SearchProfessionalsMainComponent implements OnInit {
   ];
   specializations;
   regions;
-  private CONSULTANT_TYPES: any;
-  private OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
-  private COUNSELLOR_TYPES: any;
+  CONSULTANT_TYPES: any;
+  OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
+  COUNSELLOR_TYPES: any;
 
   constructor(
-      private router: Router,
-      private dataStore: DataStoreService,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public router: Router,
+      public dataStore: DataStoreService,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {

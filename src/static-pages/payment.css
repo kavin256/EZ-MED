@@ -49,6 +49,11 @@
     right: 0;
 }
 
+#paycorp-iframe {
+    height: 500px;
+    width: 500px;
+}
+
 h1 {
     color: #b48608;
     font-family: 'Droid serif', serif;

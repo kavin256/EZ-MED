@@ -1,6 +1,6 @@
 <div class="mat-card-style">
 
-    <ng-container *ngIf="editable">
+    <ng-container *ngIf="editable && userData">
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Title</mat-label>
             <mat-select required [(value)]="userData.title">

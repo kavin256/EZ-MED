@@ -10,9 +10,9 @@ import {DataHandlerService} from './services/data-handler.service';
 export class AppService {
 
   constructor(
-      private http: HttpClient,
-      private dataHandlerService: DataHandlerService,
-      private dataStore: DataStoreService
+      public http: HttpClient,
+      public dataHandlerService: DataHandlerService,
+      public dataStore: DataStoreService
   ) { }
 
   public loadModuleConfigurations() {

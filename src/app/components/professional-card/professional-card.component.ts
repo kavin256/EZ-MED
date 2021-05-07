@@ -18,7 +18,7 @@ export class ProfessionalCardComponent implements OnInit, OnChanges {
   profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_IMAGE;
 
   constructor(
-      private https: HttpClient
+      public https: HttpClient
   ) { }
 
   ngOnInit() {

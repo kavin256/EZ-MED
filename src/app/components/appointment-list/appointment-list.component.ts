@@ -54,7 +54,7 @@ export class AppointmentListComponent implements OnInit {
   isPrescriptionsVisible = false;
   selectedPrescription = null;
   loggedInUser: UserData = null;
-  private selectedProfessionalUserId: string;
+  selectedProfessionalUserId: string;
   date = new FormControl(new Date());
   fromDate = this.date.value;
   toDate: Date;
@@ -62,9 +62,9 @@ export class AppointmentListComponent implements OnInit {
   completedAvailable;
 
   constructor(
-      private router: Router,
-      private dataHandlerService: DataHandlerService,
-      private dataLoaderService: DataLoaderService
+      public router: Router,
+      public dataHandlerService: DataHandlerService,
+      public dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {

@@ -26,12 +26,12 @@ export class PaymentConfirmationComponent implements OnInit {
   isScheduleVisible = false;
   selectedAppointmentId = '';
   loggedInUser: UserData;
-  private selectedProfessionalUserId: string;
+  selectedProfessionalUserId: string;
 
   constructor(
-      private router: Router,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public router: Router,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {

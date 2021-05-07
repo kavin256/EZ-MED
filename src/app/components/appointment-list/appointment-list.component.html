@@ -74,38 +74,38 @@
         <br>
         <button (click)="showPrescriptions(null, false)" style="width: 240px" color="primary" mat-flat-button>Back</button>
     </ng-container>
-    <ng-container  *ngIf="isPrescriptionsVisible && selectedPrescription">
-        <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>
-        <p style="font-size: small">Name: <b>{{booking.patientName}}</b></p>
-        <p style="font-size: small">Age: {{booking.patientAge}} yrs</p>
-        <mat-divider></mat-divider>
-        <mat-divider></mat-divider>
-        <div>
-            <p style="font-size: small; text-align: center"><b><u>PRESCRIPTION</u></b></p>
+<!--    <ng-container  *ngIf="isPrescriptionsVisible && selectedPrescription">-->
+<!--        <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>-->
+<!--        <p style="font-size: small">Name: <b>{{booking.patientName}}</b></p>-->
+<!--        <p style="font-size: small">Age: {{booking.patientAge}} yrs</p>-->
+<!--        <mat-divider></mat-divider>-->
+<!--        <mat-divider></mat-divider>-->
+<!--        <div>-->
+<!--            <p style="font-size: small; text-align: center"><b><u>PRESCRIPTION</u></b></p>-->
 
-            <br>
-            <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li>
+<!--            <br>-->
+<!--            <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li>-->
 
-            <table>
-                <br>
-                <tr>
-                    <th style="font-size: medium; text-align: left">
-                        {{doctor.name}}
-                    </th>
-                </tr>
-                <tr>
-                    <td style="font-size: x-small; text-align: left">
-                        {{doctor.bio}}
-                    </td>
-                </tr>
-            </table>
-            <p style="font-size: x-small">** No signature required. This is a electronically generated document that could only be edited by the prescriber **</p>
+<!--            <table>-->
+<!--                <br>-->
+<!--                <tr>-->
+<!--                    <th style="font-size: medium; text-align: left">-->
+<!--                        {{doctor.name}}-->
+<!--                    </th>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td style="font-size: x-small; text-align: left">-->
+<!--                        {{doctor.bio}}-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--            <p style="font-size: x-small">** No signature required. This is a electronically generated document that could only be edited by the prescriber **</p>-->
 
-            <mat-divider></mat-divider>
-            <mat-divider></mat-divider>
-            <br>
-            <button (click)="selectPrescription(null)" style="width: 320px" color="primary" mat-flat-button>Back</button>
+<!--            <mat-divider></mat-divider>-->
+<!--            <mat-divider></mat-divider>-->
+<!--            <br>-->
+<!--            <button (click)="selectPrescription(null)" style="width: 320px" color="primary" mat-flat-button>Back</button>-->
 
-        </div>
-    </ng-container>
+<!--        </div>-->
+<!--    </ng-container>-->
 </div>

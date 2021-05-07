@@ -67,11 +67,11 @@ export class BookingEnterTimeComponent implements OnInit {
   showRedirectionMessage = false;
 
   constructor(
-      private router: Router,
-      private datePipe: DatePipe,
-      private dataStore: DataStoreService,
-      private dataHandlerService: DataHandlerService,
-      private dataLoaderService: DataLoaderService
+      public router: Router,
+      public datePipe: DatePipe,
+      public dataStore: DataStoreService,
+      public dataHandlerService: DataHandlerService,
+      public dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit() {

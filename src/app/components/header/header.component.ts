@@ -31,11 +31,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   userType;
 
   constructor(
-              private dataHandlerService: DataHandlerService,
-              private router: Router,
-              private dataStore: DataStoreService,
-              private dataLoaderService: DataLoaderService,
-              private https: HttpClient
+              public dataHandlerService: DataHandlerService,
+              public router: Router,
+              public dataStore: DataStoreService,
+              public dataLoaderService: DataLoaderService,
+              public https: HttpClient
   ) {}
 
   ngOnInit() {

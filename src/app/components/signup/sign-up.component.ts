@@ -63,12 +63,12 @@ export class SignUpComponent implements OnInit {
   whatsappAndPhoneAreSame = false;
 
   constructor(
-      private _snackBar: MatSnackBar,
-      private dataEncryptionService: DataEncryptionService,
-      private router: Router,
-      private datePipe: DatePipe,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public _snackBar: MatSnackBar,
+      public dataEncryptionService: DataEncryptionService,
+      public router: Router,
+      public datePipe: DatePipe,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) {
     this.datePipe = new DatePipe('en-US');
   }

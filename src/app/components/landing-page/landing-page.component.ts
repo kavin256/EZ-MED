@@ -15,7 +15,7 @@ export class LandingPageComponent implements OnInit, OnChanges {
 
   loggedInUser: UserData = null;
 
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   ngOnInit() {
     if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
