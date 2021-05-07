@@ -88,6 +88,6 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   private generateRefKey(bookingId: string, patientId: string) {
-    return bookingId + '~~' + patientId;
+    return bookingId + '--' + patientId;
   }
 }
