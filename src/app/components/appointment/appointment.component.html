@@ -85,25 +85,6 @@
     <br>
     <br>
 
-    <ng-container *ngIf="booking?.messageThread">
-        <br>
-        <p style="font-size: large;">Conversation:</p>
-        <mat-divider></mat-divider>
-
-        <br>
-        <div *ngFor="let message of booking?.messageThread">
-            <div *ngIf="message.sender === 'doctor'" style="align: right">
-                <p style="font-style: italic; font-size: small; text-align:right; color: cornflowerblue" role="listitem">You: {{message.message}}</p>
-            </div>
-            <div *ngIf="message.sender === 'patient'" >
-                <p style="font-style: italic; font-size: small; text-align:left; color: slategray" role="listitem">{{patient?.patientName}}: {{message.message}}</p>
-            </div>
-        </div>
-
-        <mat-divider></mat-divider>
-
-        <br>
-    </ng-container>
     <button [disabled]="!isNew(booking?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()" style="width: 320px" mat-flat-button color="warn" >Cancel Booking</button>
 
     <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>

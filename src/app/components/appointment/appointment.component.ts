@@ -35,10 +35,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     medicalHistory: any;
 
     constructor(
-      private router: Router,
-      private route: ActivatedRoute,
-      private dataHandlerService: DataHandlerService,
-      private dataLoaderService: DataLoaderService
+      public router: Router,
+      public route: ActivatedRoute,
+      public dataHandlerService: DataHandlerService,
+      public dataLoaderService: DataLoaderService
     ) { }
 
     ngOnInit() {

@@ -26,12 +26,12 @@ export class PaymentConfirmationComponent implements OnInit {
   isScheduleVisible = false;
   selectedAppointmentId = '';
   loggedInUser: UserData;
-  private selectedProfessionalUserId: string;
+  selectedProfessionalUserId: string;
 
   constructor(
-      private router: Router,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public router: Router,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) { }
 
   ngOnInit() {
@@ -88,6 +88,6 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   private generateRefKey(bookingId: string, patientId: string) {
-    return bookingId + '~~' + patientId;
+    return bookingId + '--' + patientId;
   }
 }

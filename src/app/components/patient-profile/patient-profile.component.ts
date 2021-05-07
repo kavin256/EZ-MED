@@ -38,11 +38,11 @@ export class PatientProfileComponent implements OnInit {
   selectedProfessionalUserId: string;
 
   constructor(
-      private router: Router,
-      private datePipe: DatePipe,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService,
-      private https: HttpClient
+      public router: Router,
+      public datePipe: DatePipe,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService,
+      public https: HttpClient
   ) {
     this.datePipe = new DatePipe('en-US');
   }

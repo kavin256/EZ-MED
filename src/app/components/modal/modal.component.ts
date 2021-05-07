@@ -15,8 +15,8 @@ export class ModalComponent implements OnInit {
   @Output() clickEmitter = new EventEmitter<string>();
 
   constructor(
-      private router: Router,
-      private dialogRef: MatDialogRef<ModalComponent>,
+      public router: Router,
+      public dialogRef: MatDialogRef<ModalComponent>,
       @Inject(MAT_DIALOG_DATA) data) {
     this.modalType = data.modalType;
     this.dataA = data.dataA;

@@ -43,10 +43,10 @@ export class PrescriptionComponent implements OnInit {
   contactEmail: string;
 
   constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public route: ActivatedRoute,
+      public router: Router,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) {
     this.prescription = new Prescription();
     this.prescription.description = '';

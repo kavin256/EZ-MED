@@ -17,10 +17,10 @@ export class DoctorScheduleComponent implements OnInit {
   availableForAppointment = true;
 
   constructor(
-      private router: Router,
-      private dataStore: DataStoreService,
-      private dataLoaderService: DataLoaderService,
-      private dataHandlerService: DataHandlerService
+      public router: Router,
+      public dataStore: DataStoreService,
+      public dataLoaderService: DataLoaderService,
+      public dataHandlerService: DataHandlerService
   ) {}
 
   DAY_TITLES = new Map(

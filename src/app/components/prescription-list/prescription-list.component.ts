@@ -23,10 +23,10 @@ export class PrescriptionListComponent implements OnInit {
     sub = new Subscription();
 
     constructor(
-      private router: Router,
-      private dataLoaderService: DataLoaderService,
-      private route: ActivatedRoute,
-      private dataHandlerService: DataHandlerService
+      public router: Router,
+      public dataLoaderService: DataLoaderService,
+      public route: ActivatedRoute,
+      public dataHandlerService: DataHandlerService
     ) { }
 
     ngOnInit() {

@@ -17,9 +17,9 @@ export class DoctorProfileComponent implements OnInit {
     selectedImage: File;
     editable = false;
     loggedInUser = null;
-    private CONSULTANT_TYPES: any;
-    private OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
-    private COUNSELLOR_TYPES: any;
+    CONSULTANT_TYPES: any;
+    OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
+    COUNSELLOR_TYPES: any;
     priceCurrency = 'LKR';
     onVacation = false;
     userData: UserData;
@@ -53,12 +53,12 @@ export class DoctorProfileComponent implements OnInit {
     selectedSpecialization: any = null;
 
     constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private dataStore: DataStoreService,
-        private dataHandlerService: DataHandlerService,
-        private dataLoaderService: DataLoaderService,
-        private https: HttpClient
+        public router: Router,
+        public route: ActivatedRoute,
+        public dataStore: DataStoreService,
+        public dataHandlerService: DataHandlerService,
+        public dataLoaderService: DataLoaderService,
+        public https: HttpClient
     ) {
     }
 
