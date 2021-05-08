@@ -1,13 +1,12 @@
+import {Prescription} from './prescription';
+
 export class MedicalRecord {
-    id?: number;
-    issuedDate: Date;
+    appointmentDate: Date;
     bookingId: number;
     medicalConcern?: string;
-    status?: number;
-    professionalId?: string;
     patientId?: string;
-    professionalName?: string;
     patientName?: string;
-    prescribedItems?: any;
-    prescribedNoteItems?: any;
+    professionalId?: string;
+    professionalName?: string;
+    prescriptions?: Prescription [];
 }

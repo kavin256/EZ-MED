@@ -77,7 +77,8 @@
         </ng-container>
 
     </ng-container>
-    <button *ngIf="medicalHistory && medicalHistory.length > 0" (click)="openPastRecords()" style="width: 320px" color="primary" mat-flat-button>Patient's past records</button>
+
+    <button [disabled]="!(medicalHistory && medicalHistory.length > 0)" (click)="openPastRecords()" style="width: 320px" color="primary" mat-flat-button>Medical History</button>
     <br>
     <br>
 

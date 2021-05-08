@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
+import {MedicalRecord} from '../../models/medical-record';
 
 @Component({
   selector: 'app-modal',
@@ -10,7 +11,7 @@ import {Router} from '@angular/router';
 export class ModalComponent implements OnInit {
 
   @Input() modalType;
-  @Input() dataA;
+  @Input() dataA: MedicalRecord [];
   // @Input() errorMessage?: string;
   @Output() clickEmitter = new EventEmitter<string>();
 

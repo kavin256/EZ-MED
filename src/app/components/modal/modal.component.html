@@ -1,4 +1,4 @@
-<div align="center">
+<div>
     <ng-container *ngIf="modalType === 'LOADING'">
         <mat-spinner></mat-spinner>
         <br>
@@ -45,29 +45,37 @@
     </ng-container>
     <ng-container *ngIf="modalType === 'PAST_RECORDS'">
         <div>
-            <br><b><u>Past Records</u></b><br><br><br>
-            <ng-container *ngFor="let prescription of dataA">
+            <div align="center">
+                <span><br><b><u>Past Records</u></b><br><br><br></span>
+            </div>
+            <ng-container *ngFor="let medicalRecord of dataA">
                 <p>
-                    ------------------- {{prescription?.issuedDate | date}} -------------------
+                    ------------------- {{medicalRecord?.appointmentDate | date}} -------------------
                 </p>
-                <ng-container *ngIf="prescription?.prescribedItems && prescription?.prescribedItems.length > 0">
-                    <span style="font-size: small"><u>Medicine prescriptions</u></span>
-                    <div class="abc" *ngFor="let item of prescription?.prescribedItems; let i = index;">
-                            <span style="font-size: x-small"><b>{{item.title}}</b></span>
-    <!--                    <br>-->
-    <!--                        <span style="font-size: x-small">{{item.take}}</span><br>-->
-                    </div>
-                    <br>
-                </ng-container>
-                <ng-container *ngIf="prescription?.prescribedNoteItems && prescription?.prescribedNoteItems.length > 0">
-                    <span style="font-size: small"><u>Tests / Notes</u></span>
-                    <div class="abc" *ngFor="let item of prescription?.prescribedNoteItems; let i = index;">
-                        <span style="font-size: x-small">{{item.description}}</span><br>
-                    </div>
+                <span style="font-size: small">Concern: {{medicalRecord?.medicalConcern}}</span><br>
+                <span style="font-size: small">Professional: {{medicalRecord?.professionalName}}</span><br>
+                <span style="font-size: small">Booking Id: {{medicalRecord?.bookingId}}</span><br><br>
+                <ng-container *ngFor="let prescription of medicalRecord?.prescriptions">
+
+                    <ng-container *ngIf="prescription?.prescribedItems && prescription?.prescribedItems.length > 0">
+                        <span style="font-size: small"><u>Prescriptions</u></span>
+                        <div class="abc" *ngFor="let item of prescription?.prescribedItems; let i = index;">
+                                <span style="font-size: x-small"><b>{{item.title}}</b></span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="prescription?.prescribedNoteItems && prescription?.prescribedNoteItems.length > 0">
+                        <span style="font-size: small"><u>Tests / Notes</u></span>
+                        <div class="abc" *ngFor="let item of prescription?.prescribedNoteItems; let i = index;">
+                            <span style="font-size: x-small">{{item.description}}</span><br>
+                        </div>
+                    </ng-container>
                     <br>
                 </ng-container>
             </ng-container>
-            <button style="margin:5px;" style="width: 100px" (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+
+            <div align="center">
+                <button style="margin:5px;" style="width: 100px" (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+            </div>
         </div>
     </ng-container>
 </div>
