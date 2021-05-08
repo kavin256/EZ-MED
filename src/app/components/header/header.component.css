@@ -10,3 +10,9 @@ button.link { background:none; border:none; }
     min-width: 320px;
     max-width: 320px;
 }
+.app-header {
+    max-height: 150px;
+    /*background: #d3d1d1;*/
+    /*background-color: #d3d1d1; !* For browsers that do not support gradients *!*/
+    background-image: linear-gradient(#ffffff, #ffffff); /* Standard syntax (must be last) */
+}
