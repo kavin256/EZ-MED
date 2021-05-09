@@ -37,6 +37,7 @@ export class SignUpComponent implements OnInit {
   conPassFormControl = new FormControl('');
 
   logInError = '';
+  panelOpenState = false;
   isDoctor = false;
   encryptionKey = 'ezmed';
   hide = true;
@@ -61,6 +62,7 @@ export class SignUpComponent implements OnInit {
   passwordMissMatch = false;
   titles = PatientTitles;
   whatsappAndPhoneAreSame = false;
+  agreed = false;
 
   constructor(
       public _snackBar: MatSnackBar,
@@ -256,4 +258,8 @@ export class SignUpComponent implements OnInit {
       this.whatsAppNumber = this.contactNumber;
     }
   }
+
+    agree() {
+
+    }
 }

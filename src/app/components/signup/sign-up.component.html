@@ -97,7 +97,7 @@
                     <ng-container *ngIf="contactNumber && contactNumber !== ''">
                         <ngb-alert [dismissible]="false" style="width: 250px; max-height: 80px">
                             <section class="example-section">
-                                <mat-checkbox class="example-margin" (change)="setSimilarity()"><p style="font-size: small">WhatsApp number is the same<br>as contact  number</p></mat-checkbox>
+                                <mat-checkbox style="font-size: small" class="example-margin" (change)="setSimilarity()">WhatsApp number is the same<br>as contact  number</mat-checkbox>
                             </section>
                         </ngb-alert>
                     </ng-container>
@@ -124,8 +124,25 @@
                         <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass' [formControl]="conPassFormControl">
                     </mat-form-field>
                     <br>
+                    <ng-container *ngIf="isDoctor">
+                        <mat-expansion-panel style="width: 250px" (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{!panelOpenState ? 'Show' : 'Hide'}} Agreement
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eros ligula, feugiat nec cursus ut, faucibus in velit. Nulla nec interdum justo, vitae finibus nisl. Phasellus pulvinar ullamcorper augue, eu pulvinar sapien pharetra eget. Nullam dapibus euismod sapien, quis blandit ipsum rhoncus quis. Duis convallis sapien ac lectus pretium vehicula. Vivamus feugiat metus erat, vel venenatis justo mattis eu. Sed tortor libero, venenatis eu malesuada a, tempus eget mi. Nulla sodales orci felis. Phasellus a arcu a urna condimentum aliquet. Maecenas sit amet pulvinar quam. Pellentesque convallis neque ut enim porttitor, eget aliquet felis egestas.
+
+                                Aenean ut ultrices augue. Sed sit amet congue tortor. Proin ultricies, urna sit amet rutrum tempor, quam nibh lobortis augue, sed sagittis neque arcu ac nisl. Aliquam turpis turpis, consequat sed ultricies ut, congue quis lectus. Praesent et nunc interdum, faucibus lorem sit amet, aliquam magna. Aliquam imperdiet ut augue vitae congue. Proin sit amet fringilla est. Curabitur sit amet lectus tincidunt, pretium metus eu, blandit nisl. Fusce pretium nisl eget ex rhoncus aliquam. Pellentesque tempus condimentum nisl consectetur iaculis. Vivamus ac mi quis orci sollicitudin facilisis. Donec vitae ante at dolor tempor posuere sed in elit. Proin eu mi ac dolor tempus scelerisque eu id purus. Donec quis ultricies leo. Quisque eu ante in est hendrerit auctor vitae vitae enim. Integer vitae risus elementum, facilisis mi quis, pharetra neque.</p>
+                        </mat-expansion-panel>
+                        <br>
+                        <section style="vertical-align: center" class="example-section">
+                            <mat-checkbox style="font-size: small" class="example-margin" (change)="agreed = !agreed">I agree to the terms & conditions</mat-checkbox>
+                        </section>
+                    </ng-container>
                     <br>
-                    <button style="width: 240px" mat-flat-button color="primary" (click)="SignUp()">Sign Up</button>
+                    <button [disabled]="isDoctor && !agreed" style="width: 240px" mat-flat-button color="primary" (click)="SignUp()">Sign Up</button>
                     <br>
                     <br>
                     <p style="color: crimson" *ngIf="passwordMissMatch">Password and Confirmed password do not match!!</p>
