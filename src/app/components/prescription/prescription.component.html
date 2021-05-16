@@ -47,8 +47,12 @@
             <mat-divider></mat-divider>
             <mat-divider></mat-divider>
             <br>
+            <ng-container *ngIf="signatureImageURL">
+                <img [src]="signatureImageURL" width="200px">
+                <br>
+            </ng-container>
 
-            <p style="font-size: x-small">** No signature required. This is an electronically generated document that was prepared by the following prescriber **</p>
+            <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is an electronically generated document that was prepared by the following prescriber **</p>
             <table align="center">
                 <tr>
                     <th style="font-size: medium; text-align: left">

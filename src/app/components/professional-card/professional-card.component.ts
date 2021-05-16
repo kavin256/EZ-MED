@@ -15,7 +15,7 @@ export class ProfessionalCardComponent implements OnInit, OnChanges {
 
   overTheDoctorCard = null;
   currency = currencyCodes.LKR;
-  profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_IMAGE;
+  profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC;
 
   constructor(
       public https: HttpClient

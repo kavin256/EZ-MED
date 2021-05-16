@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs-compat/Subscription';
 import {UserData} from '../../models/user-data';
 import {Prescription} from '../../models/prescription';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {Constants} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {LocalStorageKeys, PrescriptionStatus} from '../../services/data-store.service';
@@ -41,10 +41,12 @@ export class PrescriptionComponent implements OnInit {
   doctorSide = false;
   contactPhone: string;
   contactEmail: string;
+  signatureImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN;
 
   constructor(
       public route: ActivatedRoute,
       public router: Router,
+      public https: HttpClient,
       public dataLoaderService: DataLoaderService,
       public dataHandlerService: DataHandlerService
   ) {
@@ -102,6 +104,7 @@ export class PrescriptionComponent implements OnInit {
               this.prescribedItems = this.prescription.prescribedItems;
               this.prescribedNoteItems = this.prescription.prescribedNoteItems;
               this.prescription.issuedDate = new Date(this.prescription.issuedDate);
+              this.setSignImageSource(this.prescription.lightDoctor.userId);
             } else if (data && data.status && data.status.code === -1) {
               alert('Something is not right. Please check your internet connection!');
             }
@@ -153,6 +156,26 @@ export class PrescriptionComponent implements OnInit {
           }
       });
   }
+
+    /**
+     * Set signature image source. If there is no image, make the URL empty
+     */
+    setSignImageSource(doctorId: string) {
+        this.signatureImageURL += doctorId;
+        // this.signatureImageURL += '100001';
+        // get image and verify that it is in the storage
+        const req = new HttpRequest('GET', this.signatureImageURL, {
+            reportProgress: true
+        });
+        this.https.request(req).subscribe(
+            data => {},
+            error => {
+                if (error.status !== 200) {
+                    // this.signatureImageURL = './assets/img/signature_doc.png';
+                    this.signatureImageURL = '';
+                }
+            });
+    }
 
     cancelPrescription() {
         const prescription = new Prescription();

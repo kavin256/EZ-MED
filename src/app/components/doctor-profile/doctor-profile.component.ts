@@ -164,7 +164,30 @@ export class DoctorProfileComponent implements OnInit {
         formData.append('file', this.selectedImage);
 
         // sent request
-        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_IMAGE + this.userData.userId;
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_PROFILE_PIC + this.userData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
+    }
+
+  /**
+   * Upload user image handling
+   * @param event selected image
+   */
+  uploadSignature(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
+
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_SIGN + this.userData.userId;
         const req = new HttpRequest('POST', url, formData, {
             reportProgress: true,
             responseType: 'json'
