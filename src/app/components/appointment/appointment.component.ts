@@ -153,7 +153,13 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     goToPrescription() {
-        this.router.navigate(['appointment/prescriptionList'], { queryParams: { appointmentId: this.bookingId } }).then(r => {});
+        this.router.navigate(['appointment/prescriptionList'],
+            { queryParams: { appointmentId: this.bookingId } }).then(r => {});
+    }
+
+    goToMedicalReports() {
+        this.router.navigate(['appointment/medicalReports'],
+            { queryParams: { appointmentId: this.bookingId } }).then(r => {});
     }
 
     openPastRecords(): void {

@@ -1,0 +1,15 @@
+<div class="mat-card-style">
+    <input type="file"
+           accept="image/*,.pdf,.doc,.docx"
+           (change)="uploadImage($event)">
+    <p *ngIf="uploadSuccessful" >
+        uploaded successfully!
+    </p>
+    <input type="file"
+           accept="image/*,.pdf,.doc,.docx"
+           (change)="uploadImage($event)">
+    <p *ngIf="uploadSuccessful" >
+        uploaded successfully!
+    </p>
+
+</div>
