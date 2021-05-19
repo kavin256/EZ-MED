@@ -1,15 +1,52 @@
 <div class="mat-card-style">
-    <input type="file"
-           accept="image/*,.pdf,.doc,.docx"
-           (change)="uploadImage($event)">
-    <p *ngIf="uploadSuccessful" >
-        uploaded successfully!
-    </p>
-    <input type="file"
-           accept="image/*,.pdf,.doc,.docx"
-           (change)="uploadImage($event)">
-    <p *ngIf="uploadSuccessful" >
-        uploaded successfully!
-    </p>
 
+    <ng-container *ngIf="!addItem">
+        <div align="center">
+            <button (click)="addMoreItem()" style="width: 320px" color="primary" mat-flat-button>Add a file</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="addItem">
+        <div align="center">
+            <button (click)="cancelAddingItem()" style="width: 320px" color="warn" mat-flat-button>Cancel</button>
+        </div>
+    </ng-container>
+    <br>
+    <ngb-alert *ngIf="addItem"  style="color: #3f51b5 ;border-color: white; background-color: #E5E6FE ;width: 320px; min-height: 60px" (close)="removeItem(i)" [dismissible]="false">
+        <p>
+            Add your files here. Please make sure NOT more than one file has the same file name
+        </p>
+        <mat-form-field style="width: 280px" appearance="legacy">
+            <mat-label>File name:</mat-label>
+            <input placeholder="eg: X-ray of my leg" [(ngModel)]="fileName" matInput>
+        </mat-form-field>
+
+        <input type="file"
+               accept="image/*,.pdf,.doc,.docx"
+               (change)="uploadImage($event)">
+
+    </ngb-alert>
+    <ngb-alert *ngIf="uploadSuccessful" style="color: #4CAF50 ;background-color: white ;width: 320px; height: 50px" [dismissible]="false">
+        <h5>
+            Uploaded successfully!
+        </h5>
+    </ngb-alert>
+    <ngb-alert *ngIf="uploadingInProgress" style="color: #3f51b5 ;background-color: white ;width: 320px; height: 50px" [dismissible]="false">
+        <h5>
+            Uploading...
+        </h5>
+    </ngb-alert>
+    <br>
+    <ng-container *ngIf="!addItem">
+        <div *ngFor="let summary of objectListing?.objectSummaries; let i = index;">
+        <ngb-alert style="width: 320px; min-height: 60px" (close)="removeItem(i)" [dismissible]="true">
+            <table align="left">
+                <tr>
+                    <td>
+                        <p style="font-size: small">{{summary.keyName}}</p>
+                    </td>
+                </tr>
+            </table>
+        </ngb-alert>
+        </div>
+    </ng-container>
 </div>

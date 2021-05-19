@@ -13,6 +13,7 @@ export enum Constants {
     DOWNLOAD_USER_SIGN = '/userImages/download/signature/',
     MEDICAL_REPORT_DOC_UPLOAD = '/docs/medical-reports/',
     MEDICAL_REPORT_DOC_DOWNLOAD = '/docs/medical-reports/',
+    MEDICAL_REPORT_DOC_DELETE = '/docs/medical-reports/',
     LOAD_PRESCRIPTION = '/appointment/prescriptionById/',
     ADD_PRESCRIPTION = '/appointment/add-prescription',
     SET_PRESCRIPTION_STATUS = '/appointment/prescription/set-status/',
