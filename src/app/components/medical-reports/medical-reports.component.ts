@@ -112,6 +112,9 @@ export class MedicalReportsComponent implements OnInit {
    * @param i index
    */
   removeItem(i: number) {
+    this.addItem = false;
+    this.uploadSuccessful = false;
+    this.uploadingInProgress = false;
     const key = this.objectListing.objectSummaries[i].key;
 
     // send request
