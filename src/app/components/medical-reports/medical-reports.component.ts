@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Constants} from '../../utils/Constants';
 import {HttpClient, HttpHeaderResponse, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Subscription} from 'rxjs-compat/Subscription';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LocalStorageKeys} from '../../services/data-store.service';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-medical-reports',
@@ -12,18 +14,21 @@ import {ActivatedRoute} from '@angular/router';
 export class MedicalReportsComponent implements OnInit {
   selectedFile: File;
   sub = new Subscription();
-  fileName = '';
   appointmentId: number;
   uploadSuccessful: boolean;
   uploadingInProgress: boolean;
   addItem: boolean;
   objectListing: any;
-  profileImageURL = Constants.API_BASE_URL + Constants.MEDICAL_REPORT_DOC_DOWNLOAD;
+  doctorSide = false;
+  fileListingURL = Constants.API_BASE_URL + Constants.MEDICAL_REPORT_DOC_LIST_DOWNLOAD;
+  viewFileURL = Constants.API_BASE_URL + Constants.MEDICAL_REPORT_DOC_DOWNLOAD;
+  loggedInUser: UserData = null;
 
   constructor(
       public route: ActivatedRoute,
-      public https: HttpClient
-  ) { }
+      public https: HttpClient,
+      public router: Router
+) { }
 
   ngOnInit() {
     this.sub = this.route
@@ -32,6 +37,12 @@ export class MedicalReportsComponent implements OnInit {
           this.appointmentId = +params.appointmentId;
         });
     this.setFiles();
+    this.setViewFile();
+    // if not logged In this page should not be able to access
+    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+      this.doctorSide = this.loggedInUser.doctor;
+    }
   }
 
 
@@ -39,10 +50,10 @@ export class MedicalReportsComponent implements OnInit {
    * Set files
    */
   setFiles() {
-    this.profileImageURL += this.appointmentId;
+    this.fileListingURL = Constants.API_BASE_URL + Constants.MEDICAL_REPORT_DOC_LIST_DOWNLOAD + this.appointmentId;
 
     // get file and verify that it is in the storage
-    const req = new HttpRequest('GET', this.profileImageURL, {
+    const req = new HttpRequest('GET', this.fileListingURL, {
       reportProgress: true
     });
 
@@ -62,9 +73,28 @@ export class MedicalReportsComponent implements OnInit {
         },
         error => {
           if (error.status !== 200) {
-            this.profileImageURL = './assets/img/profile_blue1.png';
+            // this.fileListingURL = './assets/img/profile_blue1.png';
           }
         });
+  }
+
+  /**
+   * Set view files
+   */
+  setViewFile() {
+    this.viewFileURL = Constants.API_BASE_URL + Constants.MEDICAL_REPORT_DOC_DOWNLOAD + this.appointmentId;
+  }
+
+  download(url, filename) {
+    fetch(url + '/' + filename).then((t) => {
+      return t.blob().then((b) => {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(b);
+            a.setAttribute('download', filename);
+            a.click();
+          }
+      );
+    });
   }
 
   /**
@@ -90,6 +120,7 @@ export class MedicalReportsComponent implements OnInit {
             this.uploadSuccessful = true;
             this.uploadingInProgress = false;
             this.setFiles();
+            this.setViewFile();
           }
         }
     );
@@ -127,8 +158,13 @@ export class MedicalReportsComponent implements OnInit {
         data => {
           if (data && data instanceof HttpHeaderResponse && data.status === 200) {
             this.setFiles();
+            this.setViewFile();
           }
         }
     );
+  }
+
+  goToMyAppointments() {
+    this.router.navigate(['appointment'], { queryParams: { id: this.appointmentId } }).then(r => {});
   }
 }

@@ -11,14 +11,10 @@
         </div>
     </ng-container>
     <br>
-    <ngb-alert *ngIf="addItem"  style="color: #3f51b5 ;border-color: white; background-color: #E5E6FE ;width: 320px; min-height: 60px" (close)="removeItem(i)" [dismissible]="false">
+    <ngb-alert *ngIf="addItem"  style="color: #3f51b5 ;border-color: white; background-color: #E5E6FE ;width: 320px; min-height: 60px" [dismissible]="false">
         <p>
             Add your files here. Please make sure NOT more than one file has the same file name
         </p>
-        <mat-form-field style="width: 280px" appearance="legacy">
-            <mat-label>File name:</mat-label>
-            <input placeholder="eg: X-ray of my leg" [(ngModel)]="fileName" matInput>
-        </mat-form-field>
 
         <input type="file"
                accept="image/*,.pdf,.doc,.docx"
@@ -38,15 +34,41 @@
     <br>
     <ng-container *ngIf="!addItem">
         <div *ngFor="let summary of objectListing?.objectSummaries; let i = index;">
-        <ngb-alert style="width: 320px; min-height: 60px" (close)="removeItem(i)" [dismissible]="true">
+        <ngb-alert style="width: 320px; min-height: 120px" (close)="removeItem(i)" [dismissible]="false">
+            <div>
             <table align="left">
                 <tr>
                     <td>
                         <p style="font-size: small">{{summary.keyName}}</p>
                     </td>
                 </tr>
+
             </table>
+            </div>
+            <br>
+            <br>
+            <div>
+            <table align="left">
+                <tr>
+                    <ng-container *ngIf="!doctorSide">
+                    <td>
+                        <button style="margin:5px;" style="width: 120px" (click)="removeItem(i)" mat-stroked-button color="warn">Remove File</button>
+                    </td>
+                    <td style="width: 5px">
+                    </td>
+                    </ng-container>
+                    <td>
+                        <button style="margin:5px;" style="width: 100px" (click)="download(viewFileURL, summary.keyName);" mat-stroked-button color="primary">Download</button>
+                    </td>
+                </tr>
+            </table>
+            </div>
         </ngb-alert>
+
         </div>
     </ng-container>
+    <br>
+
+    <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">Go back</button>
+
 </div>
