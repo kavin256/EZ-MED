@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs-compat/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocalStorageKeys} from '../../services/data-store.service';
 import {UserData} from '../../models/user-data';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-medical-reports',
@@ -17,6 +18,7 @@ export class MedicalReportsComponent implements OnInit {
   appointmentId: number;
   uploadSuccessful: boolean;
   uploadingInProgress: boolean;
+  uploadingFailed: boolean;
   addItem: boolean;
   objectListing: any;
   doctorSide = false;
@@ -106,6 +108,7 @@ export class MedicalReportsComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('file', this.selectedFile);
     this.uploadingInProgress = true;
+    this.uploadingFailed = false;
     this.uploadSuccessful = false;
     this.addItem = false;
     // send request
@@ -119,8 +122,12 @@ export class MedicalReportsComponent implements OnInit {
           if (data && data instanceof HttpHeaderResponse && data.status === 200) {
             this.uploadSuccessful = true;
             this.uploadingInProgress = false;
+            this.uploadingFailed = false;
             this.setFiles();
             this.setViewFile();
+          } else if (!this.uploadSuccessful) {
+            this.uploadingInProgress = false;
+            this.uploadingFailed = true;
           }
         }
     );
@@ -130,12 +137,14 @@ export class MedicalReportsComponent implements OnInit {
     this.addItem = true;
     this.uploadSuccessful = false;
     this.uploadingInProgress = false;
+    this.uploadingFailed = false;
   }
 
   cancelAddingItem() {
     this.addItem = false;
     this.uploadSuccessful = false;
     this.uploadingInProgress = false;
+    this.uploadingFailed = false;
   }
 
   /**
@@ -146,6 +155,7 @@ export class MedicalReportsComponent implements OnInit {
     this.addItem = false;
     this.uploadSuccessful = false;
     this.uploadingInProgress = false;
+    this.uploadingFailed = false;
     const key = this.objectListing.objectSummaries[i].key;
 
     // send request
