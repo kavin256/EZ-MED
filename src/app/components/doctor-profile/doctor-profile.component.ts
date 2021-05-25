@@ -154,11 +154,11 @@ export class DoctorProfileComponent implements OnInit {
         });
     }
 
-  /**
-   * Upload user image handling
-   * @param event selected image
-   */
-  uploadImage(event) {
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadImage(event) {
         this.selectedImage = event.target.files[0];
         const formData: FormData = new FormData();
         formData.append('file', this.selectedImage);
@@ -177,11 +177,11 @@ export class DoctorProfileComponent implements OnInit {
         );
     }
 
-  /**
-   * Upload user image handling
-   * @param event selected image
-   */
-  uploadSignature(event) {
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadSignature(event) {
         this.selectedImage = event.target.files[0];
         const formData: FormData = new FormData();
         formData.append('file', this.selectedImage);
@@ -200,35 +200,35 @@ export class DoctorProfileComponent implements OnInit {
         );
     }
 
-  checkForMandatoryFieldsToActivateProfile(userData: UserData) {
-    // currently only the userData.priceForAppointment is checked as a requirement
-    return userData &&
-        userData.priceForAppointment !== null &&
-        userData.priceForAppointment !== undefined &&
-        userData.priceForAppointment !== '' &&
-        parseInt(userData.priceForAppointment, 10) &&
-        parseInt(userData.priceForAppointment, 10) > 0;
-  }
-
-  goToVacationMode() {
-    if (!this.onVacation) {
-      this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true,
-          (result) => this.callBackFromVacationPopUp(result));
-    } else {
-      this.dataLoaderService.activateLoader(true, MODAL_TYPES.EXIT_VACATION_MODE, true,
-          (result) => this.callBackFromVacationPopUp(result));
+    checkForMandatoryFieldsToActivateProfile(userData: UserData) {
+        // currently only the userData.priceForAppointment is checked as a requirement
+        return userData &&
+            userData.priceForAppointment !== null &&
+            userData.priceForAppointment !== undefined &&
+            userData.priceForAppointment !== '' &&
+            parseInt(userData.priceForAppointment, 10) &&
+            parseInt(userData.priceForAppointment, 10) > 0;
     }
-  }
 
-  callBackFromVacationPopUp($event) {
-    switch ($event) {
-      case 'start_vacation':
-        this.onVacation = true;
-        this.vacationModeTitle = 'Exit Vacation Mode';
-        break;
-      case 'stop_vacation':
-        this.onVacation = false;
-        this.vacationModeTitle = 'Enable Vacation Mode';
+    goToVacationMode() {
+        if (!this.onVacation) {
+            this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true,
+                (result) => this.callBackFromVacationPopUp(result));
+        } else {
+            this.dataLoaderService.activateLoader(true, MODAL_TYPES.EXIT_VACATION_MODE, true,
+                (result) => this.callBackFromVacationPopUp(result));
+        }
     }
-  }
+
+    callBackFromVacationPopUp($event) {
+        switch ($event) {
+            case 'start_vacation':
+                this.onVacation = true;
+                this.vacationModeTitle = 'Exit Vacation Mode';
+                break;
+            case 'stop_vacation':
+                this.onVacation = false;
+                this.vacationModeTitle = 'Enable Vacation Mode';
+        }
+    }
 }

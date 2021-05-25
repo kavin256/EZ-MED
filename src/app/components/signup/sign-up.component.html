@@ -1,6 +1,6 @@
 <div align="center" class="mat-card-style">
     <app-page-title [title]="'Sign In / Register'"></app-page-title>
-<!--    <script src="https://theapicompany.com/deviceAPI.js"></script>-->
+    <!--    <script src="https://theapicompany.com/deviceAPI.js"></script>-->
     <script>
         // var eee = deviceAPI.deviceName;
         // console.log('eee e r ffffff fffffff xxxxx');
@@ -8,35 +8,40 @@
     </script>
     <mat-tab-group style="width: 320px" mat-align-tabs="center">
         <ng-container>
-        <mat-tab label="Existing User">
-            <div class="mat-card-style" align="center">
-                <div class="example-container">
-                    <mat-form-field style="width: 240px" appearance="legacy">
-                        <mat-label>Email</mat-label>
-                        <input (keydown.enter)="logIn()" [(ngModel)]="email" matInput>
-                    </mat-form-field>
-                    <br>
-                    <mat-form-field style="width: 240px" appearance="legacy">
-                        <mat-label>Password</mat-label>
-                        <input (keydown.enter)="logIn()" matInput [(ngModel)]="pass" [type]="hide ? 'password' : 'text'">
-                    </mat-form-field>
-                    <br>
-                    <p style="color: crimson" *ngIf="logInError && logInError !== ''">{{logInError}}</p>
-                    <br>
-                    <button type="submit" [disabled]="!(email && pass)" (click)="logIn()" style="width: 240px" mat-flat-button color="primary">Log In</button>
-                    <br>
-                    <br>
-                    <button disabled style="width: 180px"  mat-stroked-button color="link">Forgot My Password</button>
-                    <br>
+            <mat-tab label="Existing User">
+                <div class="mat-card-style" align="center">
+                    <div class="example-container">
+                        <mat-form-field style="width: 240px" appearance="legacy">
+                            <mat-label>Email</mat-label>
+                            <input (keydown.enter)="logIn()" [(ngModel)]="email" matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field style="width: 240px" appearance="legacy">
+                            <mat-label>Password</mat-label>
+                            <input (keydown.enter)="logIn()" matInput [(ngModel)]="pass"
+                                   [type]="hide ? 'password' : 'text'">
+                        </mat-form-field>
+                        <br>
+                        <p style="color: crimson" *ngIf="logInError && logInError !== ''">{{logInError}}</p>
+                        <br>
+                        <button type="submit" [disabled]="!(email && pass)" (click)="logIn()" style="width: 240px"
+                                mat-flat-button color="primary">Log In
+                        </button>
+                        <br>
+                        <br>
+                        <button disabled style="width: 180px" mat-stroked-button color="link">Forgot My Password
+                        </button>
+                        <br>
+                    </div>
                 </div>
-            </div>
-        </mat-tab>
+            </mat-tab>
         </ng-container>
         <ng-container *ngIf="isSignUp">
             <mat-tab label="New User">
                 <div class="mat-card-style" align="center">
                     <br>
-                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">Please complete the mandatory details !!</p>
+                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">Please complete the mandatory details
+                        !!</p>
                     <br>
                     <div align="left" style="padding-left: 55px">
                         <mat-radio-group aria-label="Select an option" (change)="setIsDoctor($event)">
@@ -50,7 +55,7 @@
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Title</mat-label>
                             <mat-select required [(value)]="title" [formControl]="titleFormControl">
-                                <ng-container *ngFor="let title of titles" >
+                                <ng-container *ngFor="let title of titles">
                                     <mat-option value="{{title}}">
                                         {{title}}
                                     </mat-option>
@@ -62,22 +67,25 @@
                     <div>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>First Name</mat-label>
-                            <input required matInput #input1 [(ngModel)]='firstName' [formControl]="firstNameFormControl">
+                            <input required matInput #input1 [(ngModel)]='firstName'
+                                   [formControl]="firstNameFormControl">
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Last Name</mat-label>
-                            <input required matInput #input_ln [(ngModel)]='lastName' [formControl]="lastNameFormControl">
+                            <input required matInput #input_ln [(ngModel)]='lastName'
+                                   [formControl]="lastNameFormControl">
                         </mat-form-field>
                         <br>
-                        <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Email</mat-label>
                             <input required matInput #input2 [(ngModel)]='email' [formControl]="emailFormControl">
                         </mat-form-field>
                         <br>
-                        <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Gender</mat-label>
-                            <mat-select required (selectionChange)="setGender($event.value)" [formControl]="genderFormControl">
+                            <mat-select required (selectionChange)="setGender($event.value)"
+                                        [formControl]="genderFormControl">
                                 <mat-option *ngFor="let gender of genders" [value]="gender.value">
                                     {{gender.viewValue}}
                                 </mat-option>
@@ -86,8 +94,9 @@
                         <br>
                     </div>
                     <div [hidden]="isDoctor">
-                        <mat-form-field style="width: 240px" >
-                            <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="bDayFormControl">
+                        <mat-form-field style="width: 240px">
+                            <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:"
+                                   [formControl]="bDayFormControl">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker disabled="false" #picker1></mat-datepicker>
                         </mat-form-field>
@@ -96,37 +105,44 @@
                     <div>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Phone Number</mat-label>
-                            <input required matInput [(ngModel)]='contactNumber' [formControl]="contactNumberFormControl">
+                            <input required matInput [(ngModel)]='contactNumber'
+                                   [formControl]="contactNumberFormControl">
                         </mat-form-field>
                     </div>
                     <ng-container *ngIf="contactNumber && contactNumber !== ''">
                         <ngb-alert [dismissible]="false" style="width: 250px; max-height: 80px">
                             <section class="example-section">
-                                <mat-checkbox style="font-size: small" class="example-margin" (change)="setSimilarity()">WhatsApp number is the same<br>as contact  number</mat-checkbox>
+                                <mat-checkbox style="font-size: small" class="example-margin"
+                                              (change)="setSimilarity()">WhatsApp number is the same<br>as contact
+                                    number
+                                </mat-checkbox>
                             </section>
                         </ngb-alert>
                     </ng-container>
                     <div>
-                        <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>WhatsApp Number</mat-label>
-                            <input matInput #input7 [(ngModel)]='whatsAppNumber' [formControl]="whatsAppNumberFormControl">
+                            <input matInput #input7 [(ngModel)]='whatsAppNumber'
+                                   [formControl]="whatsAppNumberFormControl">
                         </mat-form-field>
                     </div>
                     <div [hidden]="isDoctor">
-                        <mat-form-field style="width: 240px"  appearance="legacy">
+                        <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Known Allergies</mat-label>
                             <textarea type="text" matInput #input8 [(ngModel)]='knownAllergies'></textarea>
                         </mat-form-field>
                         <br>
                     </div>
-                    <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>Preferred Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='pass' [formControl]="passFormControl">
+                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='pass'
+                               [formControl]="passFormControl">
                     </mat-form-field>
                     <br>
-                    <mat-form-field style="width: 240px"  appearance="legacy">
+                    <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass' [formControl]="conPassFormControl">
+                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass'
+                               [formControl]="conPassFormControl">
                     </mat-form-field>
                     <br>
                     <ng-container *ngIf="isDoctor">
@@ -138,25 +154,13 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <p>
-                                I understand EZ Med (PVT) LTD is an intermediate service provider. EZ Med declares and undertakes all the registrations of both patients and Doctors /licenses/approvals/authorizations required by law in order to provide the services pursuant to this agreement and EZ Med has the skills, knowledge and experience required in order to provide the service as required in this agreement.
-                                EZ Med undertakes to uphold all of the requirements of the law in so far as these apply to EZ Med and in accordance with the provisions of the law and the regulations related to the services.
-                                I declare that EZ Med has no responsibility regarding the Consultation and Medical Treatment process and I discharge EZ Med from such liabilities in the process.
-                                EZ Med defined and explained the entire process and I understood the role of each party. I take the responsibility of my activities and the information I share with the patients and the other external parties. I discharge EZ Med from any types of complaint of medical malpractice which I involved and I understand the intermediate role of EZ Med.
-                                I, undertakes the responsibility to provide the service in a meticulous, precise, reliable, professional manner and at the highest level of service, to the complete satisfaction of the patients and in accordance with additional instructions to be issued from time to time via EZ Med platform and brought to the attention of the provider/ EZ Med any critical / significant issues rises.
-                                I shall take the responsibility to provide consultations and treat the patients/ clients in a courteous manner and according to good medical practices,
-                                EZ Med will extend priority register facilities to the beneficiaries, whenever possible. However the right of admission will always be the prerogative of EZ Med.
-                                I shall ensure that medical treatment/facility with all due care and accepted standards is extended to the beneficiary/ patient / Client.
-                                EZ Med will convey to all the relevant parties on the critical changes or changes of the agreement clause immediately.
-                                If any unforeseen complications occur same will be included, and permitted as necessary treatment. The treating and taking the actions purely by the Medical Practitioner and I understand my responsibility in such situations.
-                                I agreed that no employee-employer relationship shall exist between the parties and that the provider services as an independent contractor for all intents and purposes.
-                                EZ Med will not interfere in the treatment and medical care provided to its beneficiaries.  EZ Med will not be in any way held responsible for the outcome of treatment or quality of care provided by the Medical Practitioner
-                                EZ Med shall not be liable or responsible for any acts, Omission or commission of the Doctors and other medical staff of the EZ Med.
-                                I shall alone be liable to pay any costs, damages and /or compensation demanded by the beneficiary/patient for poor, wrong or bad quality of the treatment given to the patient.
-
-                                <br>
-
+                                {{AGREEMENT_REGISTER_DOCTOR}}
+                            </p>
+                            <br>
                             <section style="vertical-align: center" class="example-section">
-                                <mat-checkbox style="font-size: small" class="example-margin" (change)="agreed = !agreed">I agree to the terms & conditions</mat-checkbox>
+                                <mat-checkbox style="font-size: small" class="example-margin"
+                                              (change)="agreed = !agreed">I agree to the terms & conditions
+                                </mat-checkbox>
                             </section>
                         </mat-expansion-panel>
                     </ng-container>
@@ -169,25 +173,25 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <p>
-                                I understand that I may require medications, examinations, diagnostic procedures or other treatments in connection with my condition. I further understand that EZ Med is an intermediate platform which connects me with the relevant Medical Practitioners.  I hereby consent to connect with the Medical Professional and proceed with the treatments, tests and procedures, as appropriate personnel deem necessary or advisable.
-                                I understand that the practice of medicine and surgery is not an exact science, and I acknowledge that no guarantees have been made to me as to the results of treatments or examinations via EZ Med Platform.
-                                I understand that I have the right to withhold consent to any medical or treatment procedure. I understand that the Medical Practitioner has the right to decline to permit the performance of any procedure if there is not satisfactory assurance that informed consent was given.
-                                I understand that during my discussion via EZ Med Platform, I may be advised and treated by Doctors and other personnel in related to my physiological and psychological conditions.
-                                I certify that I have read the above and it has been explained to me so that I understand. I certify that I am the patient and I review the above terms and conditions to receive the services through EZ Med Platform. I discharge the responsibility and liability of EZ Med and I understand EZ Med is merely an online platform which facilitate my medical requirements.
-
-
-                                <br>
+                                {{AGREEMENT_REGISTER_PATIENT}}
+                            </p>
+                            <br>
 
                             <section style="vertical-align: center" class="example-section">
-                                <mat-checkbox style="font-size: small" class="example-margin" (change)="agreed = !agreed">I agree to the terms & conditions</mat-checkbox>
+                                <mat-checkbox style="font-size: small" class="example-margin"
+                                              (change)="agreed = !agreed">I agree to the terms & conditions
+                                </mat-checkbox>
                             </section>
                         </mat-expansion-panel>
                     </ng-container>
                     <br>
-                    <button [disabled]="isDoctor && !agreed" style="width: 240px" mat-flat-button color="primary" (click)="SignUp()">Sign Up</button>
+                    <button [disabled]="isDoctor && !agreed" style="width: 240px" mat-flat-button color="primary"
+                            (click)="SignUp()">Sign Up
+                    </button>
                     <br>
                     <br>
-                    <p style="color: crimson" *ngIf="passwordMissMatch">Password and Confirmed password do not match!!</p>
+                    <p style="color: crimson" *ngIf="passwordMissMatch">Password and Confirmed password do not
+                        match!!</p>
                     <br>
                 </div>
             </mat-tab>
