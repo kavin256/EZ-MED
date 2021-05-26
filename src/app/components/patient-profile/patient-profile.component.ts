@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Constants, MODAL_TYPES, PatientTitles} from '../../utils/Constants';
 import {FormControl} from '@angular/forms';
@@ -49,14 +49,14 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
 
-    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(SessionStorageKeys.selectedProfessionalUserId);
     if (this.selectedProfessionalUserId) {
       this.loadProfessionalData(this.selectedProfessionalUserId);
     }
 
-    this.patient = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    this.patient = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
     if (this.patient) {
       this.prepareFrontEndData(this.patient);
       this.loadMedicalHistory(parseInt(this.patient.userId, 10));
@@ -107,7 +107,7 @@ export class PatientProfileComponent implements OnInit {
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
               this.patient = data.data[0];
-              sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+              sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
               this.toggleEditable(false);
             } else if (data && data.status && data.status.code === -1) {
               alert('Something went wrong when saving the data!');
@@ -133,7 +133,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   dismiss() {
-    sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
+    sessionStorage.removeItem(SessionStorageKeys.selectedProfessionalUserId);
     this.selectedProfessionalUserId = null;
     this.searchedProfessionalName = null;
   }

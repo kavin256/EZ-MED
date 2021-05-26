@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {Constants, TRANSITION_PAGE_TYPE} from '../../utils/Constants';
-import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DatePipe} from '@angular/common';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {UserData} from '../../models/user-data';
@@ -75,10 +75,10 @@ export class BookingEnterTimeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(SessionStorageKeys.selectedProfessionalUserId);
     this.loadProfessionalData(this.selectedProfessionalUserId);
     this.loadAvailableAppointments(this.selectedProfessionalUserId);
-    this.loggedInUser = sessionStorage.getItem(LocalStorageKeys.loggedInUser);
+    this.loggedInUser = sessionStorage.getItem(SessionStorageKeys.loggedInUser);
   }
 
   getDate(apart: number) {
@@ -126,7 +126,7 @@ export class BookingEnterTimeComponent implements OnInit {
 
   navigateToPaymentOrLogIn() {
     // set the bookingId in localStorage
-    sessionStorage.setItem(LocalStorageKeys.selectedAppointmentId, this.selectedAppointmentId);
+    sessionStorage.setItem(SessionStorageKeys.selectedAppointmentId, this.selectedAppointmentId);
     if (!this.loggedInUser) {
       this.transitionType = TRANSITION_PAGE_TYPE.LOGIN_REDIRECT;
       this.showRedirectionMessage = true;

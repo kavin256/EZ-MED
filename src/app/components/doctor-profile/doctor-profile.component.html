@@ -4,7 +4,7 @@
         <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Title</mat-label>
             <mat-select required [(value)]="userData.title">
-                <ng-container *ngFor="let title of titles" >
+                <ng-container *ngFor="let title of titles">
                     <mat-option value="{{title.value}}">
                         {{title.value}}
                     </mat-option>
@@ -31,43 +31,46 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Registration Number (SLMC):</mat-label>
-            <input matInput placeholder=""  [(ngModel)]="userData.regNo">
+            <input matInput placeholder="" [(ngModel)]="userData.regNo">
         </mat-form-field>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Qualifications / Description:</mat-label>
             <textarea required matInput placeholder="" [(ngModel)]="userData.qualifications"></textarea>
         </mat-form-field>
 
-        <mat-form-field *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
-                        style="width: 240px" class="example-full-width">
+        <mat-form-field
+                *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
+                style="width: 240px" class="example-full-width">
             <mat-label>Specialization #1</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityA">
-                <ng-container *ngFor="let specialization of specializations" >
+                <ng-container *ngFor="let specialization of specializations">
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
                     </mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field  *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
-                         style="width: 240px" class="example-full-width">
+        <mat-form-field
+                *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
+                style="width: 240px" class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityB">
-                <ng-container *ngFor="let specialization of specializations" >
+                <ng-container *ngFor="let specialization of specializations">
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
                     </mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
+        <mat-form-field
+                *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
                 style="width: 240px" class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityC">
-                <ng-container *ngFor="let specialization of specializations" >
+                <ng-container *ngFor="let specialization of specializations">
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
                     </mat-option>
@@ -75,22 +78,22 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Contact Number:</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.contactNumber">
         </mat-form-field>
         <br>
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>WhatsApp Number:</mat-label>
             <input matInput placeholder="" [(ngModel)]="userData.whatsAppNumber">
         </mat-form-field>
         <br>
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Email:</mat-label>
             <input disabled required matInput placeholder="" [(ngModel)]="userData.email">
         </mat-form-field>
         <br>
-        <mat-form-field  style="width: 240px" class="example-full-width">
+        <mat-form-field style="width: 240px" class="example-full-width">
             <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
         </mat-form-field>
@@ -129,8 +132,9 @@
 
         <ng-container *ngIf="userData?.availableForAppointment && onVacation">
             <ngb-alert [type]="'danger'" [dismissible]="false">
-                <b>Profile Status:</b> Not Visible in searches and there are no any active appointments since you are in vacation mode. You can appear in searches again and
-            continue consultations by exiting vacation mode.
+                <b>Profile Status:</b> Not Visible in searches and there are no any active appointments since you are in
+                vacation mode. You can appear in searches again and
+                continue consultations by exiting vacation mode.
             </ngb-alert>
         </ng-container>
 
@@ -142,7 +146,8 @@
 
         <ng-container *ngIf="!userData?.availableForAppointment && !logInRequired">
             <ngb-alert [dismissible]="false">
-                <strong>Note:</strong> You have not completed your Profile and Schedule yet. You will not be listed under searches until you complete your Schedule and Profile.
+                <strong>Note:</strong> You have not completed your Profile and Schedule yet. You will not be listed
+                under searches until you complete your Schedule and Profile.
             </ngb-alert>
         </ng-container>
         <ng-container *ngIf="logInRequired">
@@ -151,29 +156,39 @@
             </ngb-alert>
         </ng-container>
 
-        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()" style="width: 320px" mat-raised-button color="primary">My Bookings</button>
+        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()" style="width: 320px"
+                mat-raised-button color="primary">My Bookings
+        </button>
         <br>
         <br>
-        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)" [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
+        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
+                [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button
+                (click)="toggleEditable(true)">Edit Profile
+        </button>
         <br>
         <br>
-        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))" [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px" mat-raised-button>Edit Schedule</button>
+        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
+                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px"
+                mat-raised-button>Edit Schedule
+        </button>
         <br>
         <br>
         <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
         <br>
         <br>
-        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px" mat-stroked-button>{{vacationModeTitle}}</button>
+        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"
+                mat-stroked-button>{{vacationModeTitle}}</button>
         <br>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out</button>
+        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out
+        </button>
         <br>
         <br>
         <br>
-        <ng-container  *ngIf="userData?.availableForAppointment">
+        <ng-container *ngIf="userData?.availableForAppointment">
             <p>What the patients see:</p>
             <app-professional-card
-            [professional]="userData"
+                    [professional]="userData"
             ></app-professional-card>
         </ng-container>
     </ng-container>

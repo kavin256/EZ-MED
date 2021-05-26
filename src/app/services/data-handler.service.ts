@@ -4,7 +4,7 @@ import {startCase, camelCase} from 'lodash';
 import {Router} from '@angular/router';
 import {FixedDoctorDate, UserData} from '../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {LocalStorageKeys} from './data-store.service';
+import {SessionStorageKeys} from './data-store.service';
 import {DataLoaderService} from './data-loader.service';
 import {ConfigModel} from '../models/config';
 
@@ -140,8 +140,8 @@ export class DataHandlerService {
       .then((data: any) => {
         if (data && data.status && data.status.code === 1) {
           userData = data.data[0];
-          sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(userData));
-          const user = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+          sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(userData));
+          const user = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
           if (user && user.doctor) {
             router.navigate(['doctor/dashboard']).then(r => {
               location.reload();
@@ -152,7 +152,7 @@ export class DataHandlerService {
             });
           }
         } else if (data && data.status && data.status.code === -1) {
-          sessionStorage.setItem(LocalStorageKeys.loggedInUser, null);
+          sessionStorage.setItem(SessionStorageKeys.loggedInUser, null);
           return null;
         }
       });

@@ -5,7 +5,7 @@ import {Prescription} from '../../models/prescription';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {Constants} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {LocalStorageKeys, PrescriptionStatus} from '../../services/data-store.service';
+import {SessionStorageKeys, PrescriptionStatus} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppointmentData} from '../../models/appointment-data';
@@ -56,9 +56,9 @@ export class PrescriptionComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
-    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-        this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+        this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
         this.doctorSide = this.loggedInUser.doctor;
         this.isNewPrescription = !this.doctorSide;
     }

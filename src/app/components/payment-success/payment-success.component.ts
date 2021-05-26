@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -38,7 +38,7 @@ export class PaymentSuccessComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
     this.processPaymentRequest();
   }
 
@@ -60,9 +60,9 @@ export class PaymentSuccessComponent implements OnInit {
                 this.paymentResponseData.responseCode === '08'
             ) {
               this.isPaymentSuccessful = true;
-              this.updateConcern(this.paymentResponseData, sessionStorage.getItem(LocalStorageKeys.appointmentConcern));
-              sessionStorage.removeItem(LocalStorageKeys.appointmentConcern);
-              sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
+              this.updateConcern(this.paymentResponseData, sessionStorage.getItem(SessionStorageKeys.appointmentConcern));
+              sessionStorage.removeItem(SessionStorageKeys.appointmentConcern);
+              sessionStorage.removeItem(SessionStorageKeys.selectedProfessionalUserId);
             } else {
               this.isPaymentSuccessful = false;
             }

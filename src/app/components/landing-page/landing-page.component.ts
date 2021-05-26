@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 import {UserData} from '../../models/user-data';
 
 @Component({
@@ -18,8 +18,8 @@ export class LandingPageComponent implements OnInit, OnChanges {
   constructor(public router: Router) {}
 
   ngOnInit() {
-    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
     }
   }
 
@@ -36,8 +36,8 @@ export class LandingPageComponent implements OnInit, OnChanges {
   }
 
   isDoctorLoggedIn() {
-    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      const loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      const loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
       return loggedInUser && loggedInUser.doctor;
     } else {
       return false;

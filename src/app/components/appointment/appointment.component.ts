@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {APPOINTMENT_STATUS, Constants, MODAL_TYPES} from '../../utils/Constants';
@@ -12,9 +12,9 @@ import * as moment from 'moment';
 import {Prescription} from '../../models/prescription';
 
 @Component({
-  selector: 'app-appointment',
-  templateUrl: './appointment.component.html',
-  styleUrls: ['./appointment.component.css']
+    selector: 'app-appointment',
+    templateUrl: './appointment.component.html',
+    styleUrls: ['./appointment.component.css']
 })
 export class AppointmentComponent implements OnInit, OnDestroy {
 
@@ -35,43 +35,46 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     medicalHistory: any;
 
     constructor(
-      public router: Router,
-      public route: ActivatedRoute,
-      public dataHandlerService: DataHandlerService,
-      public dataLoaderService: DataLoaderService
-    ) { }
+        public router: Router,
+        public route: ActivatedRoute,
+        public dataHandlerService: DataHandlerService,
+        public dataLoaderService: DataLoaderService
+    ) {
+    }
 
     ngOnInit() {
-      this.sub = this.route
-          .queryParams
-          .subscribe(params => {
-              this.bookingId = +params.id;
-              // load Appointment by ID
-              this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
-                  .then((data: AppointmentData) => {
-                      this.booking = data;
+        this.sub = this.route
+            .queryParams
+            .subscribe(params => {
+                this.bookingId = +params.id;
+                // load Appointment by ID
+                this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
+                    .then((data: AppointmentData) => {
+                        this.booking = data;
 
-                      // repeated call to check status change
-                      this.repeatedStatusChecker();
+                        // repeated call to check status change
+                        this.repeatedStatusChecker();
 
-                      // let time = new Time
-                      this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
-                      this.patient = this.booking.patientData;
-                      this.doctor = this.booking.doctorData;
+                        // let time = new Time
+                        this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
+                        this.patient = this.booking.patientData;
+                        this.doctor = this.booking.doctorData;
 
-                      // load Medical History
-                      this.loadMedicalHistory();
-                  }).catch((e) => {
-                      console.log(e);
-                  }).finally(() => {});
-          });
-      // if not logged In this page should not be able to access
-      if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-          this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
-          this.doctorSide = this.loggedInUser.doctor;
-      }
-      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
-      this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+                        // load Medical History
+                        this.loadMedicalHistory();
+                    }).catch((e) => {
+                    console.log(e);
+                }).finally(() => {
+                });
+            });
+        // if not logged In this page should not be able to access
+        if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+            this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+            this.doctorSide = this.loggedInUser.doctor;
+        }
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)),
+            this.router);
+        this.selectedProfessionalUserId = sessionStorage.getItem(SessionStorageKeys.selectedProfessionalUserId);
     }
 
     repeatedStatusChecker() {
@@ -98,14 +101,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                     this.doctor = this.booking.doctorData;
                 }
             }).catch((e) => {
-                this.networkError = true;
-                alert('Something is not right. Please check your internet connection!');
+            this.networkError = true;
+            alert('Something is not right. Please check your internet connection!');
         }).finally(() => {
         });
     }
 
     userConsent() {
-      this.isConfirmationActive = !this.isConfirmationActive;
+        this.isConfirmationActive = !this.isConfirmationActive;
     }
 
     ngOnDestroy() {
@@ -113,19 +116,20 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     private loadProfessionalData(selectedProfessionalUserId: any) {
-      this.dataHandlerService.loadUserDataUsingUserId(selectedProfessionalUserId, this.dataLoaderService)
-          .then((data: any) => {
-              this.doctor = data;
-          });
+        this.dataHandlerService.loadUserDataUsingUserId(selectedProfessionalUserId, this.dataLoaderService)
+            .then((data: any) => {
+                this.doctor = data;
+            });
     }
 
     dismiss() {
-      this.isConfirmationActive = false;
-      this.changeRequestSent = false;
+        this.isConfirmationActive = false;
+        this.changeRequestSent = false;
     }
 
     goBack() {
-        this.router.navigate(['appointments']).then(r => {});
+        this.router.navigate(['appointments']).then(r => {
+        });
     }
 
     cancel() {
@@ -133,9 +137,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.changeRequestSent = true;
         this.previousStatus = this.booking.status;
         if (this.doctorSide) {
-          this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR;
+            this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR;
         } else {
-          this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_PATIENT;
+            this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_PATIENT;
         }
         this.updateAppointmentStatus();
     }
@@ -154,12 +158,22 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     goToPrescription() {
         this.router.navigate(['appointment/prescriptionList'],
-            { queryParams: { appointmentId: this.bookingId } }).then(r => {});
+            {queryParams: {appointmentId: this.bookingId}}).then(r => {
+        });
     }
 
     goToMedicalReports() {
         this.router.navigate(['appointment/medicalReports'],
-            { queryParams: { appointmentId: this.bookingId } }).then(r => {});
+            {queryParams: {appointmentId: this.bookingId}}).then(r => {
+            if (
+                this.booking.status === APPOINTMENT_STATUS.NOT_STARTED
+                || this.booking.status === APPOINTMENT_STATUS.IN_PROGRESS
+            ) {
+                sessionStorage.setItem(SessionStorageKeys.editable, 'true');
+            } else {
+                sessionStorage.setItem(SessionStorageKeys.editable, 'false');
+            }
+        });
     }
 
     openPastRecords(): void {
@@ -194,10 +208,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                     alert('Cannot update the appointment status right now. Please check your internet connection!');
                 }
             }).catch(() => {
-                this.booking.status = this.previousStatus;
-                alert('Cannot update the appointment status right now. Please check your internet connection!');
-            }).finally(() => {
-                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+            this.booking.status = this.previousStatus;
+            alert('Cannot update the appointment status right now. Please check your internet connection!');
+        }).finally(() => {
+            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
     }
 

@@ -12,7 +12,7 @@
             <mat-form-field style="width: 240px" appearance="legacy">
                 <mat-label>Title</mat-label>
                 <mat-select required [(value)]="patient.title">
-                    <ng-container *ngFor="let title of titles" >
+                    <ng-container *ngFor="let title of titles">
                         <mat-option value="{{title}}">
                             {{title}}
                         </mat-option>
@@ -32,12 +32,12 @@
                 <input required matInput [(ngModel)]='patient.lastName' [formControl]="lastNameFormControl">
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="false" style="width: 240px"  appearance="legacy">
+            <mat-form-field *ngIf="false" style="width: 240px" appearance="legacy">
                 <mat-label>Email</mat-label>
                 <input readonly matInput [(ngModel)]='patient.email' [formControl]="emailFormControl">
                 <br>
             </mat-form-field>
-            <mat-form-field style="width: 240px"  appearance="legacy">
+            <mat-form-field style="width: 240px" appearance="legacy">
                 <mat-label>Gender * ({{gender}})</mat-label>
                 <mat-select [(value)]='gender'>
                     <mat-option required *ngFor="let gender of genders" value="{{gender}}">
@@ -48,10 +48,13 @@
             <br>
         </div>
         <div>
-            <mat-form-field style="width: 240px" >
-                <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:" [formControl]="dateFormControl">
+            <mat-form-field style="width: 240px">
+                <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:"
+                       [formControl]="dateFormControl">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker disabled="false" #picker1></mat-datepicker>
+                <mat-datepicker
+                        startView="multi-year"
+                        touchUi disabled="false" #picker1></mat-datepicker>
             </mat-form-field>
             <br>
         </div>
@@ -63,25 +66,37 @@
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field style="width: 240px"  appearance="legacy">
+            <mat-form-field style="width: 240px" appearance="legacy">
                 <mat-label>WhatsApp Number</mat-label>
                 <input matInput #input7 [(ngModel)]='patient.whatsAppNumber' [formControl]="whatsAppNumberFormControl">
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field style="width: 240px"  appearance="legacy">
+
+            <mat-form-field style="width: 240px" class="example-full-width">
+                <mat-label>Email:</mat-label>
+                <input disabled required matInput placeholder="" [(ngModel)]="patient.email">
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field style="width: 240px" appearance="legacy">
                 <mat-label>Known Allergies</mat-label>
                 <textarea type="text" matInput #input8 [(ngModel)]='patient.userAllergies'></textarea>
             </mat-form-field>
             <br>
         </div>
-        <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
-        <br>
-        <input type="file"
-               accept="image/*"
-               (change)="uploadImage($event)">
-        <br>
-        <br>
+        <div style="align-items: center; width: 200px">
+
+            <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
+            <br>
+            <input type="file"
+                   accept="image/*"
+                   (change)="uploadImage($event)">
+            <br>
+            <br>
+        </div>
+
         <button style="width: 240px" mat-raised-button color="primary" (click)="save()">Save</button>
         <br>
         <br>
@@ -92,26 +107,35 @@
     <ng-container *ngIf="!editable">
         <ng-container *ngIf="searchedProfessionalName">
             <div class="alert alert-primary" role="alert">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">error_outline</mat-icon>Want to continue your booking with {{searchedProfessionalName}}?
+                <mat-icon aria-hidden="false" aria-label="Example home icon">error_outline</mat-icon>
+                Want to continue your booking with {{searchedProfessionalName}}?
                 <br>
-                <button style="margin:5px;" (click)="goToAppointmentTimeSelection()" style="width: 100px" mat-stroked-button color="primary">Yes</button>
-                &nbsp;<button style="margin:5px;" (click)="dismiss()" style="width: 100px" mat-stroked-button color="primary">No</button>
+                <button style="margin:5px;" (click)="goToAppointmentTimeSelection()" style="width: 100px"
+                        mat-stroked-button color="primary">Yes
+                </button>
+                &nbsp;<button style="margin:5px;" (click)="dismiss()" style="width: 100px" mat-stroked-button
+                              color="primary">No
+            </button>
             </div>
         </ng-container>
         <button style="width: 320px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
         <br>
         <br>
-        <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings</button>
+        <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings
+        </button>
         <br>
         <br>
-        <ng-container *ngIf="medicalHistory && medicalHistory.length > 0" >
-            <button style="width: 320px" (click)="goToMyMedicalHistory()" mat-raised-button color="primary">My medical history</button>
+        <ng-container *ngIf="medicalHistory && medicalHistory.length > 0">
+            <button style="width: 320px" (click)="goToMyMedicalHistory()" mat-raised-button color="primary">My medical
+                history
+            </button>
             <br>
             <br>
         </ng-container>
         <button style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out</button>
+        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out
+        </button>
     </ng-container>
 </div>

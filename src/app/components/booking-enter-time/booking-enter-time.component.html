@@ -1,11 +1,12 @@
 <div class="mat-card-style" align="center">
-    <app-page-title [title]="(!summaryShown && !showRedirectionMessage) ? 'Select Convenient Time' : (summaryShown && !showRedirectionMessage) ? 'Appointment Summary' : ''"></app-page-title>
+    <app-page-title
+            [title]="(!summaryShown && !showRedirectionMessage) ? 'Select Convenient Time' : (summaryShown && !showRedirectionMessage) ? 'Appointment Summary' : ''"></app-page-title>
     <app-professional-card
             [professional]="doctor"
     ></app-professional-card>
     <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
 
-        <mat-form-field  style="width: 240px" >
+        <mat-form-field style="width: 240px">
             <mat-label>Date</mat-label>
             <mat-select [(value)]="selectedDate">
                 <ng-container *ngFor="let day of days">
@@ -14,43 +15,47 @@
             </mat-select>
         </mat-form-field>
         <ng-container *ngIf="selectedDate !== undefined && selectedDate !== null">
-            <mat-form-field  style="width: 240px" >
+            <mat-form-field style="width: 240px">
                 <mat-label>Time</mat-label>
                 <mat-select [(value)]="selectedAppointmentId">
                     <ng-container *ngFor="let timeSlot of getTimeSlots(selectedDate)">
-                        <mat-option value="{{timeSlot.appointmentId}}">{{timeSlot.displayAppointmentTime | date:'shortTime'}}</mat-option>
+                        <mat-option
+                                value="{{timeSlot.appointmentId}}">{{timeSlot.displayAppointmentTime | date:'shortTime'}}</mat-option>
                     </ng-container>
                 </mat-select>
             </mat-form-field>
         </ng-container>
-        <button [disabled]="!selectedDate || !selectedAppointmentId" mat-raised-button color="primary" style="width: 240px" (click)="continueClicked(true)">Continue</button>
+        <button [disabled]="!selectedDate || !selectedAppointmentId" mat-raised-button color="primary"
+                style="width: 240px" (click)="continueClicked(true)">Continue
+        </button>
         <br>
         <br>
 
-        <button mat-raised-button color="secondary" style="width: 240px"  (click)="goToSearchProfessionals()">Back</button>
+        <button mat-raised-button color="secondary" style="width: 240px" (click)="goToSearchProfessionals()">Back
+        </button>
 
         <br>
         <br>
-<!--        <button *ngIf="!isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(true)" >Show Available Times</button>-->
-<!--        <button *ngIf="isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(false)" >Hide Available Times</button>-->
-<!--        <br>-->
-<!--        <br>-->
-<!--        <ng-container *ngIf="isScheduleVisible" >-->
-<!--            <p>Available Times:</p>-->
-<!--            <mat-accordion>-->
-<!--                <div *ngFor="let schedule of doctorSchedule.schedule;">-->
-<!--                    <mat-expansion-panel style="width: 320px">-->
-<!--                        <mat-expansion-panel-header>-->
-<!--                            <mat-panel-title>{{schedule.title}}</mat-panel-title>-->
-<!--                        </mat-expansion-panel-header>-->
-<!--                        <p>Time Slot 1: <b>{{schedule.slot1}}</b></p>-->
-<!--                        <p>Time Slot 2: <b>{{schedule.slot2}}</b></p>-->
-<!--                        <p>Time Slot 3: <b>{{schedule.slot3}}</b></p>-->
-<!--                    </mat-expansion-panel>-->
-<!--                    <br>-->
-<!--                </div>-->
-<!--            </mat-accordion>-->
-<!--        </ng-container>-->
+        <!--        <button *ngIf="!isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(true)" >Show Available Times</button>-->
+        <!--        <button *ngIf="isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(false)" >Hide Available Times</button>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <ng-container *ngIf="isScheduleVisible" >-->
+        <!--            <p>Available Times:</p>-->
+        <!--            <mat-accordion>-->
+        <!--                <div *ngFor="let schedule of doctorSchedule.schedule;">-->
+        <!--                    <mat-expansion-panel style="width: 320px">-->
+        <!--                        <mat-expansion-panel-header>-->
+        <!--                            <mat-panel-title>{{schedule.title}}</mat-panel-title>-->
+        <!--                        </mat-expansion-panel-header>-->
+        <!--                        <p>Time Slot 1: <b>{{schedule.slot1}}</b></p>-->
+        <!--                        <p>Time Slot 2: <b>{{schedule.slot2}}</b></p>-->
+        <!--                        <p>Time Slot 3: <b>{{schedule.slot3}}</b></p>-->
+        <!--                    </mat-expansion-panel>-->
+        <!--                    <br>-->
+        <!--                </div>-->
+        <!--            </mat-accordion>-->
+        <!--        </ng-container>-->
 
     </ng-container>
     <ng-container *ngIf="summaryShown && !showRedirectionMessage">
@@ -60,14 +65,16 @@
             <b>Time:</b> {{getDisplaySelectedTime(selectedAppointmentId)}}
         </div>
         <br>
-        <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time can be slightly changed due to many reasons</p>
+        <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time can
+            be slightly changed due to unavoidable reasons</p>
         <br>
 
-        <button (click)="navigateToPaymentOrLogIn()" mat-raised-button color="primary" style="width: 240px">Continue</button>
+        <button (click)="navigateToPaymentOrLogIn()" mat-raised-button color="primary" style="width: 240px">Continue
+        </button>
         <br>
         <br>
 
-        <button mat-raised-button color="secondary" style="width: 240px"  (click)="continueClicked(false)">Back</button>
+        <button mat-raised-button color="secondary" style="width: 240px" (click)="continueClicked(false)">Back</button>
     </ng-container>
     <ng-container *ngIf="showRedirectionMessage">
         <app-transition-page

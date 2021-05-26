@@ -2,7 +2,9 @@
 
     <ng-container *ngIf="!addItem && !doctorSide">
         <div align="center">
-            <button (click)="addMoreItem()" style="width: 320px" color="primary" mat-flat-button>Add a file</button>
+            <button [disabled]="!editable" (click)="addMoreItem()" style="width: 320px" color="primary" mat-flat-button>
+                Add a file
+            </button>
         </div>
     </ng-container>
     <ng-container *ngIf="addItem">
@@ -11,7 +13,9 @@
         </div>
     </ng-container>
     <br>
-    <ngb-alert *ngIf="addItem"  style="color: #3f51b5 ;border-color: white; background-color: #E5E6FE ;width: 320px; min-height: 60px" [dismissible]="false">
+    <ngb-alert *ngIf="addItem"
+               style="color: #3f51b5 ;border-color: white; background-color: #E5E6FE ;width: 320px; min-height: 60px"
+               [dismissible]="false">
         <p>
             Add your files here. Please make sure NOT more than one file has the same file name. Max file size : 15MB
         </p>
@@ -21,17 +25,20 @@
                (change)="uploadImage($event)">
 
     </ngb-alert>
-    <ngb-alert *ngIf="uploadSuccessful" style="color: #4CAF50 ;background-color: white ;width: 320px; height: 50px" [dismissible]="false">
+    <ngb-alert *ngIf="uploadSuccessful" style="color: #4CAF50 ;background-color: white ;width: 320px; height: 50px"
+               [dismissible]="false">
         <h5>
             Uploaded successfully!
         </h5>
     </ngb-alert>
-    <ngb-alert *ngIf="uploadingInProgress" style="color: #3f51b5 ;background-color: white ;width: 320px; height: 50px" [dismissible]="false">
+    <ngb-alert *ngIf="uploadingInProgress" style="color: #3f51b5 ;background-color: white ;width: 320px; height: 50px"
+               [dismissible]="false">
         <h5>
             Uploading...
         </h5>
     </ngb-alert>
-    <ngb-alert *ngIf="uploadingFailed" style="color: #fa3c22 ;background-color: white ;width: 320px; height: 50px" [dismissible]="false">
+    <ngb-alert *ngIf="uploadingFailed" style="color: #fa3c22 ;background-color: white ;width: 320px; height: 50px"
+               [dismissible]="false">
         <h5>
             Uploading failed
         </h5>
@@ -40,6 +47,9 @@
     <br>
     <ng-container *ngIf="!addItem">
         <ng-container *ngIf="objectListing?.objectSummaries.length; else noResults">
+            <p>
+                Note: These files will automatically be removed after 2 weeks from the date of appointment!
+            </p>
             <div *ngFor="let summary of objectListing?.objectSummaries; let i = index;">
                 <ngb-alert style="width: 320px; min-height: 120px" (close)="removeItem(i)" [dismissible]="false">
                     <div>
@@ -59,13 +69,18 @@
                             <tr>
                                 <ng-container *ngIf="!doctorSide">
                                     <td>
-                                        <button style="margin:5px;" style="width: 120px" (click)="removeItem(i)" mat-stroked-button color="warn">Remove File</button>
+                                        <button style="margin:5px;" style="width: 120px" (click)="removeItem(i)"
+                                                mat-stroked-button color="warn">Remove File
+                                        </button>
                                     </td>
                                     <td style="width: 5px">
                                     </td>
                                 </ng-container>
                                 <td>
-                                    <button style="margin:5px;" style="width: 100px" (click)="download(viewFileURL, summary.keyName);" mat-stroked-button color="primary">Download</button>
+                                    <button style="margin:5px;" style="width: 100px"
+                                            (click)="download(viewFileURL, summary.keyName);" mat-stroked-button
+                                            color="primary">Download
+                                    </button>
                                 </td>
                             </tr>
                         </table>
@@ -75,9 +90,17 @@
             </div>
         </ng-container>
         <ng-template #noResults>
-            <div>
-                <p style="color: crimson; text-align: center"><b>Sorry, No results found</b></p>
-            </div>
+            <ng-container *ngIf="!doctorSide">
+                <div>
+                    <p style="color: #e88397; text-align: center"><b>Add your medical reports here</b></p>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="doctorSide">
+                <div>
+                    <p style="color: crimson; text-align: center"><b>No medical reports found</b></p>
+                </div>
+            </ng-container>
+
         </ng-template>
     </ng-container>
 

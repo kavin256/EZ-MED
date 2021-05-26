@@ -8,13 +8,14 @@
     </style>
     <div *ngIf="doctor">
         <app-professional-card
-            [professional]="doctor"
-            ></app-professional-card>
+                [professional]="doctor"
+        ></app-professional-card>
     </div>
     <div>
-        <mat-form-field style="width: 320px; height: 100px"  appearance="legacy">
-            <mat-label>Summary of your concern..</mat-label>
-            <textarea style="height: 100px" type="text" matInput #input8 [(ngModel)]='appointmentConcern' placeholder="eg: I have a back pain"></textarea>
+        <mat-form-field style="width: 320px; height: 70px" appearance="legacy">
+            <mat-label>Add your concern here.. (Optional)</mat-label>
+            <textarea style="height: 100px" type="text" matInput #input8 [(ngModel)]='appointmentConcern'
+                      placeholder="eg: Doctor, I have a high fever and my stomach hurts"></textarea>
         </mat-form-field>
     </div>
     <br>
@@ -33,17 +34,17 @@
                     {{ preTaxTotalCharge | currency:'LKR':'' }}
                 </td>
             </tr>
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    Service charge-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    LKR-->
-<!--                </td>-->
-<!--                <td style="text-align:right">-->
-<!--                    {{ serviceCharge | currency:'LKR':'' }}-->
-<!--                </td>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td>-->
+            <!--                    Service charge-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    LKR-->
+            <!--                </td>-->
+            <!--                <td style="text-align:right">-->
+            <!--                    {{ serviceCharge | currency:'LKR':'' }}-->
+            <!--                </td>-->
+            <!--            </tr>-->
             <tr>
                 <td>
                     Taxes / Fees
@@ -79,7 +80,8 @@
             </tr>
         </table>
         <br>
-        <p style="font-size: x-small"><b>*Conditions & terms:</b> <br>You will NOT be refunded if you cancel the appointment.</p>
+        <p style="font-size: x-small"><b>*Conditions & terms:</b> <br>You will NOT be refunded if you cancel the
+            appointment.</p>
     </div>
     <button (click)="payment()" mat-raised-button color="primary" style="width: 320px">Continue to payment</button>
     <br>

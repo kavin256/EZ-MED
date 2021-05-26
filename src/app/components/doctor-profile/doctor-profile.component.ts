@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {Constants, DoctorTitles, DoctorType, MODAL_TYPES} from '../../utils/Constants';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
@@ -72,11 +72,11 @@ export class DoctorProfileComponent implements OnInit {
         this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
         this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
 
-        this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+        this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
 
         // if not logged In this page should not be able to access
         this.dataHandlerService.redirectToSignUpIfNotLoggedIn(
-            JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+            JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
         if (this.loggedInUser) {
             this.userData = this.loggedInUser;
         }
@@ -133,7 +133,7 @@ export class DoctorProfileComponent implements OnInit {
             this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData)
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1) {
-                        sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+                        sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
                         this.toggleEditable(false);
                     }
                 });

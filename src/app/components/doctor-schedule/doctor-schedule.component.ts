@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DoctorScheduleData, FixedDoctorDate, UserData, WorkingTimePeriod} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Router} from '@angular/router';
@@ -41,9 +41,9 @@ export class DoctorScheduleComponent implements OnInit {
 
   ngOnInit() {
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
 
-    this.professional = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    this.professional = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
     if (this.professional && this.professional.userId) { this.populateDoctorScheduleData(this.professional.userId); }
   }
 
@@ -111,10 +111,10 @@ export class DoctorScheduleComponent implements OnInit {
               );
             }
             this.prepareDisplayData(this.doctorScheduleData);
-            sessionStorage.setItem(LocalStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
+            sessionStorage.setItem(SessionStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
           } else if (data && data.status && data.status.code === -1) {
-            sessionStorage.setItem(LocalStorageKeys.professionalScheduleData, null);
+            sessionStorage.setItem(SessionStorageKeys.professionalScheduleData, null);
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
           }
         }).finally(() => {

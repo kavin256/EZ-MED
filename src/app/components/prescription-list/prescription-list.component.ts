@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Subscription} from 'rxjs-compat/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -31,12 +31,12 @@ export class PrescriptionListComponent implements OnInit {
 
     ngOnInit() {
       this.loadPrescriptionList();
-      if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-          this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+      if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+          this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
           this.doctorSide = this.loggedInUser.doctor;
       }
       // if not logged In this page should not be able to access
-      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+      this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
     }
 
     loadPrescriptionList() {

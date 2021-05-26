@@ -3,7 +3,7 @@ import {Constants} from '../../utils/Constants';
 import {Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataHandlerService} from '../../services/data-handler.service';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 import {UserData} from '../../models/user-data';
 import {isNumber} from 'util';
 
@@ -35,13 +35,13 @@ export class PaymentConfirmationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(SessionStorageKeys.selectedProfessionalUserId);
     this.loadProfessionalData(this.selectedProfessionalUserId);
-    this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
-    this.selectedAppointmentId = sessionStorage.getItem(LocalStorageKeys.selectedAppointmentId);
+    this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+    this.selectedAppointmentId = sessionStorage.getItem(SessionStorageKeys.selectedAppointmentId);
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
   }
 
   private loadProfessionalData(selectedProfessionalUserId: any) {
@@ -66,17 +66,17 @@ export class PaymentConfirmationComponent implements OnInit {
 
   payment() {
     // set appointment concern
-    sessionStorage.setItem(LocalStorageKeys.appointmentConcern, this.appointmentConcern);
+    sessionStorage.setItem(SessionStorageKeys.appointmentConcern, this.appointmentConcern);
 
     // todo: get the charge values from backend !!!!
-    sessionStorage.setItem(LocalStorageKeys.chargeAmount, (this.totalCharge * 100).toString());
-    sessionStorage.setItem(LocalStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
-    sessionStorage.setItem(LocalStorageKeys.comment, 'This is a demo payment');
+    sessionStorage.setItem(SessionStorageKeys.chargeAmount, (this.totalCharge * 100).toString());
+    sessionStorage.setItem(SessionStorageKeys.clientRef, this.generateRefKey(this.selectedAppointmentId, this.loggedInUser.userId));
+    sessionStorage.setItem(SessionStorageKeys.comment, 'This is a demo payment');
     if (
-        sessionStorage.getItem(LocalStorageKeys.clientRef)
-        && sessionStorage.getItem(LocalStorageKeys.chargeAmount)
-        && isNumber(parseInt(sessionStorage.getItem(LocalStorageKeys.chargeAmount), 10))
-        && parseInt(sessionStorage.getItem(LocalStorageKeys.chargeAmount), 10) > 0
+        sessionStorage.getItem(SessionStorageKeys.clientRef)
+        && sessionStorage.getItem(SessionStorageKeys.chargeAmount)
+        && isNumber(parseInt(sessionStorage.getItem(SessionStorageKeys.chargeAmount), 10))
+        && parseInt(sessionStorage.getItem(SessionStorageKeys.chargeAmount), 10) > 0
     ) {
       window.location.href = Constants.FE_BASE_URL + '/static-pages/payment.html';
     } else {

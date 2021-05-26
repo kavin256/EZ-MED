@@ -1,7 +1,7 @@
 import {Component, AfterViewInit, Input, OnInit} from '@angular/core';
 import './header.component.css';
 import {Router} from '@angular/router';
-import {DataKey, DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {Constants} from '../../utils/Constants';
 import {HttpClient, HttpRequest} from '@angular/common/http';
@@ -39,8 +39,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
     }
     this.firstName = null;
     if (this.loggedInUser) {

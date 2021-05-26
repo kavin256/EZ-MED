@@ -6,7 +6,7 @@ import {Constants, MODAL_TYPES, PatientTitles} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {AuthResponse} from '../../models/auth-response';
 import {RequestOptions} from '../../models/request-options';
-import {DataKey, LocalStorageKeys} from '../../services/data-store.service';
+import {DataKey, SessionStorageKeys} from '../../services/data-store.service';
 import {HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {FormControl} from '@angular/forms';
@@ -80,7 +80,7 @@ export class SignUpComponent implements OnInit {
     ngOnInit() {
         // if not logged In this page should not be able to access
         this.dataHandlerService.redirectFromSignUpIfLoggedIn(
-            JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+            JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
         this.AGREEMENT_REGISTER_DOCTOR = this.dataHandlerService.loadConfig('AGREEMENT_REGISTER_DOCTOR');
         this.AGREEMENT_REGISTER_PATIENT = this.dataHandlerService.loadConfig('AGREEMENT_REGISTER_PATIENT');
 
@@ -101,14 +101,14 @@ export class SignUpComponent implements OnInit {
         this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    sessionStorage.setItem(LocalStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+                    sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
                     if (data.data[0].doctor) {
-                        sessionStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
+                        sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
                         this.router.navigate(['doctor/dashboard']).then(r => {
                             location.reload();
                         });
                     } else if (!data.data[0].doctor) {
-                        sessionStorage.setItem(LocalStorageKeys.userId, JSON.stringify(data.data[0].userId));
+                        sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
                         this.router.navigate(['user/dashboard']).then(r => {
                             location.reload();
                         });
@@ -202,6 +202,7 @@ export class SignUpComponent implements OnInit {
 
     setIsDoctor($event: MatRadioChange) {
         this.isDoctor = JSON.parse($event.value);
+        this.agreed = false;
         this.resetFields();
     }
 
@@ -229,7 +230,7 @@ export class SignUpComponent implements OnInit {
                 if (data && data.jwt) {
                     sessionStorage.setItem(Constants.EZ_MED_AUTH, data.jwt);
                     if (this.dataHandlerService.loadUserData(obj.username, this.dataLoaderService, this.router)) {
-                        const user = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+                        const user = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
                         if (user && user.doctor) {
                             this.router.navigate(['doctor/dashboard']).then(r => {
                                 location.reload();

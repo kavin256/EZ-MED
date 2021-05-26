@@ -98,7 +98,9 @@
                             <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:"
                                    [formControl]="bDayFormControl">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker disabled="false" #picker1></mat-datepicker>
+                            <mat-datepicker
+                                    startView="multi-year"
+                                    touchUi disabled="false" #picker1></mat-datepicker>
                         </mat-form-field>
                         <br>
                     </div>
@@ -185,7 +187,7 @@
                         </mat-expansion-panel>
                     </ng-container>
                     <br>
-                    <button [disabled]="isDoctor && !agreed" style="width: 240px" mat-flat-button color="primary"
+                    <button [disabled]="!agreed" style="width: 240px" mat-flat-button color="primary"
                             (click)="SignUp()">Sign Up
                     </button>
                     <br>

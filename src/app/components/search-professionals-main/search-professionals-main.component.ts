@@ -4,7 +4,7 @@ import {Constants, DoctorType} from '../../utils/Constants';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DataStoreService, LocalStorageKeys} from '../../services/data-store.service';
+import {DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {PageEvent} from '@angular/material/paginator';
 
@@ -59,7 +59,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
     this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
 
-    sessionStorage.removeItem(LocalStorageKeys.selectedProfessionalUserId);
+    sessionStorage.removeItem(SessionStorageKeys.selectedProfessionalUserId);
   }
 
   search() {
@@ -124,8 +124,8 @@ export class SearchProfessionalsMainComponent implements OnInit {
   selectProfessional($event: any) {
     this.PAGINATION_START = 0;
     this.PAGINATION_END = this.RESULTS_PER_PAGE;
-    sessionStorage.setItem(LocalStorageKeys.selectedProfessionalUserId, $event.userId);
-    // sessionStorage.setItem(LocalStorageKeys.selectedProfessional, JSON.stringify($event));
+    sessionStorage.setItem(SessionStorageKeys.selectedProfessionalUserId, $event.userId);
+    // sessionStorage.setItem(SessionStorageKeys.selectedProfessional, JSON.stringify($event));
     this.router.navigate(['appointmentTime']).then(r => {
     });
   }

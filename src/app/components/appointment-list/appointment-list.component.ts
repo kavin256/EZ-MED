@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {APPOINTMENT_STATUS} from '../../utils/Constants';
 import {Router} from '@angular/router';
-import {LocalStorageKeys} from '../../services/data-store.service';
+import {SessionStorageKeys} from '../../services/data-store.service';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {UserData} from '../../models/user-data';
 import {DataLoaderService} from '../../services/data-loader.service';
@@ -70,10 +70,10 @@ export class AppointmentListComponent implements OnInit {
   ngOnInit() {
 
     // if not logged In this page should not be able to access
-    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser)), this.router);
+    this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
 
-    if (sessionStorage.getItem(LocalStorageKeys.loggedInUser)) {
-      this.loggedInUser = JSON.parse(sessionStorage.getItem(LocalStorageKeys.loggedInUser));
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
       this.doctorSide = this.loggedInUser.doctor;
       this.completedAvailable = !this.doctorSide;
     }
@@ -83,7 +83,7 @@ export class AppointmentListComponent implements OnInit {
       this.toDate = this.setToDate(this.fromDate, this.doctorSide ? 0 : 7);
     }
 
-    this.selectedProfessionalUserId = sessionStorage.getItem(LocalStorageKeys.selectedProfessionalUserId);
+    this.selectedProfessionalUserId = sessionStorage.getItem(SessionStorageKeys.selectedProfessionalUserId);
     if (this.selectedProfessionalUserId) {
       this.loadProfessionalData(this.selectedProfessionalUserId);
     }
