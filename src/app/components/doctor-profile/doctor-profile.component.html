@@ -106,13 +106,24 @@
                    (change)="uploadImage($event)">
             <br>
             <br>
-            <mat-label style="font-size: small">Upload Signature:</mat-label>
-            <br>
-            <input type="file"
-                   accept="image/*"
-                   (change)="uploadSignature($event)">
-            <br>
-            <br>
+            <ng-container *ngIf="!userData?.editableMode">
+                <mat-label style="font-size: small">Upload Signature:</mat-label>
+                <br>
+                <input type="file"
+                       accept="image/*"
+                       (change)="uploadSignature($event)">
+                <br>
+                <br>
+            </ng-container>
+            <ng-container *ngIf="!userData?.editableMode">
+                <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>
+                <br>
+                <input type="file"
+                       accept="image/*"
+                       (change)="uploadStamp($event)">
+                <br>
+                <br>
+            </ng-container>
         </div>
         <button style="width: 240px" mat-raised-button color="primary" (click)="saveData()">Save</button>
         <br>

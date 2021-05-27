@@ -22,6 +22,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     isConfirmationActive = false;
     changeRequestSent = false;
     doctorSide = false;
+    contactEmail: string;
     bookingId: number;
     booking: AppointmentData;
     patient: UserData;
@@ -43,6 +44,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.contactEmail = this.dataHandlerService.loadConfig('EZMED_CONTACT_EMAIL');
+
         this.sub = this.route
             .queryParams
             .subscribe(params => {

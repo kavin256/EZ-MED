@@ -11,6 +11,7 @@ export class UserData {
     whatsAppNumber?: string;
     email?: string;
     doctor?: boolean;
+    editableMode?: boolean;
     userAllergies?: string;
     regNo?: string;
     priceForAppointment?: string;

@@ -1,14 +1,22 @@
+<div style="margin-left: auto; margin-right: auto;">
+<div align="center" id="capture1" style="max-width: 420px;
+/*background-image: url('assets/img/doctor2.jpg');*/
+background-color: white;
+background-size: auto 600px; background-repeat: no-repeat;">
 <div class="mat-card-style">
-    <div class="container" id="test" #test>
+    <div  class="container" #test>
         <br>
         <ng-container *ngIf="prescription.status === 1">
-            <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+            <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE
+                ------</b></p>
         </ng-container>
         <p style="font-size: small; text-align: center"><b><u>PROFESSIONAL'S NOTE</u></b></p>
         <br>
 
-        <p align="left" *ngIf="!isNewPrescription" style="font-size: small">Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</p>
-        <p align="left" style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}. {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></p>
+        <p align="left" *ngIf="!isNewPrescription" style="font-size: small">
+            Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</p>
+        <p align="left" style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}
+            . {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></p>
         <p align="left" style="font-size: small">Age: {{prescription?.lightPatient?.age}} yrs</p>
 
         <mat-divider></mat-divider>
@@ -18,18 +26,20 @@
         <div *ngIf="!isNewPrescription">
             <br>
             <ng-container *ngIf="prescription.status === 1">
-                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE
+                    MEDICINE ------</b></p>
             </ng-container>
             <p align="left">Medicine prescriptions</p>
             <div align="left" class="abc" *ngFor="let item of prescribedItems; let i = index;">
                 <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
                     <p>{{item.title}}</p>
-<!--                    <p>{{item.take}}</p>-->
+                    <!--                    <p>{{item.take}}</p>-->
                 </ngb-alert>
             </div>
             <br>
             <ng-container *ngIf="prescription.status === 1">
-                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE
+                    MEDICINE ------</b></p>
             </ng-container>
             <br>
             <p align="left">Tests / Notes</p>
@@ -40,7 +50,8 @@
             </div>
             <br>
             <ng-container *ngIf="prescription.status === 1">
-                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE MEDICINE ------</b></p>
+                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT ISSUE
+                    MEDICINE ------</b></p>
             </ng-container>
             <br>
 
@@ -52,11 +63,13 @@
                 <br>
             </ng-container>
 
-            <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is an electronically generated document that was prepared by the following prescriber **</p>
+            <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is an electronically
+                generated document that was prepared by the following prescriber **</p>
             <table align="center">
                 <tr>
                     <th style="font-size: medium; text-align: left">
-                        {{prescription?.lightDoctor?.title}}. {{prescription?.lightDoctor?.firstName}} {{prescription?.lightDoctor?.lastName}}
+                        {{prescription?.lightDoctor?.title}}
+                        . {{prescription?.lightDoctor?.firstName}} {{prescription?.lightDoctor?.lastName}}
                     </th>
                 </tr>
                 <tr>
@@ -75,15 +88,16 @@
         <p>Medicine prescriptions</p>
         <div *ngFor="let item of prescribedItems; let i = index;">
             <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)" [dismissible]="true">
-            <table align="center">
-                <tr>
-                    <td>
-                        <mat-form-field style="width: 280px">
-                            <textarea style="font-size: small" matInput type="text" placeholder="Medicine" [(ngModel)]='item.title'></textarea>
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
+                <table align="center">
+                    <tr>
+                        <td>
+                            <mat-form-field style="width: 280px">
+                                <textarea style="font-size: small" matInput type="text" placeholder="Medicine"
+                                          [(ngModel)]='item.title'></textarea>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
             </ngb-alert>
         </div>
         <div align="right">
@@ -98,7 +112,8 @@
                     <tr>
                         <td>
                             <mat-form-field style="width: 250px;">
-                                <textarea style="height: 60px; font-size: small" matInput type="text" placeholder="Note {{i+1}}" [(ngModel)]='item.description'></textarea>
+                                <textarea style="height: 60px; font-size: small" matInput type="text"
+                                          placeholder="Note {{i+1}}" [(ngModel)]='item.description'></textarea>
                             </mat-form-field>
                         </td>
                     </tr>
@@ -111,28 +126,43 @@
         <br>
         <br>
     </div>
-<!--    <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;" *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true" type="primary">-->
-<!--        Since this digital prescription is generated by the medical professional and no one else can edit the document, this would be a valid document to be produced-->
-<!--        to any pharmacy or other medical institute as a valid prescription/note.<br>For any inquiries, please contact {{contactEmail}} / {{contactPhone}}<br>-->
-<!--        - EZMED PVT LTD - -->
-<!--    </ngb-alert>-->
-    <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;" *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true" type="primary">
-        This digital prescription is generated by the medical professional and no one else can edit the document<br>For any inquiries, please contact {{contactEmail}}<br>
+    <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;"
+               *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true" type="primary">
+        This digital prescription is generated by the medical professional and no one else can edit the document<br>For
+        any inquiries, please contact {{contactEmail}}<br>
         - EZMED PVT LTD -
     </ngb-alert>
-    <input *ngIf="false && !isNewPrescription && !doctorSide" type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
-    <ng-container *ngIf="isNewPrescription" >
+    <ng-container *ngIf="isNewPrescription">
         <button (click)="savePrescription()" style="width: 320px" color="primary" mat-raised-button>Save</button>
         <br>
     </ng-container>
     <ng-container *ngIf="!isNewPrescription && doctorSide">
         <br>
-        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive" mat-raised-button color="warn" style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription</button>
+        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive" mat-raised-button color="warn"
+                style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription
+        </button>
         <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
-        <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px" mat-raised-button color="primary">Yes</button>
-        <span *ngIf="isConfirmationActive" >&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="isConfirmationActive = !isConfirmationActive" style="width: 150px" mat-raised-button color="secondary">No, don't cancel</button></span>
+        <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px" mat-raised-button
+                color="primary">Yes
+        </button>
+        <span *ngIf="isConfirmationActive">&nbsp;&nbsp;<button *ngIf="isConfirmationActive"
+                                                               (click)="isConfirmationActive = !isConfirmationActive"
+                                                               style="width: 150px" mat-raised-button color="secondary">No, don't cancel</button></span>
         <br>
         <br>
     </ng-container>
-    <button *ngIf="true" mat-raised-button color="secondary" style="width: 320px" (click)="goToPrescriptionList()">Back</button>
+
+
+
+    <input style="width: 320px" *ngIf="true && !isNewPrescription" type="button"
+           value="Download as Image" class="btn btn-success"
+           (click)="capture()">
+    <br>
+    <br>
+    <button mat-raised-button color="secondary" style="width: 320px" (click)="goToPrescriptionList()">
+        Back
+    </button>
+</div>
+</div>
+
 </div>

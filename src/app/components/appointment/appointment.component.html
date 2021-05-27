@@ -29,7 +29,7 @@
             Your appointment has been cancelled by {{booking?.doctorData?.title}}
             . {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}. Please contact EZMED with the
             appointment details and payment details for your refund.<br>
-            Email: ezmedltd@gmail.com
+            Email: {{contactEmail}}
         </ngb-alert>
     </ng-container>
     <ng-container *ngIf="!doctorSide">
@@ -38,7 +38,7 @@
         ></app-professional-card>
     </ng-container>
     <ng-container>
-        <ngb-alert *ngIf="booking?.concern" [dismissible]="false" type="danger">
+        <ngb-alert *ngIf="booking?.concern && booking?.concern !== 'undefined'" [dismissible]="false" type="danger">
             {{doctorSide ? "Patient's" : "Your"}} concern: <br>{{booking?.concern}}
         </ngb-alert>
         <div *ngIf="booking?.status === 1 && !doctorSide" style="text-align: center">

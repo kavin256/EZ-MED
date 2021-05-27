@@ -13,12 +13,14 @@
                     <div class="example-container">
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Email</mat-label>
-                            <input (keydown.enter)="logIn()" [(ngModel)]="email" matInput>
+                            <input (keydown.enter)="logIn()" [(ngModel)]="email"
+                                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" matInput>
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Password</mat-label>
-                            <input (keydown.enter)="logIn()" matInput [(ngModel)]="pass"
+                            <input (keydown.enter)="logIn()"
+                                   pattern=".{5,}" matInput [(ngModel)]="pass"
                                    [type]="hide ? 'password' : 'text'">
                         </mat-form-field>
                         <br>
@@ -79,7 +81,8 @@
                         <br>
                         <mat-form-field style="width: 240px" appearance="legacy">
                             <mat-label>Email</mat-label>
-                            <input required matInput #input2 [(ngModel)]='email' [formControl]="emailFormControl">
+                            <input required matInput pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                                   #input2 [(ngModel)]='email' [formControl]="emailFormControl">
                         </mat-form-field>
                         <br>
                         <mat-form-field style="width: 240px" appearance="legacy">
@@ -137,13 +140,17 @@
                     </div>
                     <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>Preferred Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='pass'
+                        <input matInput
+                               pattern=".{5,}"
+                               required [type]="hide ? 'password' : 'text'" [(ngModel)]='pass'
                                [formControl]="passFormControl">
                     </mat-form-field>
                     <br>
                     <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass'
+                        <input matInput
+                               pattern=".{5,}"
+                               required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass'
                                [formControl]="conPassFormControl">
                     </mat-form-field>
                     <br>

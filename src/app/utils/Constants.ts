@@ -11,6 +11,8 @@ export enum Constants {
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
     UPLOAD_USER_SIGN = '/userImages/upload/signature/',
     DOWNLOAD_USER_SIGN = '/userImages/download/signature/',
+    UPLOAD_USER_STAMP = '/userImages/upload/stamp/',
+    DOWNLOAD_USER_STAMP = '/userImages/download/stamp/',
     MEDICAL_REPORT_DOC_UPLOAD = '/docs/medical-reports/',
     MEDICAL_REPORT_DOC_DOWNLOAD = '/docs/medical-report/',
     MEDICAL_REPORT_DOC_LIST_DOWNLOAD = '/docs/medical-reports-summary-list/',
