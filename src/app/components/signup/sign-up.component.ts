@@ -171,15 +171,15 @@ export class SignUpComponent implements OnInit {
         } else {
             const userObj = new UserData();
             userObj.userId = this.userId;
-            userObj.email = this.email;
-            userObj.password = this.pass;
-            userObj.firstName = this.firstName;
-            userObj.lastName = this.lastName;
-            userObj.title = this.title;
+            userObj.email = this.email.trim();
+            userObj.password = this.pass.trim();
+            userObj.firstName = this.firstName.trim();
+            userObj.lastName = this.lastName.trim();
+            userObj.title = this.title.trim();
             userObj.male = this.male;
             userObj.birthday = this.birthday;
-            userObj.contactNumber = this.contactNumber;
-            userObj.whatsAppNumber = this.whatsAppNumber;
+            userObj.contactNumber = this.contactNumber.trim();
+            userObj.whatsAppNumber = this.whatsAppNumber.trim();
             userObj.doctor = this.isDoctor;
             userObj.userAllergies = this.knownAllergies;
 
@@ -222,8 +222,8 @@ export class SignUpComponent implements OnInit {
         const url = Constants.API_BASE_URL + Constants.AUTHENTICATE;
         const obj: AuthModel = new AuthModel();
 
-        const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.pass);
-        obj.username = this.email;
+        const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.pass.trim());
+        obj.username = this.email.trim();
         obj.password = encrypted;
         this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
             .then((data: any) => {

@@ -42,8 +42,8 @@
             <mat-tab label="New User">
                 <div class="mat-card-style" align="center">
                     <br>
-                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">Please complete the mandatory details
-                        !!</p>
+                    <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">Looks like some details are
+                        missing/wrong!!</p>
                     <br>
                     <div align="left" style="padding-left: 55px">
                         <mat-radio-group aria-label="Select an option" (change)="setIsDoctor($event)">

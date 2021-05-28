@@ -33,6 +33,7 @@ export class PrescriptionComponent implements OnInit {
 
     isConfirmationActive: boolean;
     eeeeee: boolean;
+    rrrrrr = [];
     ngbAlertVisible: boolean;
     prescription: Prescription;
     prescribedItems = [];
@@ -184,8 +185,23 @@ export class PrescriptionComponent implements OnInit {
     }
 
     capture() {
-        this.eeeeee = true;
-        domtoimage.toJpeg(document.getElementById('capture1'), {quality: 1})
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.GENERATE_PRESCRIPTION + this.prescriptionId;
+        this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    const image = new Image();
+                    image.src = 'data:image/png;base64,' + data.data[0];
+                    const link = document.createElement('a');
+                    link.href = image.src;
+                    const fileName = 'prescription.png';
+                    link.download = fileName;
+                    link.click();
+                } else if (data && data.status && data.status.code === -1) {
+                    alert('Something went wrong. Please contact support !!');
+                }
+            });
+        domtoimage.toJpeg(document.getElementById('capture2'), {quality: 1})
             .then((dataUrl) => {
                 const link = document.createElement('a');
                 link.style.width = '160px';
@@ -193,7 +209,7 @@ export class PrescriptionComponent implements OnInit {
                 link.download = 'prescription_' + this.prescription.lightDoctor.title + '_'
                     + this.prescription.lightDoctor.firstName + '_' + this.prescription.lightDoctor.lastName;
                 link.href = dataUrl;
-                link.click();
+                // link.click();
 
             });
     }
