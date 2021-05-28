@@ -191,7 +191,7 @@ export class PrescriptionComponent implements OnInit {
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     const image = new Image();
-                    image.src = 'data:image/png;base64,' + data.data[0];
+                    image.src = 'data:image/jpg;base64,' + data.data[0];
                     const link = document.createElement('a');
                     link.href = image.src;
                     const fileName = 'prescription.png';
@@ -201,17 +201,17 @@ export class PrescriptionComponent implements OnInit {
                     alert('Something went wrong. Please contact support !!');
                 }
             });
-        domtoimage.toJpeg(document.getElementById('capture2'), {quality: 1})
-            .then((dataUrl) => {
-                const link = document.createElement('a');
-                link.style.width = '160px';
-                link.style.height = '320px';
-                link.download = 'prescription_' + this.prescription.lightDoctor.title + '_'
-                    + this.prescription.lightDoctor.firstName + '_' + this.prescription.lightDoctor.lastName;
-                link.href = dataUrl;
-                // link.click();
-
-            });
+        // domtoimage.toJpeg(document.getElementById('capture2'), {quality: 1})
+        //     .then((dataUrl) => {
+        //         const link = document.createElement('a');
+        //         link.style.width = '160px';
+        //         link.style.height = '320px';
+        //         link.download = 'prescription_' + this.prescription.lightDoctor.title + '_'
+        //             + this.prescription.lightDoctor.firstName + '_' + this.prescription.lightDoctor.lastName;
+        //         link.href = dataUrl;
+        //         // link.click();
+        //
+        //     });
     }
 
     /**
