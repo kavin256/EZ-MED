@@ -1,7 +1,13 @@
 .header-logo {
-    padding-top: 60px;
-    padding-bottom: 50px;
+    width: 250px;
+    padding-bottom: 20px
 }
+
+.log-in-button {
+    width: 75px;
+    background-color: #d84344;
+}
+
 button.link { background:none; border:none; }
 .mat-card-style {
     margin-left: auto;
@@ -12,7 +18,6 @@ button.link { background:none; border:none; }
 }
 .app-header {
     max-height: 150px;
-    /*background: #d3d1d1;*/
-    /*background-color: #d3d1d1; !* For browsers that do not support gradients *!*/
+    width: 100%;
     background-image: linear-gradient(#ffffff, #ffffff); /* Standard syntax (must be last) */
 }

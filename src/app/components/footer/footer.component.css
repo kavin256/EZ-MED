@@ -1,9 +1,9 @@
 .app-footer {
-    min-height: 150px;
+    min-height: 50px;
     min-width: 320px;
     width: 100%;
     bottom: 0;
-    /*background: #d3d1d1;*/
-    /*background-color: #d3d1d1; !* For browsers that do not support gradients *!*/
+    position: fixed;
+    z-index: 1;
     background-image: linear-gradient(#ffffff, #b4b2b2); /* Standard syntax (must be last) */
 }

@@ -1,18 +1,18 @@
-
 <div class="app-header">
     <table>
         <tr style="height: 20px"></tr>
         <tr>
-            <th style="width: 250px; padding-bottom: 20px" align="left">
+            <th class="header-logo" align="left">
                 <img src="./assets/img/ez_med_logo.png" width="100" (click)="goToHomePage()">
             </th>
-            <th style="width: 100px;" >
+            <th style="width: 100px;">
                 <div *ngIf="!(loggedInUser && firstName)" align="center">
-                    <img (click)="logoClick()" src="./assets/img/login.png" width="70px"/>
+                    <button class="log-in-button" (click)="logoClick()">Log In</button>
                 </div>
                 <div *ngIf="loggedInUser && firstName" align="center">
                     <img (click)="logoClick()" [src]="profileImageURL" width="60px"/>
-                    <p (click)="logoClick()" style="align-content: center; padding-top: 5px; font-size: small">{{firstName}}</p>
+                    <p (click)="logoClick()"
+                       style="align-content: center; padding-top: 5px; font-size: small">{{firstName}}</p>
                 </div>
             </th>
         </tr>
