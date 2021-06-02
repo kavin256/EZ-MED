@@ -7,7 +7,7 @@
             </th>
             <th style="width: 100px;">
                 <div *ngIf="!(loggedInUser && firstName)" align="center">
-                    <button class="log-in-button" (click)="logoClick()">Log In</button>
+                    <button class="default-button log-in-button" (click)="logoClick()">Log In</button>
                 </div>
                 <div *ngIf="loggedInUser && firstName" align="center">
                     <img (click)="logoClick()" [src]="profileImageURL" width="60px"/>

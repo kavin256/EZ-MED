@@ -4,7 +4,7 @@
             Ez Med is the platform in Sri Lanka that allows you to book an appointment with your doctor online and get
             your consultation done from the comfort of your home
         </b></p>
-    <button [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()">Make an Appointment
+    <button class="default-button" [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()">Make an Appointment
     </button>
     <ng-container *ngIf="isDoctorLoggedIn()">
         <br>

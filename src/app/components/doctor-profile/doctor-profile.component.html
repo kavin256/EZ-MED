@@ -106,29 +106,28 @@
                    (change)="uploadImage($event)">
             <br>
             <br>
-            <ng-container *ngIf="!userData?.editableMode">
-                <mat-label style="font-size: small">Upload Signature:</mat-label>
-                <br>
-                <input type="file"
-                       accept="image/*"
-                       (change)="uploadSignature($event)">
-                <br>
-                <br>
-            </ng-container>
-            <ng-container *ngIf="!userData?.editableMode">
-                <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>
-                <br>
-                <input type="file"
-                       accept="image/*"
-                       (change)="uploadStamp($event)">
-                <br>
-                <br>
-            </ng-container>
+<!--            <ng-container *ngIf="!userData?.editableMode">-->
+<!--                <mat-label style="font-size: small">Upload Signature:</mat-label>-->
+<!--                <br>-->
+<!--                <input type="file"-->
+<!--                       accept="image/*"-->
+<!--                       (change)="uploadSignature($event)">-->
+<!--                <br>-->
+<!--                <br>-->
+<!--            </ng-container>-->
+<!--            <ng-container *ngIf="!userData?.editableMode">-->
+<!--                <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>-->
+<!--                <br>-->
+<!--                <input type="file"-->
+<!--                       accept="image/*"-->
+<!--                       (change)="uploadStamp($event)">-->
+<!--                <br>-->
+<!--                <br>-->
+<!--            </ng-container>-->
         </div>
-        <button (click)="saveData()">Save</button>
+        <button class="default-button" (click)="saveData()">Save</button>
         <br>
-        <br>
-        <button class="button-warning" (click)="toggleEditable(false)">Back</button>
+        <button class="default-button button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
@@ -167,10 +166,10 @@
             </ngb-alert>
         </ng-container>
 
-        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()">My Bookings
+        <button class="default-button" [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()">My Bookings
         </button>
         <br>
-        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
+        <button class="default-button" [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
                 (click)="toggleEditable(true)">Edit Profile
         </button>
 <!--        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"-->
@@ -178,7 +177,7 @@
 <!--                (click)="toggleEditable(true)">Edit Profile-->
 <!--        </button>-->
         <br>
-        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
+        <button class="default-button" [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
                (click)="editSchedule()">Edit Schedule
         </button>
 <!--        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"-->
@@ -186,13 +185,13 @@
 <!--                mat-raised-button>Edit Schedule-->
 <!--        </button>-->
         <br>
-        <button disabled >My Finances</button>
+        <button class="default-button" disabled >My Finances</button>
         <br>
-        <button disabled (click)="goToVacationMode()">{{vacationModeTitle}}</button>
+        <button class="default-button" disabled (click)="goToVacationMode()">{{vacationModeTitle}}</button>
 <!--        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"-->
 <!--                mat-stroked-button>{{vacationModeTitle}}</button>-->
         <br>
-        <button class="button-warning" (click)="dataHandlerService.logOut(router)">Log Out
+        <button class="default-button button-warning" (click)="dataHandlerService.logOut(router)">Log Out
         </button>
         <br>
         <br>

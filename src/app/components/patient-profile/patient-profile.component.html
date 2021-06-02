@@ -97,9 +97,9 @@
             <br>
         </div>
 
-        <button (click)="save()">Save</button>
+        <button class="default-button" (click)="save()">Save</button>
         <br>
-        <button class="button-warning" (click)="toggleEditable(false)">Back</button>
+        <button class="default-button button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
@@ -117,18 +117,18 @@
             </button>
             </div>
         </ng-container>
-        <button (click)="newBooking()">+ Add New Booking</button>
+        <button class="default-button" (click)="newBooking()">+ Add New Booking</button>
         <br>
-        <button (click)="goToMyAppointments()">My Bookings
+        <button class="default-button" (click)="goToMyAppointments()">My Bookings
         </button>
         <br>
         <ng-container *ngIf="medicalHistory && medicalHistory.length > 0">
-            <button (click)="goToMyMedicalHistory()">My medical history</button>
+            <button class="default-button" (click)="goToMyMedicalHistory()">My medical history</button>
             <br>
         </ng-container>
-        <button (click)="toggleEditable(true)">Edit Profile</button>
+        <button class="default-button" (click)="toggleEditable(true)">Edit Profile</button>
         <br>
-        <button class="button-warning" (click)="dataHandlerService.logOut(router)">Log Out</button>
+        <button class="default-button button-warning" (click)="dataHandlerService.logOut(router)">Log Out</button>
         <br>
     </ng-container>
 </div>
