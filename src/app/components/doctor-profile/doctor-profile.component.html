@@ -125,10 +125,10 @@
                 <br>
             </ng-container>
         </div>
-        <button style="width: 240px" mat-raised-button color="primary" (click)="saveData()">Save</button>
+        <button (click)="saveData()">Save</button>
         <br>
         <br>
-        <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
+        <button class="button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
@@ -167,33 +167,33 @@
             </ngb-alert>
         </ng-container>
 
-        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()" style="width: 320px"
-                mat-raised-button color="primary">My Bookings
+        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()">My Bookings
         </button>
-        <br>
         <br>
         <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
-                [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button
                 (click)="toggleEditable(true)">Edit Profile
         </button>
-        <br>
+<!--        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"-->
+<!--                [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button-->
+<!--                (click)="toggleEditable(true)">Edit Profile-->
+<!--        </button>-->
         <br>
         <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
-                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px"
-                mat-raised-button>Edit Schedule
+               (click)="editSchedule()">Edit Schedule
         </button>
+<!--        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"-->
+<!--                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px"-->
+<!--                mat-raised-button>Edit Schedule-->
+<!--        </button>-->
         <br>
+        <button disabled >My Finances</button>
         <br>
-        <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
+        <button disabled (click)="goToVacationMode()">{{vacationModeTitle}}</button>
+<!--        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"-->
+<!--                mat-stroked-button>{{vacationModeTitle}}</button>-->
         <br>
-        <br>
-        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"
-                mat-stroked-button>{{vacationModeTitle}}</button>
-        <br>
-        <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out
+        <button class="button-warning" (click)="dataHandlerService.logOut(router)">Log Out
         </button>
-        <br>
         <br>
         <br>
         <ng-container *ngIf="userData?.availableForAppointment">

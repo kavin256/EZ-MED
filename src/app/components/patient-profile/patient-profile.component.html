@@ -97,10 +97,9 @@
             <br>
         </div>
 
-        <button style="width: 240px" mat-raised-button color="primary" (click)="save()">Save</button>
+        <button (click)="save()">Save</button>
         <br>
-        <br>
-        <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
+        <button class="button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
@@ -118,24 +117,18 @@
             </button>
             </div>
         </ng-container>
-        <button style="width: 320px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
+        <button (click)="newBooking()">+ Add New Booking</button>
         <br>
-        <br>
-        <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings
+        <button (click)="goToMyAppointments()">My Bookings
         </button>
-        <br>
         <br>
         <ng-container *ngIf="medicalHistory && medicalHistory.length > 0">
-            <button style="width: 320px" (click)="goToMyMedicalHistory()" mat-raised-button color="primary">My medical
-                history
-            </button>
-            <br>
+            <button (click)="goToMyMedicalHistory()">My medical history</button>
             <br>
         </ng-container>
-        <button style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
+        <button (click)="toggleEditable(true)">Edit Profile</button>
         <br>
+        <button class="button-warning" (click)="dataHandlerService.logOut(router)">Log Out</button>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out
-        </button>
     </ng-container>
 </div>

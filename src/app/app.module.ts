@@ -54,6 +54,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSnackBarModule} from '@angular/material';
 import { MedicalReportsComponent } from './components/medical-reports/medical-reports.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 export function initialize(app: AppService) {
     return async () => {
@@ -126,7 +127,8 @@ export function initialize(app: AppService) {
         MatSelectModule,
         MatRadioModule,
         MatTabsModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        NgxMaterialTimepickerModule
     ],
   providers: [
       DatePipe,

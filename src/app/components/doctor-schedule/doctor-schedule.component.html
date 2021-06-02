@@ -58,10 +58,9 @@
         <p style="font-size: small; color: crimson">** You can not save above details temporarily. You have made a change request already and it takes 7 days before you can send another change request.
             Contact us for more clarifications.</p>
     </ng-container>
-    <button *ngIf="!isConfirmationActive" (click)="userConsent()"  [disabled]="changeRequestSent" style="width: 320px" mat-raised-button color="primary">Save</button>
+    <button *ngIf="!isConfirmationActive" (click)="userConsent()"  [disabled]="changeRequestSent">Save</button>
     <br>
-    <br>
-    <button *ngIf="!isConfirmationActive" (click)="goToProfessionalDashboard()" style="width: 320px" mat-raised-button color="secondary">Back</button>
+    <button *ngIf="!isConfirmationActive" (click)="goToProfessionalDashboard()" class="button-warning">Back</button>
     <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
     <button *ngIf="isConfirmationActive" (click)="save(professional.userId)" style="width: 150px" mat-raised-button color="primary">Send Request</button>
     <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button color="secondary">Cancel</button></span>

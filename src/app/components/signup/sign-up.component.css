@@ -1,10 +1,7 @@
 .mat-tab-group {
     margin-bottom: 48px;
 }
-.mat-card-style {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    min-width: 320px;
 
+.forgot-my-password-button {
+    /*width: 180px;*/
 }
