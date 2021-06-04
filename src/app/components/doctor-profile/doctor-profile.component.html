@@ -134,9 +134,9 @@
     <ng-container *ngIf="!editable">
         <app-page-title [title]="'My Profile'"></app-page-title>
         <div class="banner plain left-aligned">
-            <p style="font-size: x-large" *ngIf="!editable"><b>{{userData?.title}}. {{userData?.firstName}} {{userData?.lastName}}</b></p>
-            <p *ngIf="!editable">Email: {{userData?.email}}</p>
-            <p *ngIf="!editable">Contact number: {{userData?.contactNumber}}</p>
+            <p style="font-size: x-large"><b>{{userData?.title}}. {{userData?.firstName}} {{userData?.lastName}}</b></p>
+            <p>Email: {{userData?.email}}</p>
+            <p>Contact number: {{userData?.contactNumber}}</p>
         </div>
         <div *ngIf="userData?.availableForAppointment && !onVacation" class="banner success">
             <p><b>Profile Status: </b>Active</p>

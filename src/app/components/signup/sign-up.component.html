@@ -22,9 +22,9 @@
                            pattern=".{5,}" matInput [(ngModel)]="pass"
                            [type]="hide ? 'password' : 'text'">
                 </mat-form-field>
-                <br>
-                <p style="color: crimson" *ngIf="logInError && logInError !== ''">{{logInError}}</p>
-                <br>
+                <div *ngIf="logInError && logInError !== ''" class="banner error">
+                    <p>{{logInError}}</p>
+                </div>
                 <button class="default-button" type="submit" [disabled]="!(email && pass)" (click)="logIn()">Log In
                 </button>
                 <br>

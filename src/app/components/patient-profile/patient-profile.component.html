@@ -1,19 +1,10 @@
 <div class="mat-card-style">
     <app-page-title [title]="'My Profile'"></app-page-title>
-<!--    <div class="banner plain left-aligned">-->
-
-<!--    <h3 *ngIf="!editable">{{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</h3>-->
-<!--    <br>-->
-<!--    <h6 *ngIf="!editable">Contact number: {{patient?.contactNumber}}</h6>-->
-<!--    <h6 *ngIf="!editable">Email: {{patient?.email}}</h6>-->
-<!--    <h6 *ngIf="!editable">Allergies: {{patient?.userAllergies}}</h6>-->
-<!--    </div>-->
-    <div class="banner plain left-aligned">
-        <p style="font-size: x-large" *ngIf="!editable"><b>{{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</b></p>
-        <p *ngIf="!editable">Email: {{patient?.email}}</p>
-        <p *ngIf="!editable">Contact number: {{patient?.contactNumber}}</p>
+    <div *ngIf="!editable" class="banner plain left-aligned">
+        <p style="font-size: x-large"><b>{{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</b></p>
+        <p>Email: {{patient?.email}}</p>
+        <p>Contact number: {{patient?.contactNumber}}</p>
     </div>
-
     <ng-container *ngIf="editable">
         <div>
             <mat-form-field style="width: 240px" appearance="legacy">

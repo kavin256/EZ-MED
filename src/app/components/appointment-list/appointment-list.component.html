@@ -1,6 +1,6 @@
 <div class="mat-card-style">
     <app-page-title [title]="'My Appointments'"></app-page-title>
-
+<div class="banner plain">
     <mat-form-field appearance="outline">
         <mat-label>From</mat-label>
         <input readonly matInput [matDatepicker]="picker1" [value]="fromDate" (dateChange)="startDateChange($event)">
@@ -19,9 +19,12 @@
             <mat-checkbox [checked]="!completedAvailable" (change)="toggleCompletedAvailable()" class="example-margin">Hide completed appointments</mat-checkbox>
         </section>
     </ng-container>
+</div>
     <br>
-    <p style="font-size: large;">Appointments:</p>
-    <p style="max-width: 320px;color: crimson" *ngIf="appointments && appointments.length === 0">No active appointments that matches the criteria!</p>
+    <p *ngIf="appointments && appointments.length > 0" style="font-size: large;">Appointments:</p>
+    <div *ngIf="appointments && appointments.length === 0" class="banner error">
+        <p>No appointments that matches the criteria</p>
+    </div>
     <ng-container>
         <div *ngFor="let appointment of appointments; let i=index">
             <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">

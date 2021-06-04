@@ -13,7 +13,6 @@
 <body>
 <div class="main-content">
     <main>
-
         <script>
             function buildPayment() {
                 var value4 = sessionStorage.getItem('chargeAmount');
@@ -28,47 +27,19 @@
                     clientId: 14004356,
                     paymentAmount: parseInt(value4),
                     currency: 'LKR',
-                    returnUrl: 'http://localhost:4200/success',
-                    // returnUrl: 'http://www.ezmed.lk/success',
+                    // returnUrl: 'http://localhost:4200/success',
+                    returnUrl: 'http://www.ezmed.lk/success',
                     clientRef: value5,
                     comment: value6
                 };
             }
         </script>
-
         <script type="text/javascript">
             window.onload=function() {
                 document.getElementById("AutoClick").click();
             };
-
         </script>
-
         <a href="#" id="AutoClick" class="button" onClick="loadPaycorpPayment(buildPayment())"></a>
-
-<!--        <script>-->
-<!--            document.addEventListener("DOMContentLoaded", (event) => {-->
-<!--                loadPaycorpPayment(buildPayment(), 'paycorp-payment');-->
-<!--            });-->
-
-<!--            function buildPayment() {-->
-<!--                var value4 = sessionStorage.getItem('chargeAmount');-->
-<!--                var value5 = sessionStorage.getItem('clientRef');-->
-<!--                var value6 = sessionStorage.getItem('comment');-->
-
-<!--                return {-->
-<!--                    clientId: 14004356, // supplied by paycorp-->
-<!--                    paymentAmount: parseInt(value4),-->
-<!--                    currency: 'LKR',-->
-<!--                    // returnUrl: 'http://localhost:4200' +'/success',-->
-<!--                    returnUrl: 'http://www.ezmed.lk/success',-->
-<!--                    clientRef: value5,-->
-<!--                    comment: value6-->
-<!--                };-->
-<!--            }-->
-<!--        </script>-->
-
-<!--        <div align="center" id="paycorp-payment" class="paycorp-payment">-->
-<!--        </div>-->
     </main>
 </div>
 </body>
