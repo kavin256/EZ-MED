@@ -25,16 +25,14 @@
                 </mat-select>
             </mat-form-field>
         </ng-container>
-        <button [disabled]="!selectedDate || !selectedAppointmentId" mat-raised-button color="primary"
-                style="width: 240px" (click)="continueClicked(true)">Continue
+        <button [disabled]="!selectedDate || !selectedAppointmentId" class="default-button"
+                (click)="continueClicked(true)">Continue
         </button>
         <br>
-        <br>
 
-        <button mat-raised-button color="secondary" style="width: 240px" (click)="goToSearchProfessionals()">Back
+        <button class="default-button button-warning" (click)="goToSearchProfessionals()">Back
         </button>
 
-        <br>
         <br>
         <!--        <button *ngIf="!isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(true)" >Show Available Times</button>-->
         <!--        <button *ngIf="isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(false)" >Hide Available Times</button>-->
@@ -59,22 +57,20 @@
 
     </ng-container>
     <ng-container *ngIf="summaryShown && !showRedirectionMessage">
-        <div style="width: 240px" align="left">
-            <b>Professional:</b> {{doctor?.title}}. {{doctor?.firstName}} {{doctor?.lastName}}<br>
-            <b>Date:</b> {{selectedDate}}<br>
-            <b>Time:</b> {{getDisplaySelectedTime(selectedAppointmentId)}}
+        <div class="banner info left-aligned">
+            <p><b>Professional:</b> {{doctor?.title}}. {{doctor?.firstName}} {{doctor?.lastName}}<br></p>
+            <p><b>Date:</b> {{selectedDate}}<br></p>
+            <p><b>Time:</b> {{getDisplaySelectedTime(selectedAppointmentId)}}</p>
         </div>
-        <br>
-        <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time can
-            be slightly changed due to unavoidable reasons</p>
-        <br>
-
-        <button (click)="navigateToPaymentOrLogIn()" mat-raised-button color="primary" style="width: 240px">Continue
+        <div class="banner info">
+            <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time
+                can be slightly changed due to unavoidable reasons</p>
+        </div>
+        <button (click)="navigateToPaymentOrLogIn()" class="default-button">Continue
         </button>
         <br>
-        <br>
 
-        <button mat-raised-button color="secondary" style="width: 240px" (click)="continueClicked(false)">Back</button>
+        <button class="default-button button-warning" (click)="continueClicked(false)">Back</button>
     </ng-container>
     <ng-container *ngIf="showRedirectionMessage">
         <app-transition-page

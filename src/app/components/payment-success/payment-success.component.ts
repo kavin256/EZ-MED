@@ -79,7 +79,7 @@ export class PaymentSuccessComponent implements OnInit {
     });
   }
 
-  goToBooking() {
+  goToAppointment() {
     this.router.navigate(['appointments']).then(r => {
     });
   }

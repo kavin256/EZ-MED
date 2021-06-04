@@ -13,7 +13,7 @@ import {DataHandlerService} from '../../services/data-handler.service';
   templateUrl: './booking-enter-time.component.html',
   styleUrls: ['./booking-enter-time.component.css']
 })
-export class BookingEnterTimeComponent implements OnInit {
+export class AppointmentEnterTimeComponent implements OnInit {
 
   transitionType = null;
   selectedProfessionalUserId = null;

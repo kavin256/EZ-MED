@@ -1,36 +1,27 @@
 <div class="mat-card-style">
-    <app-page-title [title]="'Booking'"></app-page-title>
-
+    <app-page-title [title]="'Appointment'"></app-page-title>
     <ng-container>
-        <ngb-alert [dismissible]="false">
+        <div class="banner warning">
+            <p>Appointment Status: <b>{{getStatusName(booking?.status)}}</b></p>
+        </div>
+        <div class="banner info left-aligned">
             <ng-container *ngIf="doctorSide">
-                <tr>
-                    <h1 style="font-size: x-large">Contact: {{patient?.contactNumber}}</h1>
-                </tr>
+                <h1 style="font-size: x-large">Contact: {{patient?.contactNumber}}</h1>
             </ng-container>
             <ng-container *ngIf="!doctorSide">
-                <tr>
-                    <h1 style="font-size: x-large">{{booking?.doctorData?.title}}
-                        . {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}</h1>
-                </tr>
+                <h1 style="font-size: x-large">{{booking?.doctorData?.title}}.
+                    {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}</h1>
             </ng-container>
-            <tr>
-                <td style="font-size: large">Booking ID: {{booking?.appointmentId}}</td>
-            </tr>
-            <tr>
-                <td style="font-size: small">Date: {{booking?.appointmentDate}}</td>
-            </tr>
-            <tr>
-                <td style="font-size: small">Time: {{appointmentTime}}</td>
-            </tr>
-        </ngb-alert>
-        <ngb-alert *ngIf="!doctorSide && getStatusName(booking?.status) === 'Cancelled By Doctor'" [dismissible]="false"
-                   type="danger">
-            Your appointment has been cancelled by {{booking?.doctorData?.title}}
-            . {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}. Please contact EZMED with the
+            <p>Appointment ID: {{booking?.appointmentId}}</p>
+            <p>Date: {{booking?.appointmentDate}}</p>
+            <p>Time: {{appointmentTime}}</p>
+        </div>
+        <div class="banner warning" *ngIf="!doctorSide && getStatusName(booking?.status) === 'Cancelled By Doctor'">
+            Your appointment has been cancelled by {{booking?.doctorData?.title}}.
+            {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}. Please contact EZMED with the
             appointment details and payment details for your refund.<br>
             Email: {{contactEmail}}
-        </ngb-alert>
+        </div>
     </ng-container>
     <ng-container *ngIf="!doctorSide">
         <app-professional-card
@@ -38,31 +29,27 @@
         ></app-professional-card>
     </ng-container>
     <ng-container>
-        <ngb-alert *ngIf="booking?.concern && booking?.concern !== 'undefined'" [dismissible]="false" type="danger">
-            {{doctorSide ? "Patient's" : "Your"}} concern: <br>{{booking?.concern}}
-        </ngb-alert>
-        <div *ngIf="booking?.status === 1 && !doctorSide" style="text-align: center">
-            <br>
+        <div class="banner info left-aligned" *ngIf="booking?.concern && booking?.concern !== 'undefined'">
+            <p>{{doctorSide ? "Patient's" : "Your"}} concern <br><b><i>"{{booking?.concern}}"</i></b></p>
+        </div>
+        <div *ngIf="booking?.status === 1 && !doctorSide" class="banner info">
             <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time
                 can be slightly changed due to unavoidable reasons</p>
-            <br>
         </div>
     </ng-container>
     <ng-container *ngIf="doctorSide">
         <ng-container *ngIf="!isPatientDetailsShown">
-            <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary"
-                    mat-flat-button>Show Patient Details
+            <button (click)="isPatientDetailsShown = !isPatientDetailsShown" class="default-button">Show Patient Details
             </button>
+            <br>
             <br>
         </ng-container>
         <ng-container *ngIf="isPatientDetailsShown">
-            <button (click)="isPatientDetailsShown = !isPatientDetailsShown" style="width: 180px" color="primary"
-                    mat-flat-button>Hide Patient Details
+            <button (click)="isPatientDetailsShown = !isPatientDetailsShown" class="default-button">
+                Hide Patient Details
             </button>
-            <br>
         </ng-container>
-        <br>
-        <ngb-alert *ngIf="isPatientDetailsShown && patient" [dismissible]="false">
+        <div class="banner info left-aligned" *ngIf="isPatientDetailsShown && patient">
             <p style="font-size: small">Patient Name: {{patient?.title}}
                 . {{patient?.firstName}} {{patient?.lastName}}</p>
             <p style="font-size: small">Patient Ref. No: {{patient?.userId}}</p>
@@ -70,59 +57,52 @@
             <p style="font-size: small">Email: {{patient?.email}}</p>
             <p style="font-size: small">Age: {{patient?.age}}</p>
             <p style="font-size: small">Known Allergies: {{patient?.userAllergies}}</p>
-        </ngb-alert>
+        </div>
     </ng-container>
 
-    <ngb-alert style="height: 42px;outline-color: white ;background-color: yellow" [dismissible]="false">
-        <p style="font-size: small">Booking Status: {{getStatusName(booking?.status)}}</p>
-    </ngb-alert>
     <ng-container *ngIf="doctorSide">
         <ng-container *ngIf="!isInProgress(booking?.status)">
-            <button [disabled]="!isNew(booking?.status)" style="width: 320px" color="primary" (click)="start()"
-                    mat-flat-button>Start Consultation
+            <button [disabled]="!isNew(booking?.status)" (click)="start()"
+                    class="default-button">Start Consultation
             </button>
-            <br>
             <br>
         </ng-container>
         <ng-container *ngIf="isInProgress(booking?.status)">
-            <button (click)="end()" color="warn" style="width: 320px" mat-stroked-button>End Consultation</button>
-            <br>
+            <button (click)="end()" class="default-button button-warning">End Consultation</button>
             <br>
         </ng-container>
-
     </ng-container>
 
-    <button [disabled]="!(medicalHistory && medicalHistory.length > 0)" (click)="openPastRecords()" style="width: 320px"
-            color="primary" mat-flat-button>Medical History
+    <button [disabled]="!(medicalHistory && medicalHistory.length > 0)" (click)="openPastRecords()"
+            class="default-button">Medical History
     </button>
     <br>
-    <br>
-    <button (click)="goToMedicalReports()" style="width: 320px" color="primary" mat-flat-button>Medical reports</button>
-    <br>
+    <button (click)="goToMedicalReports()" class="default-button">Medical reports</button>
     <br>
 
-    <button (click)="goToPrescription()" style="width: 320px" color="accent" mat-flat-button>Prescriptions</button>
-    <br>
+    <button (click)="goToPrescription()" class="default-button">Prescriptions</button>
     <br>
 
     <button [disabled]="!isNew(booking?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()"
-            style="width: 320px" mat-flat-button color="warn">Cancel Booking
+            class="default-button button-warning">Cancel Appointment
     </button>
 
-    <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
-    <button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button color="warn">Cancel
-        Booking
-    </button>
-    <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="dismiss()" style="width: 150px" mat-raised-button
-                              color="secondary">Dismiss</button></span>
-    <br>
-    <ng-container *ngIf="isConfirmationActive && !doctorSide">
+    <ng-container *ngIf="isConfirmationActive">
         <br>
-        <ngb-alert [dismissible]="false">
-            <strong>Note:</strong> You will not be refunded if you cancel the appointment!
-        </ngb-alert>
+        <p align="center">Are you sure?</p>
+        <div *ngIf="!doctorSide" class="banner warning">
+            <p>You will not be refunded if you cancel the appointment</p>
+            <br>
+        </div>
+        <button (click)="cancel()" style="width: 150px" mat-raised-button color="warn">Cancel
+            Appointment
+        </button>
+        <span>&nbsp;&nbsp;<button (click)="dismiss()" style="width: 150px" mat-raised-button
+                                  color="secondary">Dismiss</button></span>
+        <br>
+
     </ng-container>
-    <button *ngIf="!isConfirmationActive" (click)="goBack()" style="width: 320px" mat-raised-button color="secondary">
+    <button *ngIf="!isConfirmationActive" (click)="goBack()" class="default-button button-warning">
         Back
     </button>
 

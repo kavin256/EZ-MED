@@ -1,5 +1,5 @@
 <div class="mat-card-style">
-    <app-page-title [title]="'My Bookings'"></app-page-title>
+    <app-page-title [title]="'My Appointments'"></app-page-title>
 
     <mat-form-field appearance="outline">
         <mat-label>From</mat-label>
@@ -20,12 +20,12 @@
         </section>
     </ng-container>
     <br>
-    <p style="font-size: large;">Bookings:</p>
-    <p style="max-width: 320px;color: crimson" *ngIf="bookings && bookings.length === 0">No active bookings that matches the criteria!</p>
+    <p style="font-size: large;">Appointments:</p>
+    <p style="max-width: 320px;color: crimson" *ngIf="bookings && bookings.length === 0">No active appointments that matches the criteria!</p>
     <ng-container>
         <div *ngFor="let booking of bookings; let i=index">
             <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
-                <mat-card (click)="selectBooking(booking)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(booking.status)}">
+                <mat-card (click)="selectAppointment(booking)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(booking.status)}">
                     <table>
                         <ng-container *ngIf="doctorSide">
                             <tr>

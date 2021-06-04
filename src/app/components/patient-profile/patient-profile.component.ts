@@ -75,7 +75,7 @@ export class PatientProfileComponent implements OnInit {
     });
   }
 
-  newBooking() {
+  newAppointment() {
     this.router.navigate(['searchProfessionals']).then(r => {
     });
   }

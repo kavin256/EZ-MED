@@ -9,7 +9,6 @@ import {SessionStorageKeys, PrescriptionStatus} from '../../services/data-store.
 import {DataHandlerService} from '../../services/data-handler.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppointmentData} from '../../models/appointment-data';
-import domtoimage from 'dom-to-image';
 
 @Component({
     selector: 'app-prescription',
@@ -25,15 +24,7 @@ export class PrescriptionComponent implements OnInit {
     appointmentId: number;
     patient: UserData;
     doctor: UserData;
-    items = [
-        'Augmentine 625mg bd - 5 days',
-        'Omeprazole 20mg bd - 5 days',
-        'Fexofenadine 180mg 1 night - 5 days'
-    ];
-
     isConfirmationActive: boolean;
-    eeeeee: boolean;
-    rrrrrr = [];
     ngbAlertVisible: boolean;
     prescription: Prescription;
     prescribedItems = [];
@@ -60,7 +51,8 @@ export class PrescriptionComponent implements OnInit {
 
     ngOnInit() {
         // if not logged In this page should not be able to access
-        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(
+            JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
         if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
             this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
             this.doctorSide = this.loggedInUser.doctor;
@@ -70,22 +62,6 @@ export class PrescriptionComponent implements OnInit {
         this.contactPhone = this.dataHandlerService.loadConfig('EZMED_CONTACT_PHONE');
         this.contactEmail = this.dataHandlerService.loadConfig('EZMED_CONTACT_EMAIL');
         this.loadPrescription();
-    }
-
-    copyToClipBoard() {
-        const copyText = document.getElementById('skypeId');
-        // @ts-ignore
-        copyText.select();
-        document.execCommand('copy');
-        // @ts-ignore
-        alert('Copied the text: ' + copyText.value);
-    }
-
-    public SavePDF(): void {
-        // var pdf = new jsPDF('p','pt','a4');
-        // pdf.html2pdf(document.getElementById('pdfTable'), function() {
-        //   pdf.save('pdfTable.pdf');
-        // });
     }
 
     loadPrescription() {
@@ -145,7 +121,6 @@ export class PrescriptionComponent implements OnInit {
         const prescription = new Prescription();
         prescription.prescribedItems = this.prescribedItems;
         prescription.prescribedNoteItems = this.prescribedNoteItems;
-        // prescription.description = this.prescription.description;
         prescription.description = 'this is a test description';
         prescription.status = PrescriptionStatus.active;
         prescription.bookingId = this.appointmentId;
@@ -201,17 +176,6 @@ export class PrescriptionComponent implements OnInit {
                     alert('Something went wrong. Please contact support !!');
                 }
             });
-        // domtoimage.toJpeg(document.getElementById('capture2'), {quality: 1})
-        //     .then((dataUrl) => {
-        //         const link = document.createElement('a');
-        //         link.style.width = '160px';
-        //         link.style.height = '320px';
-        //         link.download = 'prescription_' + this.prescription.lightDoctor.title + '_'
-        //             + this.prescription.lightDoctor.firstName + '_' + this.prescription.lightDoctor.lastName;
-        //         link.href = dataUrl;
-        //         // link.click();
-        //
-        //     });
     }
 
     /**
@@ -255,8 +219,7 @@ export class PrescriptionComponent implements OnInit {
 
     addMoreItem() {
         const newItem = {
-            title: '',
-            take: ''
+            title: ''
         };
         this.prescribedItems.push(newItem);
     }

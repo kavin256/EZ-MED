@@ -141,17 +141,18 @@
                 - EZMED PVT LTD -
             </ngb-alert>
             <ng-container *ngIf="isNewPrescription">
-                <button (click)="savePrescription()" style="width: 320px" color="primary" mat-raised-button>
+                <button
+                        [disabled]="!(prescribedItems && prescribedItems.length && prescribedItems[0].title !== '')
+                        && !(prescribedNoteItems && prescribedNoteItems.length && prescribedNoteItems[0].description !== '')"
+                        (click)="savePrescription()" class="default-button">
                     Save
                 </button>
-                <br>
             </ng-container>
             <ng-container *ngIf="!isNewPrescription && doctorSide">
                 <br>
-                <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive" mat-raised-button
-                        color="warn"
-                        style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel
-                    Prescription
+                <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive"
+                        class="default-button button-warning" (click)="isConfirmationActive = !isConfirmationActive">
+                    Cancel Prescription
                 </button>
                 <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
                 <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px"
@@ -166,13 +167,11 @@
                 <br>
             </ng-container>
 
-
-            <input style="width: 320px" *ngIf="true && !isNewPrescription" type="button"
-                   value="Download as Image" class="btn btn-success"
+            <input *ngIf="true && !isNewPrescription" type="button"
+                   value="Download" class="default-button"
                    (click)="capture()">
             <br>
-            <br>
-            <button mat-raised-button color="secondary" style="width: 320px" (click)="goToPrescriptionList()">
+            <button class="default-button button-warning" (click)="goToPrescriptionList()">
                 Back
             </button>
         </div>
@@ -345,31 +344,30 @@
                     </ng-container>
                     <ng-container *ngIf="!isNewPrescription && doctorSide">
                         <br>
-                        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive" mat-raised-button
-                                color="warn"
-                                style="width: 320px" (click)="isConfirmationActive = !isConfirmationActive">Cancel
-                            Prescription
+                        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive"
+                                class="default-button button-warning"
+                                (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription
                         </button>
-                        <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
-                        <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px"
-                                mat-raised-button
-                                color="primary">Yes
-                        </button>
-                        <span *ngIf="isConfirmationActive">&nbsp;&nbsp;<button *ngIf="isConfirmationActive"
-                                                                               (click)="isConfirmationActive = !isConfirmationActive"
-                                                                               style="width: 150px" mat-raised-button
-                                                                               color="secondary">No, don't cancel</button></span>
-                        <br>
-                        <br>
+                        <ng-container *ngIf="isConfirmationActive">
+                            <p align="center">Are you sure you want to cancel?</p>
+                            <button (click)="cancelPrescription()" style="width: 150px"
+                                    mat-raised-button
+                                    color="primary">Yes
+                            </button>
+                            <span>&nbsp;&nbsp;<button
+                                    (click)="isConfirmationActive = !isConfirmationActive"
+                                    style="width: 150px" mat-raised-button
+                                    color="secondary">No, don't cancel</button></span>
+                            <br>
+                            <br>
+                        </ng-container>
                     </ng-container>
 
-
-                    <input style="width: 320px" *ngIf="true && !isNewPrescription" type="button"
-                           value="Download as Image" class="btn btn-success"
+                    <input *ngIf="true && !isNewPrescription" type="button"
+                           value="Download" class="default-button"
                            (click)="capture()">
                     <br>
-                    <br>
-                    <button mat-raised-button color="secondary" style="width: 320px" (click)="goToPrescriptionList()">
+                    <button class="default-button button-warning" (click)="goToPrescriptionList()">
                         Back
                     </button>
                 </div>

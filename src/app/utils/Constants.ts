@@ -26,7 +26,7 @@ export enum Constants {
     USER_APPOINTMENT_SET_STATUS = '/appointment/set-status/',
     USER_APPOINTMENT_CONCERN = '/appointment/set-concern/',
     APPOINTMENT_BY_ID = '/appointment/appointmentById/',
-    LOAD_MEDICAL_HISTORY_FOR_BOOKING = '/appointment/medicalHistoryForBooking/',
+    LOAD_MEDICAL_HISTORY_FOR_APPOINTMENT = '/appointment/medicalHistoryForAppointment/',
     LOAD_MEDICAL_HISTORY_FOR_USER = '/appointment/medicalHistoryForUser/',
     ADD_APPOINTMENT = '/appointment/add-appointment/',
     PROFESSIONAL_SEARCH = '/doctor/doctorSearch/advanced/',

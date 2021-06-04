@@ -56,7 +56,7 @@
                 </p>
                 <span style="font-size: small">Concern: {{medicalRecord?.medicalConcern}}</span><br>
                 <span style="font-size: small">Professional: {{medicalRecord?.professionalName}}</span><br>
-                <span style="font-size: small">Booking Id: {{medicalRecord?.bookingId}}</span><br><br>
+                <span style="font-size: small">Appointment Id: {{medicalRecord?.bookingId}}</span><br><br>
                 <ng-container *ngFor="let prescription of medicalRecord?.prescriptions">
 
                     <ng-container *ngIf="prescription?.prescribedItems && prescription?.prescribedItems.length > 0">

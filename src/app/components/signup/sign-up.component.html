@@ -107,16 +107,15 @@
                                [formControl]="contactNumberFormControl">
                     </mat-form-field>
                 </div>
-                <ng-container *ngIf="contactNumber && contactNumber !== ''">
-                    <ngb-alert [dismissible]="false" style="width: 250px; max-height: 80px">
-                        <section class="example-section">
-                            <mat-checkbox style="font-size: small" class="example-margin"
-                                          (change)="setSimilarity()">WhatsApp number is the same<br>as contact
-                                number
-                            </mat-checkbox>
-                        </section>
-                    </ngb-alert>
-                </ng-container>
+
+                <div *ngIf="contactNumber && contactNumber !== ''"
+                     class="banner info" style="padding: 15px 15px 0px 15px; width: 250px">
+                    <p><span style="margin-right: 5px"><input type="checkbox" style="font-size: small"
+                                                              class="example-margin"
+                                                              (change)="setSimilarity()"></span>
+                        <span> WhatsApp number is the same as contact number</span></p>
+                </div>
+
                 <div>
                     <mat-form-field style="width: 240px" appearance="legacy">
                         <mat-label>WhatsApp Number</mat-label>

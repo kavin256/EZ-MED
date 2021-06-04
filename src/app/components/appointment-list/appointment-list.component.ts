@@ -27,8 +27,8 @@ export class AppointmentListComponent implements OnInit {
   bookings: AppointmentData [] = [];
 
   doctorSide = false;
-  selectedBookingId = null;
-  showBookings = 'all'; // 'new' or 'all'
+  selectedAppointmentId = null;
+  showAppointments = 'all'; // 'new' or 'all'
   doctor: UserData;
   isConfirmationActive = false;
   changeRequestSent = false;
@@ -125,10 +125,10 @@ export class AppointmentListComponent implements OnInit {
         });
   }
 
-  selectBooking($event: AppointmentData) {
+  selectAppointment($event: AppointmentData) {
     if (!this.isDummy($event.status)) {
-      this.selectedBookingId = $event.appointmentId;
-      this.router.navigate(['appointment'], { queryParams: { id: this.selectedBookingId } }).then(r => {});
+      this.selectedAppointmentId = $event.appointmentId;
+      this.router.navigate(['appointment'], { queryParams: { id: this.selectedAppointmentId } }).then(r => {});
     }
   }
 
@@ -141,15 +141,15 @@ export class AppointmentListComponent implements OnInit {
   getColor($event) {
     switch ($event) {
       case APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR || APPOINTMENT_STATUS.CANCELLED_BY_PATIENT:
-        return Colors.BOOKING_CANCELLED;
+        return Colors.APPOINTMENT_CANCELLED;
       case APPOINTMENT_STATUS.NOT_STARTED:
-        return Colors.BOOKING_NOT_STARTED;
+        return Colors.APPOINTMENT_NOT_STARTED;
       case APPOINTMENT_STATUS.COMPLETED:
-        return Colors.BOOKING_COMPLETED;
+        return Colors.APPOINTMENT_COMPLETED;
       case APPOINTMENT_STATUS.IN_PROGRESS:
-        return Colors.BOOKING_CURRENT;
+        return Colors.APPOINTMENT_CURRENT;
       default:
-        return Colors.BOOKING_DUMMY;
+        return Colors.APPOINTMENT_DUMMY;
     }
   }
 
@@ -183,7 +183,7 @@ export class AppointmentListComponent implements OnInit {
     this.PAGINATION_END = this.PAGINATION_START + $event.pageSize;
   }
 
-  newBooking() {
+  newAppointment() {
     this.router.navigate(['searchProfessionals']).then(r => {
     });
   }
@@ -226,9 +226,9 @@ export class AppointmentListComponent implements OnInit {
 }
 
 export enum Colors {
-  BOOKING_CANCELLED = '#ff6666',
-  BOOKING_COMPLETED = '#e6e6e6',
-  BOOKING_CURRENT = '#99ccff',
-  BOOKING_NOT_STARTED = '#d5ff80',
-  BOOKING_DUMMY = '#727171'
+  APPOINTMENT_CANCELLED = '#ff6666',
+  APPOINTMENT_COMPLETED = '#e6e6e6',
+  APPOINTMENT_CURRENT = '#99ccff',
+  APPOINTMENT_NOT_STARTED = '#d5ff80',
+  APPOINTMENT_DUMMY = '#727171'
 }
