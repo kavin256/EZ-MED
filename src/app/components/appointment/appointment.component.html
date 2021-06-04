@@ -2,23 +2,23 @@
     <app-page-title [title]="'Appointment'"></app-page-title>
     <ng-container>
         <div class="banner warning">
-            <p>Appointment Status: <b>{{getStatusName(booking?.status)}}</b></p>
+            <p>Appointment Status: <b>{{getStatusName(appointment?.status)}}</b></p>
         </div>
         <div class="banner info left-aligned">
             <ng-container *ngIf="doctorSide">
                 <h1 style="font-size: x-large">Contact: {{patient?.contactNumber}}</h1>
             </ng-container>
             <ng-container *ngIf="!doctorSide">
-                <h1 style="font-size: x-large">{{booking?.doctorData?.title}}.
-                    {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}</h1>
+                <h1 style="font-size: x-large">{{appointment?.doctorData?.title}}.
+                    {{appointment?.doctorData?.firstName}} {{appointment?.doctorData?.lastName}}</h1>
             </ng-container>
-            <p>Appointment ID: {{booking?.appointmentId}}</p>
-            <p>Date: {{booking?.appointmentDate}}</p>
+            <p>Appointment ID: {{appointment?.appointmentId}}</p>
+            <p>Date: {{appointment?.appointmentDate}}</p>
             <p>Time: {{appointmentTime}}</p>
         </div>
-        <div class="banner warning" *ngIf="!doctorSide && getStatusName(booking?.status) === 'Cancelled By Doctor'">
-            Your appointment has been cancelled by {{booking?.doctorData?.title}}.
-            {{booking?.doctorData?.firstName}} {{booking?.doctorData?.lastName}}. Please contact EZMED with the
+        <div class="banner warning" *ngIf="!doctorSide && getStatusName(appointment?.status) === 'Cancelled By Doctor'">
+            Your appointment has been cancelled by {{appointment?.doctorData?.title}}.
+            {{appointment?.doctorData?.firstName}} {{appointment?.doctorData?.lastName}}. Please contact EZMED with the
             appointment details and payment details for your refund.<br>
             Email: {{contactEmail}}
         </div>
@@ -29,10 +29,10 @@
         ></app-professional-card>
     </ng-container>
     <ng-container>
-        <div class="banner info left-aligned" *ngIf="booking?.concern && booking?.concern !== 'undefined'">
-            <p>{{doctorSide ? "Patient's" : "Your"}} concern <br><b><i>"{{booking?.concern}}"</i></b></p>
+        <div class="banner info left-aligned" *ngIf="appointment?.concern && appointment?.concern !== 'undefined'">
+            <p>{{doctorSide ? "Patient's" : "Your"}} concern <br><b><i>"{{appointment?.concern}}"</i></b></p>
         </div>
-        <div *ngIf="booking?.status === 1 && !doctorSide" class="banner info">
+        <div *ngIf="appointment?.status === 1 && !doctorSide" class="banner info">
             <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time
                 can be slightly changed due to unavoidable reasons</p>
         </div>
@@ -61,13 +61,13 @@
     </ng-container>
 
     <ng-container *ngIf="doctorSide">
-        <ng-container *ngIf="!isInProgress(booking?.status)">
-            <button [disabled]="!isNew(booking?.status)" (click)="start()"
+        <ng-container *ngIf="!isInProgress(appointment?.status)">
+            <button [disabled]="!isNew(appointment?.status)" (click)="start()"
                     class="default-button">Start Consultation
             </button>
             <br>
         </ng-container>
-        <ng-container *ngIf="isInProgress(booking?.status)">
+        <ng-container *ngIf="isInProgress(appointment?.status)">
             <button (click)="end()" class="default-button button-warning">End Consultation</button>
             <br>
         </ng-container>
@@ -83,7 +83,7 @@
     <button (click)="goToPrescription()" class="default-button">Prescriptions</button>
     <br>
 
-    <button [disabled]="!isNew(booking?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()"
+    <button [disabled]="!isNew(appointment?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()"
             class="default-button button-warning">Cancel Appointment
     </button>
 

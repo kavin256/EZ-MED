@@ -123,7 +123,7 @@ export class PrescriptionComponent implements OnInit {
         prescription.prescribedNoteItems = this.prescribedNoteItems;
         prescription.description = 'this is a test description';
         prescription.status = PrescriptionStatus.active;
-        prescription.bookingId = this.appointmentId;
+        prescription.appointmentId = this.appointmentId;
         prescription.patientId = this.prescription.lightPatient.userId;
         prescription.professionalId = this.prescription.lightDoctor.userId;
 

@@ -8,7 +8,7 @@ import {UserData} from '../../models/user-data';
 import {isNumber} from 'util';
 
 @Component({
-  selector: 'app-booking-enter',
+  selector: 'app-appointment-enter',
   templateUrl: './payment-confirmation.component.html',
   styleUrls: ['./payment-confirmation.component.css']
 })
@@ -87,7 +87,7 @@ export class PaymentConfirmationComponent implements OnInit {
     }
   }
 
-  private generateRefKey(bookingId: string, patientId: string) {
-    return bookingId + '--' + patientId;
+  private generateRefKey(appointmentId: string, patientId: string) {
+    return appointmentId + '--' + patientId;
   }
 }

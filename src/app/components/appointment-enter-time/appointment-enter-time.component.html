@@ -32,28 +32,7 @@
 
         <button class="default-button button-warning" (click)="goToSearchProfessionals()">Back
         </button>
-
         <br>
-        <!--        <button *ngIf="!isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(true)" >Show Available Times</button>-->
-        <!--        <button *ngIf="isScheduleVisible" mat-raised-button color="secondary" style="width: 220px" (click)="scheduleVisibilityToggle(false)" >Hide Available Times</button>-->
-        <!--        <br>-->
-        <!--        <br>-->
-        <!--        <ng-container *ngIf="isScheduleVisible" >-->
-        <!--            <p>Available Times:</p>-->
-        <!--            <mat-accordion>-->
-        <!--                <div *ngFor="let schedule of doctorSchedule.schedule;">-->
-        <!--                    <mat-expansion-panel style="width: 320px">-->
-        <!--                        <mat-expansion-panel-header>-->
-        <!--                            <mat-panel-title>{{schedule.title}}</mat-panel-title>-->
-        <!--                        </mat-expansion-panel-header>-->
-        <!--                        <p>Time Slot 1: <b>{{schedule.slot1}}</b></p>-->
-        <!--                        <p>Time Slot 2: <b>{{schedule.slot2}}</b></p>-->
-        <!--                        <p>Time Slot 3: <b>{{schedule.slot3}}</b></p>-->
-        <!--                    </mat-expansion-panel>-->
-        <!--                    <br>-->
-        <!--                </div>-->
-        <!--            </mat-accordion>-->
-        <!--        </ng-container>-->
 
     </ng-container>
     <ng-container *ngIf="summaryShown && !showRedirectionMessage">

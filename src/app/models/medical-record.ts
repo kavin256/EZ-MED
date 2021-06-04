@@ -2,7 +2,7 @@ import {Prescription} from './prescription';
 
 export class MedicalRecord {
     appointmentDate: Date;
-    bookingId: number;
+    appointmentId: number;
     medicalConcern?: string;
     patientId?: string;
     patientName?: string;

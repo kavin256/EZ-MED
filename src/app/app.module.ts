@@ -16,7 +16,7 @@ import { ContactPageComponent } from './components/contact-page/contact-page.com
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
 import { PaymentConfirmationComponent } from './components/payment-confirmation/payment-confirmation.component';
-import { AppointmentEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
+import { AppointmentEnterTimeComponent } from './components/appointment-enter-time/appointment-enter-time.component';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
 import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';

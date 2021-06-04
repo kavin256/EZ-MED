@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppointmentEnterTimeComponent } from './booking-enter-time.component';
+import { AppointmentEnterTimeComponent } from './appointment-enter-time.component';
 
 describe('AppointmentEnterTimeComponent', () => {
   let component: AppointmentEnterTimeComponent;

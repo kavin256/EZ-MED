@@ -24,7 +24,7 @@ export class AppointmentListComponent implements OnInit {
   RESULTS_PER_PAGE = 5;
   PAGINATION_START = 0;
   PAGINATION_END = this.RESULTS_PER_PAGE;
-  bookings: AppointmentData [] = [];
+  appointments: AppointmentData [] = [];
 
   doctorSide = false;
   selectedAppointmentId = null;
@@ -121,7 +121,7 @@ export class AppointmentListComponent implements OnInit {
     this.dataHandlerService.loadUserAppointments(userid, this.dataLoaderService, fromDateFormatted, toDateFormatted,
         dummyAvailable, this.completedAvailable)
         .then((data: any) => {
-          this.bookings = data;
+          this.appointments = data;
         });
   }
 
@@ -162,7 +162,7 @@ export class AppointmentListComponent implements OnInit {
     this.selectedPrescription = prescription;
   }
 
-  showPrescriptions(bookingId: number, action?) {
+  showPrescriptions(appointmentId: number, action?) {
     this.isPrescriptionsVisible = action;
   }
 

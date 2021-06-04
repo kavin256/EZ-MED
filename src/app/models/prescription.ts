@@ -2,7 +2,7 @@ import { UserData } from './user-data';
 
 export class Prescription {
     id: number;
-    bookingId: number;
+    appointmentId: number;
     issuedDate?: Date;
     description?: any;
     prescribedItems?: any;
