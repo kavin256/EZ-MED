@@ -14,6 +14,7 @@ import {AppointmentComponent} from './components/appointment/appointment.compone
 import {PrescriptionComponent} from './components/prescription/prescription.component';
 import {PrescriptionListComponent} from './components/prescription-list/prescription-list.component';
 import {MedicalReportsComponent} from './components/medical-reports/medical-reports.component';
+import {VerificationComponent} from './components/verification/verification.component';
 
 const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
     { path: 'appointment', component: AppointmentComponent },
     { path: 'appointment/prescriptionList', component: PrescriptionListComponent },
     { path: 'appointment/medicalReports', component: MedicalReportsComponent },
-    { path: 'appointment/prescription', component: PrescriptionComponent }
+    { path: 'appointment/prescription', component: PrescriptionComponent },
+    { path: 'registrationConfirm', component: VerificationComponent },
     ];
 
 @NgModule({

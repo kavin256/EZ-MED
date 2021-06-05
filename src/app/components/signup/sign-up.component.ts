@@ -103,14 +103,14 @@ export class SignUpComponent implements OnInit {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
                     if (data.data[0].doctor) {
-                        sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
-                        this.router.navigate(['doctor/dashboard']).then(r => {
-                            location.reload();
+                        // sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
+                        this.router.navigate(['registrationConfirm']).then(r => {
+                            // location.reload();
                         });
                     } else if (!data.data[0].doctor) {
-                        sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
-                        this.router.navigate(['user/dashboard']).then(r => {
-                            location.reload();
+                        // sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
+                        this.router.navigate(['registrationConfirm']).then(r => {
+                            // location.reload();
                         });
                     }
                 } else if (data && data.status && data.status.code === -1) {
