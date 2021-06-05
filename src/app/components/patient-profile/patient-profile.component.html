@@ -1,12 +1,10 @@
 <div class="mat-card-style">
     <app-page-title [title]="'My Profile'"></app-page-title>
-    <h3 *ngIf="!editable">{{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</h3>
-    <br>
-    <h6 *ngIf="!editable">Contact number: {{patient?.contactNumber}}</h6>
-    <h6 *ngIf="!editable">Email: {{patient?.email}}</h6>
-    <h6 *ngIf="!editable">Allergies: {{patient?.userAllergies}}</h6>
-    <br>
-
+    <div *ngIf="!editable" class="banner plain left-aligned">
+        <p style="font-size: x-large"><b>{{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</b></p>
+        <p>Email: {{patient?.email}}</p>
+        <p>Contact number: {{patient?.contactNumber}}</p>
+    </div>
     <ng-container *ngIf="editable">
         <div>
             <mat-form-field style="width: 240px" appearance="legacy">
@@ -97,10 +95,9 @@
             <br>
         </div>
 
-        <button style="width: 240px" mat-raised-button color="primary" (click)="save()">Save</button>
+        <button class="default-button" (click)="save()">Save</button>
         <br>
-        <br>
-        <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
+        <button class="default-button button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
@@ -108,7 +105,7 @@
         <ng-container *ngIf="searchedProfessionalName">
             <div class="alert alert-primary" role="alert">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">error_outline</mat-icon>
-                Want to continue your booking with {{searchedProfessionalName}}?
+                Want to continue your appointment with {{searchedProfessionalName}}?
                 <br>
                 <button style="margin:5px;" (click)="goToAppointmentTimeSelection()" style="width: 100px"
                         mat-stroked-button color="primary">Yes
@@ -118,24 +115,18 @@
             </button>
             </div>
         </ng-container>
-        <button style="width: 320px" (click)="newBooking()" mat-raised-button color="primary">+ Add New Booking</button>
+        <button class="default-button" (click)="newAppointment()">+ Add New Appointment</button>
         <br>
-        <br>
-        <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings
+        <button class="default-button" (click)="goToMyAppointments()">My Appointments
         </button>
-        <br>
         <br>
         <ng-container *ngIf="medicalHistory && medicalHistory.length > 0">
-            <button style="width: 320px" (click)="goToMyMedicalHistory()" mat-raised-button color="primary">My medical
-                history
-            </button>
-            <br>
+            <button class="default-button" (click)="goToMyMedicalHistory()">My Medical History</button>
             <br>
         </ng-container>
-        <button style="width: 320px" mat-raised-button (click)="toggleEditable(true)">Edit Profile</button>
+        <button class="default-button" (click)="toggleEditable(true)">Edit Profile</button>
         <br>
+        <button class="default-button button-warning" (click)="dataHandlerService.logOut(router)">Log Out</button>
         <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out
-        </button>
     </ng-container>
 </div>

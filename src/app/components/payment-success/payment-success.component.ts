@@ -79,7 +79,7 @@ export class PaymentSuccessComponent implements OnInit {
     });
   }
 
-  goToBooking() {
+  goToAppointment() {
     this.router.navigate(['appointments']).then(r => {
     });
   }
@@ -93,13 +93,13 @@ export class PaymentSuccessComponent implements OnInit {
     this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, {concern})
         .then((data: any) => {
           if (data && data.status && data.status.code === 1) {
-            // this.booking = data.data[0];
+            // this.appointment = data.data[0];
           } else if (data && data.status && data.status.code === -1) {
-            // this.booking.status = this.previousStatus;
+            // this.appointment.status = this.previousStatus;
             // alert('Cannot update the appointment status right now. Please check your internet connection!');
           }
         }).catch(() => {
-      // this.booking.status = this.previousStatus;
+      // this.appointment.status = this.previousStatus;
       // alert('Cannot update the appointment status right now. Please check your internet connection!');
     }).finally(() => {
       // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);

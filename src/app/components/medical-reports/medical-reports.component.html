@@ -2,54 +2,35 @@
 
     <ng-container *ngIf="!addItem && !doctorSide">
         <div align="center">
-            <button [disabled]="!editable" (click)="addMoreItem()" style="width: 320px" color="primary" mat-flat-button>
+            <button [disabled]="!editable" (click)="addMoreItem()" class="default-button">
                 Add a file
             </button>
         </div>
     </ng-container>
     <ng-container *ngIf="addItem">
         <div align="center">
-            <button (click)="cancelAddingItem()" style="width: 320px" color="warn" mat-flat-button>Cancel</button>
+            <button (click)="cancelAddingItem()" class="default-button button-warning">Cancel</button>
         </div>
     </ng-container>
     <br>
-    <ngb-alert *ngIf="addItem"
-               style="color: #3f51b5 ;border-color: white; background-color: #E5E6FE ;width: 320px; min-height: 60px"
-               [dismissible]="false">
-        <p>
-            Add your files here. Please make sure NOT more than one file has the same file name. Max file size : 15MB
-        </p>
-
-        <input type="file"
+    <div class="banner plain" *ngIf="addItem">
+        <p>Add your files here. Please make sure NOT more than one file has the same file name. Max file size : 15MB</p>
+        <p><input type="file"
                accept="image/*,.pdf,.doc,.docx"
-               (change)="uploadImage($event)">
+                  (change)="uploadImage($event)"></p>
+    </div>
+    <div class="banner success" *ngIf="uploadSuccessful">
+        <p>Uploaded successfully</p>
+    </div>
+    <div class="banner info" *ngIf="uploadingInProgress">
+        <p>Uploading...</p>
+    </div>
+    <div class="banner error" *ngIf="uploadingFailed">
+        <p>Uploading failed</p>
+    </div>
 
-    </ngb-alert>
-    <ngb-alert *ngIf="uploadSuccessful" style="color: #4CAF50 ;background-color: white ;width: 320px; height: 50px"
-               [dismissible]="false">
-        <h5>
-            Uploaded successfully!
-        </h5>
-    </ngb-alert>
-    <ngb-alert *ngIf="uploadingInProgress" style="color: #3f51b5 ;background-color: white ;width: 320px; height: 50px"
-               [dismissible]="false">
-        <h5>
-            Uploading...
-        </h5>
-    </ngb-alert>
-    <ngb-alert *ngIf="uploadingFailed" style="color: #fa3c22 ;background-color: white ;width: 320px; height: 50px"
-               [dismissible]="false">
-        <h5>
-            Uploading failed
-        </h5>
-    </ngb-alert>
-
-    <br>
     <ng-container *ngIf="!addItem">
         <ng-container *ngIf="objectListing?.objectSummaries.length; else noResults">
-            <p>
-                Note: These files will automatically be removed after 2 weeks from the date of appointment!
-            </p>
             <div *ngFor="let summary of objectListing?.objectSummaries; let i = index;">
                 <ngb-alert style="width: 320px; min-height: 120px" (close)="removeItem(i)" [dismissible]="false">
                     <div>
@@ -88,24 +69,22 @@
                 </ngb-alert>
 
             </div>
+            <div class="banner warning">
+                <p><b>Note:</b> These files will automatically be removed after 2 weeks from the date of appointment</p>
+            </div>
         </ng-container>
         <ng-template #noResults>
-            <ng-container *ngIf="!doctorSide">
-                <div>
-                    <p style="color: #e88397; text-align: center"><b>Add your medical reports here</b></p>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="doctorSide">
-                <div>
-                    <p style="color: crimson; text-align: center"><b>No medical reports found</b></p>
-                </div>
-            </ng-container>
-
+            <div *ngIf="!doctorSide" class="banner plain">
+                <p>Add your medical reports here</p>
+            </div>
+            <div *ngIf="doctorSide" class="banner error">
+                <p>No medical reports found</p>
+            </div>
         </ng-template>
     </ng-container>
 
     <br>
 
-    <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">Go back</button>
+    <button (click)="goToMyAppointments()" class="default-button button-warning">Back</button>
 
 </div>

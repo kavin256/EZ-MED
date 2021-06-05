@@ -12,57 +12,75 @@
                 <p align="left"><b>
                     <mat-checkbox
                             (change)="disableDay($event, schedule)"
-                            [checked]="schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0"><span style="font-family: 'Arial Black'">Active</span>
+                            [checked]="schedule.workingTimePeriods && schedule.workingTimePeriods.length > 0"><span
+                            style="font-family: 'Arial Black'">Active</span>
                     </mat-checkbox>
                 </b></p>
                 <ng-container *ngFor="let workingTimePeriod of schedule.workingTimePeriods; let i = index">
 
-<!--                    <p align="left"><b>-->
-<!--                        <mat-checkbox-->
-<!--                                (change)="workingTimePeriod.isActive = !workingTimePeriod.isActive"-->
-<!--                                [checked]="workingTimePeriod && workingTimePeriod.isActive"><span style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</span>-->
-<!--                        </mat-checkbox>-->
-<!--                    </b></p>-->
+                    <!--                    <p align="left"><b>-->
+                    <!--                        <mat-checkbox-->
+                    <!--                                (change)="workingTimePeriod.isActive = !workingTimePeriod.isActive"-->
+                    <!--                                [checked]="workingTimePeriod && workingTimePeriod.isActive"><span style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</span>-->
+                    <!--                        </mat-checkbox>-->
+                    <!--                    </b></p>-->
                     <ng-container>
                         <mat-label>From:</mat-label>
-                        <ngb-timepicker [(ngModel)]="workingTimePeriod.startTimeSelected" [meridian]="meridian"></ngb-timepicker>
+                        <ngb-timepicker [(ngModel)]="workingTimePeriod.startTimeSelected"
+                                        [meridian]="meridian"></ngb-timepicker>
                         <mat-label>To:</mat-label>
-                        <ngb-timepicker [(ngModel)]="workingTimePeriod.endTimeSelected" [meridian]="meridian"></ngb-timepicker>
-                        <ng-container *ngIf="schedule.workingTimePeriods.length > i+1"><mat-divider></mat-divider></ng-container>
+                        <ngb-timepicker [(ngModel)]="workingTimePeriod.endTimeSelected"
+                                        [meridian]="meridian"></ngb-timepicker>
+                        <ng-container *ngIf="schedule.workingTimePeriods.length > i+1">
+                            <mat-divider></mat-divider>
+                        </ng-container>
                         <br>
                     </ng-container>
                 </ng-container>
                 <div *ngIf="false" align="right">
-                    <button (click)="addMoreSlot(true, schedule)" style="width: 50px" color="primary" mat-stroked-button>+</button>&nbsp;
-                    <button (click)="removeSlot(true, schedule)" style="width: 50px" color="primary" mat-stroked-button>-</button>
+                    <button (click)="addMoreSlot(true, schedule)" style="width: 50px" color="primary"
+                            mat-stroked-button>+
+                    </button>&nbsp;
+                    <button (click)="removeSlot(true, schedule)" style="width: 50px" color="primary" mat-stroked-button>
+                        -
+                    </button>
                 </div>
             </mat-expansion-panel>
             <br>
         </div>
     </mat-accordion>
     <br>
-    <mat-form-field *ngIf="doctorScheduleData"  style="width: 240px"  appearance="legacy">
+    <mat-form-field *ngIf="doctorScheduleData" style="width: 240px" appearance="legacy">
         <mat-label>Average Time For Consultation (minutes):</mat-label>
         <input required onlyNumber matInput #input7 [(ngModel)]='doctorScheduleData.averageTimeForAppointment'>
     </mat-form-field>
     <br>
 
-    <ng-container *ngIf="availableForAppointment">
-        <p style="font-size: small; color: crimson">
-            <span><b>Note: </b></span>Once you save the changes, the new schedule will be populated from the 7th day onwards. Because the already booked appointments will be affected.<br>
-            For example, if you save the changes on 5th January 20XX, the new schedule will be appearing to the patients from 12th January 20XX. And until then, you will be working with the
+    <div *ngIf="availableForAppointment" class="banner warning">
+        <p>
+            <b>Note: </b>Once you save the changes, the new schedule will be populated from the 7th day onwards. Because
+            the already booked appointments will be affected.<br>
+            For example, if you save the changes on 5th January 20XX, the new schedule will be appearing to the patients
+            from 12th January 20XX. And until then, you will be working with the
             original schedule.
         </p>
-    </ng-container>
+    </div>
     <ng-container *ngIf="changeRequestSent">
-        <p style="font-size: small; color: crimson">** You can not save above details temporarily. You have made a change request already and it takes 7 days before you can send another change request.
+        <p style="font-size: small; color: crimson">** You can not save above details temporarily. You have made a
+            change request already and it takes 7 days before you can send another change request.
             Contact us for more clarifications.</p>
     </ng-container>
-    <button *ngIf="!isConfirmationActive" (click)="userConsent()"  [disabled]="changeRequestSent" style="width: 320px" mat-raised-button color="primary">Save</button>
+    <button class="default-button" *ngIf="!isConfirmationActive" (click)="userConsent()" [disabled]="changeRequestSent">
+        Save
+    </button>
     <br>
-    <br>
-    <button *ngIf="!isConfirmationActive" (click)="goToProfessionalDashboard()" style="width: 320px" mat-raised-button color="secondary">Back</button>
+    <button *ngIf="!isConfirmationActive" (click)="goToProfessionalDashboard()" class="default-button button-warning">
+        Back
+    </button>
     <p *ngIf="isConfirmationActive" align="center">Are you sure?</p>
-    <button *ngIf="isConfirmationActive" (click)="save(professional.userId)" style="width: 150px" mat-raised-button color="primary">Send Request</button>
-    <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button color="secondary">Cancel</button></span>
+    <button *ngIf="isConfirmationActive" (click)="save(professional.userId)" style="width: 150px" mat-raised-button
+            color="primary">Send Request
+    </button>
+    <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button
+                              color="secondary">Cancel</button></span>
 </div>

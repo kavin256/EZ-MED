@@ -16,7 +16,7 @@ import { ContactPageComponent } from './components/contact-page/contact-page.com
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
 import { PaymentConfirmationComponent } from './components/payment-confirmation/payment-confirmation.component';
-import { BookingEnterTimeComponent } from './components/booking-enter-time/booking-enter-time.component';
+import { AppointmentEnterTimeComponent } from './components/appointment-enter-time/appointment-enter-time.component';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { DoctorFinanceComponent } from './components/doctor-finance/doctor-finance.component';
 import {NgbAlertModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
@@ -54,6 +54,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSnackBarModule} from '@angular/material';
 import { MedicalReportsComponent } from './components/medical-reports/medical-reports.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { VerificationComponent } from './components/verification/verification.component';
 
 export function initialize(app: AppService) {
@@ -78,7 +79,7 @@ export function initialize(app: AppService) {
         FaqsComponent,
         PrescriptionComponent,
         PaymentConfirmationComponent,
-        BookingEnterTimeComponent,
+        AppointmentEnterTimeComponent,
         PaymentSuccessComponent,
         DoctorFinanceComponent,
         PatientProfileComponent,
@@ -128,7 +129,8 @@ export function initialize(app: AppService) {
         MatSelectModule,
         MatRadioModule,
         MatTabsModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        NgxMaterialTimepickerModule
     ],
   providers: [
       DatePipe,

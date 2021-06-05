@@ -1,6 +1,6 @@
 <div class="mat-card-style">
-    <app-page-title [title]="'My Bookings'"></app-page-title>
-
+    <app-page-title [title]="'My Appointments'"></app-page-title>
+<div class="banner plain">
     <mat-form-field appearance="outline">
         <mat-label>From</mat-label>
         <input readonly matInput [matDatepicker]="picker1" [value]="fromDate" (dateChange)="startDateChange($event)">
@@ -19,44 +19,47 @@
             <mat-checkbox [checked]="!completedAvailable" (change)="toggleCompletedAvailable()" class="example-margin">Hide completed appointments</mat-checkbox>
         </section>
     </ng-container>
+</div>
     <br>
-    <p style="font-size: large;">Bookings:</p>
-    <p style="max-width: 320px;color: crimson" *ngIf="bookings && bookings.length === 0">No active bookings that matches the criteria!</p>
+    <p *ngIf="appointments && appointments.length > 0" style="font-size: large;">Appointments:</p>
+    <div *ngIf="appointments && appointments.length === 0" class="banner error">
+        <p>No appointments that matches the criteria</p>
+    </div>
     <ng-container>
-        <div *ngFor="let booking of bookings; let i=index">
+        <div *ngFor="let appointment of appointments; let i=index">
             <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
-                <mat-card (click)="selectBooking(booking)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(booking.status)}">
+                <mat-card (click)="selectAppointment(appointment)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(appointment.status)}">
                     <table>
                         <ng-container *ngIf="doctorSide">
                             <tr>
-                                <td style="font-size: large" [ngClass]="booking?.status === 3 ? 'strikethrough':'null'">#{{booking?.appointmentId}}</td>
+                                <td style="font-size: large" [ngClass]="appointment?.status === 3 ? 'strikethrough':'null'">#{{appointment?.appointmentId}}</td>
                             </tr>
                         </ng-container>
                         <ng-container *ngIf="!doctorSide">
                             <tr>
-                                <td style="font-size: large" [ngClass]="booking?.status === 3 ? 'strikethrough':'null'">{{booking.doctorData?.title}}. {{booking.doctorData?.firstName}} {{booking.doctorData?.lastName}}</td>
+                                <td style="font-size: large" [ngClass]="appointment?.status === 3 ? 'strikethrough':'null'">{{appointment.doctorData?.title}}. {{appointment.doctorData?.firstName}} {{appointment.doctorData?.lastName}}</td>
                             </tr>
                         </ng-container>
 
                         <tr>
-                            <td style="font-size: small">{{booking?.appointmentDate}} / {{getTime(booking?.appointmentTime)}}</td>
+                            <td style="font-size: small">{{appointment?.appointmentDate}} / {{getTime(appointment?.appointmentTime)}}</td>
                         </tr>
                         <tr>
-                            <td style="font-size: small">Status: {{getStatusName(booking?.status)}}</td>
+                            <td style="font-size: small">Status: {{getStatusName(appointment?.status)}}</td>
                         </tr>
                     </table>
                 </mat-card>
                 <br>
             </ng-container>
         </div>
-        <mat-paginator #paginator  *ngIf="!(bookings && bookings.length === 0)"
-                        [length]="bookings.length"
+        <mat-paginator #paginator  *ngIf="!(appointments && appointments.length === 0)"
+                        [length]="appointments.length"
                        [pageSize]="RESULTS_PER_PAGE"
                        (page)="goToPage($event)"
         >
         </mat-paginator>
     </ng-container>
-    <button (click)="goToDashboard()" style="width: 300px" mat-raised-button color="secondary">Back</button>
+    <button (click)="goToDashboard()" class="default-button button-warning">Back</button>
 
     <ng-container *ngIf="isPrescriptionsVisible && !selectedPrescription">
         <div *ngFor="let prescription of prescriptionList; index as index">
@@ -72,12 +75,12 @@
             </ng-container>
         </div>
         <br>
-        <button (click)="showPrescriptions(null, false)" style="width: 240px" color="primary" mat-flat-button>Back</button>
+        <button class="default-button" (click)="showPrescriptions(null, false)">Back</button>
     </ng-container>
 <!--    <ng-container  *ngIf="isPrescriptionsVisible && selectedPrescription">-->
 <!--        <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>-->
-<!--        <p style="font-size: small">Name: <b>{{booking.patientName}}</b></p>-->
-<!--        <p style="font-size: small">Age: {{booking.patientAge}} yrs</p>-->
+<!--        <p style="font-size: small">Name: <b>{{appointment.patientName}}</b></p>-->
+<!--        <p style="font-size: small">Age: {{appointment.patientAge}} yrs</p>-->
 <!--        <mat-divider></mat-divider>-->
 <!--        <mat-divider></mat-divider>-->
 <!--        <div>-->

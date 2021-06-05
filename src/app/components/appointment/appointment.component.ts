@@ -23,8 +23,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     changeRequestSent = false;
     doctorSide = false;
     contactEmail: string;
-    bookingId: number;
-    booking: AppointmentData;
+    appointmentId: number;
+    appointment: AppointmentData;
     patient: UserData;
     doctor: UserData;
     loggedInUser: UserData = null;
@@ -49,19 +49,19 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.sub = this.route
             .queryParams
             .subscribe(params => {
-                this.bookingId = +params.id;
+                this.appointmentId = +params.id;
                 // load Appointment by ID
-                this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
+                this.dataHandlerService.loadUserAppointmentById(this.appointmentId, this.dataLoaderService)
                     .then((data: AppointmentData) => {
-                        this.booking = data;
+                        this.appointment = data;
 
                         // repeated call to check status change
                         this.repeatedStatusChecker();
 
                         // let time = new Time
-                        this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
-                        this.patient = this.booking.patientData;
-                        this.doctor = this.booking.doctorData;
+                        this.appointmentTime = moment(this.appointment.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
+                        this.patient = this.appointment.patientData;
+                        this.doctor = this.appointment.doctorData;
 
                         // load Medical History
                         this.loadMedicalHistory();
@@ -83,7 +83,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     repeatedStatusChecker() {
         setTimeout(() => {
             if (!this.networkError && !this.doctorSide
-                && (this.booking.status === APPOINTMENT_STATUS.NOT_STARTED || this.booking.status === APPOINTMENT_STATUS.IN_PROGRESS)
+                && (this.appointment.status === APPOINTMENT_STATUS.NOT_STARTED || this.appointment.status === APPOINTMENT_STATUS.IN_PROGRESS)
             ) {
                 this.liteStatusChecker();
                 this.repeatedStatusChecker();
@@ -93,15 +93,15 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     liteStatusChecker() {
         this.networkError = false;
-        this.dataHandlerService.loadUserAppointmentById(this.bookingId, this.dataLoaderService)
+        this.dataHandlerService.loadUserAppointmentById(this.appointmentId, this.dataLoaderService)
             .then((data: AppointmentData) => {
                 console.log('status checked');
-                if (data.status !== this.booking.status) {
-                    this.booking = data;
+                if (data.status !== this.appointment.status) {
+                    this.appointment = data;
                     // let time = new Time
-                    this.appointmentTime = moment(this.booking.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
-                    this.patient = this.booking.patientData;
-                    this.doctor = this.booking.doctorData;
+                    this.appointmentTime = moment(this.appointment.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
+                    this.patient = this.appointment.patientData;
+                    this.doctor = this.appointment.doctorData;
                 }
             }).catch((e) => {
             this.networkError = true;
@@ -138,39 +138,39 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     cancel() {
         this.isConfirmationActive = false;
         this.changeRequestSent = true;
-        this.previousStatus = this.booking.status;
+        this.previousStatus = this.appointment.status;
         if (this.doctorSide) {
-            this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR;
+            this.appointment.status = APPOINTMENT_STATUS.CANCELLED_BY_DOCTOR;
         } else {
-            this.booking.status = APPOINTMENT_STATUS.CANCELLED_BY_PATIENT;
+            this.appointment.status = APPOINTMENT_STATUS.CANCELLED_BY_PATIENT;
         }
         this.updateAppointmentStatus();
     }
 
     start() {
-        this.previousStatus = this.booking.status;
-        this.booking.status = APPOINTMENT_STATUS.IN_PROGRESS;
+        this.previousStatus = this.appointment.status;
+        this.appointment.status = APPOINTMENT_STATUS.IN_PROGRESS;
         this.updateAppointmentStatus();
     }
 
     end() {
-        this.previousStatus = this.booking.status;
-        this.booking.status = APPOINTMENT_STATUS.COMPLETED;
+        this.previousStatus = this.appointment.status;
+        this.appointment.status = APPOINTMENT_STATUS.COMPLETED;
         this.updateAppointmentStatus();
     }
 
     goToPrescription() {
         this.router.navigate(['appointment/prescriptionList'],
-            {queryParams: {appointmentId: this.bookingId}}).then(r => {
+            {queryParams: {appointmentId: this.appointmentId}}).then(r => {
         });
     }
 
     goToMedicalReports() {
         this.router.navigate(['appointment/medicalReports'],
-            {queryParams: {appointmentId: this.bookingId}}).then(r => {
+            {queryParams: {appointmentId: this.appointmentId}}).then(r => {
             if (
-                this.booking.status === APPOINTMENT_STATUS.NOT_STARTED
-                || this.booking.status === APPOINTMENT_STATUS.IN_PROGRESS
+                this.appointment.status === APPOINTMENT_STATUS.NOT_STARTED
+                || this.appointment.status === APPOINTMENT_STATUS.IN_PROGRESS
             ) {
                 sessionStorage.setItem(SessionStorageKeys.editable, 'true');
             } else {
@@ -201,17 +201,17 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     private updateAppointmentStatus() {
         this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
-        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS + this.booking.appointmentId + '/' + this.booking.status;
+        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS + this.appointment.appointmentId + '/' + this.appointment.status;
         this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, null)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1) {
-                    this.booking = data.data[0];
+                    this.appointment = data.data[0];
                 } else if (data && data.status && data.status.code === -1) {
-                    this.booking.status = this.previousStatus;
+                    this.appointment.status = this.previousStatus;
                     alert('Cannot update the appointment status right now. Please check your internet connection!');
                 }
             }).catch(() => {
-            this.booking.status = this.previousStatus;
+            this.appointment.status = this.previousStatus;
             alert('Cannot update the appointment status right now. Please check your internet connection!');
         }).finally(() => {
             this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
@@ -219,7 +219,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     private loadMedicalHistory() {
-        this.dataHandlerService.loadMedicalHistory(this.bookingId, this.dataLoaderService)
+        this.dataHandlerService.loadMedicalHistory(this.appointmentId, this.dataLoaderService)
             .then((data: Prescription []) => {
                 if (data) {
                     this.medicalHistory = data;

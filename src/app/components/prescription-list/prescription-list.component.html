@@ -1,7 +1,7 @@
 <div class="mat-card-style">
     <br>
     <ng-container *ngIf="doctorSide" >
-        <button (click)="addPrescription()" style="width: 320px; height: 50px" color="accent" mat-raised-button>Add New Prescription</button>
+        <button (click)="addPrescription()" class="default-button">Add New Prescription</button>
         <br>
         <br>
         <br>
@@ -12,11 +12,10 @@
         <br>
         <br>
     </ng-container>
-    <ng-container *ngIf="prescriptionList && prescriptionList.length === 0">
-        <br>
-        <br>
-        <p style="color: crimson"><b>------   Sorry, No results found   ------</b></p>
-        <br>
-    </ng-container>
-    <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">Go to appointment</button>
+    <div *ngIf="prescriptionList && prescriptionList.length === 0">
+        <p>
+            Sorry, No results found
+        </p>
+    </div>
+    <button (click)="goToMyAppointments()"  class="default-button button-warning">Back</button>
 </div>

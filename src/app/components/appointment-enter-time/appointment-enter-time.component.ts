@@ -9,11 +9,11 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
-  selector: 'app-booking-enter-time',
-  templateUrl: './booking-enter-time.component.html',
-  styleUrls: ['./booking-enter-time.component.css']
+  selector: 'app-appointment-enter-time',
+  templateUrl: './appointment-enter-time.component.html',
+  styleUrls: ['./appointment-enter-time.component.css']
 })
-export class BookingEnterTimeComponent implements OnInit {
+export class AppointmentEnterTimeComponent implements OnInit {
 
   transitionType = null;
   selectedProfessionalUserId = null;
@@ -125,7 +125,7 @@ export class BookingEnterTimeComponent implements OnInit {
   }
 
   navigateToPaymentOrLogIn() {
-    // set the bookingId in localStorage
+    // set the appointmentId in localStorage
     sessionStorage.setItem(SessionStorageKeys.selectedAppointmentId, this.selectedAppointmentId);
     if (!this.loggedInUser) {
       this.transitionType = TRANSITION_PAGE_TYPE.LOGIN_REDIRECT;

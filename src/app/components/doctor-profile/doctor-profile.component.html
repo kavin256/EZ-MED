@@ -106,94 +106,92 @@
                    (change)="uploadImage($event)">
             <br>
             <br>
-            <ng-container *ngIf="!userData?.editableMode">
-                <mat-label style="font-size: small">Upload Signature:</mat-label>
-                <br>
-                <input type="file"
-                       accept="image/*"
-                       (change)="uploadSignature($event)">
-                <br>
-                <br>
-            </ng-container>
-            <ng-container *ngIf="!userData?.editableMode">
-                <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>
-                <br>
-                <input type="file"
-                       accept="image/*"
-                       (change)="uploadStamp($event)">
-                <br>
-                <br>
-            </ng-container>
+            <!--            <ng-container *ngIf="!userData?.editableMode">-->
+            <!--                <mat-label style="font-size: small">Upload Signature:</mat-label>-->
+            <!--                <br>-->
+            <!--                <input type="file"-->
+            <!--                       accept="image/*"-->
+            <!--                       (change)="uploadSignature($event)">-->
+            <!--                <br>-->
+            <!--                <br>-->
+            <!--            </ng-container>-->
+            <!--            <ng-container *ngIf="!userData?.editableMode">-->
+            <!--                <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>-->
+            <!--                <br>-->
+            <!--                <input type="file"-->
+            <!--                       accept="image/*"-->
+            <!--                       (change)="uploadStamp($event)">-->
+            <!--                <br>-->
+            <!--                <br>-->
+            <!--            </ng-container>-->
         </div>
-        <button style="width: 240px" mat-raised-button color="primary" (click)="saveData()">Save</button>
+        <button class="default-button" (click)="saveData()">Save</button>
         <br>
-        <br>
-        <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
+        <button class="default-button button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
     <ng-container *ngIf="!editable">
         <app-page-title [title]="'My Profile'"></app-page-title>
+        <div class="banner plain left-aligned">
+            <p style="font-size: x-large"><b>{{userData?.title}}. {{userData?.firstName}} {{userData?.lastName}}</b></p>
+            <p>Email: {{userData?.email}}</p>
+            <p>Contact number: {{userData?.contactNumber}}</p>
+        </div>
+        <div *ngIf="userData?.availableForAppointment && !onVacation" class="banner success">
+            <p><b>Profile Status: </b>Active</p>
+        </div>
 
-        <ng-container *ngIf="userData?.availableForAppointment && !onVacation">
-            <ngb-alert [type]="'success'" [dismissible]="false">
-                Profile Status: <b>Active</b>
-            </ngb-alert>
-        </ng-container>
-
-        <ng-container *ngIf="userData?.availableForAppointment && onVacation">
-            <ngb-alert [type]="'danger'" [dismissible]="false">
-                <b>Profile Status:</b> Not Visible in searches and there are no any active appointments since you are in
+        <div class="banner error" *ngIf="userData?.availableForAppointment && onVacation">
+            <p><b>Profile Status: </b>Your profile is not Visible in searches and there are no any active appointments
+                since you are in
                 vacation mode. You can appear in searches again and
-                continue consultations by exiting vacation mode.
-            </ngb-alert>
-        </ng-container>
+                continue consultations by exiting vacation mode.</p>
+        </div>
 
-        <ng-container *ngIf="!userData?.availableForAppointment">
-            <ngb-alert [type]="'danger'" [dismissible]="false">
-                Profile Status: <b>Not Active</b>
-            </ngb-alert>
-        </ng-container>
+        <div *ngIf="!userData?.availableForAppointment" class="banner error">
+            <p><b>Profile Status: </b>Not Active</p>
+        </div>
 
-        <ng-container *ngIf="!userData?.availableForAppointment && !logInRequired">
-            <ngb-alert [dismissible]="false">
-                <strong>Note:</strong> You have not completed your Profile and Schedule yet. You will not be listed
-                under searches until you complete your Schedule and Profile.
-            </ngb-alert>
-        </ng-container>
-        <ng-container *ngIf="logInRequired">
-            <ngb-alert [dismissible]="false">
-                <strong>Note:</strong> Please log out and log in again to continue with your profile
-            </ngb-alert>
-        </ng-container>
+        <div *ngIf="!userData?.availableForAppointment && !logInRequired" class="banner warning">
+            <p><b>Note:</b> You have not completed your profile and schedules yet. You will not be listed
+                under searches until you complete your profile and schedule</p>
+        </div>
 
-        <button [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()" style="width: 320px"
-                mat-raised-button color="primary">My Bookings
+        <div class="banner error" *ngIf="logInRequired">
+            <p><b>Note:</b> Please log out and log in again to continue with your profile</p>
+        </div>
+
+        <button class="default-button" [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()">My
+            Appointments
         </button>
         <br>
-        <br>
-        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
-                [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button
+        <button class="default-button"
+                [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
                 (click)="toggleEditable(true)">Edit Profile
         </button>
+        <!--        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"-->
+        <!--                [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button-->
+        <!--                (click)="toggleEditable(true)">Edit Profile-->
+        <!--        </button>-->
         <br>
-        <br>
-        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
-                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px"
-                mat-raised-button>Edit Schedule
+        <button class="default-button"
+                [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
+                (click)="editSchedule()">Edit Schedule
         </button>
+        <!--        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"-->
+        <!--                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px"-->
+        <!--                mat-raised-button>Edit Schedule-->
+        <!--        </button>-->
         <br>
+        <button class="default-button" disabled>My Finances</button>
         <br>
-        <button disabled style="width: 320px" mat-stroked-button>My Finances</button>
+        <button class="default-button" disabled (click)="goToVacationMode()">{{vacationModeTitle}}</button>
+        <!--        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"-->
+        <!--                mat-stroked-button>{{vacationModeTitle}}</button>-->
         <br>
-        <br>
-        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"
-                mat-stroked-button>{{vacationModeTitle}}</button>
-        <br>
-        <br>
-        <button style="width: 320px" mat-flat-button color="warn" (click)="dataHandlerService.logOut(router)">Log Out
+        <button class="default-button button-warning" (click)="dataHandlerService.logOut(router)">Log Out
         </button>
-        <br>
         <br>
         <br>
         <ng-container *ngIf="userData?.availableForAppointment">
