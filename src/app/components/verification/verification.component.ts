@@ -4,6 +4,7 @@ import {Prescription} from '../../models/prescription';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Constants} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
     selector: 'app-verification',
@@ -17,10 +18,14 @@ export class VerificationComponent implements OnInit {
     PageStatus = PageStatus;
     status: PageStatus;
     loading: boolean;
+    error: { code: number, message: string };
+    contactPhone: string;
+    contactEmail: string;
 
     constructor(
         public route: ActivatedRoute,
         public router: Router,
+        public dataHandlerService: DataHandlerService,
         public dataLoaderService: DataLoaderService
     ) {
     }
@@ -36,6 +41,8 @@ export class VerificationComponent implements OnInit {
         } else if (this.email) {
             this.status = PageStatus.goToVerificationLink;
         }
+        this.contactEmail = this.dataHandlerService.loadConfig('EZMED_CONTACT_EMAIL');
+        this.contactPhone = this.dataHandlerService.loadConfig('EZMED_CONTACT_PHONE');
     }
 
     logIn(): void {
@@ -44,20 +51,20 @@ export class VerificationComponent implements OnInit {
     }
 
     getStatus() {
-      // create url and send request
-      const url = Constants.API_BASE_URL + Constants.VERIFY_EMAIL_ACCOUNT;
-      this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, {token: this.token})
-          .then((data: any) => {
-            if (data && data.status && data.status.code === 1) {
-                console.log('successful');
-                this.status = PageStatus.canLogIn;
-            } else if (data && data.status && data.status.code === -1) {
-                console.log('unsuccessful');
-                this.status = PageStatus.error;
-            }
-          });
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.VERIFY_EMAIL_ACCOUNT;
+        this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, {token: this.token})
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1) {
+                    this.status = PageStatus.canLogIn;
+                } else if (data && data.status && data.status.code === -1) {
+                    this.status = PageStatus.error;
+                    this.error = data.data[0];
+                }
+            });
     }
 }
+
 export enum PageStatus {
     loading,
     error,

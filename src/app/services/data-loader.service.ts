@@ -16,7 +16,8 @@ export class DataLoaderService {
         public dialog: MatDialog,
         public http: HttpClient,
         public dataStore: DataStoreService
-    ) {}
+    ) {
+    }
 
     // make a GET request
     public get<T>(url: string, param: HttpParams, headers: HttpHeaders) {
@@ -26,7 +27,7 @@ export class DataLoaderService {
                 headers: options.headers,
                 params: options.params
             }).subscribe(
-                ( data) => {
+                (data) => {
                     resolve(data);
                 }, (data) => {
                     reject(data);
@@ -47,7 +48,7 @@ export class DataLoaderService {
                 params: options.params
             }).subscribe(
                 // tslint:disable-next-line:no-shadowed-variable
-                ( data) => {
+                (data) => {
                     if (dataKey) {
                         // @ts-ignore
                         this.dataStore.set(dataKey, data.data, true);
@@ -69,10 +70,13 @@ export class DataLoaderService {
                 params: options.params
             }).subscribe(
                 // tslint:disable-next-line:no-shadowed-variable
-                ( data) => {
+                (data) => {
                     resolve(data);
                     // @ts-ignore
-                    if (dataKey) { this.dataStore.set(dataKey, data.data, true); }
+                    if (dataKey) {
+                        // @ts-ignore
+                        this.dataStore.set(dataKey, data.data, true);
+                    }
                     // tslint:disable-next-line:no-shadowed-variable
                 }, (data) => {
                     reject(data);

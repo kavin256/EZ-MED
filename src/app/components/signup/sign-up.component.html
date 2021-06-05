@@ -25,6 +25,11 @@
                 <div *ngIf="logInError && logInError !== ''" class="banner error">
                     <p>{{logInError}}</p>
                 </div>
+                <button class="default-button" type="submit"
+                        *ngIf="logInError && logInError !== '' && logInErrorCode === -2"
+                        (click)="generateNewValidationLink()">
+                    Resend Link
+                </button>
                 <button class="default-button" type="submit" [disabled]="!(email && pass)" (click)="logIn()">Log In
                 </button>
                 <br>
