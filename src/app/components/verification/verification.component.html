@@ -1,8 +1,28 @@
 <div align="center" class="mat-card-style">
     <app-page-title [title]="'Account Verification'"></app-page-title>
-    <script>
-    </script>
-    <mat-tab-group style="width: 320px" mat-align-tabs="center">
-            <p style="max-width: 320px; color: crimson"><b>Your account verification successful. You can log into your account now.</b></p>
-    </mat-tab-group>
+    <br>
+    <div *ngIf="status === PageStatus.goToVerificationLink" class="banner warning">
+        <p>
+            A verification link has been sent to your email <b>{{email}}</b>. Please click on that link to continue your
+            registration
+        </p>
+    </div>
+    <div *ngIf="status === PageStatus.loading" class="banner warning">
+        <p>
+            Loading
+        </p>
+    </div>
+    <div *ngIf="status === PageStatus.error" class="banner error">
+        <p>
+            Something went wrong
+        </p>
+    </div>
+    <ng-container *ngIf="status === PageStatus.canLogIn">
+    <div class="banner success">
+        <p>
+            Account verification is successful. You can log into your account now
+        </p>
+    </div>
+    <button (click)="logIn()" class="default-button">Log In</button>
+    </ng-container>
 </div>

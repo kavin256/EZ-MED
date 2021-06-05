@@ -101,17 +101,15 @@ export class SignUpComponent implements OnInit {
         this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
-                    if (data.data[0].doctor) {
+                    // sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+                    if (data.data[0]) {
                         // sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
-                        this.router.navigate(['registrationConfirm']).then(r => {
-                            // location.reload();
-                        });
-                    } else if (!data.data[0].doctor) {
-                        // sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
-                        this.router.navigate(['registrationConfirm']).then(r => {
-                            // location.reload();
-                        });
+                        // this.router.navigate(['registrationConfirm'], ).then(r => {
+                        //     // location.reload();
+                        // });
+                        this.router.navigate(['registrationConfirm'], { queryParams: { email: data.data[0].email } }).then(r => {});
+                    } else {
+                        alert('Something went wrong');
                     }
                 } else if (data && data.status && data.status.code === -1) {
                     alert(data.status.message);

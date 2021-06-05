@@ -7,11 +7,11 @@
             </th>
             <th style="width: 100px;">
                 <div *ngIf="!(loggedInUser && firstName)" align="center">
-                    <button class="default-button log-in-button" (click)="logoClick()">Log In</button>
+                    <button class="default-button log-in-button" (click)="profilePicClick()">Log In</button>
                 </div>
                 <div *ngIf="loggedInUser && firstName" align="center">
-                    <img (click)="logoClick()" [src]="profileImageURL" width="60px"/>
-                    <p (click)="logoClick()"
+                    <img (click)="profilePicClick()" [src]="profileImageURL" width="60px"/>
+                    <p (click)="profilePicClick()"
                        style="align-content: center; padding-top: 5px; font-size: small">{{firstName}}</p>
                 </div>
             </th>

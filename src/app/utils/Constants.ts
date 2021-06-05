@@ -6,6 +6,7 @@ export enum Constants {
     FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
+    VERIFY_EMAIL_ACCOUNT = '/user/registrationConfirm',
     LOAD_CONFIGURATIONS = '/admin/configs',
     UPLOAD_USER_PROFILE_PIC = '/userImages/upload/profilePic/',
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
@@ -37,7 +38,6 @@ export enum Constants {
     GET_USER_DATA_BY_ID = '/user/user-data-by-id/',
     AUTHENTICATE = '/authenticate',
     AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = '/doctor/available-appointments/',
-    VERIFY_EMAIL_ACCOUNT = '/registrationConfirm/',
 
     // payment
     CLI_ID = 14004356,

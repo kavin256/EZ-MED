@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  logoClick(): void {
+  profilePicClick(): void {
     if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
       this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
       this.userType = this.signUpResultObject.userType;
