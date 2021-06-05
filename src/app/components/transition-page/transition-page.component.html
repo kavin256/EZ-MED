@@ -1,12 +1,14 @@
 <div class="mat-card-style" align="center">
     <ng-container *ngIf="modalType === 'LOGIN_REDIRECT'">
-        <h6 *ngIf="dismissible" style="color: crimson">Sorry, You have to log in to confirm the appointment!</h6>
+        <div *ngIf="dismissible" class="banner error">
+            <p>
+                Sorry, You have to log in to confirm the appointment
+            </p>
+        </div>
         <h6 *ngIf="!dismissible" style="color: crimson">Please Log In !</h6>
+        <button (click)="logIn()" class="default-button">Log In</button>
         <br>
-        <button (click)="logIn()" mat-raised-button color="primary" style="width: 240px">Log In</button>
-        <br>
-        <br>
-        <button *ngIf="dismissible" mat-raised-button color="secondary" style="width: 240px" (click)="dismiss()">Back</button>
+        <button *ngIf="dismissible" class="default-button button-warning" (click)="dismiss()">Back</button>
     </ng-container>
     <br>
     <br>

@@ -1,378 +1,381 @@
-<ng-container *ngIf="isNewPrescription">
+<div class="mat-card-style">
     <div class="mat-card-style">
-        <div class="mat-card-style">
-            <div class="container" #test>
+        <div class="container" #test>
+            <br>
+            <ng-container *ngIf="prescription.status === 1">
+                <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT
+                    ISSUE MEDICINE
+                    ------</b></p>
+            </ng-container>
+            <p style="font-size: small; text-align: center"><b><u>PROFESSIONAL'S NOTE</u></b></p>
+            <br>
+
+            <p align="left" *ngIf="!isNewPrescription" style="font-size: small">
+                Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</p>
+            <p align="left" style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}
+                . {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></p>
+            <p align="left" style="font-size: small">Age: {{prescription?.lightPatient?.age}} yrs</p>
+
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <br>
+
+            <div *ngIf="!isNewPrescription">
                 <br>
                 <ng-container *ngIf="prescription.status === 1">
-                    <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO NOT
-                        ISSUE MEDICINE
-                        ------</b></p>
+                    <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO
+                        NOT ISSUE
+                        MEDICINE ------</b></p>
                 </ng-container>
-                <p style="font-size: small; text-align: center"><b><u>PROFESSIONAL'S NOTE</u></b></p>
+                <p align="left">Medicine prescriptions</p>
+                <div align="left" class="abc" *ngFor="let item of prescribedItems; let i = index;">
+                    <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
+                        <p>{{item.title}}</p>
+                        <!--                    <p>{{item.take}}</p>-->
+                    </ngb-alert>
+                </div>
                 <br>
-
-                <p align="left" *ngIf="!isNewPrescription" style="font-size: small">
-                    Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</p>
-                <p align="left" style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}
-                    . {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></p>
-                <p align="left" style="font-size: small">Age: {{prescription?.lightPatient?.age}} yrs</p>
+                <ng-container *ngIf="prescription.status === 1">
+                    <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO
+                        NOT ISSUE
+                        MEDICINE ------</b></p>
+                </ng-container>
+                <br>
+                <p align="left">Tests / Notes</p>
+                <div align="left" class="abc" *ngFor="let item of prescribedNoteItems; let i = index;">
+                    <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
+                        <p>{{item.description}}</p>
+                    </ngb-alert>
+                </div>
+                <br>
+                <ng-container *ngIf="prescription.status === 1">
+                    <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO
+                        NOT ISSUE
+                        MEDICINE ------</b></p>
+                </ng-container>
+                <br>
 
                 <mat-divider></mat-divider>
                 <mat-divider></mat-divider>
                 <br>
+                <ng-container *ngIf="signatureImageURL && signatureImageURL !== Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN">
+                    <img [src]="signatureImageURL" width="200px">
+                    <br>
+                </ng-container>
 
-                <div *ngIf="!isNewPrescription">
+                <ng-container *ngIf="stampImageURL && stampImageURL !== Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP">
+                    <img [src]="stampImageURL" width="200px">
                     <br>
-                    <ng-container *ngIf="prescription.status === 1">
-                        <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO
-                            NOT ISSUE
-                            MEDICINE ------</b></p>
-                    </ng-container>
-                    <p align="left">Medicine prescriptions</p>
-                    <div align="left" class="abc" *ngFor="let item of prescribedItems; let i = index;">
-                        <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
-                            <p>{{item.title}}</p>
-                            <!--                    <p>{{item.take}}</p>-->
-                        </ngb-alert>
-                    </div>
-                    <br>
-                    <ng-container *ngIf="prescription.status === 1">
-                        <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO
-                            NOT ISSUE
-                            MEDICINE ------</b></p>
-                    </ng-container>
-                    <br>
-                    <p align="left">Tests / Notes</p>
-                    <div align="left" class="abc" *ngFor="let item of prescribedNoteItems; let i = index;">
-                        <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
-                            <p>{{item.description}}</p>
-                        </ngb-alert>
-                    </div>
-                    <br>
-                    <ng-container *ngIf="prescription.status === 1">
-                        <p style="font-size: x-small; color: crimson"><b>------ Cancelled Prescription !!!!! DO
-                            NOT ISSUE
-                            MEDICINE ------</b></p>
-                    </ng-container>
-                    <br>
+                </ng-container>
 
-                    <mat-divider></mat-divider>
-                    <mat-divider></mat-divider>
-                    <br>
-                    <ng-container *ngIf="signatureImageURL">
-                        <img [src]="signatureImageURL" width="200px">
-                        <br>
-                    </ng-container>
-
-                    <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is
-                        an electronically
-                        generated document that was prepared by the following prescriber **</p>
+                <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is
+                    an electronically
+                    generated document that was prepared by the following prescriber **</p>
+                <table align="center">
+                    <tr>
+                        <th style="font-size: medium; text-align: left">
+                            {{prescription?.lightDoctor?.title}}
+                            . {{prescription?.lightDoctor?.firstName}} {{prescription?.lightDoctor?.lastName}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="font-size: x-small; text-align: left">
+                            Reg. number: {{prescription?.lightDoctor?.regNo}}<br>
+                            {{prescription?.lightDoctor?.qualifications}}<br><br>
+                            Phone number: {{prescription?.lightDoctor?.contactNumber}}<br>
+                            Email: {{prescription?.lightDoctor?.email}}
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </div>
+        </div>
+        <div *ngIf="isNewPrescription">
+            <p>Medicine prescriptions</p>
+            <div *ngFor="let item of prescribedItems; let i = index;">
+                <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)"
+                           [dismissible]="true">
                     <table align="center">
                         <tr>
-                            <th style="font-size: medium; text-align: left">
-                                {{prescription?.lightDoctor?.title}}
-                                . {{prescription?.lightDoctor?.firstName}} {{prescription?.lightDoctor?.lastName}}
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="font-size: x-small; text-align: left">
-                                Reg. number: {{prescription?.lightDoctor?.regNo}}<br>
-                                {{prescription?.lightDoctor?.qualifications}}<br><br>
-                                Phone number: {{prescription?.lightDoctor?.contactNumber}}<br>
-                                Email: {{prescription?.lightDoctor?.email}}
+                            <td>
+                                <mat-form-field style="width: 280px">
+                                <textarea style="font-size: small" matInput type="text" placeholder="Medicine"
+                                          [(ngModel)]='item.title'></textarea>
+                                </mat-form-field>
                             </td>
                         </tr>
                     </table>
-                    <br>
-                </div>
+                </ngb-alert>
             </div>
-            <div *ngIf="isNewPrescription">
-                <p>Medicine prescriptions</p>
-                <div *ngFor="let item of prescribedItems; let i = index;">
-                    <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)"
-                               [dismissible]="true">
-                        <table align="center">
-                            <tr>
-                                <td>
-                                    <mat-form-field style="width: 280px">
-                                <textarea style="font-size: small" matInput type="text" placeholder="Medicine"
-                                          [(ngModel)]='item.title'></textarea>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </ngb-alert>
-                </div>
-                <div align="right">
-                    <button (click)="addMoreItem()" style="width: 50px" color="primary" mat-stroked-button>+
-                    </button>
-                </div>
-                <br>
-
-                <p>Tests / Notes</p>
-                <div *ngFor="let item of prescribedNoteItems; let i = index;">
-                    <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">
-                        <table align="center">
-                            <tr>
-                                <td>
-                                    <mat-form-field style="width: 250px;">
-                                <textarea style="height: 60px; font-size: small" matInput type="text"
-                                          placeholder="Note {{i+1}}" [(ngModel)]='item.description'></textarea>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </ngb-alert>
-                </div>
-                <div align="right">
-                    <button (click)="addMoreNoteItem()" style="width: 50px" color="primary" mat-stroked-button>
-                        +
-                    </button>
-                </div>
-                <br>
-                <br>
+            <div align="right">
+                <button (click)="addMoreItem()" style="width: 50px" color="primary" mat-stroked-button>+
+                </button>
             </div>
-            <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;"
-                       *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true"
-                       type="primary">
-                This digital prescription is generated by the medical professional and no one else can edit the
-                document<br>For
-                any inquiries, please contact {{contactEmail}}<br>
-                - EZMED PVT LTD -
-            </ngb-alert>
-            <ng-container *ngIf="isNewPrescription">
-                <button
-                        [disabled]="!(prescribedItems && prescribedItems.length && prescribedItems[0].title !== '')
-                        && !(prescribedNoteItems && prescribedNoteItems.length && prescribedNoteItems[0].description !== '')"
-                        (click)="savePrescription()" class="default-button">
-                    Save
-                </button>
-            </ng-container>
-            <ng-container *ngIf="!isNewPrescription && doctorSide">
-                <br>
-                <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive"
-                        class="default-button button-warning" (click)="isConfirmationActive = !isConfirmationActive">
-                    Cancel Prescription
-                </button>
-                <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
-                <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px"
-                        mat-raised-button
-                        color="primary">Yes
-                </button>
-                <span *ngIf="isConfirmationActive">&nbsp;&nbsp;<button *ngIf="isConfirmationActive"
-                                                                       (click)="isConfirmationActive = !isConfirmationActive"
-                                                                       style="width: 150px" mat-raised-button
-                                                                       color="secondary">No, don't cancel</button></span>
-                <br>
-                <br>
-            </ng-container>
-
-            <input *ngIf="true && !isNewPrescription" type="button"
-                   value="Download" class="default-button"
-                   (click)="capture()">
             <br>
-            <button class="default-button button-warning" (click)="goToPrescriptionList()">
-                Back
-            </button>
-        </div>
-    </div>
 
-
-</ng-container>
-<ng-container *ngIf="!isNewPrescription">
-    <div align="center" class="mat-card-style-downloadable">
-        <div align="center" style="margin-left: auto; margin-right: auto;">
-            <div align="center" id="capture2"
-                 style="min-width: 320px; background-color: white; background-size: auto 600px; background-repeat: no-repeat;">
-                <div class="mat-card-style-downloadable">
-                    <div class="container">
-                        <!--                        <ng-container *ngIf="prescription.status === 1">-->
-                        <!--                            <p style="font-size: x-small; color: crimson"><b>&#45;&#45;&#45;&#45;&#45;&#45; Cancelled Prescription !!!!! DO NOT-->
-                        <!--                                ISSUE MEDICINE-->
-                        <!--                                &#45;&#45;&#45;&#45;&#45;&#45;</b></p>-->
-                        <!--                        </ng-container>-->
-                        <!--                        <span style="font-size: small; text-align: center"><b><u>PROFESSIONAL'S NOTE</u></b></span>-->
-                        <br>
-                        <div align="left">
-
-                        <span align="left" *ngIf="!isNewPrescription" style="font-size: small">
-                            Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</span> <br>
-
-                            <span align="left" style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}
-                                . {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></span>
-                            <br>
-
-                            <span align="left" style="font-size: small">Age: {{prescription?.lightPatient?.age}}
-                                yrs</span>
-
-                        </div>
-                        <mat-divider></mat-divider>
-                        <mat-divider></mat-divider>
-                        <br>
-
-                        <div *ngIf="!isNewPrescription">
-                            <ng-container *ngIf="prescription.status === 1">
-                                <p style="font-size: x-small; color: crimson"><b>This is a Cancelled Prescription. Do
-                                    NOT issue !!!</b></p>
-                            </ng-container>
-                            <p style="font-size: small" align="left"><b><u>Medicine prescriptions</u></b></p>
-                            <ul>
-
-                                <div align="left" class="abc" *ngFor="let item of prescribedItems; let i = index;">
-                                    <li><p style="font-size: small">{{item.title}}</p></li>
-                                </div>
-                            </ul>
-                            <p *ngIf="prescribedNoteItems && prescribedNoteItems.length" style="font-size: small"
-                               align="left"><b><u>Tests / Notes</u></b></p>
-                            <ul>
-
-                                <div align="left" class="abc" *ngFor="let item of prescribedNoteItems; let i = index;">
-                                    <li><p style="font-size: small">{{item.description}}</p></li>
-                                </div>
-                            </ul>
-                            <ng-container *ngIf="prescription.status === 1">
-                                <p style="font-size: x-small; color: crimson"><b>This is a Cancelled Prescription. Do
-                                    NOT issue !!!</b></p>
-                            </ng-container>
-
-                            <mat-divider></mat-divider>
-                            <mat-divider></mat-divider>
-                            <ng-container *ngIf="signatureImageURL">
-                                <!--                                <img [src]="signatureImageURL" width="150px">-->
-                            </ng-container>
-
-                            <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is
-                                an electronically
-                                generated document that was prepared by the following prescriber **</p>
-                            <br>
-                            <table align="center">
-                                <tr>
-                                    <td>
-                                        <img [src]="signatureImageURL" width="100px">
-
-                                    </td>
-                                    <td>
-                                        <!--                                        <img [src]="signatureImageURL" width="100px">-->
-
-                                    </td>
-                                    <td style="font-size: small; text-align: left">
-                                        {{prescription?.lightDoctor?.title}}
-                                        . {{prescription?.lightDoctor?.firstName}} {{prescription?.lightDoctor?.lastName}}
-                                        <br>
-                                        Reg.: {{prescription?.lightDoctor?.regNo}}<br>
-                                        {{prescription?.lightDoctor?.qualifications}}
-                                    </td>
-                                </tr>
-                                <!--                                <tr>-->
-                                <!--                                    <td style="font-size: x-small; text-align: left">-->
-                                <!--&lt;!&ndash;                                        Phone number: {{prescription?.lightDoctor?.contactNumber}}<br>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                        Email: {{prescription?.lightDoctor?.email}}&ndash;&gt;-->
-                                <!--                                    </td>-->
-                                <!--                                    <td style="font-size: x-small; text-align: left">-->
-                                <!--                                        Reg. number: {{prescription?.lightDoctor?.regNo}}<br>-->
-                                <!--                                        {{prescription?.lightDoctor?.qualifications}}-->
-
-                                <!--                                    </td>-->
-                                <!--                                </tr>-->
-                            </table>
-                            <br>
-                        </div>
-                    </div>
-                    <div *ngIf="isNewPrescription">
-                        <p>Medicine prescriptions</p>
-                        <div *ngFor="let item of prescribedItems; let i = index;">
-                            <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)"
-                                       [dismissible]="true">
-                                <table align="center">
-                                    <tr>
-                                        <td>
-                                            <mat-form-field style="width: 280px">
-                                <textarea style="font-size: small" matInput type="text" placeholder="Medicine"
-                                          [(ngModel)]='item.title'></textarea>
-                                            </mat-form-field>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ngb-alert>
-                        </div>
-                        <div align="right">
-                            <button (click)="addMoreItem()" style="width: 50px" color="primary" mat-stroked-button>+
-                            </button>
-                        </div>
-                        <br>
-
-                        <p>Tests / Notes</p>
-                        <div *ngFor="let item of prescribedNoteItems; let i = index;">
-                            <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">
-                                <table align="center">
-                                    <tr>
-                                        <td>
-                                            <mat-form-field style="width: 250px;">
+            <p>Tests / Notes</p>
+            <div *ngFor="let item of prescribedNoteItems; let i = index;">
+                <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <mat-form-field style="width: 250px;">
                                 <textarea style="height: 60px; font-size: small" matInput type="text"
                                           placeholder="Note {{i+1}}" [(ngModel)]='item.description'></textarea>
-                                            </mat-form-field>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ngb-alert>
-                        </div>
-                        <div align="right">
-                            <button (click)="addMoreNoteItem()" style="width: 50px" color="primary" mat-stroked-button>
-                                +
-                            </button>
-                        </div>
-                        <br>
-                        <br>
-                    </div>
-                    <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;"
-                               *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true"
-                               type="primary">
-                        This digital prescription is generated by the medical professional and no one else can edit the
-                        document<br>For
-                        any inquiries, please contact {{contactEmail}}<br>
-                        - EZMED PVT LTD -
-                    </ngb-alert>
-                </div>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </ngb-alert>
             </div>
-            <div align="center">
-                <div align="center">
-                    <ng-container *ngIf="isNewPrescription">
-                        <button (click)="savePrescription()" style="width: 320px" color="primary" mat-raised-button>
-                            Save
-                        </button>
-                        <br>
-                    </ng-container>
-                    <ng-container *ngIf="!isNewPrescription && doctorSide">
-                        <br>
-                        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive"
-                                class="default-button button-warning"
-                                (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription
-                        </button>
-                        <ng-container *ngIf="isConfirmationActive">
-                            <p align="center">Are you sure you want to cancel?</p>
-                            <button (click)="cancelPrescription()" style="width: 150px"
-                                    mat-raised-button
-                                    color="primary">Yes
-                            </button>
-                            <span>&nbsp;&nbsp;<button
-                                    (click)="isConfirmationActive = !isConfirmationActive"
-                                    style="width: 150px" mat-raised-button
-                                    color="secondary">No, don't cancel</button></span>
-                            <br>
-                            <br>
-                        </ng-container>
-                    </ng-container>
-
-                    <input *ngIf="true && !isNewPrescription" type="button"
-                           value="Download" class="default-button"
-                           (click)="capture()">
-                    <br>
-                    <button class="default-button button-warning" (click)="goToPrescriptionList()">
-                        Back
-                    </button>
-                </div>
+            <div align="right">
+                <button (click)="addMoreNoteItem()" style="width: 50px" color="primary" mat-stroked-button>
+                    +
+                </button>
             </div>
-
+            <br>
+            <br>
         </div>
+        <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;"
+                   *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true"
+                   type="primary">
+            This digital prescription is generated by the medical professional and no one else can edit the
+            document<br>For
+            any inquiries, please contact {{contactEmail}}<br>
+            - EZMED PVT LTD -
+        </ngb-alert>
+        <ng-container *ngIf="isNewPrescription">
+            <button
+                    [disabled]="!(prescribedItems && prescribedItems.length && prescribedItems[0].title !== '')
+                        && !(prescribedNoteItems && prescribedNoteItems.length && prescribedNoteItems[0].description !== '')"
+                    (click)="savePrescription()" class="default-button">
+                Save
+            </button>
+        </ng-container>
+        <ng-container *ngIf="!isNewPrescription && doctorSide">
+            <br>
+            <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive"
+                    class="default-button button-warning" (click)="isConfirmationActive = !isConfirmationActive">
+                Cancel Prescription
+            </button>
+            <p *ngIf="isConfirmationActive" align="center">Are you sure you want to cancel?</p>
+            <button *ngIf="isConfirmationActive" (click)="cancelPrescription()" style="width: 150px"
+                    mat-raised-button
+                    color="primary">Yes
+            </button>
+            <span *ngIf="isConfirmationActive">&nbsp;&nbsp;<button *ngIf="isConfirmationActive"
+                                                                   (click)="isConfirmationActive = !isConfirmationActive"
+                                                                   style="width: 150px" mat-raised-button
+                                                                   color="secondary">No, don't cancel</button></span>
+            <br>
+            <br>
+        </ng-container>
+
+        <input *ngIf="true && !isNewPrescription" type="button"
+               value="Download" class="default-button"
+               (click)="capture()">
+        <br>
+        <button class="default-button button-warning" (click)="goToPrescriptionList()">
+            Back
+        </button>
     </div>
-</ng-container>
+</div>
+
+
+<!--<ng-container *ngIf="!isNewPrescription">-->
+<!--    <div align="center" class="mat-card-style-downloadable">-->
+<!--        <div align="center" style="margin-left: auto; margin-right: auto;">-->
+<!--            <div align="center" id="capture2"-->
+<!--                 style="min-width: 320px; background-color: white; background-size: auto 600px; background-repeat: no-repeat;">-->
+<!--                <div class="mat-card-style-downloadable">-->
+<!--                    <div class="container">-->
+<!--                        &lt;!&ndash;                        <ng-container *ngIf="prescription.status === 1">&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            <p style="font-size: x-small; color: crimson"><b>&#45;&#45;&#45;&#45;&#45;&#45; Cancelled Prescription !!!!! DO NOT&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                ISSUE MEDICINE&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                &#45;&#45;&#45;&#45;&#45;&#45;</b></p>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        </ng-container>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        <span style="font-size: small; text-align: center"><b><u>PROFESSIONAL'S NOTE</u></b></span>&ndash;&gt;-->
+<!--                        <br>-->
+<!--                        <div align="left">-->
+
+<!--                        <span align="left" *ngIf="!isNewPrescription" style="font-size: small">-->
+<!--                            Date: {{prescription?.issuedDate | date:'yyyy-MM-dd'}}</span> <br>-->
+
+<!--                            <span align="left" style="font-size: small">Name: <b>{{prescription?.lightPatient?.title}}-->
+<!--                                . {{prescription?.lightPatient?.firstName}} {{prescription?.lightPatient?.lastName}}</b></span>-->
+<!--                            <br>-->
+
+<!--                            <span align="left" style="font-size: small">Age: {{prescription?.lightPatient?.age}}-->
+<!--                                yrs</span>-->
+
+<!--                        </div>-->
+<!--                        <mat-divider></mat-divider>-->
+<!--                        <mat-divider></mat-divider>-->
+<!--                        <br>-->
+
+<!--                        <div *ngIf="!isNewPrescription">-->
+<!--                            <ng-container *ngIf="prescription.status === 1">-->
+<!--                                <p style="font-size: x-small; color: crimson"><b>This is a Cancelled Prescription. Do-->
+<!--                                    NOT issue !!!</b></p>-->
+<!--                            </ng-container>-->
+<!--                            <p style="font-size: small" align="left"><b><u>Medicine prescriptions</u></b></p>-->
+<!--                            <ul>-->
+
+<!--                                <div align="left" class="abc" *ngFor="let item of prescribedItems; let i = index;">-->
+<!--                                    <li><p style="font-size: small">{{item.title}}</p></li>-->
+<!--                                </div>-->
+<!--                            </ul>-->
+<!--                            <p *ngIf="prescribedNoteItems && prescribedNoteItems.length" style="font-size: small"-->
+<!--                               align="left"><b><u>Tests / Notes</u></b></p>-->
+<!--                            <ul>-->
+
+<!--                                <div align="left" class="abc" *ngFor="let item of prescribedNoteItems; let i = index;">-->
+<!--                                    <li><p style="font-size: small">{{item.description}}</p></li>-->
+<!--                                </div>-->
+<!--                            </ul>-->
+<!--                            <ng-container *ngIf="prescription.status === 1">-->
+<!--                                <p style="font-size: x-small; color: crimson"><b>This is a Cancelled Prescription. Do-->
+<!--                                    NOT issue !!!</b></p>-->
+<!--                            </ng-container>-->
+
+<!--                            <mat-divider></mat-divider>-->
+<!--                            <mat-divider></mat-divider>-->
+<!--                            <ng-container *ngIf="signatureImageURL">-->
+<!--                                &lt;!&ndash;                                <img [src]="signatureImageURL" width="150px">&ndash;&gt;-->
+<!--                            </ng-container>-->
+
+<!--                            <p *ngIf="!signatureImageURL" style="font-size: x-small">** No signature required. This is-->
+<!--                                an electronically-->
+<!--                                generated document that was prepared by the following prescriber **</p>-->
+<!--                            <br>-->
+<!--                            <table align="center">-->
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <img [src]="signatureImageURL" width="100px">-->
+
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        &lt;!&ndash;                                        <img [src]="signatureImageURL" width="100px">&ndash;&gt;-->
+
+<!--                                    </td>-->
+<!--                                    <td style="font-size: small; text-align: left">-->
+<!--                                        {{prescription?.lightDoctor?.title}}-->
+<!--                                        . {{prescription?.lightDoctor?.firstName}} {{prescription?.lightDoctor?.lastName}}-->
+<!--                                        <br>-->
+<!--                                        Reg.: {{prescription?.lightDoctor?.regNo}}<br>-->
+<!--                                        {{prescription?.lightDoctor?.qualifications}}-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                &lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td style="font-size: x-small; text-align: left">&ndash;&gt;-->
+<!--                                &lt;!&ndash;&lt;!&ndash;                                        Phone number: {{prescription?.lightDoctor?.contactNumber}}<br>&ndash;&gt;&ndash;&gt;-->
+<!--                                &lt;!&ndash;&lt;!&ndash;                                        Email: {{prescription?.lightDoctor?.email}}&ndash;&gt;&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <td style="font-size: x-small; text-align: left">&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                        Reg. number: {{prescription?.lightDoctor?.regNo}}<br>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                        {{prescription?.lightDoctor?.qualifications}}&ndash;&gt;-->
+
+<!--                                &lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--                            </table>-->
+<!--                            <br>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div *ngIf="isNewPrescription">-->
+<!--                        <p>Medicine prescriptions</p>-->
+<!--                        <div *ngFor="let item of prescribedItems; let i = index;">-->
+<!--                            <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)"-->
+<!--                                       [dismissible]="true">-->
+<!--                                <table align="center">-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <mat-form-field style="width: 280px">-->
+<!--                                <textarea style="font-size: small" matInput type="text" placeholder="Medicine"-->
+<!--                                          [(ngModel)]='item.title'></textarea>-->
+<!--                                            </mat-form-field>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+<!--                            </ngb-alert>-->
+<!--                        </div>-->
+<!--                        <div align="right">-->
+<!--                            <button (click)="addMoreItem()" style="width: 50px" color="primary" mat-stroked-button>+-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <br>-->
+
+<!--                        <p>Tests / Notes</p>-->
+<!--                        <div *ngFor="let item of prescribedNoteItems; let i = index;">-->
+<!--                            <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">-->
+<!--                                <table align="center">-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <mat-form-field style="width: 250px;">-->
+<!--                                <textarea style="height: 60px; font-size: small" matInput type="text"-->
+<!--                                          placeholder="Note {{i+1}}" [(ngModel)]='item.description'></textarea>-->
+<!--                                            </mat-form-field>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+<!--                            </ngb-alert>-->
+<!--                        </div>-->
+<!--                        <div align="right">-->
+<!--                            <button (click)="addMoreNoteItem()" style="width: 50px" color="primary" mat-stroked-button>-->
+<!--                                +-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <br>-->
+<!--                        <br>-->
+<!--                    </div>-->
+<!--                    <ngb-alert (close)="ngbAlertVisible=false" style="font-size: small;"-->
+<!--                               *ngIf="!isNewPrescription && !doctorSide && ngbAlertVisible" [dismissible]="true"-->
+<!--                               type="primary">-->
+<!--                        This digital prescription is generated by the medical professional and no one else can edit the-->
+<!--                        document<br>For-->
+<!--                        any inquiries, please contact {{contactEmail}}<br>-->
+<!--                        - EZMED PVT LTD - -->
+<!--                    </ngb-alert>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div align="center">-->
+<!--                <div align="center">-->
+<!--                    <ng-container *ngIf="isNewPrescription">-->
+<!--                        <button (click)="savePrescription()" style="width: 320px" color="primary" mat-raised-button>-->
+<!--                            Save-->
+<!--                        </button>-->
+<!--                        <br>-->
+<!--                    </ng-container>-->
+<!--                    <ng-container *ngIf="!isNewPrescription && doctorSide">-->
+<!--                        <br>-->
+<!--                        <button [disabled]="prescription?.status === 1" *ngIf="!isConfirmationActive"-->
+<!--                                class="default-button button-warning"-->
+<!--                                (click)="isConfirmationActive = !isConfirmationActive">Cancel Prescription-->
+<!--                        </button>-->
+<!--                        <ng-container *ngIf="isConfirmationActive">-->
+<!--                            <p align="center">Are you sure you want to cancel?</p>-->
+<!--                            <button (click)="cancelPrescription()" style="width: 150px"-->
+<!--                                    mat-raised-button-->
+<!--                                    color="primary">Yes-->
+<!--                            </button>-->
+<!--                            <span>&nbsp;&nbsp;<button-->
+<!--                                    (click)="isConfirmationActive = !isConfirmationActive"-->
+<!--                                    style="width: 150px" mat-raised-button-->
+<!--                                    color="secondary">No, don't cancel</button></span>-->
+<!--                            <br>-->
+<!--                            <br>-->
+<!--                        </ng-container>-->
+<!--                    </ng-container>-->
+
+<!--                    <input *ngIf="true && !isNewPrescription" type="button"-->
+<!--                           value="Download" class="default-button"-->
+<!--                           (click)="capture()">-->
+<!--                    <br>-->
+<!--                    <button class="default-button button-warning" (click)="goToPrescriptionList()">-->
+<!--                        Back-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</ng-container>-->

@@ -1,19 +1,21 @@
 <div align="center" class="mat-card-style">
-    <p style="max-width: 425px;font-size: medium; line-height:1.6; padding-bottom: 40px;  padding-right: 30px;  padding-left: 30px;">
-        <b>
+    <div class="banner plain">
+        <p><b>
             Ez Med is the platform in Sri Lanka that allows you to book an appointment with your doctor online and get
-            your consultation done from the comfort of your home
-        </b></p>
+            your consultation done from the comfort of your home</b>
+        </p>
+    </div>
+    <br>
+
     <button class="default-button" [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()">Make an Appointment
     </button>
-    <ng-container *ngIf="isDoctorLoggedIn()">
-        <br>
-        <br>
-        <p style="max-width: 320px; color: crimson"><b>You cannot make appointments since you are logged in as a medical
+
+    <div *ngIf="isDoctorLoggedIn()" class="banner error">
+        <p><b>You cannot make appointments since you are logged in as a medical
             professional. If you wish to make an appointment, please log in with a different email address as a
             patient</b></p>
-    </ng-container>
-    <br>
+    </div>
+
     <br>
     <br>
     <img (click)="goToSearchPage()" src="/assets/img/search-doctor.png" width="100px">

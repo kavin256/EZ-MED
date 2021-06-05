@@ -12,11 +12,10 @@
         <br>
         <br>
     </ng-container>
-    <ng-container *ngIf="prescriptionList && prescriptionList.length === 0">
-        <br>
-        <br>
-        <p style="color: crimson"><b>------   Sorry, No results found   ------</b></p>
-        <br>
-    </ng-container>
+    <div *ngIf="prescriptionList && prescriptionList.length === 0">
+        <p>
+            Sorry, No results found
+        </p>
+    </div>
     <button (click)="goToMyAppointments()"  class="default-button button-warning">Back</button>
 </div>

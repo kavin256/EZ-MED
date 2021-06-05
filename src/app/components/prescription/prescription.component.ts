@@ -35,6 +35,7 @@ export class PrescriptionComponent implements OnInit {
     doctorSide = false;
     contactPhone: string;
     contactEmail: string;
+    Constants = Constants;
     signatureImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN;
     stampImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP;
 

@@ -19,7 +19,7 @@
                 <mat-form-field style="width: 240px" appearance="legacy">
                     <mat-label>Password</mat-label>
                     <input (keydown.enter)="logIn()"
-                           pattern=".{5,}" matInput [(ngModel)]="pass"
+                           pattern=".{4,}" matInput [(ngModel)]="pass"
                            [type]="hide ? 'password' : 'text'">
                 </mat-form-field>
                 <div *ngIf="logInError && logInError !== ''" class="banner error">
@@ -133,7 +133,7 @@
                 <mat-form-field style="width: 240px" appearance="legacy">
                     <mat-label>Preferred Password</mat-label>
                     <input matInput
-                           pattern=".{5,}"
+                           pattern=".{4,}"
                            required [type]="hide ? 'password' : 'text'" [(ngModel)]='pass'
                            [formControl]="passFormControl">
                 </mat-form-field>
@@ -141,7 +141,7 @@
                 <mat-form-field style="width: 240px" appearance="legacy">
                     <mat-label>Confirm Password</mat-label>
                     <input matInput
-                           pattern=".{5,}"
+                           pattern=".{4,}"
                            required [type]="hide ? 'password' : 'text'" [(ngModel)]='conPass'
                            [formControl]="conPassFormControl">
                 </mat-form-field>

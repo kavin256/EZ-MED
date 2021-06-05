@@ -2,27 +2,28 @@
     <app-page-title [title]="'Payment Summary'"></app-page-title>
     <style>
         table, th, td {
-            border: 0.25px darkgray;
+            border: 0.5px darkgray;
             font-size: small;
         }
     </style>
-    <div *ngIf="doctor">
-        <app-professional-card
-                [professional]="doctor"
-        ></app-professional-card>
-    </div>
-    <div>
-        <mat-form-field style="width: 320px; height: 70px" appearance="legacy">
+    <!--    <div *ngIf="doctor">-->
+    <!--        <app-professional-card-->
+    <!--                [professional]="doctor"-->
+    <!--        ></app-professional-card>-->
+    <!--    </div>-->
+    <div class="banner plain">
+        <mat-form-field style="width: 200px; height: 100px" appearance="legacy">
             <mat-label>Add your concern here.. (Optional)</mat-label>
-            <textarea style="height: 100px" type="text" matInput #input8 [(ngModel)]='appointmentConcern'
+            <textarea style="height: 70px" type="text" matInput #input8 [(ngModel)]='appointmentConcern'
                       placeholder="eg: Doctor, I have a high fever and my stomach hurts"></textarea>
         </mat-form-field>
+        <br>
     </div>
-    <br>
-    <div>
+    <div class="banner plain" style="padding-left: 15px">
+
         <br>
 
-        <table style="width:320px;">
+        <table style="width:200px;">
             <tr>
                 <td style="width: 65%; text-align:left">
                     Appointment charge
@@ -46,10 +47,10 @@
             <!--                </td>-->
             <!--            </tr>-->
             <tr>
-                <td>
+                <td style="text-align: left">
                     Taxes / Fees
                 </td>
-                <td>
+                <td style="text-align: left">
                     LKR
                 </td>
                 <td style="text-align:right">
@@ -57,10 +58,10 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <mat-divider style="width: 200px"></mat-divider>
+                <td style="text-align: left">
+                    <mat-divider style="width: 160px"></mat-divider>
                 </td>
-                <td>
+                <td style="text-align: left">
                     <mat-divider style="width: 40px"></mat-divider>
                 </td>
                 <td style="text-align:right">
@@ -68,10 +69,10 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td style="text-align: left">
                     <b>Total</b>
                 </td>
-                <td>
+                <td style="text-align: left">
                     <b>LKR</b>
                 </td>
                 <td style="text-align:right">
