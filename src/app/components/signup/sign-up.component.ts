@@ -96,6 +96,7 @@ export class SignUpComponent implements OnInit {
     }
 
     registerNewUser(user: UserData) {
+        this.loaderVisible = true;
         user.password = this.dataEncryptionService.set('123456$#@$^@1ERF', user.password);
         user.birthday = this.datePipe.transform(this.bDayFormControl.value, 'yyyy-MM-dd');
 
@@ -106,6 +107,7 @@ export class SignUpComponent implements OnInit {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     // sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
                     if (data.data[0]) {
+                        this.loaderVisible = false;
                         // sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
                         // this.router.navigate(['registrationConfirm'], ).then(r => {
                         //     // location.reload();
@@ -113,9 +115,11 @@ export class SignUpComponent implements OnInit {
                         this.router.navigate(['registrationConfirm'], {queryParams: {email: data.data[0].email}}).then(r => {
                         });
                     } else {
+                        this.loaderVisible = false;
                         alert('Something went wrong');
                     }
                 } else if (data && data.status && data.status.code === -1) {
+                    this.loaderVisible = false;
                     alert(data.status.message);
                 }
             });
