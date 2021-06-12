@@ -6,7 +6,16 @@
     min-width: 320px;
     max-width: 320px;
 }
+
 .abc {
-    word-wrap: break-word;      /* IE 5.5-7 */
-    white-space: pre-wrap;      /* Modern browsers */
+    word-wrap: break-word; /* IE 5.5-7 */
+    white-space: pre-wrap; /* Modern browsers */
+}
+
+.container {
+    max-width: 380px;
+}
+
+ngb-alert {
+    width: unset;
 }
