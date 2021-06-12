@@ -3,7 +3,7 @@
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion *ngIf="doctorScheduleData">
         <div *ngFor="let schedule of doctorScheduleData.fixedDoctorDates;">
-            <mat-expansion-panel style="width: 320px">
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title style="font-family: 'Arial Black'"><b>{{schedule.title}}</b></mat-panel-title>
                 </mat-expansion-panel-header>
@@ -50,7 +50,7 @@
         </div>
     </mat-accordion>
     <br>
-    <mat-form-field *ngIf="doctorScheduleData" style="width: 240px" appearance="legacy">
+    <mat-form-field *ngIf="doctorScheduleData" appearance="legacy">
         <mat-label>Average Time For Consultation (minutes):</mat-label>
         <input required onlyNumber matInput #input7 [(ngModel)]='doctorScheduleData.averageTimeForAppointment'>
     </mat-form-field>

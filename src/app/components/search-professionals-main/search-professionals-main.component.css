@@ -1,23 +1,17 @@
-
-::ng-deep .mat-select-panel.example-long-panel {
-    max-height: 363px;
-    scroll-behavior: unset;
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 98%;
+    gap: 5px;
 }
-
-::ng-deep .mat-select-panel::-webkit-scrollbar {
-    -webkit-appearance: none;
+.wrapper > app-professional-card {
+    width: 49.5%;
+    transition: 0.5s;
+    min-width: 290px;
+    margin: 2px auto;
 }
-
-::ng-deep .mat-select-panel::-webkit-scrollbar:vertical {
-    width: 11px;
-}
-
-::ng-deep .mat-select-panel::-webkit-scrollbar:horizontal {
-    height: 11px;
-}
-
-::ng-deep .mat-select-panel::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    border: 2px solid white; /* should match background, can't be transparent */
-    background-color: rgba(0, 0, 0, .5);
+@media (max-width: 614px) {
+    .wrapper > app-professional-card {
+        width: 75%;
+    }
 }

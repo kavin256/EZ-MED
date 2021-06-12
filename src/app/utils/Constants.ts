@@ -3,7 +3,7 @@ export enum Constants {
     // API_BASE_URL = 'http://Ezmed-env.ap-south-1.elasticbeanstalk.com:80',
     API_BASE_URL = 'http://localhost:5000',
     // FE_BASE_URL = 'http://www.ezmed.lk',
-    FE_BASE_URL = 'http://localhost:4200',
+    FE_BASE_URL = 'http://localhost:4201',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     VERIFY_EMAIL_ACCOUNT = '/user/registrationConfirm',

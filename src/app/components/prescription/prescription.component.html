@@ -29,7 +29,7 @@
                 </ng-container>
                 <p align="left">Medicine prescriptions</p>
                 <div align="left" class="abc" *ngFor="let item of prescribedItems; let i = index;">
-                    <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
+                    <ngb-alert style="height: auto" [dismissible]="false">
                         <p>{{item.title}}</p>
                         <!--                    <p>{{item.take}}</p>-->
                     </ngb-alert>
@@ -43,7 +43,7 @@
                 <br>
                 <p align="left">Tests / Notes</p>
                 <div align="left" class="abc" *ngFor="let item of prescribedNoteItems; let i = index;">
-                    <ngb-alert style="width: 300px; height: auto" [dismissible]="false">
+                    <ngb-alert style="height: auto" [dismissible]="false">
                         <p>{{item.description}}</p>
                     </ngb-alert>
                 </div>
@@ -58,12 +58,14 @@
                 <mat-divider></mat-divider>
                 <mat-divider></mat-divider>
                 <br>
-                <ng-container *ngIf="signatureImageURL && signatureImageURL !== Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN">
+                <ng-container
+                        *ngIf="signatureImageURL && signatureImageURL !== Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN">
                     <img [src]="signatureImageURL" width="200px">
                     <br>
                 </ng-container>
 
-                <ng-container *ngIf="stampImageURL && stampImageURL !== Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP">
+                <ng-container
+                        *ngIf="stampImageURL && stampImageURL !== Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP">
                     <img [src]="stampImageURL" width="200px">
                     <br>
                 </ng-container>
@@ -93,12 +95,12 @@
         <div *ngIf="isNewPrescription">
             <p>Medicine prescriptions</p>
             <div *ngFor="let item of prescribedItems; let i = index;">
-                <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)"
+                <ngb-alert style="min-height: 100px" (close)="removeItem(i)"
                            [dismissible]="true">
                     <table align="center">
                         <tr>
                             <td>
-                                <mat-form-field style="width: 280px">
+                                <mat-form-field>
                                 <textarea style="font-size: small" matInput type="text" placeholder="Medicine"
                                           [(ngModel)]='item.title'></textarea>
                                 </mat-form-field>
@@ -115,11 +117,11 @@
 
             <p>Tests / Notes</p>
             <div *ngFor="let item of prescribedNoteItems; let i = index;">
-                <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">
+                <ngb-alert (close)="removeNoteItem(i)" [dismissible]="true">
                     <table align="center">
                         <tr>
                             <td>
-                                <mat-form-field style="width: 250px;">
+                                <mat-form-field>
                                 <textarea style="height: 60px; font-size: small" matInput type="text"
                                           placeholder="Note {{i+1}}" [(ngModel)]='item.description'></textarea>
                                 </mat-form-field>
@@ -284,7 +286,7 @@
 <!--                    <div *ngIf="isNewPrescription">-->
 <!--                        <p>Medicine prescriptions</p>-->
 <!--                        <div *ngFor="let item of prescribedItems; let i = index;">-->
-<!--                            <ngb-alert style="width: 320px; min-height: 100px" (close)="removeItem(i)"-->
+<!--                            <ngb-alert style=" min-height: 100px" (close)="removeItem(i)"-->
 <!--                                       [dismissible]="true">-->
 <!--                                <table align="center">-->
 <!--                                    <tr>-->
@@ -306,7 +308,7 @@
 
 <!--                        <p>Tests / Notes</p>-->
 <!--                        <div *ngFor="let item of prescribedNoteItems; let i = index;">-->
-<!--                            <ngb-alert style="width: 320px" (close)="removeNoteItem(i)" [dismissible]="true">-->
+<!--                            <ngb-alert (close)="removeNoteItem(i)" [dismissible]="true">-->
 <!--                                <table align="center">-->
 <!--                                    <tr>-->
 <!--                                        <td>-->
@@ -340,7 +342,7 @@
 <!--            <div align="center">-->
 <!--                <div align="center">-->
 <!--                    <ng-container *ngIf="isNewPrescription">-->
-<!--                        <button (click)="savePrescription()" style="width: 320px" color="primary" mat-raised-button>-->
+<!--                        <button (click)="savePrescription()" color="primary" mat-raised-button>-->
 <!--                            Save-->
 <!--                        </button>-->
 <!--                        <br>-->

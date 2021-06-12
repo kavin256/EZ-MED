@@ -1,34 +1,40 @@
 <div class="mat-card-style" align="center">
     <app-page-title
             [title]="(!summaryShown && !showRedirectionMessage) ? 'Select Convenient Time' : (summaryShown && !showRedirectionMessage) ? 'Appointment Summary' : ''"></app-page-title>
-    <app-professional-card
-            [professional]="doctor"
-    ></app-professional-card>
+    <div style="max-width: 380px">
+        <app-professional-card
+                [professional]="doctor"
+        ></app-professional-card>
+    </div>
     <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
 
-        <mat-form-field style="width: 240px">
-            <mat-label>Date</mat-label>
-            <mat-select [(value)]="selectedDate">
-                <ng-container *ngFor="let day of days">
-                    <mat-option *ngIf="day.available" value="{{day.date}}">{{day.date}} - {{day.day}}</mat-option>
-                </ng-container>
-            </mat-select>
-        </mat-form-field>
-        <ng-container *ngIf="selectedDate !== undefined && selectedDate !== null">
-            <mat-form-field style="width: 240px">
-                <mat-label>Time</mat-label>
-                <mat-select [(value)]="selectedAppointmentId">
-                    <ng-container *ngFor="let timeSlot of getTimeSlots(selectedDate)">
-                        <mat-option
-                                value="{{timeSlot.appointmentId}}">{{timeSlot.displayAppointmentTime | date:'shortTime'}}</mat-option>
+        <div class="banner plain">
+            <mat-form-field>
+                <mat-label>Date</mat-label>
+                <mat-select [(value)]="selectedDate">
+                    <ng-container *ngFor="let day of days">
+                        <mat-option *ngIf="day.available" value="{{day.date}}">{{day.date}} - {{day.day}}</mat-option>
                     </ng-container>
                 </mat-select>
             </mat-form-field>
-        </ng-container>
-        <button [disabled]="!selectedDate || !selectedAppointmentId" class="default-button"
-                (click)="continueClicked(true)">Continue
-        </button>
-        <br>
+            <br>
+            <ng-container *ngIf="selectedDate !== undefined && selectedDate !== null">
+                <mat-form-field>
+                    <mat-label>Time</mat-label>
+                    <mat-select [(value)]="selectedAppointmentId">
+                        <ng-container *ngFor="let timeSlot of getTimeSlots(selectedDate)">
+                            <mat-option
+                                    value="{{timeSlot.appointmentId}}">{{timeSlot.displayAppointmentTime | date:'shortTime'}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+            <br>
+            <button [disabled]="!selectedDate || !selectedAppointmentId" class="default-button"
+                    (click)="continueClicked(true)">Continue
+            </button>
+            <br>
+        </div>
 
         <button class="default-button button-warning" (click)="goToSearchProfessionals()">Back
         </button>

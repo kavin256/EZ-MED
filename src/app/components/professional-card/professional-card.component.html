@@ -1,83 +1,61 @@
-<div [ngClass]="isOverTheDoctorCard(professional?.userId) ? 'shadow' : ''" (mouseenter)="onMouseEnter(professional?.userId)" (mouseleave)="onMouseLeave()">
-    <mat-card (click)="selectProfessional_(professional)" style="width: 320px; height: auto">
-        <table>
-            <tr>
-                <th style="width: 120px; height: 100px; align-content: center">
-                    <img [src]="profileImageURL" width="100px">
-                </th>
-                <th>
-                </th>
-                <th>
-                    <table>
-                        <tr>
-                            <th style="font-size: medium; text-align: left">
-                                {{professional?.title}} {{professional?.firstName}} {{professional?.lastName}}
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="font-size: x-small; color: #797D7F;  text-align: left">
-                                {{professional?.qualifications}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <mat-divider style="left: inherit; width: 160px"></mat-divider>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                            <td style="font-size: small; color: #797D7F;  text-align: left">
-                                Specializations:
-                            </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                            <tr>
-                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                    {{professional?.specialityA}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                    {{professional?.specialityB}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                    {{professional?.specialityC}}
-                                </td>
-                            </tr>
-                        <ng-container *ngIf="chargeVisible">
-                            <tr>
-                                <mat-divider style=" color: #797D7F; left: inherit; width: 160px"></mat-divider>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td style=" color: #797D7F; font-size: small; text-align: left">
-                                    Charge per consultation:
-                                </td>
-                            </tr>
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td style=" color: #797D7F; font-size: x-small; text-align: left">
-                                    {{currency}} {{professional?.priceForAppointment}}
-                                </td>
-                            </tr>
-                        </ng-container>
-                        <tr>
-                    </table>
-                </th>
-            </tr>
-        </table>
-    </mat-card>
+<div (click)="checkCard()" class="professional-card" [ngClass]="{'expanded': selected}">
+    <div class="professional-card-summary">
+        <div class="professional-card-item">
+            <img [src]="profileImageURL">
+        </div>
+        <div class="professional-card-item">
+            <p class="professional-card-item-name">
+                {{professional?.title}} {{professional?.firstName}} {{professional?.lastName}}
+            </p>
+            <!--        <p class="professional-card-item-content">-->
+            <!--            {{professional?.qualifications}}-->
+            <!--        </p>-->
+            <!--        <p class="professional-card-item-content">-->
+            <!--            {{professional?.qualifications}}-->
+            <!--        </p>-->
+            <p class="professional-card-item-content">
+                <b>{{dataHandlerService.convertProfessionalTypeFromDBFormat(
+                    professional?.professionalType) | uppercase}}</b>
+            </p>
+            <ng-container *ngIf="professional?.specialityA || professional?.specialityB || professional?.specialityC">
+                <!--            <p class="professional-card-item-content">-->
+                <!--                <mat-divider style="left: inherit;"></mat-divider>-->
+                <!--            </p>-->
+                <p class="professional-card-item-content">
+                    ( {{professional?.specialityA}}{{professional?.specialityA ?
+                    ', ' + professional?.specialityA : ''}}{{professional?.specialityA ?
+                    ', ' + professional?.specialityA : ''}} )
+                </p>
+            </ng-container>
+            <ng-container *ngIf="professional?.specialityA">
+                <!--            <p class="professional-card-item-content" style="padding-bottom: 10px">-->
+                <!--                <mat-divider style="left: inherit;"></mat-divider>-->
+                <!--            </p>-->
+                <p class="professional-card-item-content" style="padding-top: 10px; color: #4CAF50">
+                    <b>Available in 3.04 hours</b>
+                </p>
+            </ng-container>
+        </div>
+    </div>
+    <div *ngIf="selected" class="professional-card-details">
+        <p class="professional-card-details-content">
+            <b>{{'Qualifications:' | uppercase}}</b>
+        </p>
+        <p class="professional-card-details-content" style="margin-left: 20px">
+            {{professional?.qualifications}}
+        </p>
+        <p class="professional-card-details-content">
+            <b>{{'Bio:' | uppercase}}</b>
+        </p>
+        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">
+            Dr. (Mrs) Ranasinghe is a Board Certified Consultant Endocrinologist and had her Clinical
+            Trainings at Addenbrookes hospital, Cambridge, UK. She has published many research articles
+            in diverse areas of Endocrinology.
+        </p>
+        <div class="professional-card-details-content" style="text-align: right">
+            <button (click)="selectProfessional_($event, professional)" class="default-button secondary"
+                    style="alignment: right">Select
+            </button>
+        </div>
+    </div>
 </div>
-<br>

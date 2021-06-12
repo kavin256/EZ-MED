@@ -7,7 +7,7 @@
     </div>
     <ng-container *ngIf="editable">
         <div>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>Title</mat-label>
                 <mat-select required [(value)]="patient.title">
                     <ng-container *ngFor="let title of titles">
@@ -20,22 +20,22 @@
             <br>
         </div>
         <div>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>First Name</mat-label>
                 <input required matInput #input1 [(ngModel)]='patient.firstName' [formControl]="firstNameFormControl">
             </mat-form-field>
             <br>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>Last Name</mat-label>
                 <input required matInput [(ngModel)]='patient.lastName' [formControl]="lastNameFormControl">
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="false" style="width: 240px" appearance="legacy">
+            <mat-form-field *ngIf="false" appearance="legacy">
                 <mat-label>Email</mat-label>
                 <input readonly matInput [(ngModel)]='patient.email' [formControl]="emailFormControl">
                 <br>
             </mat-form-field>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>Gender * ({{gender}})</mat-label>
                 <mat-select [(value)]='gender'>
                     <mat-option required *ngFor="let gender of genders" value="{{gender}}">
@@ -46,7 +46,7 @@
             <br>
         </div>
         <div>
-            <mat-form-field style="width: 240px">
+            <mat-form-field>
                 <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:"
                        [formControl]="dateFormControl">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -57,28 +57,28 @@
             <br>
         </div>
         <div>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>Contact Number</mat-label>
                 <br>
                 <input required matInput [(ngModel)]='patient.contactNumber' [formControl]="contactNumberFormControl">
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>WhatsApp Number</mat-label>
                 <input matInput #input7 [(ngModel)]='patient.whatsAppNumber' [formControl]="whatsAppNumberFormControl">
             </mat-form-field>
         </div>
         <div>
 
-            <mat-form-field style="width: 240px" class="example-full-width">
+            <mat-form-field class="example-full-width">
                 <mat-label>Email:</mat-label>
                 <input disabled required matInput placeholder="" [(ngModel)]="patient.email">
             </mat-form-field>
             <br>
         </div>
         <div>
-            <mat-form-field style="width: 240px" appearance="legacy">
+            <mat-form-field appearance="legacy">
                 <mat-label>Known Allergies</mat-label>
                 <textarea type="text" matInput #input8 [(ngModel)]='patient.userAllergies'></textarea>
             </mat-form-field>
@@ -103,9 +103,9 @@
 
     <ng-container *ngIf="!editable">
         <ng-container *ngIf="searchedProfessionalName">
-            <div class="alert alert-primary" role="alert">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">error_outline</mat-icon>
+            <div class="alert">
                 Want to continue your appointment with {{searchedProfessionalName}}?
+                <br>
                 <br>
                 <button style="margin:5px;" (click)="goToAppointmentTimeSelection()" style="width: 100px"
                         mat-stroked-button color="primary">Yes
