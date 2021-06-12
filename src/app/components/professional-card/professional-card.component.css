@@ -45,6 +45,15 @@ img {
     font-size: x-small;
 }
 
+.mk-button {
+    text-align: right;
+}
+
+.price {
+    text-align: right;
+    padding-right: 7px;
+}
+
 .professional-card:hover {
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
 }
