@@ -194,9 +194,9 @@
                 <button class="default-button" [disabled]="!agreed" (click)="SignUp()">Sign Up
                 </button>
                 <br>
-                <br>
-                <p style="color: crimson" *ngIf="passwordMissMatch">Password and Confirmed password do not
-                    match!!</p>
+                <div *ngIf="passwordMissMatch" class="banner error">
+                    <p>Password and Confirmed password do NOT match</p>
+                </div>
                 <br>
             </mat-tab>
         </ng-container>
