@@ -10,13 +10,13 @@
         <ng-container>
             <mat-tab label="Existing User">
                 <br>
-                <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-form-field appearance="legacy">
                     <mat-label>Email</mat-label>
                     <input (keydown.enter)="logIn()" [(ngModel)]="email"
                            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" matInput>
                 </mat-form-field>
                 <br>
-                <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-form-field appearance="legacy">
                     <mat-label>Password</mat-label>
                     <input (keydown.enter)="logIn()"
                            pattern=".{4,}" matInput [(ngModel)]="pass"
@@ -25,6 +25,11 @@
                 <div *ngIf="logInError && logInError !== ''" class="banner error">
                     <p>{{logInError}}</p>
                 </div>
+                <button class="default-button" type="submit"
+                        *ngIf="logInError && logInError !== '' && logInErrorCode === -2"
+                        (click)="generateNewValidationLink()">
+                    Resend Link
+                </button>
                 <button class="default-button" type="submit" [disabled]="!(email && pass)" (click)="logIn()">Log In
                 </button>
                 <br>
@@ -35,9 +40,9 @@
         <ng-container *ngIf="isSignUp">
             <mat-tab label="New User">
                 <br>
-                <p style="color: crimson" *ngIf="isIncompleteErrorAvailable">Looks like some details are
-                    missing/wrong!!</p>
-                <br>
+                <div *ngIf="isIncompleteErrorAvailable" class="banner error">
+                    <p>Looks like some details are missing/wrong!!</p>
+                </div>
                 <div align="left" style="padding-left: 55px">
                     <mat-radio-group aria-label="Select an option" (change)="setIsDoctor($event)">
                         <mat-radio-button [checked]='true' value=false>I'm a Patient</mat-radio-button>
@@ -47,7 +52,7 @@
                 </div>
                 <br>
                 <div>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Title</mat-label>
                         <mat-select required [(value)]="title" [formControl]="titleFormControl">
                             <ng-container *ngFor="let title of titles">
@@ -60,25 +65,25 @@
                     <br>
                 </div>
                 <div>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>First Name</mat-label>
                         <input required matInput #input1 [(ngModel)]='firstName'
                                [formControl]="firstNameFormControl">
                     </mat-form-field>
                     <br>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Last Name</mat-label>
                         <input required matInput #input_ln [(ngModel)]='lastName'
                                [formControl]="lastNameFormControl">
                     </mat-form-field>
                     <br>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Email</mat-label>
                         <input required matInput pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                                #input2 [(ngModel)]='email' [formControl]="emailFormControl">
                     </mat-form-field>
                     <br>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Gender</mat-label>
                         <mat-select required (selectionChange)="setGender($event.value)"
                                     [formControl]="genderFormControl">
@@ -90,7 +95,7 @@
                     <br>
                 </div>
                 <div [hidden]="isDoctor">
-                    <mat-form-field style="width: 240px">
+                    <mat-form-field>
                         <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:"
                                [formControl]="bDayFormControl">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -101,7 +106,7 @@
                     <br>
                 </div>
                 <div>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Phone Number</mat-label>
                         <input required matInput [(ngModel)]='contactNumber'
                                [formControl]="contactNumberFormControl">
@@ -117,20 +122,20 @@
                 </div>
 
                 <div>
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>WhatsApp Number</mat-label>
                         <input matInput #input7 [(ngModel)]='whatsAppNumber'
                                [formControl]="whatsAppNumberFormControl">
                     </mat-form-field>
                 </div>
                 <div [hidden]="isDoctor">
-                    <mat-form-field style="width: 240px" appearance="legacy">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Known Allergies</mat-label>
                         <textarea type="text" matInput #input8 [(ngModel)]='knownAllergies'></textarea>
                     </mat-form-field>
                     <br>
                 </div>
-                <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-form-field appearance="legacy">
                     <mat-label>Preferred Password</mat-label>
                     <input matInput
                            pattern=".{4,}"
@@ -138,7 +143,7 @@
                            [formControl]="passFormControl">
                 </mat-form-field>
                 <br>
-                <mat-form-field style="width: 240px" appearance="legacy">
+                <mat-form-field appearance="legacy">
                     <mat-label>Confirm Password</mat-label>
                     <input matInput
                            pattern=".{4,}"
@@ -147,7 +152,7 @@
                 </mat-form-field>
                 <br>
                 <ng-container *ngIf="isDoctor">
-                    <mat-expansion-panel style="width: 250px" (opened)="panelOpenState = true"
+                    <mat-expansion-panel (opened)="panelOpenState = true"
                                          (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -166,14 +171,14 @@
                     </mat-expansion-panel>
                 </ng-container>
                 <ng-container *ngIf="!isDoctor">
-                    <mat-expansion-panel style="width: 250px" (opened)="panelOpenState = true"
+                    <mat-expansion-panel (opened)="panelOpenState = true"
                                          (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{!panelOpenState ? 'Show' : 'Hide'}} Agreement
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <p>
+                        <p class="agreement">
                             {{AGREEMENT_REGISTER_PATIENT}}
                         </p>
                         <br>

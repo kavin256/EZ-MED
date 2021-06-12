@@ -18,7 +18,8 @@ export class SearchProfessionalsMainComponent implements OnInit {
   searchString = null;
   professionalList = null;
   error = false;
-  RESULTS_PER_PAGE = 10;
+  checkedIndex: number;
+  RESULTS_PER_PAGE = 6;
   PAGINATION_START = 0;
   PAGINATION_END = this.RESULTS_PER_PAGE;
   selectedCategory: any = null;
@@ -60,9 +61,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
     this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
 
     sessionStorage.removeItem(SessionStorageKeys.selectedProfessionalUserId);
+    this.search(true);
   }
 
-  search() {
+  search(initial?: boolean) {
 
     // making 'Any' option null
     if (this.selectedCategory === 'Any' || this.selectedCategory === '') {
@@ -87,7 +89,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
 
     this.professionalList = [];
 
-    if (!(this.searchString || this.selectedCategory)) {
+    if (!(this.searchString || this.selectedCategory || initial)) {
       this.error = true;
     } else {
       this.error = false;
@@ -112,6 +114,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
       if (this.selectedSpecialization) {
         httpParams = httpParams.append('specialization', this.selectedSpecialization);
       }
+      if (initial) {
+        httpParams = httpParams.append('initial', 'true');
+      }
       this.dataLoaderService.get<UserData>(url, httpParams, new HttpHeaders())
           .then((data: any) => {
             if (data && data.status && data.status.code === 1) {
@@ -128,6 +133,10 @@ export class SearchProfessionalsMainComponent implements OnInit {
     // sessionStorage.setItem(SessionStorageKeys.selectedProfessional, JSON.stringify($event));
     this.router.navigate(['appointmentTime']).then(r => {
     });
+  }
+
+  checkedEmit(event: number) {
+    this.checkedIndex = event;
   }
 
   goToPage($event: PageEvent) {

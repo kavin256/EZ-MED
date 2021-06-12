@@ -32,7 +32,7 @@
     <ng-container *ngIf="!addItem">
         <ng-container *ngIf="objectListing?.objectSummaries.length; else noResults">
             <div *ngFor="let summary of objectListing?.objectSummaries; let i = index;">
-                <ngb-alert style="width: 320px; min-height: 120px" (close)="removeItem(i)" [dismissible]="false">
+                <ngb-alert style="min-height: 120px" (close)="removeItem(i)" [dismissible]="false">
                     <div>
                         <table align="left">
                             <tr>

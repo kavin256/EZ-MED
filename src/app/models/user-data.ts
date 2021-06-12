@@ -20,6 +20,7 @@ export class UserData {
     specialityA?: string;
     specialityB?: string;
     specialityC?: string;
+    nextTime?: string;
     availableForAppointment?: string;
 }
 

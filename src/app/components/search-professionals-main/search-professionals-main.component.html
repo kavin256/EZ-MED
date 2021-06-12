@@ -3,12 +3,11 @@
     <app-page-title [title]="'Search Professionals'"></app-page-title>
 
     <div class="banner plain">
-        <mat-form-field style="width: 250px">
+        <mat-form-field>
             <input matInput type="text" placeholder="Search by name" [(ngModel)]="searchString">
         </mat-form-field>
-
         <br>
-        <mat-form-field style="width: 240px">
+        <mat-form-field>
             <mat-label>Category</mat-label>
             <mat-select (selectionChange)="selectCategory($event)">
                 <ng-container *ngFor="let category of categories">
@@ -16,8 +15,9 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+        <br>
         <ng-container *ngIf="specializations && specializations.length > 0">
-            <mat-form-field style="width: 240px">
+            <mat-form-field>
                 <mat-label>Specialization</mat-label>
                 <mat-select panelClass="example-long-panel" [(value)]="selectedSpecialization">
                     <ng-container *ngFor="let subCategory of specializations">
@@ -26,6 +26,7 @@
                     </ng-container>
                 </mat-select>
             </mat-form-field>
+            <br>
         </ng-container>
 
         <button class="default-button" (click)="search()">Search</button>
@@ -44,14 +45,19 @@
             Please fill at least one search field
         </p>
     </div>
-    <ng-container *ngFor="let doc of professionalList; let i=index">
-        <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
-            <app-professional-card
-                    [professional]="doc"
-                    (selectProfessional)="selectProfessional($event)"
-            ></app-professional-card>
+    <div class="wrapper">
+        <ng-container *ngFor="let doc of professionalList; let i=index">
+            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
+                <app-professional-card
+                        [professional]="doc"
+                        [index]="i"
+                        [selected]="checkedIndex === i"
+                        (selectProfessional)="selectProfessional($event)"
+                        (checkedEmit)="checkedEmit($event)"
+                ></app-professional-card>
+            </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
     <ng-container *ngIf="professionalList && professionalList.length > 0">
         <mat-paginator [length]="professionalList.length"
                        [pageSize]="RESULTS_PER_PAGE"

@@ -1,7 +1,7 @@
 <div class="mat-card-style">
 
     <ng-container *ngIf="editable && userData">
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Title</mat-label>
             <mat-select required [(value)]="userData.title">
                 <ng-container *ngFor="let title of titles">
@@ -12,17 +12,17 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>First Name: {{userData.firstName}}</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.firstName">
         </mat-form-field>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Last Name: {{userData.lastName}}</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.lastName">
         </mat-form-field>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Professional Level</mat-label>
             <mat-select (selectionChange)="selectCategory($event)" [value]="selectedCategory">
                 <ng-container *ngFor="let category of categories">
@@ -31,19 +31,19 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Registration Number (SLMC):</mat-label>
             <input matInput placeholder="" [(ngModel)]="userData.regNo">
         </mat-form-field>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Qualifications / Description:</mat-label>
             <textarea required matInput placeholder="" [(ngModel)]="userData.qualifications"></textarea>
         </mat-form-field>
 
         <mat-form-field
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
-                style="width: 240px" class="example-full-width">
+                class="example-full-width">
             <mat-label>Specialization #1</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityA">
                 <ng-container *ngFor="let specialization of specializations">
@@ -55,7 +55,7 @@
         </mat-form-field>
         <mat-form-field
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
-                style="width: 240px" class="example-full-width">
+                class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityB">
                 <ng-container *ngFor="let specialization of specializations">
@@ -67,7 +67,7 @@
         </mat-form-field>
         <mat-form-field
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
-                style="width: 240px" class="example-full-width">
+                class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
             <mat-select matNativeControl [(value)]="userData.specialityC">
                 <ng-container *ngFor="let specialization of specializations">
@@ -78,22 +78,22 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Contact Number:</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.contactNumber">
         </mat-form-field>
         <br>
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>WhatsApp Number:</mat-label>
             <input matInput placeholder="" [(ngModel)]="userData.whatsAppNumber">
         </mat-form-field>
         <br>
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Email:</mat-label>
             <input disabled required matInput placeholder="" [(ngModel)]="userData.email">
         </mat-form-field>
         <br>
-        <mat-form-field style="width: 240px" class="example-full-width">
+        <mat-form-field class="example-full-width">
             <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
         </mat-form-field>
@@ -171,7 +171,7 @@
                 (click)="toggleEditable(true)">Edit Profile
         </button>
         <!--        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"-->
-        <!--                [color]="userData?.availableForAppointment? null: 'warn'" style="width: 320px" mat-raised-button-->
+        <!--                [color]="userData?.availableForAppointment? null: 'warn'" mat-raised-button-->
         <!--                (click)="toggleEditable(true)">Edit Profile-->
         <!--        </button>-->
         <br>
@@ -180,14 +180,14 @@
                 (click)="editSchedule()">Edit Schedule
         </button>
         <!--        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"-->
-        <!--                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" style="width: 320px"-->
+        <!--                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" -->
         <!--                mat-raised-button>Edit Schedule-->
         <!--        </button>-->
         <br>
         <button class="default-button" disabled>My Finances</button>
         <br>
         <button class="default-button" disabled (click)="goToVacationMode()">{{vacationModeTitle}}</button>
-        <!--        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" style="width: 320px"-->
+        <!--        <button disabled [color]="onVacation? 'warn' : null" (click)="goToVacationMode()" -->
         <!--                mat-stroked-button>{{vacationModeTitle}}</button>-->
         <br>
         <button class="default-button button-warning" (click)="dataHandlerService.logOut(router)">Log Out
@@ -196,9 +196,11 @@
         <br>
         <ng-container *ngIf="userData?.availableForAppointment">
             <p>What the patients see:</p>
-            <app-professional-card
-                    [professional]="userData"
-            ></app-professional-card>
+            <div style="max-width: 380px">
+                <app-professional-card
+                        [professional]="userData"
+                ></app-professional-card>
+            </div>
         </ng-container>
     </ng-container>
 </div>

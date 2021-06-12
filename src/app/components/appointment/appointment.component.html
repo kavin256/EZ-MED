@@ -23,11 +23,11 @@
             Email: {{contactEmail}}
         </div>
     </ng-container>
-<!--    <ng-container *ngIf="!doctorSide">-->
-<!--        <app-professional-card-->
-<!--                [professional]="doctor"-->
-<!--        ></app-professional-card>-->
-<!--    </ng-container>-->
+    <!--    <ng-container *ngIf="!doctorSide">-->
+    <!--        <app-professional-card-->
+    <!--                [professional]="doctor"-->
+    <!--        ></app-professional-card>-->
+    <!--    </ng-container>-->
     <ng-container>
         <div class="banner info left-aligned" *ngIf="appointment?.concern && appointment?.concern !== 'undefined'">
             <p>{{doctorSide ? "Patient's" : "Your"}} concern <br><b><i>"{{appointment?.concern}}"</i></b></p>
@@ -86,7 +86,7 @@
     <button [disabled]="!isNew(appointment?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()"
             class="default-button button-warning">Cancel Appointment
     </button>
-
+    <br>
     <ng-container *ngIf="isConfirmationActive">
         <br>
         <p align="center">Are you sure?</p>

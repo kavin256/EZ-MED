@@ -37,6 +37,8 @@ export class SignUpComponent implements OnInit {
     conPassFormControl = new FormControl('');
 
     logInError = '';
+    emailForRegeneratingVerificationLink = '';
+    logInErrorCode: number;
     panelOpenState = false;
     isDoctor = false;
     encryptionKey = 'ezmed';
@@ -101,17 +103,36 @@ export class SignUpComponent implements OnInit {
         this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.createdUser, user)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
-                    if (data.data[0].doctor) {
-                        sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
-                        this.router.navigate(['doctor/dashboard']).then(r => {
-                            location.reload();
+                    // sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+                    if (data.data[0]) {
+                        // sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
+                        // this.router.navigate(['registrationConfirm'], ).then(r => {
+                        //     // location.reload();
+                        // });
+                        this.router.navigate(['registrationConfirm'], {queryParams: {email: data.data[0].email}}).then(r => {
                         });
-                    } else if (!data.data[0].doctor) {
-                        sessionStorage.setItem(SessionStorageKeys.userId, JSON.stringify(data.data[0].userId));
-                        this.router.navigate(['user/dashboard']).then(r => {
-                            location.reload();
+                    } else {
+                        alert('Something went wrong');
+                    }
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
+                }
+            });
+    }
+
+    generateNewValidationLink() {
+        const dataObj = {email: this.emailForRegeneratingVerificationLink, token: null};
+
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.RESEND_REGISTRATION_TOKEN;
+        this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), null, dataObj)
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    if (data.data[0]) {
+                        this.router.navigate(['registrationConfirm'], {queryParams: {email: data.data[0].email}}).then(r => {
                         });
+                    } else {
+                        alert('Something went wrong');
                     }
                 } else if (data && data.status && data.status.code === -1) {
                     alert(data.status.message);
@@ -225,6 +246,8 @@ export class SignUpComponent implements OnInit {
         const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.pass.trim());
         obj.username = this.email.trim();
         obj.password = encrypted;
+        // backup
+        this.emailForRegeneratingVerificationLink = JSON.parse(JSON.stringify(obj.username));
         this.dataLoaderService.login<AuthResponse>(url, new RequestOptions(), obj, DataKey.authKey)
             .then((data: any) => {
                 if (data && data.jwt) {
@@ -241,6 +264,9 @@ export class SignUpComponent implements OnInit {
                             });
                         }
                     }
+                } else if (data.data && data.data[0]) {
+                    this.logInError = data.data[0].message;
+                    this.logInErrorCode = data.data[0].code;
                 } else {
                     alert('Something went wrong. Please contact support !!');
                 }

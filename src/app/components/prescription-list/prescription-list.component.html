@@ -1,6 +1,6 @@
 <div class="mat-card-style">
     <br>
-    <ng-container *ngIf="doctorSide" >
+    <ng-container *ngIf="doctorSide">
         <button (click)="addPrescription()" class="default-button">Add New Prescription</button>
         <br>
         <br>
@@ -8,14 +8,15 @@
     </ng-container>
     <p *ngIf="prescriptionList && prescriptionList.length > 0" style="font-size: x-large">List of Prescriptions:</p>
     <ng-container *ngFor="let prescription of prescriptionList; let i = index">
-        <button [ngStyle]="{'background-color': prescription.status ? '#d4d5d6' : 'white'}" (click)="selectPrescription(prescription.id)" style="width: 320px" mat-raised-button>Prescription {{i+1}}</button>
+        <button style="width: 250px" [ngStyle]="{'background-color': prescription.status ? '#d4d5d6' : 'white'}"
+                (click)="selectPrescription(prescription.id)" mat-raised-button>Prescription {{i + 1}}</button>
         <br>
         <br>
     </ng-container>
-    <div *ngIf="prescriptionList && prescriptionList.length === 0">
+    <div *ngIf="prescriptionList && prescriptionList.length === 0" class="banner error">
         <p>
             Sorry, No results found
         </p>
     </div>
-    <button (click)="goToMyAppointments()"  class="default-button button-warning">Back</button>
+    <button (click)="goToMyAppointments()" class="default-button button-warning">Back</button>
 </div>

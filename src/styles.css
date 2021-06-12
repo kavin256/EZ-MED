@@ -1,10 +1,12 @@
 /*main styles*/
 .mat-card-style {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
     min-width: 320px;
-    max-width: 320px;
+    max-width: 600px;
+}
+mat-form-field, mat-expansion-panel, ngb-alert {
+    width: 270px
 }
 html, body {
     height: 100%;
@@ -13,9 +15,11 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-p {
-    /*margin: 10px;*/
+
+label, p, alert {
+    font-family: Arial, Helvetica, sans-serif;
 }
+
 
 /*buttons*/
 .default-button {
@@ -30,6 +34,7 @@ p {
     margin: 8px 2px;
     border-radius: 8px;
     cursor: pointer;
+    transition: 0.5s;
 }
 .default-button.button-warning {
     background-color: #ff3333;
@@ -45,11 +50,23 @@ p {
     box-shadow: unset;
     cursor: unset;
 }
+.default-button.secondary {
+    background-color: unset;
+    font-size: 12px;
+    width: 100px;
+    opacity: 90%;
+    border: 1px solid #0056e7;
+    color: #0056e7;
+}
+.default-button.secondary:hover {
+    opacity: 100%;
+}
 
 /*banners*/
 .banner {
     padding: 20px 10px 3px;
     margin: 10px;
+    max-width: 380px;
     font-size: small;
     text-align: center;
     border-radius: 8px;
@@ -83,4 +100,11 @@ p {
     text-align: left;
     padding-left: 30px;
     padding-right: 30px;
+}
+
+
+.alert {
+    background-color: #dfe9f8;
+    max-width: 380px;
+    color: #001f72;
 }

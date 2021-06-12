@@ -2,6 +2,10 @@
     margin-bottom: 48px;
 }
 
+.agreement {
+    text-align: justify;
+}
+
 .forgot-my-password-button {
     /*width: 180px;*/
 }
