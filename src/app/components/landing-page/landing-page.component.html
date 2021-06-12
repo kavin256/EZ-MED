@@ -1,35 +1,42 @@
 <div align="center" class="mat-card-style">
-    <p style="font-size: medium; line-height:1.6; padding-bottom: 60px;  padding-right: 30px;  padding-left: 30px;">
-        Ez Med is the <b>FIRST</b> and the <b>ONLY</b>  platform in Sri Lanka that allows you to book an appointment with your doctor online and get your consultation done via video / audio call.
-    </p>
-    <img src="./assets/img/search-doctor.png" width="100px">
+    <div class="banner plain">
+        <p><b>
+            Ez Med is the platform in Sri Lanka that allows you to book an appointment with your doctor online and get
+            your consultation done from the comfort of your home</b>
+        </p>
+    </div>
+    <br>
+
+    <button class="default-button" [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()">Make an Appointment
+    </button>
+
+    <div *ngIf="isDoctorLoggedIn()" class="banner error">
+        <p><b>You cannot make appointments since you are logged in as a medical
+            professional. If you wish to make an appointment, please log in with a different email address as a
+            patient</b></p>
+    </div>
+
+    <br>
+    <br>
+    <img (click)="goToSearchPage()" src="/assets/img/search-doctor.png" width="100px">
     <p style="font-size: medium; padding-bottom: 40px;">
         1. Search for a Doctor
     </p>
-    <img src="./assets/img/booking.png" width="100px">
+    <img (click)="goToSearchPage()" src="./assets/img/appointment.png" width="100px">
 
     <p style="font-size: medium; padding-bottom: 40px;">
-        2. Schedule the appointment
+        2. Make the appointment
     </p>
-    <img src="./assets/img/video-chat.png" width="100px">
+    <img (click)="goToSearchPage()" src="./assets/img/video-chat.png" width="100px">
 
     <p style="font-size: medium;">
         3. Wait for the doctor's call
-
-<!--        <a href="https://support.skype.com/en/faq/FA11098/how-do-i-get-started-with-skype" style="color: dodgerblue">Help me set up Skype</a>-->
-<!--        <br>-->
-<!--        <a href="https://www.businessinsider.com/what-is-my-skype-id" style="color: dodgerblue">What is my Skype ID?</a>-->
-<!--        <br>-->
     </p>
-    <p style="font-size: small; padding-bottom: 40px; max-width: 300px">
-        Once your booking is up, doctor (/professional) will contact you. After several attempts to contact you,
-        your booking will be automatically cancelled and you will be refunded (cancellation charges apply*).<br>
-    </p>
+    <!--    <p style="font-size: small; padding-bottom: 40px; max-width: 300px">-->
+    <!--        Once your appointment is up, doctor (/professional) will contact you. After several attempts to contact you,-->
+    <!--        your appointment will be automatically cancelled and you will be refunded (cancellation charges apply*).<br>-->
+    <!--    </p>-->
 
-    <button (click)="goToSearchPage()" style="width: 250px; height: 60px" mat-raised-button color="primary"><b>Make an Appointment</b></button>
+    <!--    <button [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()" style="height: 50px" mat-raised-button color="primary"><b>Make an Appointment</b></button>-->
     <br>
-
-<!--    <br>-->
-<!--    <button style="width: 180px" mat-raised-button color="link">I'm a Doctor</button>-->
-<!--    <br>-->
 </div>

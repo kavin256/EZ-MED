@@ -1,14 +1,42 @@
 <div class="mat-card-style">
-    <br>
-    <div align="center">
+    <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
         <img src="./assets/img/successfulPayment.png" width="300px"/>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <button mat-raised-button color="secondary" style="width: 240px" >Go to Profile</button>
-
+    </ng-container>
+    <ng-container *ngIf="paymentResponseData && !isPaymentSuccessful">
+        <img src="./assets/img/failedPayment.png" width="300px"/>
+    </ng-container>
+    <ng-container *ngIf="!paymentResponseData">
+        <img src="./assets/img/pageLoadError.png" width="300px"/>
+    </ng-container>
+    <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
+        <div class="banner plain left-aligned">
+            <p><b>Card No.: </b>{{paymentResponseData?.cardNo}}</p>
+            <p><b>Name on card: </b>{{paymentResponseData?.cardHolder}}</p>
+            <p><b>Amount: </b>{{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>
+            <p><b>Comment: </b>{{paymentResponseData?.respTxt }}</p>
+            <p><b>Ref. number: </b>{{paymentResponseData?.txnRef}}</p>
+        </div>
+        <div class="banner success left-aligned">
+            <p><b>Appointment Id: </b>{{paymentResponseData?.appointment?.appointmentId}}</p>
+            <p><b>Professional: </b>{{paymentResponseData?.appointment?.doctorData?.title}}
+                . {{paymentResponseData?.appointment?.doctorData?.firstName}} {{paymentResponseData?.appointment?.doctorData?.lastName}}
+            </p>
+            <p><b>Date: </b>{{paymentResponseData?.appointment?.appointmentDate}}</p>
+            <p><b>Time: </b>{{getTime(paymentResponseData?.appointment?.appointmentTime)}}</p>
+        </div>
+    </ng-container>
+    <div *ngIf="paymentResponseData && !isPaymentSuccessful" class="banner plain left-aligned">
+        <p><b>Card No.: </b>{{paymentResponseData?.cardNo}}</p>
+        <p><b>Name on card: </b>{{paymentResponseData?.cardHolder}}</p>
+        <p><b>Reason: </b>{{paymentResponseData?.respTxt}}</p>
+        <p><b>Ref. number: </b>{{paymentResponseData?.txnRef}}</p>
     </div>
-
+    <div class="banner warning" *ngIf="paymentResponseData">
+        <p>Please make sure you have the ref. number of the payment with you for future reference</p>
+    </div>
+    <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
+        <button (click)="goToAppointment()" class="default-button">Go to my appointments</button>
+        <br>
+    </ng-container>
+    <button (click)="goToDashboard()" class="default-button">Go to my profile</button>
 </div>

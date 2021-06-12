@@ -1,0 +1,90 @@
+<div class="mat-card-style">
+
+    <ng-container *ngIf="!addItem && !doctorSide">
+        <div align="center">
+            <button [disabled]="!editable" (click)="addMoreItem()" class="default-button">
+                Add a file
+            </button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="addItem">
+        <div align="center">
+            <button (click)="cancelAddingItem()" class="default-button button-warning">Cancel</button>
+        </div>
+    </ng-container>
+    <br>
+    <div class="banner plain" *ngIf="addItem">
+        <p>Add your files here. Please make sure NOT more than one file has the same file name. Max file size : 15MB</p>
+        <p><input type="file"
+               accept="image/*,.pdf,.doc,.docx"
+                  (change)="uploadImage($event)"></p>
+    </div>
+    <div class="banner success" *ngIf="uploadSuccessful">
+        <p>Uploaded successfully</p>
+    </div>
+    <div class="banner info" *ngIf="uploadingInProgress">
+        <p>Uploading...</p>
+    </div>
+    <div class="banner error" *ngIf="uploadingFailed">
+        <p>Uploading failed</p>
+    </div>
+
+    <ng-container *ngIf="!addItem">
+        <ng-container *ngIf="objectListing?.objectSummaries.length; else noResults">
+            <div *ngFor="let summary of objectListing?.objectSummaries; let i = index;">
+                <ngb-alert style="min-height: 120px" (close)="removeItem(i)" [dismissible]="false">
+                    <div>
+                        <table align="left">
+                            <tr>
+                                <td>
+                                    <p style="font-size: small">{{summary.keyName}}</p>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <br>
+                    <br>
+                    <div>
+                        <table align="left">
+                            <tr>
+                                <ng-container *ngIf="!doctorSide">
+                                    <td>
+                                        <button style="margin:5px;" style="width: 120px" (click)="removeItem(i)"
+                                                mat-stroked-button color="warn">Remove File
+                                        </button>
+                                    </td>
+                                    <td style="width: 5px">
+                                    </td>
+                                </ng-container>
+                                <td>
+                                    <button style="margin:5px;" style="width: 100px"
+                                            (click)="download(viewFileURL, summary.keyName);" mat-stroked-button
+                                            color="primary">Download
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </ngb-alert>
+
+            </div>
+            <div class="banner warning">
+                <p><b>Note:</b> These files will automatically be removed after 2 weeks from the date of appointment</p>
+            </div>
+        </ng-container>
+        <ng-template #noResults>
+            <div *ngIf="!doctorSide" class="banner plain">
+                <p>Add your medical reports here</p>
+            </div>
+            <div *ngIf="doctorSide" class="banner error">
+                <p>No medical reports found</p>
+            </div>
+        </ng-template>
+    </ng-container>
+
+    <br>
+
+    <button (click)="goToMyAppointments()" class="default-button button-warning">Back</button>
+
+</div>

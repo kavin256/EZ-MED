@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs-compat/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +51,31 @@ export enum DataKey {
   error,
   authKey,
   loggedUser,
+  Configurations,
+  loggedInUser,
   createdUser,
   uploadImage,
   doctorScheduleData,
-  signUpResultObject
+  signUpResultObject,
+  availableAppointmentsForProfessional
+}
+
+export enum PrescriptionStatus {
+  active,
+  cancelled
+}
+
+export enum SessionStorageKeys {
+  loggedInUser = 'loggedInUser',
+  chargeAmount = 'chargeAmount',
+  clientRef = 'clientRef',
+  appointmentConcern = 'appointmentConcern',
+  comment = 'comment',
+  editable = 'editable',
+  selectedProfessionalUserId = 'selectedProfessionalUserId',
+  selectedProfessional = 'selectedProfessional',
+  AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL = 'AVAILABLE_APPOINTMENTS_FOR_A_PROFESSIONAL',
+  professionalScheduleData = 'professionalScheduleData',
+  selectedAppointmentId = 'selectedAppointmentId',
+  userId = 'userId'
 }

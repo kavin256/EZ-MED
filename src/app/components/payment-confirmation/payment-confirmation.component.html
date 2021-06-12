@@ -1,0 +1,90 @@
+<div class="mat-card-style">
+    <app-page-title [title]="'Payment Summary'"></app-page-title>
+    <style>
+        table, th, td {
+            border: 0.5px darkgray;
+            font-size: small;
+        }
+    </style>
+    <!--    <div *ngIf="doctor">-->
+    <!--        <app-professional-card-->
+    <!--                [professional]="doctor"-->
+    <!--        ></app-professional-card>-->
+    <!--    </div>-->
+    <div class="banner plain">
+        <mat-form-field style="height: 100px" appearance="legacy">
+            <mat-label>Add your concern here.. (Optional)</mat-label>
+            <textarea style="height: 70px" type="text" matInput #input8 [(ngModel)]='appointmentConcern'
+                      placeholder="eg: Doctor, I have a high fever and my stomach hurts"></textarea>
+        </mat-form-field>
+        <br>
+    </div>
+    <div class="banner plain" style="padding-left: 15px">
+
+        <br>
+
+        <table style="width:200px;">
+            <tr>
+                <td style="width: 65%; text-align:left">
+                    Appointment charge
+                </td>
+                <td style="width: 15%; text-align:left">
+                    LKR
+                </td>
+                <td style="text-align:right">
+                    {{ preTaxTotalCharge | currency:'LKR':'' }}
+                </td>
+            </tr>
+            <!--            <tr>-->
+            <!--                <td>-->
+            <!--                    Service charge-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    LKR-->
+            <!--                </td>-->
+            <!--                <td style="text-align:right">-->
+            <!--                    {{ serviceCharge | currency:'LKR':'' }}-->
+            <!--                </td>-->
+            <!--            </tr>-->
+            <tr>
+                <td style="text-align: left">
+                    Taxes / Fees
+                </td>
+                <td style="text-align: left">
+                    LKR
+                </td>
+                <td style="text-align:right">
+                    {{ taxesAndFees | currency:'LKR':'' }}
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left">
+                    <mat-divider style="width: 160px"></mat-divider>
+                </td>
+                <td style="text-align: left">
+                    <mat-divider style="width: 40px"></mat-divider>
+                </td>
+                <td style="text-align:right">
+                    <mat-divider style="width: 60px"></mat-divider>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left">
+                    <b>Total</b>
+                </td>
+                <td style="text-align: left">
+                    <b>LKR</b>
+                </td>
+                <td style="text-align:right">
+                    <b>{{ totalCharge | currency:'LKR':'' }}</b>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p style="font-size: x-small"><b>*Conditions & terms:</b> <br>You will NOT be refunded if you cancel the
+            appointment.</p>
+    </div>
+    <button (click)="payment()" class="default-button">Continue to payment</button>
+    <br>
+    <button (click)="goBack()" class="default-button button-warning">Back</button>
+</div>

@@ -1,41 +1,69 @@
 <div class="mat-card-style">
 
-    <div align="center">
-    <mat-form-field style="width: 250px">
-        <input matInput type="text" placeholder="Search by name" value="{{searchString}}">
-    </mat-form-field>
+    <app-page-title [title]="'Search Professionals'"></app-page-title>
 
-    <br>
-    <mat-form-field  style="width: 240px" >
-        <mat-label>Category</mat-label>
-        <mat-select [(value)]="selectedCategory">
-            <ng-container *ngFor="let category of categories">
-                <mat-option value="{{category.category}}">{{category.category}}</mat-option>
-            </ng-container>
-        </mat-select>
-    </mat-form-field>
-    <ng-container *ngIf="selectedCategory !== undefined && selectedCategory !== 'General Practitioners'">
-        <mat-form-field  style="width: 240px" >
-            <mat-label>Specialization</mat-label>
-            <mat-select [(value)]="selectedSpecialization">
-                <ng-container *ngFor="let subCategory of subCategories">
-                    <mat-option value="{{subCategory}}">{{subCategory.category}}</mat-option>
+    <div class="banner plain">
+        <mat-form-field>
+            <input matInput type="text" placeholder="Search by name" [(ngModel)]="searchString">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select (selectionChange)="selectCategory($event)">
+                <ng-container *ngFor="let category of categories">
+                    <mat-option value="{{category.category}}">{{category.category}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>
-    </ng-container>
+        <br>
+        <ng-container *ngIf="specializations && specializations.length > 0">
+            <mat-form-field>
+                <mat-label>Specialization</mat-label>
+                <mat-select panelClass="example-long-panel" [(value)]="selectedSpecialization">
+                    <ng-container *ngFor="let subCategory of specializations">
+                        <mat-option
+                                value="{{subCategory}}">{{dataHandlerService.convertCamelCaseToSentence(subCategory)}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <br>
+        </ng-container>
 
-        <button (click)="search()" style="width: 90px" color="primary" mat-flat-button>Search</button>
+        <button class="default-button" (click)="search()">Search</button>
     </div>
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-    <p style="font-size: x-large">Search Results:</p>
-    <ng-container *ngFor="let doc of professionalList">
-        <app-professional-card
-        [professional]="doc"
-        (selectProfessional)="selectProfessional($event)"
-        ></app-professional-card>
+    <ng-container *ngIf="professionalList && professionalList.length > 0">
+        <br>
+        <p style="font-size: large">Select a professional to continue:</p>
+    </ng-container>
+    <div *ngIf="!error && professionalList && professionalList.length === 0" class="banner error">
+        <p>
+            Sorry, No results found
+        </p>
+    </div>
+    <div *ngIf="error" class="banner error">
+        <p>
+            Please fill at least one search field
+        </p>
+    </div>
+    <div class="wrapper">
+        <ng-container *ngFor="let doc of professionalList; let i=index">
+            <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
+                <app-professional-card
+                        [professional]="doc"
+                        [index]="i"
+                        [selected]="checkedIndex === i"
+                        (selectProfessional)="selectProfessional($event)"
+                        (checkedEmit)="checkedEmit($event)"
+                ></app-professional-card>
+            </ng-container>
+        </ng-container>
+    </div>
+    <ng-container *ngIf="professionalList && professionalList.length > 0">
+        <mat-paginator [length]="professionalList.length"
+                       [pageSize]="RESULTS_PER_PAGE"
+                       (page)="goToPage($event)"
+        >
+        </mat-paginator>
     </ng-container>
 </div>
 

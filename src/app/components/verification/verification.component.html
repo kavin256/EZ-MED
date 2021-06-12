@@ -1,0 +1,35 @@
+<div align="center" class="mat-card-style">
+    <app-page-title [title]="'Account Verification'"></app-page-title>
+    <br>
+    <div *ngIf="status === PageStatus.goToVerificationLink" class="banner warning">
+        <p>
+            A verification link has been sent to your email <b>{{email}}</b>. Please click on that link to continue your
+            registration
+        </p>
+    </div>
+    <div *ngIf="status === PageStatus.loading" class="banner warning">
+        <p>
+            Loading
+        </p>
+    </div>
+    <div *ngIf="status === PageStatus.error" class="banner error">
+        <p>
+            {{error.message}}
+        </p>
+    </div>
+    <div *ngIf="status === PageStatus.error && error.code === -1" class="banner warning">
+        <p>
+            Please contact support.<br>Email: <b>{{contactEmail}}</b><br>Phone: <b>{{contactPhone}}</b>
+        </p>
+    </div>
+    <button *ngIf="status === PageStatus.error && error.code === -2" class="default-button">Resend validation link
+    </button>
+    <ng-container *ngIf="status === PageStatus.canLogIn">
+        <div class="banner success">
+            <p>
+                Account verification is successful. You can log into your account now
+            </p>
+        </div>
+        <button (click)="logIn()" class="default-button">Log In</button>
+    </ng-container>
+</div>

@@ -1,0 +1,46 @@
+<?php
+  echo "<br>Please Wait . . . DO NOT RELOAD OR GO BACK &#9787;&#9787;";
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hosted Checkout</title>
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" type="text/css" href="payment.css">
+    <script type="text/javascript" src="https://sampath.paycorp.lk/webinterface/qw/paycorp_payments.js"></script>
+</head>
+<body>
+<div class="main-content">
+    <main>
+        <script>
+            function buildPayment() {
+                var value4 = sessionStorage.getItem('chargeAmount');
+                var value5 = sessionStorage.getItem('clientRef');
+                var value6 = sessionStorage.getItem('comment');
+                sessionStorage.removeItem('chargeAmount');
+                sessionStorage.removeItem('clientRef');
+                sessionStorage.removeItem('comment');
+
+                // Build the payment object
+                return {
+                    clientId: 14004356,
+                    paymentAmount: parseInt(value4),
+                    currency: 'LKR',
+                    returnUrl: 'http://localhost:4201/success',
+                    // returnUrl: 'http://www.ezmed.lk/success',
+                    clientRef: value5,
+                    comment: value6
+                };
+            }
+        </script>
+        <script type="text/javascript">
+            window.onload=function() {
+                document.getElementById("AutoClick").click();
+            };
+        </script>
+        <a href="#" id="AutoClick" class="button" onClick="loadPaycorpPayment(buildPayment())"></a>
+    </main>
+</div>
+</body>
+</html>

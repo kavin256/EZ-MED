@@ -1,8 +1,17 @@
-.mat-card-style {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    min-width: 320px;
-    max-width: 320px;
-
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 98%;
+    gap: 5px;
+}
+.wrapper > app-professional-card {
+    width: 49.5%;
+    transition: 0.5s;
+    min-width: 290px;
+    margin: 2px auto;
+}
+@media (max-width: 614px) {
+    .wrapper > app-professional-card {
+        width: 75%;
+    }
 }

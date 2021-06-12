@@ -1,0 +1,68 @@
+<div class="mat-card-style" align="center">
+    <app-page-title
+            [title]="(!summaryShown && !showRedirectionMessage) ? 'Select Convenient Time' : (summaryShown && !showRedirectionMessage) ? 'Appointment Summary' : ''"></app-page-title>
+    <div style="max-width: 380px">
+        <app-professional-card
+                [professional]="doctor"
+        ></app-professional-card>
+    </div>
+    <ng-container *ngIf="!summaryShown && !showRedirectionMessage">
+
+        <div class="banner plain">
+            <mat-form-field>
+                <mat-label>Date</mat-label>
+                <mat-select [(value)]="selectedDate">
+                    <ng-container *ngFor="let day of days">
+                        <mat-option *ngIf="day.available" value="{{day.date}}">{{day.date}} - {{day.day}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <ng-container *ngIf="selectedDate !== undefined && selectedDate !== null">
+                <mat-form-field>
+                    <mat-label>Time</mat-label>
+                    <mat-select [(value)]="selectedAppointmentId">
+                        <ng-container *ngFor="let timeSlot of getTimeSlots(selectedDate)">
+                            <mat-option
+                                    value="{{timeSlot.appointmentId}}">{{timeSlot.displayAppointmentTime | date:'shortTime'}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+            <br>
+            <button [disabled]="!selectedDate || !selectedAppointmentId" class="default-button"
+                    (click)="continueClicked(true)">Continue
+            </button>
+            <br>
+        </div>
+
+        <button class="default-button button-warning" (click)="goToSearchProfessionals()">Back
+        </button>
+        <br>
+
+    </ng-container>
+    <ng-container *ngIf="summaryShown && !showRedirectionMessage">
+        <div class="banner info left-aligned">
+            <p><b>Professional:</b> {{doctor?.title}}. {{doctor?.firstName}} {{doctor?.lastName}}<br></p>
+            <p><b>Date:</b> {{selectedDate}}<br></p>
+            <p><b>Time:</b> {{getDisplaySelectedTime(selectedAppointmentId)}}</p>
+        </div>
+        <div class="banner info">
+            <p>Make yourself available for a call from <b>{{doctor?.contactNumber}}</b>. And please note that the time
+                can be slightly changed due to unavoidable reasons</p>
+        </div>
+        <button (click)="navigateToPaymentOrLogIn()" class="default-button">Continue
+        </button>
+        <br>
+
+        <button class="default-button button-warning" (click)="continueClicked(false)">Back</button>
+    </ng-container>
+    <ng-container *ngIf="showRedirectionMessage">
+        <app-transition-page
+                [modalType]="transitionType"
+                (clickEmitter)="clickFromTransitionPage($event)"
+        ></app-transition-page>
+    </ng-container>
+    <br>
+    <br>
+</div>

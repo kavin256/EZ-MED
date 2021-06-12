@@ -1,5 +1,7 @@
-import {Component, Inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {MedicalRecord} from '../../models/medical-record';
 
 @Component({
   selector: 'app-modal',
@@ -8,41 +10,31 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class ModalComponent implements OnInit {
 
-  @Input() modalType = 'SIGN_UP';
-  signUpResultObject = {
-    isSignUp: undefined,
-    userType: undefined
-  };
-  isSignUp = null;
+  @Input() modalType;
+  @Input() dataA: MedicalRecord [];
+  // @Input() errorMessage?: string;
+  @Output() clickEmitter = new EventEmitter<string>();
 
   constructor(
+      public router: Router,
       public dialogRef: MatDialogRef<ModalComponent>,
       @Inject(MAT_DIALOG_DATA) data) {
     this.modalType = data.modalType;
+    this.dataA = data.dataA;
   }
 
   ngOnInit() {
   }
 
-  signIn(): void {
-    this.isSignUp = false;
-    this.signUpResultObject.isSignUp =  this.isSignUp;
-    this.dialogRef.close(this.signUpResultObject);
+  startVacationMode() {
+    this.dialogRef.close('start_vacation');
   }
 
-  signUp(): void {
-    this.isSignUp = true;
+  stopVacationMode() {
+    this.dialogRef.close('stop_vacation');
   }
 
-  doctorSignUp(): void {
-    this.signUpResultObject.isSignUp =  this.isSignUp;
-    this.signUpResultObject.userType =  'doctor';
-    this.dialogRef.close(this.signUpResultObject);
-  }
-
-  patientSignUp(): void {
-    this.signUpResultObject.isSignUp =  this.isSignUp;
-    this.signUpResultObject.userType =  'patient';
-    this.dialogRef.close(this.signUpResultObject);
+  dismiss() {
+    this.dialogRef.close('dismiss');
   }
 }

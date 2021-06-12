@@ -1,10 +1,11 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, AfterViewInit, Input, OnInit} from '@angular/core';
 import './header.component.css';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {ModalComponent} from '../modal/modal.component';
-import {MODAL_TYPES} from '../../utils/Constants';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {Constants} from '../../utils/Constants';
+import {HttpClient, HttpRequest} from '@angular/common/http';
+import {DataLoaderService} from '../../services/data-loader.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,9 @@ import {DataKey, DataStoreService} from '../../services/data-store.service';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
+
+  profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC;
 
   signUpResultObject = {
     isSignUp: undefined,
@@ -20,78 +23,78 @@ export class HeaderComponent implements OnInit {
   };
   loggedInUser = null;
   user = null;
-  firstName = null;
+  firstName: string;
   isSignUp = true;
+  overTheProfilePic = null;
+  overTheLogo = null;
 
-  //
-  // firstName = 'Kavin';
-  // userType = 'Doctor';
-
-  // //
-  // firstName = 'Kavin';
-  // userType = 'Patient';
-
-  // //
   userType;
 
-  constructor(public dialog: MatDialog,
-              private router: Router,
-              private dataStore: DataStoreService
+  constructor(
+              public dataHandlerService: DataHandlerService,
+              public router: Router,
+              public dataStore: DataStoreService,
+              public dataLoaderService: DataLoaderService,
+              public https: HttpClient
   ) {}
 
   ngOnInit() {
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+    }
+    this.firstName = null;
+    if (this.loggedInUser) {
+      this.firstName = this.setFirstName(this.loggedInUser);
+    }
     if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
       this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
       this.userType = this.signUpResultObject.userType;
       this.isSignUp = this.signUpResultObject.isSignUp;
+    }
+    this.setProfileImageSource();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => { window.scroll(0, 0); }, 1000);
+  }
+
+  /**
+   * Set profile image source. If there is no image, set default avatar
+   */
+  setProfileImageSource() {
+    if (this.loggedInUser) {
+      this.profileImageURL += this.loggedInUser.userId;
+      // get image and verify that it is in the storage
+      const req = new HttpRequest('GET', this.profileImageURL, {
+        reportProgress: true
+      });
+      this.https.request(req).subscribe(
+          data => {},
+          error => {
+            if (error.status !== 200) {
+              this.profileImageURL = './assets/img/profile_blue1.png';
+            }
+          }
+      );
+    } else {
+      this.profileImageURL = './assets/img/profile_blue1.png';
     }
   }
 
-  logoClick(): void {
+  profilePicClick(): void {
     if (this.dataStore.get(DataKey.signUpResultObject).getValue()) {
       this.signUpResultObject = this.dataStore.get(DataKey.signUpResultObject).getValue();
       this.userType = this.signUpResultObject.userType;
       this.isSignUp = this.signUpResultObject.isSignUp;
     }
-    this.loggedInUser = this.dataStore.get(DataKey.createdUser).getValue();
-    if (this.loggedInUser && this.loggedInUser[0] && this.loggedInUser[0].doctor) {
+    if (this.loggedInUser && this.loggedInUser.doctor !== null && this.loggedInUser.doctor) {
       this.router.navigate(['doctor/dashboard']).then(r => {
       });
-    } else if (this.loggedInUser && this.loggedInUser[0] && !this.loggedInUser[0].doctor) {
+    } else if (this.loggedInUser && this.loggedInUser.doctor !== null && !this.loggedInUser.doctor) {
       this.router.navigate(['user/dashboard']).then(r => {
       });
-    }
-
-    if (!(this.signUpResultObject && this.signUpResultObject.userType)) {
-      this.goToHomePage();
-      const dialogConfig = new MatDialogConfig();
-
-      dialogConfig.data = {
-        modalType: MODAL_TYPES.SIGN_UP
-      };
-
-      dialogConfig.disableClose = false;
-      dialogConfig.width = '300px';
-
-      const dialogRef = this.dialog.open(ModalComponent, dialogConfig
-      );
-
-      dialogRef.afterClosed().subscribe(result => {
-        this.user = result;
-        if (result) {
-          // if (!result.isSignUp) {
-          //   this.firstName = 'Kavin';
-          // }
-          this.dataStore.set(DataKey.signUpResultObject, result);
-          this.router.navigate(['signup']).then(r => {
-          });
-        }
-      });
-    } else if (this.userType && this.userType.toLowerCase() === 'Doctor'.toLowerCase()) {
-      this.router.navigate(['doctor/dashboard']).then(r => {
-      });
-    } else if (this.userType && this.userType.toLowerCase() === 'Patient'.toLowerCase()) {
-      this.router.navigate(['user/dashboard']).then(r => {
+    } else {
+      this.router.navigate(['signup']).then(r => {
       });
     }
   }
@@ -99,5 +102,43 @@ export class HeaderComponent implements OnInit {
   goToHomePage() {
     this.router.navigate(['/']).then(r => {
     });
+  }
+
+  onMouseEnterProfilePic($event: number) {
+    this.overTheProfilePic = $event;
+  }
+
+  onMouseLeaveProfilePic() {
+    this.overTheProfilePic = null;
+  }
+
+  isOverTheProfilePic($event: number) {
+    return $event === this.overTheProfilePic;
+  }
+
+  onMouseEnterLogo() {
+    this.overTheLogo = true;
+  }
+
+  onMouseLeaveLogo() {
+    this.overTheLogo = false;
+  }
+
+  isOverTheLogo() {
+    // return $event === this.overTheLogo;
+  }
+
+  private setFirstName(loggedInUser: any): string {
+    let fName = null;
+    if (loggedInUser && loggedInUser.doctor) {
+      // todo: uncomment
+      // fName = loggedInUser.doctorData.firstName;
+      fName = loggedInUser.firstName;
+    } else if (loggedInUser && !loggedInUser.doctor) {
+      // todo: uncomment
+      // fName = loggedInUser.patientData.firstName;
+      fName = loggedInUser.firstName;
+    }
+    return fName;
   }
 }

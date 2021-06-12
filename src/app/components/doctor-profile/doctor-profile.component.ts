@@ -1,120 +1,257 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DataLoaderService} from '../../services/data-loader.service';
-import {Constants, currencyCodes, DoctorTitles, DoctorType, Specializations} from '../../utils/Constants';
-import {DataKey} from '../../services/data-store.service';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {DoctorSpecificData, UserData} from '../../models/user-data';
+import {Constants, DoctorTitles, DoctorType, MODAL_TYPES} from '../../utils/Constants';
+import {DataKey, DataStoreService, SessionStorageKeys} from '../../services/data-store.service';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
+import {UserData} from '../../models/user-data';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {Subscription} from 'rxjs-compat/Subscription';
 
 @Component({
-  selector: 'app-doctor-profile',
-  templateUrl: './doctor-profile.component.html',
-  styleUrls: ['./doctor-profile.component.css']
+    selector: 'app-doctor-profile',
+    templateUrl: './doctor-profile.component.html',
+    styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent implements OnInit {
-  selectedImage: File;
-  profileUsername: string;
-  doctorSpecificData: DoctorSpecificData;
+    selectedImage: File;
+    editable = false;
+    loggedInUser = null;
+    CONSULTANT_TYPES: any;
+    OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
+    COUNSELLOR_TYPES: any;
+    priceCurrency = 'LKR';
+    onVacation = false;
+    userData: UserData;
+    vacationModeTitle = 'Enable Vacation Mode';
+    titles = [
+        {value: DoctorTitles.DR},
+        {value: DoctorTitles.MR},
+        {value: DoctorTitles.MRS},
+        {value: DoctorTitles.MS},
+        {value: DoctorTitles.PROF},
+    ];
 
-  titles = [
-    {value: DoctorTitles.DR},
-    {value: DoctorTitles.MR},
-    {value: DoctorTitles.MRS},
-    {value: DoctorTitles.MS},
-    {value: DoctorTitles.PROF},
-  ];
+    categories = [
+        {
+            category: DoctorType.CON
+        },
+        {
+            category: DoctorType.GEN
+        },
+        {
+            category: DoctorType.COUN
+        },
+        {
+            category: DoctorType.OTH
+        }
+    ];
+    specializations;
+    sub = new Subscription();
+    logInRequired: boolean;
+    selectedCategory: any = null;
+    selectedSpecialization: any = null;
 
-  doctorTypes = [
-    {value: DoctorType.CON},
-    {value: DoctorType.GEN},
-    {value: DoctorType.OTH}
-  ];
+    constructor(
+        public router: Router,
+        public route: ActivatedRoute,
+        public dataStore: DataStoreService,
+        public dataHandlerService: DataHandlerService,
+        public dataLoaderService: DataLoaderService,
+        public https: HttpClient
+    ) {
+    }
 
-  specializations = [
-    {value: Specializations.None},
-    {value: Specializations.Immunologist},
-    {value: Specializations.Cardiologist},
-    {value: Specializations.Pulmonologist},
-    {value: Specializations.Radiologist},
-    {value: Specializations.Dermatologist},
-    {value: Specializations.Clinical_Nutritionist},
-    {value: Specializations.Endocrinologist}
-  ];
+    ngOnInit() {
+        this.sub = this.route
+            .queryParams
+            .subscribe(params => {
+                this.logInRequired = params.logInRequired === 'true';
+            });
+        this.CONSULTANT_TYPES = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+        this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
+        this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
 
-  editable = false;
+        this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
 
-  constructor(
-      private router: Router,
-      private dataLoaderService: DataLoaderService
-  ) { }
+        // if not logged In this page should not be able to access
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(
+            JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
+        if (this.loggedInUser) {
+            this.userData = this.loggedInUser;
+        }
 
-  ngOnInit() {
-    // this.loadDoctorSpecificData();
-    this.loadDoctorSpecificDataFromMock();
-  }
+        // converting professionalType to a user friendly readable format
+        if (this.userData && this.userData.professionalType) {
+            this.selectedCategory = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
+                JSON.parse(JSON.stringify(this.userData.professionalType)));
+            this.selectCategory({value: this.selectedCategory});
+        }
+    }
 
-  getColor(state: string) {
-    return '#000000';
-  }
+    getColor(state: string) {
+        return '#000000';
+    }
 
-  toggleEditable(editable: boolean) {
-    this.editable = editable;
-  }
+    selectCategory($event) {
+        this.selectedSpecialization = null;
+        this.selectedCategory = $event.value;
+        switch (this.selectedCategory) {
+            case DoctorType.CON:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.CONSULTANT_TYPES);
+                break;
+            case DoctorType.COUN:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.COUNSELLOR_TYPES);
+                break;
+            case DoctorType.OTH:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.OTHER_MEDICAL_PROFESSIONAL_TYPES);
+                break;
+            default:
+                this.specializations = [];
+                break;
+        }
+    }
 
-  isConsultant(type: string) {
-    return type === DoctorType.CON;
-  }
+    toggleEditable(editable: boolean) {
+        this.editable = editable;
+    }
 
-  goToMyAppointments() {
-    this.router.navigate(['doctor/appointments']).then(r => {
-    });
-  }
+    saveData() {
+        if (this.selectedCategory &&
+            this.userData.priceForAppointment &&
+            parseInt(this.userData.priceForAppointment, 10) > 0) {
 
-  editSchedule() {
-    this.router.navigate(['doctor/schedule']).then(r => {
-    });
-  }
+            // converting professionalType to a database readable format
+            if (this.selectedCategory) {
+                this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
+                    JSON.parse(JSON.stringify(this.selectedCategory)));
+            }
+            const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.userData.userId;
+            this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1) {
+                        sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
+                        this.toggleEditable(false);
+                    }
+                });
+        } else if (parseInt(this.userData.priceForAppointment, 10) <= 0) {
+            alert('Price per consultation should be more than LKR 0');
+        } else {
+            alert('Please fill mandatory fields.');
+        }
+    }
 
-  uploadImage(event) {
-    this.selectedImage = event.target.file;
-    const formData = new FormData();
-    formData.append('image', this.selectedImage);
-    formData.append( 'username', this.profileUsername);
-
-    // sent request
-    const url = Constants.BASE_URL + Constants.UPLOAD_USER_IMAGE;
-    this.dataLoaderService.post<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, formData )
-        .then((data: any) => {
-          if (data && data.status && data.status.code === 1) {
-            // console.log('data');
-            // console.log(data.data);
-          } else if (data && data.status && data.status.code === -1) {
-            // console.log('data null');
-            // console.log(data.data);
-          }
+    goToMyAppointments() {
+        this.router.navigate(['appointments']).then(r => {
         });
-  }
+    }
 
-  private loadDoctorSpecificData() {
+    editSchedule() {
+        this.router.navigate(['doctor/schedule']).then(r => {
+        });
+    }
 
-  }
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadImage(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
 
-  private loadDoctorSpecificDataFromMock() {
-    this.doctorSpecificData = {
-      username: 'johndoe@gmail.com',
-      title: DoctorTitles.DR,
-      name: 'John Doe',
-      contactNumber: '+94773092323',
-      whatsAppNumber: '+94773092323',
-      doctorRegistrationNumber: 'reg/34234235',
-      pricePerAppointment: '1650',
-      priceCurrency: currencyCodes.LKR,
-      qualifications: 'MBBS (India), MS, MCh, MChir, FLT-HPBS, FACS, Kozhikode, India',
-      doctorType: DoctorType.CON,
-      specialityA: 'Pulmonologist',
-      specialityB: 'Dermatologist',
-      specialityC: '',
-      isActiveProfile: 'true'
-    };
-  }
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_PROFILE_PIC + this.userData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
+    }
+
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadSignature(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
+
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_SIGN + this.userData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
+    }
+
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadStamp(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
+
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_STAMP + this.userData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
+    }
+
+    checkForMandatoryFieldsToActivateProfile(userData: UserData) {
+        // currently only the userData.priceForAppointment is checked as a requirement
+        return userData &&
+            userData.priceForAppointment !== null &&
+            userData.priceForAppointment !== undefined &&
+            userData.priceForAppointment !== '' &&
+            parseInt(userData.priceForAppointment, 10) &&
+            parseInt(userData.priceForAppointment, 10) > 0;
+    }
+
+    goToVacationMode() {
+        if (!this.onVacation) {
+            this.dataLoaderService.activateLoader(true, MODAL_TYPES.ENTER_VACATION_MODE, true,
+                (result) => this.callBackFromVacationPopUp(result));
+        } else {
+            this.dataLoaderService.activateLoader(true, MODAL_TYPES.EXIT_VACATION_MODE, true,
+                (result) => this.callBackFromVacationPopUp(result));
+        }
+    }
+
+    callBackFromVacationPopUp($event) {
+        switch ($event) {
+            case 'start_vacation':
+                this.onVacation = true;
+                this.vacationModeTitle = 'Exit Vacation Mode';
+                break;
+            case 'stop_vacation':
+                this.onVacation = false;
+                this.vacationModeTitle = 'Enable Vacation Mode';
+        }
+    }
 }

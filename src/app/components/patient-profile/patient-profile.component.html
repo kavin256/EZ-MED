@@ -1,62 +1,132 @@
 <div class="mat-card-style">
-
-    <app-page-title [title]="title"></app-page-title>
-    <h5 *ngIf="!editable">Name: {{patient.title}} {{patient.name}}</h5>
-    <h6 *ngIf="!editable">Age: {{patient.age}}</h6>
-    <br>
-
+    <app-page-title [title]="'My Profile'"></app-page-title>
+    <div *ngIf="!editable" class="banner plain left-aligned">
+        <p style="font-size: x-large"><b>{{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</b></p>
+        <p>Email: {{patient?.email}}</p>
+        <p>Contact number: {{patient?.contactNumber}}</p>
+    </div>
     <ng-container *ngIf="editable">
-        <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Title</mat-label>
-            <mat-select [(value)]="patient.title">
-                <ng-container *ngFor="let title of titles" >
-                    <mat-option value="{{title.value}}">
-                        {{title.value}}
+        <div>
+            <mat-form-field appearance="legacy">
+                <mat-label>Title</mat-label>
+                <mat-select required [(value)]="patient.title">
+                    <ng-container *ngFor="let title of titles">
+                        <mat-option value="{{title}}">
+                            {{title}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field appearance="legacy">
+                <mat-label>First Name</mat-label>
+                <input required matInput #input1 [(ngModel)]='patient.firstName' [formControl]="firstNameFormControl">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Last Name</mat-label>
+                <input required matInput [(ngModel)]='patient.lastName' [formControl]="lastNameFormControl">
+            </mat-form-field>
+            <br>
+            <mat-form-field *ngIf="false" appearance="legacy">
+                <mat-label>Email</mat-label>
+                <input readonly matInput [(ngModel)]='patient.email' [formControl]="emailFormControl">
+                <br>
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Gender * ({{gender}})</mat-label>
+                <mat-select [(value)]='gender'>
+                    <mat-option required *ngFor="let gender of genders" value="{{gender}}">
+                        {{gender | titlecase}}
                     </mat-option>
-                </ng-container>
-            </mat-select>
-        </mat-form-field>
+                </mat-select>
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput readonly required [matDatepicker]="picker1" placeholder="Birthday:"
+                       [formControl]="dateFormControl">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker
+                        startView="multi-year"
+                        touchUi disabled="false" #picker1></mat-datepicker>
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field appearance="legacy">
+                <mat-label>Contact Number</mat-label>
+                <br>
+                <input required matInput [(ngModel)]='patient.contactNumber' [formControl]="contactNumberFormControl">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="legacy">
+                <mat-label>WhatsApp Number</mat-label>
+                <input matInput #input7 [(ngModel)]='patient.whatsAppNumber' [formControl]="whatsAppNumberFormControl">
+            </mat-form-field>
+        </div>
+        <div>
 
-        <mat-form-field style="width: 240px" class="example-full-width">
-            <mat-label>Name: {{patient.name}}</mat-label>
-            <input matInput placeholder="" [value]="patient.name">
-        </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Email:</mat-label>
+                <input disabled required matInput placeholder="" [(ngModel)]="patient.email">
+            </mat-form-field>
+            <br>
+        </div>
+        <div>
+            <mat-form-field appearance="legacy">
+                <mat-label>Known Allergies</mat-label>
+                <textarea type="text" matInput #input8 [(ngModel)]='patient.userAllergies'></textarea>
+            </mat-form-field>
+            <br>
+        </div>
+        <div style="align-items: center; width: 200px">
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Birthday:</mat-label>
-            <input matInput placeholder=""  value="{{patient.birthday}}">
-        </mat-form-field>
+            <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
+            <br>
+            <input type="file"
+                   accept="image/*"
+                   (change)="uploadImage($event)">
+            <br>
+            <br>
+        </div>
 
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Allergies:</mat-label>
-            <textarea matInput placeholder="" value="{{patient.allergies}}"></textarea>
-        </mat-form-field>
-
-        <mat-form-field  style="width: 240px" class="example-full-width">
-            <mat-label>Medical History:</mat-label>
-            <textarea matInput placeholder="" value="{{patient.medicalHistory}}"></textarea>
-        </mat-form-field>
-
+        <button class="default-button" (click)="save()">Save</button>
         <br>
-        <br>
-        <button style="width: 240px" mat-raised-button color="primary" (click)="toggleEditable(false)">Save</button>
-        <br>
-        <br>
-        <button style="width: 240px" mat-raised-button color="secondary" (click)="toggleEditable(false)">Back</button>
+        <button class="default-button button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
     </ng-container>
 
     <ng-container *ngIf="!editable">
-
-        <button style="width: 320px" (click)="goToMyAppointments()" mat-raised-button color="primary">My Bookings</button>
+        <ng-container *ngIf="searchedProfessionalName">
+            <div class="alert">
+                Want to continue your appointment with {{searchedProfessionalName}}?
+                <br>
+                <br>
+                <button style="margin:5px;" (click)="goToAppointmentTimeSelection()" style="width: 100px"
+                        mat-stroked-button color="primary">Yes
+                </button>
+                &nbsp;<button style="margin:5px;" (click)="dismiss()" style="width: 100px" mat-stroked-button
+                              color="primary">No
+            </button>
+            </div>
+        </ng-container>
+        <button class="default-button" (click)="newAppointment()">+ Add New Appointment</button>
         <br>
+        <button class="default-button" (click)="goToMyAppointments()">My Appointments
+        </button>
         <br>
-        <button style="width: 320px" mat-stroked-button (click)="toggleEditable(true)">Edit Profile</button>
+        <ng-container *ngIf="medicalHistory && medicalHistory.length > 0">
+            <button class="default-button" (click)="goToMyMedicalHistory()">My Medical History</button>
+            <br>
+        </ng-container>
+        <button class="default-button" (click)="toggleEditable(true)">Edit Profile</button>
         <br>
+        <button class="default-button button-warning" (click)="dataHandlerService.logOut(router)">Log Out</button>
         <br>
-<!--        <button style="width: 320px" mat-stroked-button>My Finances</button>-->
-<!--        <br>-->
-<!--        <br>-->
-
     </ng-container>
 </div>

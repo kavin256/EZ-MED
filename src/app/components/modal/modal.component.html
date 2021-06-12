@@ -1,14 +1,83 @@
-<div align="center">
-    <ng-container *ngIf="modalType === 'SIGN_UP' && !isSignUp">
-        <button style="width: 150px; height: 50px" mat-stroked-button color="primary" (click)="signUp()">Sign Up</button><br><br>
+<div>
+    <ng-container *ngIf="modalType === 'LOADING'">
+        <div align="center">
+            <mat-spinner></mat-spinner>
+            <br>
+            <h5>Loading...</h5>
+        </div>
     </ng-container>
-    <ng-container *ngIf="modalType === 'SIGN_UP' && !isSignUp">
-        <button style="width: 150px; height: 50px" mat-raised-button color="primary" (click)="signIn()">Sign In</button><br><br>
+    <ng-container *ngIf="modalType === 'ENTER_VACATION_MODE'">
+        <div class="alert alert-primary" role="alert">
+            <b>Note:</b>
+            When you enter vacation mode, you will not be visible to the patients in the search list from now onwards
+            until you disable vacation mode. And your already booked appointments will be cancelled automatically.
+            Want to enable vacation mode?
+            <br>
+            <button style="margin:5px;" style="width: 100px" (click)="startVacationMode()" mat-stroked-button color="primary">Yes</button>
+            &nbsp;<button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">No</button>
+        </div>
     </ng-container>
-    <ng-container *ngIf="modalType === 'SIGN_UP' && isSignUp">
-        <button style="width: 150px; height: 50px" mat-stroked-button color="primary" (click)="doctorSignUp()">Doctor Sign Up</button><br><br>
+    <ng-container *ngIf="modalType === 'EXIT_VACATION_MODE'">
+        <div class="alert alert-primary" role="alert">
+            <b>Note:</b>
+            Hope you had a great vacation. You are about to exit vacation mode. You will be visible to the patients in the search list from now onwards.
+            Want to exit vacation mode?
+            <br>
+            <button style="margin:5px;" style="width: 100px" (click)="stopVacationMode()" mat-stroked-button color="primary">Yes</button>
+            &nbsp;<button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">No</button>
+        </div>
     </ng-container>
-    <ng-container *ngIf="modalType === 'SIGN_UP' && isSignUp">
-        <button style="width: 150px; height: 50px" mat-raised-button color="primary" (click)="patientSignUp()">Patient Sign Up</button><br><br>
+    <ng-container *ngIf="modalType === 'ERROR_1'">
+        <div class="alert alert-primary" role="alert">
+            Please check your time slots. Might have an overlap or start time might be after the end time in a time slot!<br>
+            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'ERROR_2'">
+        <div class="alert alert-primary" role="alert">
+            Something went wrong!<br>
+            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'ERROR_3'">
+        <div class="alert alert-primary" role="alert">
+            Please enter a valid appointment time duration!<br>
+            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'PAST_RECORDS'">
+        <div>
+            <div align="center">
+                <span><br><b><u>Past Records</u></b><br><br><br></span>
+            </div>
+            <ng-container *ngFor="let medicalRecord of dataA">
+                <p>
+                    ------------------- {{medicalRecord?.appointmentDate | date}} -------------------
+                </p>
+                <span style="font-size: small">Concern: {{medicalRecord?.medicalConcern}}</span><br>
+                <span style="font-size: small">Professional: {{medicalRecord?.professionalName}}</span><br>
+                <span style="font-size: small">Appointment Id: {{medicalRecord?.appointmentId}}</span><br><br>
+                <ng-container *ngFor="let prescription of medicalRecord?.prescriptions">
+
+                    <ng-container *ngIf="prescription?.prescribedItems && prescription?.prescribedItems.length > 0">
+                        <span style="font-size: small"><u>Prescriptions</u></span>
+                        <div class="abc" *ngFor="let item of prescription?.prescribedItems; let i = index;">
+                                <span style="font-size: x-small"><b>{{item.title}}</b></span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="prescription?.prescribedNoteItems && prescription?.prescribedNoteItems.length > 0">
+                        <span style="font-size: small"><u>Tests / Notes</u></span>
+                        <div class="abc" *ngFor="let item of prescription?.prescribedNoteItems; let i = index;">
+                            <span style="font-size: x-small">{{item.description}}</span><br>
+                        </div>
+                    </ng-container>
+                    <br>
+                </ng-container>
+            </ng-container>
+
+            <div align="center">
+                <button style="margin:5px;" style="width: 100px" (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+            </div>
+        </div>
     </ng-container>
 </div>

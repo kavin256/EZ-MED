@@ -7,5 +7,5 @@ import './app.component.css';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'WellBeey-FE';
+  title = 'Ez-Med';
 }

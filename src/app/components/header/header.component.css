@@ -1,12 +1,40 @@
 .header-logo {
-    padding-top: 60px;
-    padding-bottom: 50px;
+    width: 250px;
+    padding-bottom: 20px
 }
+
+.log-in-button {
+    width: 75px;
+    background-color: #d84344;
+}
+
 button.link { background:none; border:none; }
-.mat-card-style {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    min-width: 320px;
-    max-width: 320px;
+
+.app-header {
+    max-height: 150px;
+    width: 100%;
+    background-image: linear-gradient(#ffffff, #ffffff); /* Standard syntax (must be last) */
+}
+
+.app-header-content {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 98%;
+    gap: 5px;
+    /*grid-template-columns: 1fr 1fr;*/
+}
+.app-header-content > div {
+    width: 49.5%;
+    /*background-color: #797D7F;*/
+    margin: 10px auto;
+}
+
+.app-header-content.logo {
+    text-align: left;
+    /*grid-template-columns: 1fr 1fr;*/
+}
+
+.app-header-content.profile {
+    padding-top: 45px;
+    /*grid-template-columns: 1fr 1fr;*/
 }

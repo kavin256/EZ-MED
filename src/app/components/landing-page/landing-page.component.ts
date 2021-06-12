@@ -1,12 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {DataLoaderService} from '../../services/data-loader.service';
-import {AuthModel} from '../../models/auth-model';
-import {DataKey, DataStoreService} from '../../services/data-store.service';
-import {RequestOptions} from '../../models/request-options';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {AuthResponse} from '../../models/auth-response';
-import {Constants} from '../../utils/Constants';
+import {SessionStorageKeys} from '../../services/data-store.service';
+import {UserData} from '../../models/user-data';
 
 @Component({
   selector: 'app-landing-page',
@@ -18,11 +13,14 @@ export class LandingPageComponent implements OnInit, OnChanges {
   @Input() flow: number;
   @Output() emitFlowChange = new EventEmitter();
 
-  constructor(private router: Router,
-              private dataLoader: DataLoaderService,
-              private dataStore: DataStoreService) {}
+  loggedInUser: UserData = null;
+
+  constructor(public router: Router) {}
 
   ngOnInit() {
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -32,18 +30,30 @@ export class LandingPageComponent implements OnInit, OnChanges {
   }
 
   goToSearchPage() {
-    this.router.navigate(['searchProfessionals']).then(r => {
-    });
+    if (!this.isDoctorLoggedIn()) {
+      this.router.navigate(['searchProfessionals']).then(r => {});
+    }
+  }
 
-    const obj: AuthModel = new AuthModel();
-    obj.username = 'foo12345';
-    obj.password = 'foo';
-    this.dataLoader.login<AuthResponse>(Constants.BASE_URL + '/authenticate', new RequestOptions(), obj, DataKey.authKey);
+  isDoctorLoggedIn() {
+    if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
+      const loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
+      return loggedInUser && loggedInUser.doctor;
+    } else {
+      return false;
+    }
+  }
 
-    this.dataStore.get(DataKey.authKey, true).subscribe(
-        (data) => {
-          console.log(data);
-        }
-    );
+  logIn(): void {
+    this.router.navigate(['signup']).then(r => {});
+  }
+  dashboard(): void {
+    if (this.loggedInUser && this.loggedInUser.doctor !== null && this.loggedInUser.doctor) {
+      this.router.navigate(['doctor/dashboard']).then(r => {
+      });
+    } else if (this.loggedInUser && this.loggedInUser.doctor !== null && !this.loggedInUser.doctor) {
+      this.router.navigate(['user/dashboard']).then(r => {
+      });
+    }
   }
 }

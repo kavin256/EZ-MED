@@ -1,15 +1,27 @@
 export class UserData {
-    userName: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+    userId?: string;
+    password?: string;
     title: string;
-    isMale: boolean;
-    birthday: any;
+    firstName: string;
+    lastName?: string;
+    male?: boolean;
+    birthday?: any;
+    age?: any;
     contactNumber: string;
-    whatsAppNumber: string;
-    doctor: boolean;
-    userAllergies: string;
+    whatsAppNumber?: string;
+    email?: string;
+    doctor?: boolean;
+    editableMode?: boolean;
+    userAllergies?: string;
+    regNo?: string;
+    priceForAppointment?: string;
+    qualifications?: string;
+    professionalType?: string;
+    specialityA?: string;
+    specialityB?: string;
+    specialityC?: string;
+    nextTime?: string;
+    availableForAppointment?: string;
 }
 
 export class WorkingTimePeriod {
@@ -30,21 +42,3 @@ export class DoctorScheduleData {
     averageTimeForAppointment: number;
     fixedDoctorDates: FixedDoctorDate [];
 }
-
-export class DoctorSpecificData {
-    username?: string;
-    title: string;
-    name: string;
-    contactNumber: string;
-    whatsAppNumber: string;
-    doctorRegistrationNumber: string;
-    pricePerAppointment: string;
-    priceCurrency: string;
-    qualifications: string;
-    doctorType?: string;
-    specialityA?: string;
-    specialityB?: string;
-    specialityC?: string;
-    isActiveProfile?: string;
-}
-
