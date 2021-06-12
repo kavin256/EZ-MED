@@ -36,6 +36,7 @@ export class SignUpComponent implements OnInit {
     passFormControl = new FormControl('');
     conPassFormControl = new FormControl('');
 
+    loaderVisible: boolean;
     logInError = '';
     emailForRegeneratingVerificationLink = '';
     logInErrorCode: number;
@@ -237,7 +238,8 @@ export class SignUpComponent implements OnInit {
 
     logIn() {
         this.logInError = '';
-        this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+        // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+        this.loaderVisible = true;
 
         // create url and send request
         const url = Constants.API_BASE_URL + Constants.AUTHENTICATE;
@@ -270,7 +272,9 @@ export class SignUpComponent implements OnInit {
                 } else {
                     alert('Something went wrong. Please contact support !!');
                 }
-                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                this.loaderVisible = false;
+
+                // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
             })
             .catch((e) => {
                 if (e instanceof HttpErrorResponse) {
@@ -281,7 +285,9 @@ export class SignUpComponent implements OnInit {
                 this.openSnackBar(this.logInError, null);
             })
             .finally(() => {
-                this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                this.loaderVisible = false;
+
+                // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
             });
     }
 

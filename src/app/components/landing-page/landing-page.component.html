@@ -7,6 +7,16 @@
     </div>
     <br>
 
+    <!--    Modal-->
+<!--    <button (click)="clickToggleModal()">open</button>-->
+    <div (click)="clickToggleModal()" *ngIf="visible" id="myModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="loader"></div>
+        </div>
+    </div>
+    <!--    Modal end-->
+
+
     <button class="default-button" [disabled]="isDoctorLoggedIn()" (click)="goToSearchPage()">Make an Appointment
     </button>
 

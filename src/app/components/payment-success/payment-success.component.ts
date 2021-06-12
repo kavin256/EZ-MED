@@ -22,6 +22,7 @@ export class PaymentSuccessComponent implements OnInit {
   clientRef: string;
   isPaymentSuccessful = false;
   paymentResponseData: any;
+  loaderVisible: boolean;
 
   constructor(
       public httpClient: HttpClient,
@@ -43,7 +44,9 @@ export class PaymentSuccessComponent implements OnInit {
   }
 
   private processPaymentRequest() {
-    this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+    // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+    this.loaderVisible = true;
+
     const url = Constants.API_BASE_URL + Constants.APPOINTMENT_PAYMENT;
     let params = new HttpParams();
     const queryString = window.location.search;
@@ -70,7 +73,9 @@ export class PaymentSuccessComponent implements OnInit {
         }).catch((e) => {
       console.log(e.message);
     }).finally(() => {
-      this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+      this.loaderVisible = false;
+
+      // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
     });
   }
 
