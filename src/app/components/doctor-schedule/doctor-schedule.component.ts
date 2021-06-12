@@ -15,6 +15,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 export class DoctorScheduleComponent implements OnInit {
     professional: UserData;
     availableForAppointment = true;
+    loaderVisible: boolean;
 
     constructor(
         public router: Router,
@@ -42,7 +43,8 @@ export class DoctorScheduleComponent implements OnInit {
 
     ngOnInit() {
         // if not logged In this page should not be able to access
-        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
+        this.dataHandlerService.redirectToSignUpIfNotLoggedIn(
+            JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
 
         this.professional = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
         if (this.professional && this.professional.userId) {
@@ -53,7 +55,8 @@ export class DoctorScheduleComponent implements OnInit {
     save(userId: string) {
         if (this.updateSchedule()) {
             const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userId;
-            this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+            // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+            this.loaderVisible = true;
             if (this.availableForAppointment) {
                 this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
                     DataKey.doctorScheduleData, this.doctorScheduleData)
@@ -61,11 +64,13 @@ export class DoctorScheduleComponent implements OnInit {
                         if (data && data.status && data.status.code === 1) {
                             this.isConfirmationActive = false;
                             this.changeRequestSent = true;
-                            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                            this.loaderVisible = false;
+                            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                             this.router.navigate(['doctor/dashboard']).then(r => {
                             });
                         } else if (data && data.status && data.status.code === -1) {
-                            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                            this.loaderVisible = false;
+                            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                             this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '2', false);
                         }
                     });
@@ -77,9 +82,11 @@ export class DoctorScheduleComponent implements OnInit {
                             this.dataHandlerService.loadUserData(userId, this.dataLoaderService, this.router);
                             this.isConfirmationActive = false;
                             this.changeRequestSent = true;
-                            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                            this.loaderVisible = false;
+                            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                         } else if (data && data.status && data.status.code === -1) {
-                            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                            this.loaderVisible = false;
+                            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                             this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '2', false);
                         }
                     })
@@ -94,7 +101,8 @@ export class DoctorScheduleComponent implements OnInit {
                     });
             }
         } else {
-            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+            this.loaderVisible = false;
+            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
             this.dataLoaderService.activateLoader(true, MODAL_TYPES.ERROR + '1', false);
         }
     }
@@ -105,7 +113,8 @@ export class DoctorScheduleComponent implements OnInit {
     }
 
     private populateDoctorScheduleData(userId: string) {
-        this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+        this.loaderVisible = true;
+        // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
         const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userId;
         this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
             .then((data: any) => {
@@ -119,19 +128,23 @@ export class DoctorScheduleComponent implements OnInit {
                     }
                     this.prepareDisplayData(this.doctorScheduleData);
                     sessionStorage.setItem(SessionStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
-                    this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                    this.loaderVisible = false;
+                    // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                 } else if (data && data.status && data.status.code === -1) {
                     sessionStorage.setItem(SessionStorageKeys.professionalScheduleData, null);
-                    this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+                    this.loaderVisible = false;
+                    // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                 }
             }).finally(() => {
-            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+            this.loaderVisible = false;
+            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
     }
 
     private updateSchedule() {
         let success = true;
-        this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
+        this.loaderVisible = true;
+        // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
 
         // from hours and minutes to date
         if (this.doctorScheduleData) {

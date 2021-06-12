@@ -1,5 +1,4 @@
 <div class="mat-card-style">
-
     <p>Weekly Schedule for consultations:</p>
     <mat-accordion *ngIf="doctorScheduleData">
         <div *ngFor="let schedule of doctorScheduleData.fixedDoctorDates;">
@@ -84,3 +83,11 @@
     <span>&nbsp;&nbsp;<button *ngIf="isConfirmationActive" (click)="cancel()" style="width: 150px" mat-raised-button
                               color="secondary">Cancel</button></span>
 </div>
+<!--    Modal-->
+<!--    <button (click)="clickToggleModal()">open</button>-->
+<div *ngIf="loaderVisible" id="myModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <div class="loader"></div>
+    </div>
+</div>
+<!--    Modal end-->

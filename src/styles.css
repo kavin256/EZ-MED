@@ -5,12 +5,15 @@
     min-width: 320px;
     max-width: 600px;
 }
+
 mat-form-field, mat-expansion-panel, ngb-alert {
     width: 270px
 }
+
 html, body {
     height: 100%;
 }
+
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -36,20 +39,25 @@ label, p, alert {
     cursor: pointer;
     transition: 0.5s;
 }
+
 .default-button.button-warning {
     background-color: #ff3333;
 }
+
 .default-button.button-success {
     background-color: #27aa02;
 }
+
 .default-button:hover {
     box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.04), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
 }
+
 .default-button:disabled {
     background-color: #c7c7c7;
     box-shadow: unset;
     cursor: unset;
 }
+
 .default-button.secondary {
     background-color: unset;
     font-size: 12px;
@@ -58,6 +66,7 @@ label, p, alert {
     border: 1px solid #0056e7;
     color: #0056e7;
 }
+
 .default-button.secondary:hover {
     opacity: 100%;
 }
@@ -72,30 +81,36 @@ label, p, alert {
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.81);
 }
+
 .banner.error {
     background-color: #fff4f7;
     border: 1px dashed #FF0000;
     color: red;
 }
+
 .banner.info {
     background-color: #f1f9fd;
     border: 1px dashed #001f72;
     color: #001f72;
 }
+
 .banner.warning {
     background-color: #fdf9ea;
     border: 1px dashed #6a5800;
     color: #6a5800;
 }
+
 .banner.success {
     background-color: #f1fdf1;
     border: 1px dashed #087200;
     color: #087200;
 }
+
 .banner.plain {
     border: 1px dashed #4b4b4b;
     color: #4b4b4b;
 }
+
 .banner.left-aligned {
     text-align: left;
     padding-left: 30px;
@@ -107,4 +122,69 @@ label, p, alert {
     background-color: #dfe9f8;
     max-width: 380px;
     color: #001f72;
+}
+
+
+/* The Modal (background) */
+.custom-modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /*padding-top: 100px; !* Location of the box *!*/
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.custom-modal-content {
+    background-color: #fefefe;
+    /*margin: auto;*/
+    margin-top: 30%;
+    padding-top: 40px;
+    /*top: 50%;*/
+
+    /*border: 1px solid #888;*/
+    /*max-width: 50%;*/
+    width: 200px;
+    height: 200px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.loader {
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #0056e7;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

@@ -40,3 +40,11 @@
     </ng-container>
     <button (click)="goToDashboard()" class="default-button">Go to my profile</button>
 </div>
+<!--    Modal-->
+<!--    <button (click)="clickToggleModal()">open</button>-->
+<div *ngIf="loaderVisible" id="myModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <div class="loader"></div>
+    </div>
+</div>
+<!--    Modal end-->

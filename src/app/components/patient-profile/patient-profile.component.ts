@@ -23,6 +23,7 @@ export class PatientProfileComponent implements OnInit {
   gender;
   searchedProfessionalName;
   medicalHistory: any;
+  loaderVisible: boolean;
 
   // form controls
   firstNameFormControl = new FormControl('');
@@ -101,7 +102,8 @@ export class PatientProfileComponent implements OnInit {
     if (this.dataHandlerService.isMandatoryDetailsFilled(this.patient)) {
       this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'yyyy-MM-dd');
       this.setGender(this.gender);
-      this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
+      this.loaderVisible = true;
+      // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
       const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.patient.userId;
       this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.patient)
           .then((data: any) => {
@@ -115,7 +117,8 @@ export class PatientProfileComponent implements OnInit {
           }).catch(() => {
             alert('Something went wrong when saving the data!');
           }).finally(() => {
-            this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
+            this.loaderVisible = false;
+            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
           });
     } else {
       alert('Please fill mandatory fields.');
