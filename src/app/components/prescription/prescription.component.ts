@@ -135,7 +135,7 @@ export class PrescriptionComponent implements OnInit {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     this.goToPrescriptionList();
                 } else if (data && data.status && data.status.code === -1) {
-                    alert('Something went wrong. Please contact support !!');
+                    alert('Something went wrong. Please contact support');
                 }
             });
     }
@@ -174,7 +174,7 @@ export class PrescriptionComponent implements OnInit {
                     link.download = fileName;
                     link.click();
                 } else if (data && data.status && data.status.code === -1) {
-                    alert('Something went wrong. Please contact support !!');
+                    alert('Something went wrong. Please contact support');
                 }
             });
     }
@@ -211,10 +211,10 @@ export class PrescriptionComponent implements OnInit {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     this.goToPrescriptionList();
                 } else if (data && data.status && data.status.code === -1) {
-                    alert('Something went wrong. Please check your internet connection !!');
+                    alert('Something went wrong. Please check your internet connection');
                 }
             }).catch((e) => {
-            alert('Something went wrong. Please check your internet connection !!');
+            alert('Something went wrong. Please check your internet connection');
         });
     }
 

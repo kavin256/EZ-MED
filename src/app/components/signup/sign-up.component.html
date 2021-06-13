@@ -41,7 +41,7 @@
             <mat-tab label="New User">
                 <br>
                 <div *ngIf="isIncompleteErrorAvailable" class="banner error">
-                    <p>Looks like some details are missing/wrong!!</p>
+                    <p>Looks like some details are missing / incorrect</p>
                 </div>
                 <div align="left" style="padding-left: 55px">
                     <mat-radio-group aria-label="Select an option" (change)="setIsDoctor($event)">
@@ -159,7 +159,7 @@
                                 {{!panelOpenState ? 'Show' : 'Hide'}} Agreement
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <p>
+                        <p class="agreement">
                             {{AGREEMENT_REGISTER_DOCTOR}}
                         </p>
                         <br>

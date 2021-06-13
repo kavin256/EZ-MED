@@ -11,16 +11,19 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+        <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>First Name: {{userData.firstName}}</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.firstName">
         </mat-form-field>
+        <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Last Name: {{userData.lastName}}</mat-label>
             <input required matInput placeholder="" [(ngModel)]="userData.lastName">
         </mat-form-field>
+        <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Professional Level</mat-label>
@@ -30,16 +33,20 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+        <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Registration Number (SLMC):</mat-label>
             <input matInput placeholder="" [(ngModel)]="userData.regNo">
         </mat-form-field>
+        <br>
 
         <mat-form-field class="example-full-width">
-            <mat-label>Qualifications / Description:</mat-label>
-            <textarea required matInput placeholder="" [(ngModel)]="userData.qualifications"></textarea>
+            <mat-label>Qualifications (as in the stamp):</mat-label>
+            <textarea required matInput placeholder="eg: MD(Russia), MBBS(SL)"
+                      [(ngModel)]="userData.qualifications"></textarea>
         </mat-form-field>
+        <br>
 
         <mat-form-field
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
@@ -53,6 +60,8 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+        <br>
+
         <mat-form-field
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
                 class="example-full-width">
@@ -65,6 +74,8 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+        <br>
+
         <mat-form-field
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
                 class="example-full-width">
@@ -77,6 +88,7 @@
                 </ng-container>
             </mat-select>
         </mat-form-field>
+        <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Contact Number:</mat-label>
@@ -99,7 +111,7 @@
         </mat-form-field>
         <br>
         <div style="align-items: center; width: 200px">
-            <mat-label style="font-size: small">Upload Profile Picture:</mat-label>
+            <mat-label style="font-size: small">Upload Profile Picture: (Square shape is better)</mat-label>
             <br>
             <input type="file"
                    accept="image/*"

@@ -274,7 +274,7 @@ export class SignUpComponent implements OnInit {
                     this.logInError = data.data[0].message;
                     this.logInErrorCode = data.data[0].code;
                 } else {
-                    alert('Something went wrong. Please contact support !!');
+                    alert('Something went wrong. Please contact support');
                 }
                 this.loaderVisible = false;
 
