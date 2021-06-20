@@ -28,10 +28,10 @@
     <ng-container *ngIf="visibleSection === 'configs'">
         <p>Set configuration values</p>
         <div class="simple-form">
-            <label>Code</label><input>
-            <label>Description</label><input>
-            <label>Value</label><input>
-            <button class="default-button" style="width: 100px">Add</button>
+            <label>Code</label><input [(ngModel)]="code">
+            <label>Description</label><input [(ngModel)]="desc">
+            <label>Value</label><input [(ngModel)]="configValue">
+            <button (click)="addConfig()" class="default-button" style="width: 100px">Add</button>
         </div>
     </ng-container>
 
@@ -41,8 +41,8 @@
     <ng-container *ngIf="visibleSection === 'dpet'">
         <p>Make a professional's profile editable</p>
         <div class="simple-form">
-            <label>Email</label><input>
-            <label>ID</label><input>
+            <label>Email</label><input value="email">
+            <label>ID</label><input value="id">
             <label>Value</label>
             <div>
                 <input style="margin: 5px" type="radio" name="editable" value="disable">
