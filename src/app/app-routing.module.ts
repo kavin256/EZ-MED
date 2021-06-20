@@ -15,6 +15,7 @@ import {PrescriptionComponent} from './components/prescription/prescription.comp
 import {PrescriptionListComponent} from './components/prescription-list/prescription-list.component';
 import {MedicalReportsComponent} from './components/medical-reports/medical-reports.component';
 import {VerificationComponent} from './components/verification/verification.component';
+import {ControlPanelComponent} from './components/control-panel/control-panel.component';
 
 const routes: Routes = [
     { path: '', component: LandingPageComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
     { path: 'appointment/prescriptionList', component: PrescriptionListComponent },
     { path: 'appointment/medicalReports', component: MedicalReportsComponent },
     { path: 'appointment/prescription', component: PrescriptionComponent },
+    { path: 'control-panel', component: ControlPanelComponent},
     { path: 'registrationConfirm', component: VerificationComponent },
     ];
 

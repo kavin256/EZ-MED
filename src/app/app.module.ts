@@ -56,6 +56,7 @@ import {MatSnackBarModule} from '@angular/material';
 import { MedicalReportsComponent } from './components/medical-reports/medical-reports.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { VerificationComponent } from './components/verification/verification.component';
+import { ControlPanelComponent } from './components/control-panel/control-panel.component';
 
 export function initialize(app: AppService) {
     return async () => {
@@ -92,7 +93,8 @@ export function initialize(app: AppService) {
         PrescriptionListComponent,
         TransitionPageComponent,
         MedicalReportsComponent,
-        VerificationComponent
+        VerificationComponent,
+        ControlPanelComponent
     ],
     imports: [
         BrowserModule,

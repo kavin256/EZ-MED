@@ -1,0 +1,72 @@
+<div class="mat-card-style" align="left">
+    <app-page-title [title]="'Control Panel'"></app-page-title>
+    <br>
+
+    <!--    Doctor Profile Activation-->
+    <h3 (click)="visibleSection = visibleSection ? '':'dpa'"
+        class="collapsible">{{visibleSection === 'dpa' ? '- ' : '+ '}} Doctor Profile Activation</h3>
+    <ng-container *ngIf="visibleSection === 'dpa'">
+        <p>Activate professional's profile for appointments</p>
+        <div class="simple-form">
+            <label>Email</label><input>
+            <label>ID</label><input>
+            <label>Value</label>
+            <div>
+                <input style="margin: 5px" type="radio" name="editable" value="disable">
+                <label style="margin: 5px"> Activate </label>
+                <input style="margin: 5px" type="radio" name="editable" value="enable">
+                <label style="margin: 5px"> Deactivate </label><br>
+            </div>
+
+            <button class="default-button" style="width: 100px">Save</button>
+        </div>
+    </ng-container>
+
+    <!--    Configurations-->
+    <h3 (click)="visibleSection = visibleSection ? '':'configs'"
+        class="collapsible">{{visibleSection === 'config' ? '- ' : '+ '}} Configurations</h3>
+    <ng-container *ngIf="visibleSection === 'configs'">
+        <p>Set configuration values</p>
+        <div class="simple-form">
+            <label>Code</label><input>
+            <label>Description</label><input>
+            <label>Value</label><input>
+            <button class="default-button" style="width: 100px">Add</button>
+        </div>
+    </ng-container>
+
+    <!--    Doctor Profile Editable Toggle-->
+    <h3 (click)="visibleSection = visibleSection ? '':'dpet'"
+        class="collapsible">{{visibleSection === 'dpet' ? '- ' : '+ '}} Doctor Profile Editable Toggle</h3>
+    <ng-container *ngIf="visibleSection === 'dpet'">
+        <p>Make a professional's profile editable</p>
+        <div class="simple-form">
+            <label>Email</label><input>
+            <label>ID</label><input>
+            <label>Value</label>
+            <div>
+                <input style="margin: 5px" type="radio" name="editable" value="disable">
+                <label style="margin: 5px"> Disable </label>
+                <input style="margin: 5px" type="radio" name="editable" value="enable">
+                <label style="margin: 5px"> Enable </label><br>
+            </div>
+
+            <button class="default-button" style="width: 100px">Save</button>
+        </div>
+    </ng-container>
+
+    <!--    Profile password management-->
+    <h3 (click)="visibleSection = visibleSection ? '':'ppwm'"
+        class="collapsible">{{visibleSection === 'ppwm' ? '- ' : '+ '}} Profile password management</h3>
+    <ng-container *ngIf="visibleSection === 'ppwm'">
+        <p>Make changes to profile passwords</p>
+        <div class="simple-form">
+            <label>Email</label><input>
+            <label>ID</label><input>
+            <label>New Password</label><input>
+
+            <button class="default-button" style="width: 100px">Save</button>
+        </div>
+    </ng-container>
+
+</div>

@@ -1,0 +1,21 @@
+.simple-form {
+    display: grid;
+    margin: 5px;
+    padding: 5px;
+    grid-template-columns: 1fr 3fr;
+    gap: 5px;
+}
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+
+
