@@ -34,6 +34,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     previousStatus: APPOINTMENT_STATUS;
     networkError: boolean;
     medicalHistory: any;
+    messageText: string;
 
     constructor(
         public router: Router,
@@ -62,6 +63,27 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                         this.appointmentTime = moment(this.appointment.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
                         this.patient = this.appointment.patientData;
                         this.doctor = this.appointment.doctorData;
+                        this.messageText = 'Hi ' + this.patient.firstName
+                            + ', I am ' + this.doctor.title + ' '
+                            + this.doctor.firstName + ' '
+                            + this.doctor.lastName + ' from EZMED. Can I call you now?';
+
+                        if (this.patient) {
+                            if (this.patient.contactNumber) {
+                                this.patient.contactNumber = this.dataHandlerService.formatPhoneNumber(this.patient.contactNumber);
+                            }
+                            if (this.patient.whatsAppNumber) {
+                                this.patient.whatsAppNumber = this.dataHandlerService.formatPhoneNumber(this.patient.whatsAppNumber);
+                            }
+                        }
+                        if (this.doctor) {
+                            if (this.doctor.contactNumber) {
+                                this.doctor.contactNumber = this.dataHandlerService.formatPhoneNumber(this.doctor.contactNumber);
+                            }
+                            if (this.doctor.whatsAppNumber) {
+                                this.doctor.whatsAppNumber = this.dataHandlerService.formatPhoneNumber(this.doctor.whatsAppNumber);
+                            }
+                        }
 
                         // load Medical History
                         this.loadMedicalHistory();
@@ -102,6 +124,24 @@ export class AppointmentComponent implements OnInit, OnDestroy {
                     this.appointmentTime = moment(this.appointment.appointmentTime, ['HH.mm.ss']).format('hh:mm a');
                     this.patient = this.appointment.patientData;
                     this.doctor = this.appointment.doctorData;
+
+                    if (this.patient) {
+                        if (this.patient.contactNumber) {
+                            this.patient.contactNumber = this.dataHandlerService.formatPhoneNumber(this.patient.contactNumber);
+                        }
+                        if (this.patient.whatsAppNumber) {
+                            this.patient.whatsAppNumber = this.dataHandlerService.formatPhoneNumber(this.patient.whatsAppNumber);
+                        }
+                    }
+                    if (this.doctor) {
+                        if (this.doctor.contactNumber) {
+                            this.doctor.contactNumber = this.dataHandlerService.formatPhoneNumber(this.doctor.contactNumber);
+                        }
+                        if (this.doctor.whatsAppNumber) {
+                            this.doctor.whatsAppNumber = this.dataHandlerService.formatPhoneNumber(this.doctor.whatsAppNumber);
+                        }
+                    }
+
                 }
             }).catch((e) => {
             this.networkError = true;

@@ -273,6 +273,19 @@ export class DataHandlerService {
     return professionalType;
   }
 
+  formatPhoneNumber(pNumber: string) {
+    let returnNumber = pNumber;
+    // let returnNumber = '+0wed00000(000023o46301625363-=';
+
+    // remove non-digits
+    returnNumber = returnNumber.replace(/[^\d]/g, '');
+
+    // removes spaces
+    returnNumber = returnNumber.replace(/^0+/, '');
+
+    return  returnNumber;
+  }
+
   calculateAgeFromJavaBirthdayDate(birthday: any) {
     const birthdayD = new Date(birthday);
     const today = new Date();

@@ -5,9 +5,22 @@
             <p>Appointment Status: <b>{{getStatusName(appointment?.status)}}</b></p>
         </div>
         <div class="banner info left-aligned">
+
+<!--            <ng-container *ngIf="doctorSide">-->
+<!--                <h1 style="font-size: x-large">WhatsApp: <a href="https://wa.me/{{patient?.whatsAppNumber}}">{{patient?.whatsAppNumber}}</a></h1>-->
+<!--            </ng-container>-->
             <ng-container *ngIf="doctorSide">
-                <h1 style="font-size: x-large">Contact: <a href="tel:{{patient?.contactNumber}}">{{patient?.contactNumber}}</a></h1>
+                <h1 style="font-size: large">WhatsApp Text: <a href="https://wa.me/{{patient?.whatsAppNumber}}?text={{messageText}}">{{patient?.whatsAppNumber}}</a></h1>
             </ng-container>
+            <br>
+
+
+            <ng-container *ngIf="doctorSide">
+                <h1 style="font-size: large">Contact: <a href="tel:{{patient?.contactNumber}}">{{patient?.contactNumber}}</a></h1>
+            </ng-container>
+            <br>
+
+
             <ng-container *ngIf="!doctorSide">
                 <h1 style="font-size: x-large">{{appointment?.doctorData?.title}}.
                     {{appointment?.doctorData?.firstName}} {{appointment?.doctorData?.lastName}}</h1>
@@ -49,6 +62,7 @@
                 Hide Patient Details
             </button>
         </ng-container>
+        <br>
         <div class="banner info left-aligned" *ngIf="isPatientDetailsShown && patient">
             <p style="font-size: small">Patient Name: {{patient?.title}}
                 . {{patient?.firstName}} {{patient?.lastName}}</p>
