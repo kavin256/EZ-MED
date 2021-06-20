@@ -16,7 +16,7 @@ export class AppService {
   ) { }
 
   public loadModuleConfigurations() {
-    const url = Constants.API_BASE_URL + Constants.LOAD_CONFIGURATIONS;
+    const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
     return new Promise((resolve, reject) => {
       this.http.get(url, {
       }).subscribe(

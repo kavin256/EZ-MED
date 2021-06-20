@@ -8,7 +8,7 @@ export enum Constants {
     CREATE_NEW_USER = '/user/register',
     VERIFY_EMAIL_ACCOUNT = '/user/registrationConfirm',
     RESEND_REGISTRATION_TOKEN = '/user/resendRegistrationToken',
-    LOAD_CONFIGURATIONS = '/admin/configs',
+    CONFIGURATIONS = '/admin/configs',
     UPLOAD_USER_PROFILE_PIC = '/userImages/upload/profilePic/',
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
     UPLOAD_USER_SIGN = '/userImages/upload/signature/',

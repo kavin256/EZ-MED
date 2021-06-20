@@ -87,22 +87,47 @@ export class DataLoaderService {
     // make a DELETE request
     public delete<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey) {
         const options: RequestOptions = this.makeOptions(param, headers);
-        if (this.dataStore.has(dataKey, true)) {
+        if (dataKey && this.dataStore.has(dataKey, true)) {
             this.dataStore.set(dataKey, new BehaviorSubject(null));
         }
 
-        this.http.delete<T>(url, {
-            headers: options.headers,
-            params: options.params
-        }).subscribe(
-            result => {
-                this.dataStore.set(dataKey, result, true);
-            },
-            error => {
-                this.dataStore.set(DataKey.error, error, true);
-            }
-        );
+        return new Promise((resolve, reject) => {
+            this.http.delete<T>(url, {
+                headers: options.headers,
+                params: options.params
+            }).subscribe(
+                // tslint:disable-next-line:no-shadowed-variable
+                (data) => {
+                    if (dataKey) {
+                        // @ts-ignore
+                        this.dataStore.set(dataKey, data.data, true);
+                    }
+                    resolve(data);
+                }, (data) => {
+                    reject(data);
+                });
+        });
     }
+
+    // make a DELETE request
+    // public delete<T>(url: string, param: HttpParams, headers: HttpHeaders, dataKey: DataKey) {
+    //     const options: RequestOptions = this.makeOptions(param, headers);
+    //     if (this.dataStore.has(dataKey, true)) {
+    //         this.dataStore.set(dataKey, new BehaviorSubject(null));
+    //     }
+    //
+    //     this.http.delete<T>(url, {
+    //         headers: options.headers,
+    //         params: options.params
+    //     }).subscribe(
+    //         result => {
+    //             this.dataStore.set(dataKey, result, true);
+    //         },
+    //         error => {
+    //             this.dataStore.set(DataKey.error, error, true);
+    //         }
+    //     );
+    // }
 
     // make request params and headers for request
     public makeOptions(param: HttpParams, headers: HttpHeaders): RequestOptions {

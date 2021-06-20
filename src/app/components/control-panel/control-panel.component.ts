@@ -31,13 +31,33 @@ export class ControlPanelComponent implements OnInit {
         configModel.value = this.configValue;
 
         // create url and send request
-        const url = Constants.API_BASE_URL + Constants.LOAD_CONFIGURATIONS;
+        const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
         this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, configModel)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    console.log();
+                    alert(data.status.message);
                 } else if (data && data.status && data.status.code === -1) {
-                    console.log(data);
+                    alert(data.status.message);
+                }
+            });
+    }
+
+    /**
+     * deletes config when the config code is provided
+     * todo: implemented in BE as well. But, NOT TESTED YET !!!
+     */
+    deleteConfig() {
+        let params = new HttpParams();
+        params = params.append('code', this.code);
+
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
+        this.dataLoaderService.delete<Prescription>(url, params, new HttpHeaders(), null)
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    alert(data.status.message);
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
                 }
             });
     }
