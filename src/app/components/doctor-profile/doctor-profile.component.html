@@ -3,7 +3,7 @@
     <ng-container *ngIf="editable && userData">
         <mat-form-field class="example-full-width">
             <mat-label>Title</mat-label>
-            <mat-select required [(value)]="userData.title">
+            <mat-select [disabled]="!userData?.editableMode" required [(value)]="userData.title">
                 <ng-container *ngFor="let title of titles">
                     <mat-option value="{{title.value}}">
                         {{title.value}}
@@ -15,19 +15,19 @@
 
         <mat-form-field class="example-full-width">
             <mat-label>First Name: {{userData.firstName}}</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="userData.firstName">
+            <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.firstName">
         </mat-form-field>
         <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Last Name: {{userData.lastName}}</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="userData.lastName">
+            <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.lastName">
         </mat-form-field>
         <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Professional Level</mat-label>
-            <mat-select (selectionChange)="selectCategory($event)" [value]="selectedCategory">
+            <mat-select [disabled]="!userData?.editableMode" (selectionChange)="selectCategory($event)" [value]="selectedCategory">
                 <ng-container *ngFor="let category of categories">
                     <mat-option value="{{category.category}}">{{category.category}}</mat-option>
                 </ng-container>
@@ -37,13 +37,13 @@
 
         <mat-form-field class="example-full-width">
             <mat-label>Registration Number (SLMC):</mat-label>
-            <input matInput placeholder="" [(ngModel)]="userData.regNo">
+            <input [disabled]="!userData?.editableMode" matInput placeholder="" [(ngModel)]="userData.regNo">
         </mat-form-field>
         <br>
 
         <mat-form-field class="example-full-width">
             <mat-label>Qualifications (as in the stamp):</mat-label>
-            <textarea required matInput placeholder="eg: MD(Russia), MBBS(SL)"
+            <textarea [disabled]="!userData?.editableMode" required matInput placeholder="eg: MD(Russia), MBBS(SL)"
                       [(ngModel)]="userData.qualifications"></textarea>
         </mat-form-field>
         <br>
@@ -52,7 +52,7 @@
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
                 class="example-full-width">
             <mat-label>Specialization #1</mat-label>
-            <mat-select matNativeControl [(value)]="userData.specialityA">
+            <mat-select [disabled]="!userData?.editableMode" matNativeControl [(value)]="userData.specialityA">
                 <ng-container *ngFor="let specialization of specializations">
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
@@ -66,7 +66,7 @@
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
                 class="example-full-width">
             <mat-label>Specialization #2 (Optional)</mat-label>
-            <mat-select matNativeControl [(value)]="userData.specialityB">
+            <mat-select [disabled]="!userData?.editableMode" matNativeControl [(value)]="userData.specialityB">
                 <ng-container *ngFor="let specialization of specializations">
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
@@ -80,7 +80,7 @@
                 *ngIf="selectedCategory !== undefined && selectedCategory !== null && !(selectedCategory === 'General Practitioner' || selectedCategory === 'Any')"
                 class="example-full-width">
             <mat-label>Specialization #3 (Optional)</mat-label>
-            <mat-select matNativeControl [(value)]="userData.specialityC">
+            <mat-select [disabled]="!userData?.editableMode" matNativeControl [(value)]="userData.specialityC">
                 <ng-container *ngFor="let specialization of specializations">
                     <mat-option value="{{specialization}}">
                         {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
@@ -92,36 +92,38 @@
 
         <mat-form-field class="example-full-width">
             <mat-label>Contact Number:</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="userData.contactNumber">
+            <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.contactNumber">
         </mat-form-field>
         <br>
         <mat-form-field class="example-full-width">
             <mat-label>WhatsApp Number:</mat-label>
-            <input matInput placeholder="" [(ngModel)]="userData.whatsAppNumber">
+            <input [disabled]="!userData?.editableMode" matInput placeholder="" [(ngModel)]="userData.whatsAppNumber">
         </mat-form-field>
         <br>
         <mat-form-field class="example-full-width">
             <mat-label>Email:</mat-label>
-            <input disabled required matInput placeholder="" [(ngModel)]="userData.email">
+            <input [disabled]="!userData?.editableMode" disabled required matInput placeholder="" [(ngModel)]="userData.email">
         </mat-form-field>
         <br>
         <mat-form-field class="example-full-width">
             <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
-            <input required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
+            <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
         </mat-form-field>
         <br>
         <div style="align-items: center; width: 200px">
+            <ng-container *ngIf="userData?.editableMode">
             <mat-label style="font-size: small">Upload Profile Picture: (Square shape is better)</mat-label>
             <br>
-            <input type="file"
+            <input [disabled]="!userData?.editableMode" type="file"
                    accept="image/*"
                    (change)="uploadImage($event)">
             <br>
             <br>
+            </ng-container>
             <ng-container *ngIf="userData?.editableMode">
                 <mat-label style="font-size: small">Upload Signature:</mat-label>
                 <br>
-                <input type="file"
+                <input [disabled]="!userData?.editableMode" type="file"
                        accept="image/*"
                        (change)="uploadSignature($event)">
                 <br>
@@ -130,14 +132,14 @@
             <ng-container *ngIf="userData?.editableMode">
                 <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>
                 <br>
-                <input type="file"
+                <input [disabled]="!userData?.editableMode" type="file"
                        accept="image/*"
                        (change)="uploadStamp($event)">
                 <br>
                 <br>
             </ng-container>
         </div>
-        <button class="default-button" (click)="saveData()">Save</button>
+        <button [disabled]="!userData?.editableMode" class="default-button" (click)="saveData()">Save</button>
         <br>
         <button class="default-button button-warning" (click)="toggleEditable(false)">Back</button>
         <br>
