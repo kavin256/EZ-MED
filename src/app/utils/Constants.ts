@@ -9,6 +9,8 @@ export enum Constants {
     VERIFY_EMAIL_ACCOUNT = '/user/registrationConfirm',
     RESEND_REGISTRATION_TOKEN = '/user/resendRegistrationToken',
     CONFIGURATIONS = '/admin/control-panel/configs',
+    EDITABLE_MODE = '/admin/control-panel/editableMode',
+    PROFESSIONAL_BIO = '/admin/control-panel/bio',
     UPLOAD_USER_PROFILE_PIC = '/userImages/upload/profilePic/',
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
     UPLOAD_USER_SIGN = '/userImages/upload/signature/',

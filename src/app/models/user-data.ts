@@ -12,6 +12,7 @@ export class UserData {
     email?: string;
     doctor?: boolean;
     editableMode?: boolean;
+    bio?: string;
     userAllergies?: string;
     regNo?: string;
     priceForAppointment?: string;

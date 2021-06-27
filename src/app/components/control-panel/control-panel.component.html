@@ -8,14 +8,12 @@
     <ng-container *ngIf="visibleSection === 'dpa'">
         <p>Activate professional's profile for appointments</p>
         <div class="simple-form">
-            <label>Email</label><input>
-            <label>ID</label><input>
+            <label>Email</label><input [(ngModel)]="email">
+            <label>ID</label><input disabled [(ngModel)]="id">
             <label>Value</label>
             <div>
-                <input style="margin: 5px" type="radio" name="editable" value="disable">
+                <input style="margin: 5px" type="checkbox" [(ngModel)]="activated">
                 <label style="margin: 5px"> Activate </label>
-                <input style="margin: 5px" type="radio" name="editable" value="enable">
-                <label style="margin: 5px"> Deactivate </label><br>
             </div>
 
             <button class="default-button" style="width: 100px">Save</button>
@@ -41,17 +39,29 @@
     <ng-container *ngIf="visibleSection === 'dpet'">
         <p>Make a professional's profile editable</p>
         <div class="simple-form">
-            <label>Email</label><input value="email">
-            <label>ID</label><input value="id">
+            <label>Email</label><input [(ngModel)]="email">
+            <label>ID</label><input disabled [(ngModel)]="id">
             <label>Value</label>
             <div>
-                <input style="margin: 5px" type="radio" name="editable" value="disable">
-                <label style="margin: 5px"> Disable </label>
-                <input style="margin: 5px" type="radio" name="editable" value="enable">
-                <label style="margin: 5px"> Enable </label><br>
+                <input style="margin: 5px" type="checkbox" [(ngModel)]="editable">
+                <label style="margin: 5px"> Enable </label>
             </div>
 
-            <button class="default-button" style="width: 100px">Save</button>
+            <button [disabled]="!email" (click)="setEditableMode()" class="default-button" style="width: 100px">Save</button>
+        </div>
+    </ng-container>
+
+    <!--    Doctor Profile Bio Section-->
+    <h3 (click)="visibleSection = visibleSection ? '':'bio'"
+        class="collapsible">{{visibleSection === 'bio' ? '- ' : '+ '}} Doctor Profile Bio Section</h3>
+    <ng-container *ngIf="visibleSection === 'bio'">
+        <p>Fill the professional's profile bio</p>
+        <div class="simple-form">
+            <label>Email</label><input [(ngModel)]="email">
+            <label>ID</label><input disabled [(ngModel)]="id">
+            <label>Bio</label><input [(ngModel)]="bio">
+
+            <button [disabled]="!email" (click)="setBio()" class="default-button" style="width: 100px">Save</button>
         </div>
     </ng-container>
 

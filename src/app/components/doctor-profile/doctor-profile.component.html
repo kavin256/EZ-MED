@@ -1,7 +1,15 @@
 <div class="mat-card-style">
 
     <ng-container *ngIf="editable && userData">
-        <mat-form-field class="example-full-width">
+        <br>
+
+        <mat-form-field>
+            <mat-label>Ezmed registration no.:</mat-label>
+            <input [disabled]="true" matInput placeholder="" [(ngModel)]="userData.userId">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field>
             <mat-label>Title</mat-label>
             <mat-select [disabled]="!userData?.editableMode" required [(value)]="userData.title">
                 <ng-container *ngFor="let title of titles">
@@ -13,19 +21,19 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>First Name: {{userData.firstName}}</mat-label>
             <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.firstName">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Last Name: {{userData.lastName}}</mat-label>
             <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.lastName">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Professional Level</mat-label>
             <mat-select [disabled]="!userData?.editableMode" (selectionChange)="selectCategory($event)" [value]="selectedCategory">
                 <ng-container *ngFor="let category of categories">
@@ -35,13 +43,13 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Registration Number (SLMC):</mat-label>
             <input [disabled]="!userData?.editableMode" matInput placeholder="" [(ngModel)]="userData.regNo">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Qualifications (as in the stamp):</mat-label>
             <textarea [disabled]="!userData?.editableMode" required matInput placeholder="eg: MD(Russia), MBBS(SL)"
                       [(ngModel)]="userData.qualifications"></textarea>
@@ -90,24 +98,29 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Contact Number:</mat-label>
             <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.contactNumber">
         </mat-form-field>
         <br>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>WhatsApp Number:</mat-label>
             <input [disabled]="!userData?.editableMode" matInput placeholder="" [(ngModel)]="userData.whatsAppNumber">
         </mat-form-field>
         <br>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Email:</mat-label>
-            <input [disabled]="!userData?.editableMode" disabled required matInput placeholder="" [(ngModel)]="userData.email">
+            <input [disabled]="true" disabled required matInput placeholder="" [(ngModel)]="userData.email">
         </mat-form-field>
         <br>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
             <input [disabled]="!userData?.editableMode" required matInput placeholder="" [(ngModel)]="userData.priceForAppointment">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Bio:</mat-label>
+            <input [disabled]="true" matInput placeholder="" [(ngModel)]="userData.bio">
         </mat-form-field>
         <br>
         <div style="align-items: center; width: 200px">

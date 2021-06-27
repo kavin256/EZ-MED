@@ -15,6 +15,11 @@ export class ControlPanelComponent implements OnInit {
     code = '';
     desc = '';
     configValue = '';
+    email: string;
+    id: string;
+    editable: boolean;
+    activated: boolean;
+    bio = '';
 
     constructor(
         public dataLoaderService: DataLoaderService
@@ -33,6 +38,32 @@ export class ControlPanelComponent implements OnInit {
         // create url and send request
         const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
         this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, configModel)
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    alert(data.status.message);
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
+                }
+            });
+    }
+
+    setEditableMode() {
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.EDITABLE_MODE + '/' + this.email + '/' + !!this.editable;
+        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    alert(data.status.message);
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
+                }
+            });
+    }
+
+    setBio() {
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_BIO + '/' + this.email;
+        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, this.bio)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     alert(data.status.message);
