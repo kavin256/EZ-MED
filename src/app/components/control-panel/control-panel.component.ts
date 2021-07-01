@@ -20,6 +20,9 @@ export class ControlPanelComponent implements OnInit {
     editable: boolean;
     activated: boolean;
     bio = '';
+    countA = 0;
+    countB = 0;
+    countC = 0;
 
     constructor(
         public dataLoaderService: DataLoaderService
@@ -27,6 +30,7 @@ export class ControlPanelComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getTheCounts();
     }
 
     addConfig() {
@@ -45,6 +49,43 @@ export class ControlPanelComponent implements OnInit {
                     alert(data.status.message);
                 }
             });
+    }
+
+    loadConfig() {
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+        this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    this.desc = data.data[0].description;
+                    this.configValue = data.data[0].value;
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
+                }
+            }).catch((data: any) => {
+            if (data && data.error && data.error.status) {
+                alert(data.error.status.message);
+            }
+        });
+    }
+
+    getTheCounts() {
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.COUNTS;
+        this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    this.countA = data.data[0].completedCount;
+                    this.countB = data.data[0].notStartedCount;
+                    this.countC = data.data[0].cancelledCount;
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
+                }
+            }).catch((data: any) => {
+            if (data && data.error && data.error.status) {
+                alert(data.error.status.message);
+            }
+        });
     }
 
     setEditableMode() {

@@ -10,6 +10,7 @@ export enum Constants {
     RESEND_REGISTRATION_TOKEN = '/user/resendRegistrationToken',
     CONFIGURATIONS = '/admin/control-panel/configs',
     EDITABLE_MODE = '/admin/control-panel/editableMode',
+    COUNTS = '/admin/control-panel/counts',
     PROFESSIONAL_BIO = '/admin/control-panel/bio',
     UPLOAD_USER_PROFILE_PIC = '/userImages/upload/profilePic/',
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
