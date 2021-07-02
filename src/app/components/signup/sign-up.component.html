@@ -107,24 +107,24 @@
                 </div>
                 <div>
                     <mat-form-field appearance="legacy">
-                        <mat-label>Phone Number</mat-label>
-                        <input required matInput [(ngModel)]='contactNumber'
+                        <mat-label>Phone Number (With country code)</mat-label>
+                        <input required matInput [(ngModel)]='contactNumber' placeholder="eg: +94712345678"
                                [formControl]="contactNumberFormControl">
                     </mat-form-field>
                 </div>
 
-                <div *ngIf="contactNumber && contactNumber !== ''"
-                     class="banner info" style="padding: 15px 15px 0px 15px; width: 250px">
-                    <p><span style="margin-right: 5px"><input type="checkbox" style="font-size: small"
-                                                              class="example-margin"
-                                                              (change)="setSimilarity()"></span>
-                        <span> WhatsApp number is the same as contact number</span></p>
-                </div>
+<!--                <div *ngIf="contactNumber && contactNumber !== ''"-->
+<!--                     class="banner info" style="padding: 15px 15px 0px 15px; width: 250px">-->
+<!--                    <p><span style="margin-right: 5px"><input type="checkbox" style="font-size: small"-->
+<!--                                                              class="example-margin"-->
+<!--                                                              (change)="setSimilarity()"></span>-->
+<!--                        <span> WhatsApp number is the same as contact number</span></p>-->
+<!--                </div>-->
 
                 <div>
                     <mat-form-field appearance="legacy">
-                        <mat-label>WhatsApp Number</mat-label>
-                        <input matInput #input7 [(ngModel)]='whatsAppNumber'
+                        <mat-label>WhatsApp (With country code)</mat-label>
+                        <input matInput #input7 [(ngModel)]='whatsAppNumber' placeholder="eg: +94712345678"
                                [formControl]="whatsAppNumberFormControl">
                     </mat-form-field>
                 </div>
