@@ -57,6 +57,34 @@
 
     </ng-container>
 
+    <!--    Promo codes-->
+    <h3 (click)="visibleSection = visibleSection ? '':'prcodes'"
+        class="collapsible">{{visibleSection === 'prcodes' ? '- ' : '+ '}} Promo Codes</h3>
+    <ng-container *ngIf="visibleSection === 'prcodes'">
+        <p><b>Promo codes</b></p>
+        <ng-container *ngFor="let promo of promos">
+            <div class="simple-form">
+                <p>Promo Code</p><input disabled [value]="promo?.pCode">
+                <p>expireDate</p><input disabled [value]="promo?.expireDate">
+                <p>initiationDate</p><input disabled [value]="promo?.initiationDate">
+                <p>rate</p><input disabled [value]="promo?.rate">
+                <p>Rules</p><input disabled [value]="promo?.promoRules">
+            </div>
+            <br>
+        </ng-container>
+        <button *ngIf="!(promos && promos.length)" (click)="loadPromoCodes()" class="default-button">Load Promo Codes</button>
+        <p><b>Set promo code values</b></p>
+        <div class="simple-form">
+            <label>Promo Code</label><input [(ngModel)]="pCode">
+            <label>expireDate</label><input [(ngModel)]="expireDate">
+            <label>initiationDate</label><input [(ngModel)]="initiationDate">
+            <label>rate</label><input [(ngModel)]="rate">
+            <label>Rules</label><textarea style="height: 200px" [(ngModel)]="promoRules"></textarea>
+        </div>
+        <button (click)="loadPromoCode()" class="default-button" style="width: 100px">Load</button>
+        <button (click)="savePromoCode()" class="default-button" style="width: 100px">Save</button>
+    </ng-container>
+
     <!--    Doctor Profile Editable Toggle-->
     <h3 (click)="visibleSection = visibleSection ? '':'dpet'"
         class="collapsible">{{visibleSection === 'dpet' ? '- ' : '+ '}} Doctor Profile Editable Toggle</h3>

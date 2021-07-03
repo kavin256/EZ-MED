@@ -13,6 +13,12 @@ import {DataLoaderService} from '../../services/data-loader.service';
 export class ControlPanelComponent implements OnInit {
     visibleSection = '';
     code = '';
+    promos = [];
+    pCode = '';
+    expireDate = '';
+    initiationDate = '';
+    rate = '';
+    promoRules = '';
     desc = '';
     configValue = '';
     email: string;
@@ -67,6 +73,83 @@ export class ControlPanelComponent implements OnInit {
                 alert(data.error.status.message);
             }
         });
+    }
+
+    loadPromoCodes() {
+        this.promos = [
+            {
+                pCode: 'CODEGEN_10',
+                expireDate: '2021-04-02',
+                initiationDate: '2021-08-02',
+                rate: '10',
+                promoRules: 'rul'
+            },
+            {
+                pCode: 'CODEGEN_10',
+                expireDate: '2021-04-02',
+                initiationDate: '2021-08-02',
+                rate: '10',
+                promoRules: 'rul'
+            },
+            {
+                pCode: 'CODEGEN_10',
+                expireDate: '2021-04-02',
+                initiationDate: '2021-08-02',
+                rate: '10',
+                promoRules: 'rul'
+            }
+        ];
+        // // create url and send request
+        // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+        // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+        //     .then((data: any) => {
+        //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+        //             this.desc = data.data[0].description;
+        //             this.configValue = data.data[0].value;
+        //         } else if (data && data.status && data.status.code === -1) {
+        //             alert(data.status.message);
+        //         }
+        //     }).catch((data: any) => {
+        //     if (data && data.error && data.error.status) {
+        //         alert(data.error.status.message);
+        //     }
+        // });
+    }
+
+    loadPromoCode() {
+        // // create url and send request
+        // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+        // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+        //     .then((data: any) => {
+        //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+        //             this.desc = data.data[0].description;
+        //             this.configValue = data.data[0].value;
+        //         } else if (data && data.status && data.status.code === -1) {
+        //             alert(data.status.message);
+        //         }
+        //     }).catch((data: any) => {
+        //     if (data && data.error && data.error.status) {
+        //         alert(data.error.status.message);
+        //     }
+        // });
+    }
+
+    savePromoCode() {
+        // // create url and send request
+        // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+        // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+        //     .then((data: any) => {
+        //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+        //             this.desc = data.data[0].description;
+        //             this.configValue = data.data[0].value;
+        //         } else if (data && data.status && data.status.code === -1) {
+        //             alert(data.status.message);
+        //         }
+        //     }).catch((data: any) => {
+        //     if (data && data.error && data.error.status) {
+        //         alert(data.error.status.message);
+        //     }
+        // });
     }
 
     getTheCounts() {
