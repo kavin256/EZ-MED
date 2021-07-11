@@ -99,9 +99,9 @@ export class PatientProfileComponent implements OnInit {
   }
 
   save() {
+    this.setGender(this.gender);
     if (this.dataHandlerService.isMandatoryDetailsFilled(this.patient)) {
       this.patient.birthday = this.datePipe.transform(this.dateFormControl.value, 'yyyy-MM-dd');
-      this.setGender(this.gender);
       this.loaderVisible = true;
       // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
       const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.patient.userId;
