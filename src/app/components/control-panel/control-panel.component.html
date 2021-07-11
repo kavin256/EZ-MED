@@ -64,11 +64,15 @@
         <p><b>Promo codes</b></p>
         <ng-container *ngFor="let promo of promos">
             <div class="simple-form">
-                <p>Promo Code</p><input disabled [value]="promo?.pCode">
-                <p>expireDate</p><input disabled [value]="promo?.expireDate">
-                <p>initiationDate</p><input disabled [value]="promo?.initiationDate">
-                <p>rate</p><input disabled [value]="promo?.rate">
-                <p>Rules</p><input disabled [value]="promo?.promoRules">
+                <p>Promo Code</p><input disabled [value]="promo?.code">
+                <p>Description</p><input disabled [value]="promo?.description">
+                <p>Expire Date</p><input disabled [value]="promo?.validTo">
+                <p>Initiation Date</p><input disabled [value]="promo?.validFrom">
+                <p>Priority</p><input disabled [value]="promo?.priority">
+                <p>RateType</p><input disabled [value]="promo?.rateType">
+                <p>Rate</p><input disabled [value]="promo?.rate">
+                <p>Rule Type</p><input disabled [value]="promo?.ruleType">
+                <p>Rules</p><input disabled [value]="promo?.rules">
             </div>
             <br>
         </ng-container>
@@ -76,10 +80,14 @@
         <p><b>Set promo code values</b></p>
         <div class="simple-form">
             <label>Promo Code</label><input [(ngModel)]="pCode">
-            <label>expireDate</label><input [(ngModel)]="expireDate">
-            <label>initiationDate</label><input [(ngModel)]="initiationDate">
-            <label>rate</label><input [(ngModel)]="rate">
-            <label>Rules</label><textarea style="height: 200px" [(ngModel)]="promoRules"></textarea>
+            <label>Description</label><input [(ngModel)]="pDescription">
+            <label>Expire Date</label><input [(ngModel)]="pValidTo">
+            <label>Initiation Date</label><input [(ngModel)]="pValidFrom">
+            <label>Priority</label><input [(ngModel)]="pPriority">
+            <label>RateType</label><input [(ngModel)]="pRateType">
+            <label>Rate</label><input [(ngModel)]="pRate">
+            <label>Rule Type</label><input [(ngModel)]="pRuleType">
+            <label>Rules</label><textarea style="height: 200px" [(ngModel)]="pRules"></textarea>
         </div>
         <button (click)="loadPromoCode()" class="default-button" style="width: 100px">Load</button>
         <button (click)="savePromoCode()" class="default-button" style="width: 100px">Save</button>

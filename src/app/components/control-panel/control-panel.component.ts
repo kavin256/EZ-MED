@@ -13,12 +13,16 @@ import {DataLoaderService} from '../../services/data-loader.service';
 export class ControlPanelComponent implements OnInit {
     visibleSection = '';
     code = '';
-    promos = [];
     pCode = '';
-    expireDate = '';
-    initiationDate = '';
-    rate = '';
-    promoRules = '';
+    pDescription = '';
+    pValidTo = '';
+    pValidFrom = '';
+    pPriority = '';
+    pRateType = '';
+    pRate = '';
+    pRuleType = '';
+    pRules = '';
+    promos = [];
     desc = '';
     configValue = '';
     email: string;
@@ -78,25 +82,25 @@ export class ControlPanelComponent implements OnInit {
     loadPromoCodes() {
         this.promos = [
             {
-                pCode: 'CODEGEN_10',
-                expireDate: '2021-04-02',
-                initiationDate: '2021-08-02',
+                code: 'CODEGEN_10',
+                validFrom: '2021-04-02',
+                validTo: '2021-08-02',
                 rate: '10',
-                promoRules: 'rul'
+                rules: 'rul'
             },
             {
-                pCode: 'CODEGEN_10',
-                expireDate: '2021-04-02',
-                initiationDate: '2021-08-02',
+                code: 'CODEGEN_10',
+                validFrom: '2021-04-02',
+                validTo: '2021-08-02',
                 rate: '10',
-                promoRules: 'rul'
+                rules: 'rul'
             },
             {
-                pCode: 'CODEGEN_10',
-                expireDate: '2021-04-02',
-                initiationDate: '2021-08-02',
+                code: 'CODEGEN_10',
+                validFrom: '2021-04-02',
+                validTo: '2021-08-02',
                 rate: '10',
-                promoRules: 'rul'
+                rules: 'rul'
             }
         ];
         // // create url and send request
