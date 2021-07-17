@@ -1,0 +1,22 @@
+.simple-form_2 {
+    display: grid;
+    margin: 5px;
+    padding: 5px;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 5px;
+}
+
+.small-button {
+    background-color: #27aa02;
+    border: none;
+    color: white;
+    width: 70px;
+    /*padding: 8px;*/
+    text-align: center;
+    text-decoration: none;
+    font-size: 10px;
+    /*margin: 8px 2px;*/
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.5s;
+}

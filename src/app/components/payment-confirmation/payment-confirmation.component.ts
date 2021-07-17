@@ -20,6 +20,7 @@ export class PaymentConfirmationComponent implements OnInit {
   serviceChargeRate = 0.1;
   preTaxTotalCharge = 0;
   totalCharge = 0;
+  pCode = '';
 
   doctor: UserData;
   appointmentConcern: string;
@@ -61,6 +62,10 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   goBack() {
+    this.router.navigate(['appointmentTime']).then(r => {});
+  }
+
+  applyPromo() {
     this.router.navigate(['appointmentTime']).then(r => {});
   }
 
