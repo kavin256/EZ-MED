@@ -16,6 +16,7 @@ export class UserData {
     userAllergies?: string;
     regNo?: string;
     priceForAppointment?: string;
+    rate?: Rate;
     qualifications?: string;
     professionalType?: string;
     specialityA?: string;
@@ -32,6 +33,16 @@ export class WorkingTimePeriod {
     isActive?: boolean;
     startTimeSelected?: { hour: number; minute: number };
     endTimeSelected?: { hour: number; minute: number };
+}
+
+export class Rate {
+    appliedPromoCodes: string [];
+    cancellationFee: number;
+    cost: number;
+    dueAmount: number;
+    margin: number;
+    paidAmount: number;
+    price: number;
 }
 
 export class FixedDoctorDate {

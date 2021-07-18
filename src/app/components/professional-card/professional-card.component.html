@@ -27,7 +27,7 @@
                     ', ' + professional?.specialityC : ''}} )
                 </p>
             </ng-container>
-            <ng-container *ngIf="professional?.specialityA">
+            <ng-container *ngIf="isSearch">
                 <!--            <p class="professional-card-item-content" style="padding-bottom: 10px">-->
                 <!--                <mat-divider style="left: inherit;"></mat-divider>-->
                 <!--            </p>-->
@@ -37,30 +37,36 @@
             </ng-container>
         </div>
     </div>
-    <div *ngIf="selected" class="professional-card-details">
+    <div *ngIf="selected || !isSearch" class="professional-card-details">
         <p class="professional-card-details-content">
-            <b>{{'Qualifications (as in the stamp):' | uppercase}}</b>
+            <b>{{'Qualifications:' | uppercase}}</b>
         </p>
         <p class="professional-card-details-content" style="margin-left: 20px">
             {{professional?.qualifications}}
         </p>
-        <p class="professional-card-details-content">
-            <b>{{'Bio:' | uppercase}}</b>
-        </p>
-        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">
-            Dr. (Mrs) Ranasinghe is a Board Certified Consultant Endocrinologist and had her Clinical
-            Trainings at Addenbrookes hospital, Cambridge, UK. She has published many research articles
-            in diverse areas of Endocrinology.
-        </p>
-        <p class="professional-card-details-content price" style="text-align: right; font-size: small; color: #001f72">
+        <ng-container *ngIf="professional?.bio">
+            <p class="professional-card-details-content">
+                <b>{{'Bio:' | uppercase}}</b>
+            </p>
+            <!--        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">-->
+            <!--            Dr. (Mrs) Ranasinghe is a Board Certified Consultant Endocrinologist and had her Clinical-->
+            <!--            Trainings at Addenbrookes hospital, Cambridge, UK. She has published many research articles-->
+            <!--            in diverse areas of Endocrinology.-->
+            <!--        </p>-->
+            <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">
+                {{professional?.bio}}
+            </p>
+        </ng-container>
+        <p *ngIf="isSearch" class="professional-card-details-content price"
+           style="text-align: right; font-size: small; color: #001f72">
             <br>
-<!--            Price per consultation: <b>{{currency}} {{professional?.priceForAppointment}}</b>-->
-            <b>Price: {{currency}} {{professional?.priceForAppointment}}</b>
+            <!--            Price per consultation: <b>{{currency}} {{professional?.rate?.price}}</b>-->
+            <b>Price: {{currency}} {{professional?.rate?.price}}</b>
         </p>
-<!--        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">-->
-<!--            {{currency}} {{professional?.priceForAppointment}}-->
-<!--        </p>-->
-        <div class="professional-card-details-content mk-button">
+        <!--        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">-->
+        <!--            {{currency}} {{professional?.rate?.price}}-->
+        <!--        </p>-->
+        <div *ngIf="isSearch" class="professional-card-details-content mk-button">
             <button (click)="selectProfessional_($event, professional)" class="default-button secondary"
                     style="alignment: right">Make Appointment
             </button>

@@ -9,6 +9,7 @@ export enum Constants {
     VERIFY_EMAIL_ACCOUNT = '/user/registrationConfirm',
     RESEND_REGISTRATION_TOKEN = '/user/resendRegistrationToken',
     CONFIGURATIONS = '/admin/control-panel/configs',
+    PW_CHANGE = '/admin/control-panel/pw/',
     EDITABLE_MODE = '/admin/control-panel/editableMode',
     COUNTS = '/admin/control-panel/counts',
     PROFESSIONAL_BIO = '/admin/control-panel/bio',

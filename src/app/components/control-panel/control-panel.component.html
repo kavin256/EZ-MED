@@ -132,11 +132,11 @@
     <ng-container *ngIf="visibleSection === 'ppwm'">
         <p>Make changes to profile passwords</p>
         <div class="simple-form">
-            <label>Email</label><input>
+            <label>Email</label><input [(ngModel)]="email">
             <label>ID</label><input disabled>
-            <label>New Password</label><input>
+            <label>New Password</label><input [(ngModel)]="newPW">
 
-            <button class="default-button" style="width: 100px">Save</button>
+            <button (click)="setPW()" class="default-button" style="width: 100px">Save</button>
         </div>
     </ng-container>
 

@@ -13,6 +13,7 @@ export class ProfessionalCardComponent implements OnInit, OnChanges {
     @Input() professional: UserData;
     @Input() index: number;
     @Input() selected: boolean;
+    @Input() isSearch: boolean;
     @Input() chargeVisible = false;
     @Output() checkedEmit: EventEmitter<number> = new EventEmitter<number>();
     @Output() selectProfessional: EventEmitter<any> = new EventEmitter<any>();

@@ -4,6 +4,7 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {ConfigModel} from '../../models/config';
 import {Constants} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
+import {DataEncryptionService} from '../../services/data-encryption.service';
 
 @Component({
     selector: 'app-control-panel',
@@ -26,6 +27,7 @@ export class ControlPanelComponent implements OnInit {
     desc = '';
     configValue = '';
     email: string;
+    newPW: string;
     id: string;
     editable: boolean;
     activated: boolean;
@@ -35,7 +37,8 @@ export class ControlPanelComponent implements OnInit {
     countC = 0;
 
     constructor(
-        public dataLoaderService: DataLoaderService
+        public dataLoaderService: DataLoaderService,
+        public dataEncryptionService: DataEncryptionService,
     ) {
     }
 
@@ -192,6 +195,21 @@ export class ControlPanelComponent implements OnInit {
         // create url and send request
         const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_BIO + '/' + this.email;
         this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, this.bio)
+            .then((data: any) => {
+                if (data && data.status && data.status.code === 1) {
+                    alert(data.status.message);
+                } else if (data && data.status && data.status.code === -1) {
+                    alert(data.status.message);
+                }
+            });
+    }
+
+    setPW() {
+        const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.newPW.trim());
+
+        // create url and send request
+        const url = Constants.API_BASE_URL + Constants.PW_CHANGE + this.email + '/' + encrypted;
+        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                     alert(data.status.message);

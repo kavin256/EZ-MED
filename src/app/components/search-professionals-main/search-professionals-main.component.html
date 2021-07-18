@@ -51,6 +51,7 @@
                 <app-professional-card
                         [professional]="doc"
                         [index]="i"
+                        [isSearch]="true"
                         [selected]="checkedIndex === i"
                         (selectProfessional)="selectProfessional($event)"
                         (checkedEmit)="checkedEmit($event)"
