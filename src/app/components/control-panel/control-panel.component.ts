@@ -48,116 +48,126 @@ export class ControlPanelComponent implements OnInit {
     }
 
     addConfig() {
-        const configModel = new ConfigModel();
-        configModel.name = this.code;
-        configModel.description = this.desc;
-        configModel.value = this.configValue;
+        if (this.isUnlocked()) {
+            const configModel = new ConfigModel();
+            configModel.name = this.code;
+            configModel.description = this.desc;
+            configModel.value = this.configValue;
 
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
-        this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, configModel)
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    alert(data.status.message);
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
-                }
-            });
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
+            this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, configModel)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                });
+        }
     }
 
     loadConfig() {
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-        this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    this.desc = data.data[0].description;
-                    this.configValue = data.data[0].value;
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.desc = data.data[0].description;
+                        this.configValue = data.data[0].value;
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
                 }
-            }).catch((data: any) => {
-            if (data && data.error && data.error.status) {
-                alert(data.error.status.message);
-            }
-        });
+            });
+        }
     }
 
     loadPromoCodes() {
-        this.promos = [
-            {
-                code: 'CODEGEN_10',
-                validFrom: '2021-04-02',
-                validTo: '2021-08-02',
-                rate: '10',
-                rules: 'rul'
-            },
-            {
-                code: 'CODEGEN_10',
-                validFrom: '2021-04-02',
-                validTo: '2021-08-02',
-                rate: '10',
-                rules: 'rul'
-            },
-            {
-                code: 'CODEGEN_10',
-                validFrom: '2021-04-02',
-                validTo: '2021-08-02',
-                rate: '10',
-                rules: 'rul'
-            }
-        ];
-        // // create url and send request
-        // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-        // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-        //     .then((data: any) => {
-        //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-        //             this.desc = data.data[0].description;
-        //             this.configValue = data.data[0].value;
-        //         } else if (data && data.status && data.status.code === -1) {
-        //             alert(data.status.message);
-        //         }
-        //     }).catch((data: any) => {
-        //     if (data && data.error && data.error.status) {
-        //         alert(data.error.status.message);
-        //     }
-        // });
+        if (this.isUnlocked()) {
+            this.promos = [
+                {
+                    code: 'CODEGEN_10',
+                    validFrom: '2021-04-02',
+                    validTo: '2021-08-02',
+                    rate: '10',
+                    rules: 'rul'
+                },
+                {
+                    code: 'CODEGEN_10',
+                    validFrom: '2021-04-02',
+                    validTo: '2021-08-02',
+                    rate: '10',
+                    rules: 'rul'
+                },
+                {
+                    code: 'CODEGEN_10',
+                    validFrom: '2021-04-02',
+                    validTo: '2021-08-02',
+                    rate: '10',
+                    rules: 'rul'
+                }
+            ];
+            // // create url and send request
+            // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+            // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            //     .then((data: any) => {
+            //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+            //             this.desc = data.data[0].description;
+            //             this.configValue = data.data[0].value;
+            //         } else if (data && data.status && data.status.code === -1) {
+            //             alert(data.status.message);
+            //         }
+            //     }).catch((data: any) => {
+            //     if (data && data.error && data.error.status) {
+            //         alert(data.error.status.message);
+            //     }
+            // });
+        }
     }
 
     loadPromoCode() {
-        // // create url and send request
-        // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-        // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-        //     .then((data: any) => {
-        //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-        //             this.desc = data.data[0].description;
-        //             this.configValue = data.data[0].value;
-        //         } else if (data && data.status && data.status.code === -1) {
-        //             alert(data.status.message);
-        //         }
-        //     }).catch((data: any) => {
-        //     if (data && data.error && data.error.status) {
-        //         alert(data.error.status.message);
-        //     }
-        // });
+        if (this.isUnlocked()) {
+            // // create url and send request
+            // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+            // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            //     .then((data: any) => {
+            //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+            //             this.desc = data.data[0].description;
+            //             this.configValue = data.data[0].value;
+            //         } else if (data && data.status && data.status.code === -1) {
+            //             alert(data.status.message);
+            //         }
+            //     }).catch((data: any) => {
+            //     if (data && data.error && data.error.status) {
+            //         alert(data.error.status.message);
+            //     }
+            // });
+        }
     }
 
     savePromoCode() {
-        // // create url and send request
-        // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-        // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-        //     .then((data: any) => {
-        //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-        //             this.desc = data.data[0].description;
-        //             this.configValue = data.data[0].value;
-        //         } else if (data && data.status && data.status.code === -1) {
-        //             alert(data.status.message);
-        //         }
-        //     }).catch((data: any) => {
-        //     if (data && data.error && data.error.status) {
-        //         alert(data.error.status.message);
-        //     }
-        // });
+        if (this.isUnlocked()) {
+            // // create url and send request
+            // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
+            // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            //     .then((data: any) => {
+            //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+            //             this.desc = data.data[0].description;
+            //             this.configValue = data.data[0].value;
+            //         } else if (data && data.status && data.status.code === -1) {
+            //             alert(data.status.message);
+            //         }
+            //     }).catch((data: any) => {
+            //     if (data && data.error && data.error.status) {
+            //         alert(data.error.status.message);
+            //     }
+            // });
+        }
     }
 
     getTheCounts() {
@@ -180,57 +190,66 @@ export class ControlPanelComponent implements OnInit {
     }
 
     setEditableMode() {
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.EDITABLE_MODE + '/' + this.email + '/' + !!this.editable;
-        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    alert(data.status.message);
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
-                }
-            });
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.EDITABLE_MODE + '/' + this.email + '/' + !!this.editable;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                });
+        }
     }
 
     setProfileVisibility() {
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_VISIBILITY + this.email + '/' + !!this.activated;
-        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    alert(data.status.message);
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
-                }
-            });
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_VISIBILITY + this.email + '/' + !!this.activated;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                });
+        }
+
     }
 
     setBio() {
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_BIO + '/' + this.email;
-        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, this.bio)
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1) {
-                    alert(data.status.message);
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
-                }
-            });
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_BIO + '/' + this.email;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, this.bio)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                });
+        }
     }
 
     setPW() {
-        const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.newPW.trim());
+        if (this.isUnlocked()) {
+            const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.newPW.trim());
 
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.PW_CHANGE + this.email + '/' + encrypted;
-        this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    alert(data.status.message);
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
-                }
-            });
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.PW_CHANGE + this.email + '/' + encrypted;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                });
+        }
     }
 
     /**
@@ -238,19 +257,21 @@ export class ControlPanelComponent implements OnInit {
      * todo: implemented in BE as well. But, NOT TESTED YET !!!
      */
     deleteConfig() {
-        let params = new HttpParams();
-        params = params.append('code', this.code);
+        if (this.isUnlocked()) {
+            let params = new HttpParams();
+            params = params.append('code', this.code);
 
-        // create url and send request
-        const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
-        this.dataLoaderService.delete<Prescription>(url, params, new HttpHeaders(), null)
-            .then((data: any) => {
-                if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                    alert(data.status.message);
-                } else if (data && data.status && data.status.code === -1) {
-                    alert(data.status.message);
-                }
-            });
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS;
+            this.dataLoaderService.delete<Prescription>(url, params, new HttpHeaders(), null)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                });
+        }
     }
 
     isUnlocked() {
