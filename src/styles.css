@@ -6,6 +6,10 @@
     max-width: 600px;
 }
 
+.mat-card-style.is-disabled {
+    pointer-events: none;
+}
+
 mat-form-field, mat-expansion-panel, ngb-alert {
     width: 270px
 }

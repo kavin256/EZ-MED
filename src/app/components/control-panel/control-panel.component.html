@@ -1,4 +1,4 @@
-<div class="mat-card-style" align="left">
+<div class="mat-card-style" [ngClass]="{'is-disabled' : !isUnlocked()}" align="left">
     <app-page-title [title]="'Control Panel'"></app-page-title>
     <br>
     <!--    summary-->
@@ -139,4 +139,7 @@
         </div>
     </ng-container>
 
+</div>
+<div class="mat-card-style" align="left">
+    <input [(ngModel)]="unlockPW">
 </div>

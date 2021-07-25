@@ -35,6 +35,7 @@ export class ControlPanelComponent implements OnInit {
     countA = 0;
     countB = 0;
     countC = 0;
+    unlockPW = '';
 
     constructor(
         public dataLoaderService: DataLoaderService,
@@ -250,5 +251,9 @@ export class ControlPanelComponent implements OnInit {
                     alert(data.status.message);
                 }
             });
+    }
+
+    isUnlocked() {
+        return this.unlockPW === '1243';
     }
 }
