@@ -191,9 +191,9 @@ export class ControlPanelComponent implements OnInit {
             });
     }
 
-    setProfileActivation() {
+    setProfileVisibility() {
         // create url and send request
-        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_ACTIVATION + this.email + '/' + !!this.activated;
+        const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_VISIBILITY + this.email + '/' + !!this.activated;
         this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {

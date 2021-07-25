@@ -13,7 +13,7 @@ export enum Constants {
     EDITABLE_MODE = '/admin/control-panel/editableMode',
     COUNTS = '/admin/control-panel/counts',
     PROFESSIONAL_BIO = '/admin/control-panel/bio',
-    PROFESSIONAL_ACTIVATION = '/admin/control-panel/doctor-activate/',
+    PROFESSIONAL_VISIBILITY = '/admin/control-panel/doctor-activate/',
     UPLOAD_USER_PROFILE_PIC = '/userImages/upload/profilePic/',
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
     UPLOAD_USER_SIGN = '/userImages/upload/signature/',

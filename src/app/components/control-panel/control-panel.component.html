@@ -24,20 +24,20 @@
 
     </div>
 
-    <!--    Doctor Profile Activation-->
+    <!--    Doctor Profile Visibility-->
     <h3 (click)="visibleSection = visibleSection ? '':'dpa'"
         class="collapsible">{{visibleSection === 'dpa' ? '- ' : '+ '}} Doctor Profile Activation</h3>
     <ng-container *ngIf="visibleSection === 'dpa'">
-        <p>Activate professional's profile for appointments</p>
+        <p>Professional's profile visibility for appointments</p>
         <div class="simple-form">
             <label>Email</label><input [(ngModel)]="email">
             <label>ID</label><input disabled [(ngModel)]="id">
             <label>Value</label>
             <div>
                 <input style="margin: 5px" type="checkbox" [(ngModel)]="activated">
-                <label style="margin: 5px"> Activate </label>
+                <label style="margin: 5px"> Visible </label>
             </div>
-            <button class="default-button" style="width: 100px" (click)="setProfileActivation()">Save</button>
+            <button class="default-button" style="width: 100px" (click)="setProfileVisibility()">Save</button>
         </div>
     </ng-container>
 
