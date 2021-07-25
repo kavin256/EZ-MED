@@ -13,36 +13,81 @@
             until you disable vacation mode. And your already booked appointments will be cancelled automatically.
             Want to enable vacation mode?
             <br>
-            <button style="margin:5px;" style="width: 100px" (click)="startVacationMode()" mat-stroked-button color="primary">Yes</button>
-            &nbsp;<button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">No</button>
+            <button style="margin:5px;" style="width: 100px" (click)="startVacationMode()" mat-stroked-button
+                    color="primary">Yes
+            </button>
+            &nbsp;<button style="margin:5px;" style="width: 100px" (click)="dismiss()" mat-stroked-button
+                          color="primary">No
+        </button>
         </div>
     </ng-container>
     <ng-container *ngIf="modalType === 'EXIT_VACATION_MODE'">
         <div class="alert alert-primary" role="alert">
             <b>Note:</b>
-            Hope you had a great vacation. You are about to exit vacation mode. You will be visible to the patients in the search list from now onwards.
+            Hope you had a great vacation. You are about to exit vacation mode. You will be visible to the patients in
+            the search list from now onwards.
             Want to exit vacation mode?
             <br>
-            <button style="margin:5px;" style="width: 100px" (click)="stopVacationMode()" mat-stroked-button color="primary">Yes</button>
-            &nbsp;<button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">No</button>
+            <button style="margin:5px;" style="width: 100px" (click)="stopVacationMode()" mat-stroked-button
+                    color="primary">Yes
+            </button>
+            &nbsp;<button style="margin:5px;" style="width: 100px" (click)="dismiss()" mat-stroked-button
+                          color="primary">No
+        </button>
         </div>
     </ng-container>
     <ng-container *ngIf="modalType === 'ERROR_1'">
         <div class="alert alert-primary" role="alert">
-            Please check your time slots. Might have an overlap or start time might be after the end time in a time slot!<br>
-            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+            Please check your time slots. Might have an overlap or start time might be after the end time in a time
+            slot!<br>
+            <button style="margin:5px;" style="width: 100px" (click)="dismiss()" mat-stroked-button color="primary">
+                Dismiss
+            </button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'D_AGREEMENT'">
+        <div style="text-align: justify">
+            {{dataA}}<br><br>
+            <div style="text-align: right">
+
+                <button class="default-button button-warning" style="margin:5px;" style="width: 150px"
+                        (click)="dismiss()">
+                    I don't agree
+                </button>
+                <button class="default-button" style="margin:5px;" style="width: 100px" (click)="agree()">
+                    I agree
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="modalType === 'P_AGREEMENT'">
+        <div style="text-align: justify">
+            {{dataA}}<br><br>
+            <div style="text-align: right">
+                <button class="default-button button-warning" style="margin:5px;" style="width: 150px"
+                        (click)="dismiss()">
+                    I don't agree
+                </button>
+                <button class="default-button" style="margin:5px;" style="width: 100px" (click)="agree()">
+                    I agree
+                </button>
+            </div>
         </div>
     </ng-container>
     <ng-container *ngIf="modalType === 'ERROR_2'">
         <div class="alert alert-primary" role="alert">
             Something went wrong!<br>
-            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+            <button style="margin:5px;" style="width: 100px" (click)="dismiss()" mat-stroked-button color="primary">
+                Dismiss
+            </button>
         </div>
     </ng-container>
     <ng-container *ngIf="modalType === 'ERROR_3'">
         <div class="alert alert-primary" role="alert">
             Please enter a valid appointment time duration!<br>
-            <button style="margin:5px;" style="width: 100px"  (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+            <button style="margin:5px;" style="width: 100px" (click)="dismiss()" mat-stroked-button color="primary">
+                Dismiss
+            </button>
         </div>
     </ng-container>
     <ng-container *ngIf="modalType === 'PAST_RECORDS'">
@@ -62,10 +107,11 @@
                     <ng-container *ngIf="prescription?.prescribedItems && prescription?.prescribedItems.length > 0">
                         <span style="font-size: small"><u>Prescriptions</u></span>
                         <div class="abc" *ngFor="let item of prescription?.prescribedItems; let i = index;">
-                                <span style="font-size: x-small"><b>{{item.title}}</b></span>
+                            <span style="font-size: x-small"><b>{{item.title}}</b></span>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="prescription?.prescribedNoteItems && prescription?.prescribedNoteItems.length > 0">
+                    <ng-container
+                            *ngIf="prescription?.prescribedNoteItems && prescription?.prescribedNoteItems.length > 0">
                         <span style="font-size: small"><u>Tests / Notes</u></span>
                         <div class="abc" *ngFor="let item of prescription?.prescribedNoteItems; let i = index;">
                             <span style="font-size: x-small">{{item.description}}</span><br>
@@ -76,7 +122,9 @@
             </ng-container>
 
             <div align="center">
-                <button style="margin:5px;" style="width: 100px" (click)="dismiss()"  mat-stroked-button color="primary">Dismiss</button>
+                <button style="margin:5px;" style="width: 100px" (click)="dismiss()" mat-stroked-button color="primary">
+                    Dismiss
+                </button>
             </div>
         </div>
     </ng-container>

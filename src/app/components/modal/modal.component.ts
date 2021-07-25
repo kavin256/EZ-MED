@@ -37,4 +37,8 @@ export class ModalComponent implements OnInit {
   dismiss() {
     this.dialogRef.close('dismiss');
   }
+
+  agree() {
+    this.dialogRef.close('agree');
+  }
 }

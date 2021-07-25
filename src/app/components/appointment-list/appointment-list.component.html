@@ -1,25 +1,28 @@
 <div class="mat-card-style">
     <app-page-title [title]="'My Appointments'"></app-page-title>
-<div class="banner plain">
-    <mat-form-field appearance="outline">
-        <mat-label>From</mat-label>
-        <input readonly matInput [matDatepicker]="picker1" [value]="fromDate" (dateChange)="startDateChange($event)">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field>
+    <div class="banner plain">
+        <mat-form-field appearance="outline">
+            <mat-label>From</mat-label>
+            <input readonly matInput [matDatepicker]="picker1" [value]="fromDate"
+                   (dateChange)="startDateChange($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-        <mat-label>To</mat-label>
-        <input readonly matInput [matDatepicker]="picker3" [value]="toDate" (dateChange)="endDateChange($event)">
-        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-        <mat-datepicker #picker3></mat-datepicker>
-    </mat-form-field>
-    <ng-container>
-        <section class="example-section">
-            <mat-checkbox [checked]="!completedAvailable" (change)="toggleCompletedAvailable()" class="example-margin">Hide completed appointments</mat-checkbox>
-        </section>
-    </ng-container>
-</div>
+        <mat-form-field appearance="outline">
+            <mat-label>To</mat-label>
+            <input readonly matInput [matDatepicker]="picker3" [value]="toDate" (dateChange)="endDateChange($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+        <ng-container>
+            <section class="example-section">
+                <mat-checkbox [checked]="!completedAvailable" (change)="toggleCompletedAvailable()"
+                              class="example-margin">Hide completed appointments
+                </mat-checkbox>
+            </section>
+        </ng-container>
+    </div>
     <br>
     <p *ngIf="appointments && appointments.length > 0" style="font-size: large;">Appointments:</p>
     <div *ngIf="appointments && appointments.length === 0" class="banner error">
@@ -28,36 +31,44 @@
     <ng-container>
         <div *ngFor="let appointment of appointments; let i=index">
             <ng-container *ngIf="i >= PAGINATION_START && i < PAGINATION_END">
-                <mat-card (click)="selectAppointment(appointment)" style="width: 300px; height: 100px;" [ngStyle]="{background: getColor(appointment.status)}">
+                <div class="appointment-card" (click)="selectAppointment(appointment)"
+                     [ngStyle]="{background: getColor(appointment.status)}">
                     <table>
                         <ng-container *ngIf="doctorSide">
                             <tr>
-                                <td style="font-size: large" [ngClass]="appointment?.status === 3 ? 'strikethrough':'null'">#{{appointment?.appointmentId}}</td>
+                                <td style="font-size: large"
+                                    [ngClass]="appointment?.status === 3 ? 'strikethrough':'null'">
+                                    #{{appointment?.appointmentId}}</td>
                             </tr>
                         </ng-container>
                         <ng-container *ngIf="!doctorSide">
                             <tr>
-                                <td style="font-size: large" [ngClass]="appointment?.status === 3 ? 'strikethrough':'null'">{{appointment.doctorData?.title}}. {{appointment.doctorData?.firstName}} {{appointment.doctorData?.lastName}}</td>
+                                <td style="font-size: large"
+                                    [ngClass]="appointment?.status === 3 ? 'strikethrough':'null'">{{appointment.doctorData?.title}}
+                                    . {{appointment.doctorData?.firstName}} {{appointment.doctorData?.lastName}}</td>
                             </tr>
                         </ng-container>
 
                         <tr>
-                            <td style="font-size: small">{{appointment?.appointmentDate}} / {{getTime(appointment?.appointmentTime)}}</td>
+                            <td style="font-size: small">{{appointment?.appointmentDate}}
+                                / {{getTime(appointment?.appointmentTime)}}</td>
                         </tr>
                         <tr>
                             <td style="font-size: small">Status: {{getStatusName(appointment?.status)}}</td>
                         </tr>
                     </table>
-                </mat-card>
+                </div>
                 <br>
             </ng-container>
         </div>
-        <mat-paginator #paginator  *ngIf="!(appointments && appointments.length === 0)"
-                        [length]="appointments.length"
-                       [pageSize]="RESULTS_PER_PAGE"
-                       (page)="goToPage($event)"
-        >
-        </mat-paginator>
+        <div>
+            <mat-paginator #paginator *ngIf="!(appointments && appointments.length === 0)"
+                           [length]="appointments.length"
+                           [pageSize]="RESULTS_PER_PAGE"
+                           (page)="goToPage($event)">
+            </mat-paginator>
+        </div>
+
     </ng-container>
     <button (click)="goToDashboard()" class="default-button button-warning">Back</button>
 
@@ -77,38 +88,38 @@
         <br>
         <button class="default-button" (click)="showPrescriptions(null, false)">Back</button>
     </ng-container>
-<!--    <ng-container  *ngIf="isPrescriptionsVisible && selectedPrescription">-->
-<!--        <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>-->
-<!--        <p style="font-size: small">Name: <b>{{appointment.patientName}}</b></p>-->
-<!--        <p style="font-size: small">Age: {{appointment.patientAge}} yrs</p>-->
-<!--        <mat-divider></mat-divider>-->
-<!--        <mat-divider></mat-divider>-->
-<!--        <div>-->
-<!--            <p style="font-size: small; text-align: center"><b><u>PRESCRIPTION</u></b></p>-->
+    <!--    <ng-container  *ngIf="isPrescriptionsVisible && selectedPrescription">-->
+    <!--        <p style="font-size: small">Date: {{currentDate | date:'yyyy-MM-dd'}}</p>-->
+    <!--        <p style="font-size: small">Name: <b>{{appointment.patientName}}</b></p>-->
+    <!--        <p style="font-size: small">Age: {{appointment.patientAge}} yrs</p>-->
+    <!--        <mat-divider></mat-divider>-->
+    <!--        <mat-divider></mat-divider>-->
+    <!--        <div>-->
+    <!--            <p style="font-size: small; text-align: center"><b><u>PRESCRIPTION</u></b></p>-->
 
-<!--            <br>-->
-<!--            <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li>-->
+    <!--            <br>-->
+    <!--            <li  style="padding-bottom: 10px; font-size: small" *ngFor="let item of items">{{item}}</li>-->
 
-<!--            <table>-->
-<!--                <br>-->
-<!--                <tr>-->
-<!--                    <th style="font-size: medium; text-align: left">-->
-<!--                        {{doctor.name}}-->
-<!--                    </th>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td style="font-size: x-small; text-align: left">-->
-<!--                        {{doctor.bio}}-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <p style="font-size: x-small">** No signature required. This is a electronically generated document that could only be edited by the prescriber **</p>-->
+    <!--            <table>-->
+    <!--                <br>-->
+    <!--                <tr>-->
+    <!--                    <th style="font-size: medium; text-align: left">-->
+    <!--                        {{doctor.name}}-->
+    <!--                    </th>-->
+    <!--                </tr>-->
+    <!--                <tr>-->
+    <!--                    <td style="font-size: x-small; text-align: left">-->
+    <!--                        {{doctor.bio}}-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--            </table>-->
+    <!--            <p style="font-size: x-small">** No signature required. This is a electronically generated document that could only be edited by the prescriber **</p>-->
 
-<!--            <mat-divider></mat-divider>-->
-<!--            <mat-divider></mat-divider>-->
-<!--            <br>-->
-<!--            <button (click)="selectPrescription(null)" color="primary" mat-flat-button>Back</button>-->
+    <!--            <mat-divider></mat-divider>-->
+    <!--            <mat-divider></mat-divider>-->
+    <!--            <br>-->
+    <!--            <button (click)="selectPrescription(null)" color="primary" mat-flat-button>Back</button>-->
 
-<!--        </div>-->
-<!--    </ng-container>-->
+    <!--        </div>-->
+    <!--    </ng-container>-->
 </div>

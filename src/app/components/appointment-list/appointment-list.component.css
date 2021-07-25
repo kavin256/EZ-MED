@@ -5,3 +5,11 @@
 .mat-radio-button ~ .mat-radio-button {
     margin-left: 16px;
 }
+.appointment-card {
+    text-align: left;
+    cursor: pointer;
+    width: 300px;
+    padding: 15px;
+    border: 1px solid #e5e4e4;
+    border-radius: 4px;
+}

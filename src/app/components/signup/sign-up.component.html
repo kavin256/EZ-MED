@@ -151,45 +151,7 @@
                            [formControl]="conPassFormControl">
                 </mat-form-field>
                 <br>
-                <ng-container *ngIf="isDoctor">
-                    <mat-expansion-panel (opened)="panelOpenState = true"
-                                         (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{!panelOpenState ? 'Show' : 'Hide'}} Agreement
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <p class="agreement">
-                            {{AGREEMENT_REGISTER_DOCTOR}}
-                        </p>
-                        <br>
-                        <section style="vertical-align: center" class="example-section">
-                            <mat-checkbox style="font-size: small" class="example-margin"
-                                          (change)="agreed = !agreed">I agree to the terms & conditions
-                            </mat-checkbox>
-                        </section>
-                    </mat-expansion-panel>
-                </ng-container>
-                <ng-container *ngIf="!isDoctor">
-                    <mat-expansion-panel (opened)="panelOpenState = true"
-                                         (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{!panelOpenState ? 'Show' : 'Hide'}} Agreement
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <p class="agreement">
-                            {{AGREEMENT_REGISTER_PATIENT}}
-                        </p>
-                        <br>
-
-                        <section style="vertical-align: center" class="example-section">
-                            <mat-checkbox style="font-size: small" class="example-margin"
-                                          (change)="agreed = !agreed">I agree to the terms & conditions
-                            </mat-checkbox>
-                        </section>
-                    </mat-expansion-panel>
-                </ng-container>
+                <button class="default-button button-white" (click)="openAgreement()">Open Agreement</button>
                 <br>
                 <button class="default-button" [disabled]="!agreed" (click)="SignUp()">Sign Up
                 </button>
@@ -204,7 +166,6 @@
     </mat-tab-group>
 </div>
 <!--    Modal-->
-<!--    <button (click)="clickToggleModal()">open</button>-->
 <div *ngIf="loaderVisible" id="myModal" class="custom-modal">
     <div class="custom-modal-content">
         <div class="loader"></div>

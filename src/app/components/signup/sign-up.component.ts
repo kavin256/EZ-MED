@@ -301,4 +301,13 @@ export class SignUpComponent implements OnInit {
             this.whatsAppNumber = this.contactNumber;
         }
     }
+
+    openAgreement(): void {
+        this.agreed = false;
+        this.dataLoaderService.activateLoader(true, this.isDoctor ? 'D_AGREEMENT' : 'P_AGREEMENT',
+            false,
+            (event) => this.agreed = event === 'agree',
+            undefined,
+            this.isDoctor ? this.AGREEMENT_REGISTER_DOCTOR : this.AGREEMENT_REGISTER_PATIENT);
+    }
 }
