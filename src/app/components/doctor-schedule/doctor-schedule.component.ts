@@ -14,7 +14,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 })
 export class DoctorScheduleComponent implements OnInit {
     professional: UserData;
-    availableForAppointment = true;
+    profileCompleted = true;
     loaderVisible: boolean;
 
     constructor(
@@ -57,7 +57,7 @@ export class DoctorScheduleComponent implements OnInit {
             const url = Constants.API_BASE_URL + Constants.UPDATE_PROFESSIONAL_WORK_DATA + userId;
             // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING, true);
             this.loaderVisible = true;
-            if (this.availableForAppointment) {
+            if (this.profileCompleted) {
                 this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(),
                     DataKey.doctorScheduleData, this.doctorScheduleData)
                     .then((data: any) => {
@@ -119,9 +119,9 @@ export class DoctorScheduleComponent implements OnInit {
         this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1) {
-                    this.availableForAppointment = JSON.parse(this.professional.availableForAppointment);
+                    this.profileCompleted = JSON.parse(this.professional.profileCompleted);
                     this.doctorScheduleData = data.data[0];
-                    if (!this.availableForAppointment) {
+                    if (!this.profileCompleted) {
                         this.doctorScheduleData.fixedDoctorDates = this.addDummyData(
                             JSON.parse(JSON.stringify(this.doctorScheduleData.fixedDoctorDates))
                         );

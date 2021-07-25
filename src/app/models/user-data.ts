@@ -24,7 +24,7 @@ export class UserData {
     nextAvailableTime?: string;
     specialityC?: string;
     nextTime?: string;
-    availableForAppointment?: string;
+    profileCompleted?: string;
 }
 
 export class WorkingTimePeriod {

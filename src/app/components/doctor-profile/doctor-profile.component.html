@@ -165,22 +165,22 @@
             <p>Email: {{userData?.email}}</p>
             <p>Contact number: {{userData?.contactNumber}}</p>
         </div>
-        <div *ngIf="userData?.availableForAppointment && !onVacation" class="banner success">
+        <div *ngIf="userData?.profileCompleted && !onVacation" class="banner success">
             <p><b>Profile Status: </b>Active</p>
         </div>
 
-        <div class="banner error" *ngIf="userData?.availableForAppointment && onVacation">
+        <div class="banner error" *ngIf="userData?.profileCompleted && onVacation">
             <p><b>Profile Status: </b>Your profile is not Visible in searches and there are no any active appointments
                 since you are in
                 vacation mode. You can appear in searches again and
                 continue consultations by exiting vacation mode.</p>
         </div>
 
-        <div *ngIf="!userData?.availableForAppointment" class="banner error">
+        <div *ngIf="!userData?.profileCompleted" class="banner error">
             <p><b>Profile Status: </b>Not Active</p>
         </div>
 
-        <div *ngIf="!userData?.availableForAppointment && !logInRequired" class="banner warning">
+        <div *ngIf="!userData?.profileCompleted && !logInRequired" class="banner warning">
             <p><b>Note:</b> You have not completed your profile and schedules yet. You will not be listed
                 under searches until you complete your profile and schedule</p>
         </div>
@@ -189,25 +189,25 @@
             <p><b>Note:</b> Please log out and log in again to continue with your profile</p>
         </div>
 
-        <button class="default-button" [disabled]="!userData?.availableForAppointment" (click)="goToMyAppointments()">My
+        <button class="default-button" [disabled]="!userData?.profileCompleted" (click)="goToMyAppointments()">My
             Appointments
         </button>
         <br>
         <button class="default-button"
-                [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"
+                [disabled]="!userData?.profileCompleted && checkForMandatoryFieldsToActivateProfile(userData)"
                 (click)="toggleEditable(true)">Edit Profile
         </button>
-        <!--        <button [disabled]="!userData?.availableForAppointment && checkForMandatoryFieldsToActivateProfile(userData)"-->
-        <!--                [color]="userData?.availableForAppointment? null: 'warn'" mat-raised-button-->
+        <!--        <button [disabled]="!userData?.profileCompleted && checkForMandatoryFieldsToActivateProfile(userData)"-->
+        <!--                [color]="userData?.profileCompleted? null: 'warn'" mat-raised-button-->
         <!--                (click)="toggleEditable(true)">Edit Profile-->
         <!--        </button>-->
         <br>
         <button class="default-button"
-                [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"
+                [disabled]="logInRequired || (!userData?.profileCompleted && !checkForMandatoryFieldsToActivateProfile(userData))"
                 (click)="editSchedule()">Edit Schedule
         </button>
-        <!--        <button [disabled]="logInRequired || (!userData?.availableForAppointment && !checkForMandatoryFieldsToActivateProfile(userData))"-->
-        <!--                [color]="userData?.availableForAppointment? null:'warn'" (click)="editSchedule()" -->
+        <!--        <button [disabled]="logInRequired || (!userData?.profileCompleted && !checkForMandatoryFieldsToActivateProfile(userData))"-->
+        <!--                [color]="userData?.profileCompleted? null:'warn'" (click)="editSchedule()" -->
         <!--                mat-raised-button>Edit Schedule-->
         <!--        </button>-->
         <br>
@@ -221,7 +221,7 @@
         </button>
         <br>
         <br>
-        <ng-container *ngIf="userData?.availableForAppointment">
+        <ng-container *ngIf="userData?.profileCompleted">
             <p>What the patients see:</p>
             <div style="max-width: 380px">
                 <app-professional-card
