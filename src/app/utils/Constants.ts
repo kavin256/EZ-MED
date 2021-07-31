@@ -1,9 +1,9 @@
 export enum Constants {
     // endpoints
-    // API_BASE_URL = 'http://Ezmed-env.ap-south-1.elasticbeanstalk.com:80',
-    API_BASE_URL = 'http://localhost:5000',
-    // FE_BASE_URL = 'http://www.ezmed.lk',
-    FE_BASE_URL = 'http://localhost:4200',
+    API_BASE_URL = 'http://Ezmed-env.ap-south-1.elasticbeanstalk.com:80',
+    // API_BASE_URL = 'http://localhost:5000',
+    FE_BASE_URL = 'http://www.ezmed.lk',
+    // FE_BASE_URL = 'http://localhost:4200',
     AUTHENTICATION = 'test',
     CREATE_NEW_USER = '/user/register',
     VERIFY_EMAIL_ACCOUNT = '/user/registrationConfirm',
@@ -102,5 +102,6 @@ export enum APPOINTMENT_STATUS {
     IN_PROGRESS,
     COMPLETED,
     CANCELLED_BY_PATIENT,
-    CANCELLED_BY_DOCTOR
+    CANCELLED_BY_DOCTOR,
+    CANCELED_BY_ADMIN
 }
