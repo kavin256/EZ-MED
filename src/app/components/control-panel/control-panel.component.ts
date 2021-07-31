@@ -16,6 +16,7 @@ export class ControlPanelComponent implements OnInit {
     code = '';
     pCode = '';
     pDescription = '';
+    pIsPublic = '';
     pValidTo = '';
     pValidFrom = '';
     pPriority = '';
@@ -132,21 +133,21 @@ export class ControlPanelComponent implements OnInit {
 
     loadPromoCode() {
         if (this.isUnlocked()) {
-            // // create url and send request
-            // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-            // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-            //     .then((data: any) => {
-            //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-            //             this.desc = data.data[0].description;
-            //             this.configValue = data.data[0].value;
-            //         } else if (data && data.status && data.status.code === -1) {
-            //             alert(data.status.message);
-            //         }
-            //     }).catch((data: any) => {
-            //     if (data && data.error && data.error.status) {
-            //         alert(data.error.status.message);
-            //     }
-            // });
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.PRICING_RULE + this.pCode;
+            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.pDescription = data.data[0].description;
+                        this.pIsPublic = data.data[0].isPublic;
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
         }
     }
 

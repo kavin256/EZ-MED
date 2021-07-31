@@ -25,6 +25,7 @@ export class UserData {
     specialityC?: string;
     nextTime?: string;
     profileCompleted?: string;
+    visibleForSearches?: string;
 }
 
 export class WorkingTimePeriod {

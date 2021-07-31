@@ -26,7 +26,7 @@
 
     <!--    Doctor Profile Visibility-->
     <h3 (click)="visibleSection = visibleSection ? '':'dpa'"
-        class="collapsible">{{visibleSection === 'dpa' ? '- ' : '+ '}} Doctor Profile Activation</h3>
+        class="collapsible">{{visibleSection === 'dpa' ? '- ' : '+ '}} Doctor Profile Visibility</h3>
     <ng-container *ngIf="visibleSection === 'dpa'">
         <p>Professional's profile visibility for appointments</p>
         <div class="simple-form">
@@ -85,6 +85,7 @@
             <label>Priority</label><input [(ngModel)]="pPriority">
             <label>RateType</label><input [(ngModel)]="pRateType">
             <label>Rate</label><input [(ngModel)]="pRate">
+            <label>Is Public</label><input [(ngModel)]="pIsPublic">
             <label>Rule Type</label><input [(ngModel)]="pRuleType">
             <label>Control Rules</label><textarea style="height: 200px" [(ngModel)]="pRules"></textarea>
         </div>

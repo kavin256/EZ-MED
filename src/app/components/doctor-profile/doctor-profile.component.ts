@@ -51,6 +51,8 @@ export class DoctorProfileComponent implements OnInit {
     logInRequired: boolean;
     selectedCategory: any = null;
     selectedSpecialization: any = null;
+    contactPhone: string;
+    contactEmail: string;
 
     constructor(
         public router: Router,
@@ -71,7 +73,8 @@ export class DoctorProfileComponent implements OnInit {
         this.CONSULTANT_TYPES = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
         this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
         this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
-
+        this.contactEmail = this.dataHandlerService.loadConfig('EZMED_CONTACT_EMAIL');
+        this.contactPhone = this.dataHandlerService.loadConfig('EZMED_CONTACT_PHONE');
         this.loggedInUser = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
 
         // if not logged In this page should not be able to access
