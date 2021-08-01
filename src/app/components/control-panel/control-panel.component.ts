@@ -225,7 +225,7 @@ export class ControlPanelComponent implements OnInit {
             const url = Constants.API_BASE_URL + Constants.PROFESSIONAL_VISIBILITY + this.email + '/' + !!this.activated;
             this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
                 .then((data: any) => {
-                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                    if (data && data.status && data.status.code === 1) {
                         alert(data.status.message);
                     } else if (data && data.status && data.status.code === -1) {
                         alert(data.status.message);
