@@ -143,6 +143,48 @@ export class ControlPanelComponent implements OnInit {
         }
     }
 
+    updatePricingRule() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const pricingRuleObj = JSON.parse(JSON.stringify(this.pricingRule));
+            pricingRuleObj.controlRules = JSON.parse(pricingRuleObj.controlRules);
+            const url = Constants.API_BASE_URL + Constants.PRICING_RULE;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, pricingRuleObj)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.pricingRule = data.data[0];
+                        this.pricingRule.controlRules = JSON.stringify(this.pricingRule.controlRules);
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
+    deletePricingRule() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.PRICING_RULE + '/' + this.pricingRule.code;
+            this.dataLoaderService.delete<Prescription>(url, new HttpParams(), new HttpHeaders(), null)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
     getTheCounts() {
         // create url and send request
         const url = Constants.API_BASE_URL + Constants.COUNTS;

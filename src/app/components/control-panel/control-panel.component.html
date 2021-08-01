@@ -91,7 +91,9 @@
             <label>Control Rules</label><textarea style="height: 200px" [(ngModel)]="pricingRule.controlRules"></textarea>
         </div>
         <button (click)="loadPricingRule()" class="default-button" style="width: 100px">Load</button>
-        <button (click)="addNewPricingRule()" class="default-button" style="width: 100px">Save</button>
+        <button (click)="addNewPricingRule()" class="default-button" style="width: 100px">Add New</button>
+        <button (click)="updatePricingRule()" class="default-button" style="width: 100px">Update</button>
+        <button (click)="deletePricingRule()" class="default-button" style="width: 100px">Delete</button>
     </ng-container>
 
     <!--    Doctor Profile Editable Toggle-->
