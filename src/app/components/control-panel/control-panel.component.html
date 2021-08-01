@@ -56,41 +56,42 @@
 
     </ng-container>
 
-    <!--    Promo codes-->
+    <!--    Pricing rules-->
     <h3 (click)="visibleSection = visibleSection ? '':'prcodes'"
-        class="collapsible">{{visibleSection === 'prcodes' ? '- ' : '+ '}} Promo Codes</h3>
+        class="collapsible">{{visibleSection === 'prcodes' ? '- ' : '+ '}} Pricing Rules</h3>
     <ng-container *ngIf="visibleSection === 'prcodes'">
-        <p><b>Promo codes</b></p>
-        <ng-container *ngFor="let promo of promos">
+        <p><b>Pricing rules</b></p>
+        <ng-container *ngFor="let pricingRule of pricingRules">
             <div class="simple-form">
-                <p>Promo Code</p><input disabled [value]="promo?.code">
-                <p>Description</p><input disabled [value]="promo?.description">
-                <p>Expire Date</p><input disabled [value]="promo?.validTo">
-                <p>Initiation Date</p><input disabled [value]="promo?.validFrom">
-                <p>Priority</p><input disabled [value]="promo?.priority">
-                <p>RateType</p><input disabled [value]="promo?.rateType">
-                <p>Rate</p><input disabled [value]="promo?.rate">
-                <p>Rule Type</p><input disabled [value]="promo?.ruleType">
-                <p>Rules</p><input disabled [value]="promo?.rules">
+                <p>Code</p><input disabled [value]="pricingRule?.code">
+                <p>Description</p><input disabled [value]="pricingRule?.description">
+                <p>Expire Date</p><input disabled [value]="pricingRule?.validTo">
+                <p>Initiation Date</p><input disabled [value]="pricingRule?.validFrom">
+                <p>Priority</p><input disabled [value]="pricingRule?.priority">
+                <p>RateType</p><input disabled [value]="pricingRule?.rateType">
+                <p>Rate</p><input disabled [value]="pricingRule?.rate">
+                <p>Public</p><input disabled [value]="pricingRule?.public">
+                <p>Rule Type</p><input disabled [value]="pricingRule?.ruleType">
+                <p>Rules</p><input disabled [value]="pricingRule?.controlRules">
             </div>
             <br>
         </ng-container>
-        <button *ngIf="!(promos && promos.length)" (click)="loadPromoCodes()" class="default-button">Load Promo Codes</button>
-        <p><b>Set promo code values</b></p>
+        <button *ngIf="!(pricingRules && pricingRules.length)" (click)="loadPricingRules()" class="default-button">Load Pricing Rules</button>
+        <p><b>Set pricing rule code values</b></p>
         <div class="simple-form">
-            <label>Promo Code</label><input [(ngModel)]="pCode">
-            <label>Description</label><input [(ngModel)]="pDescription">
-            <label>Expire Date</label><input [(ngModel)]="pValidTo">
-            <label>Initiation Date</label><input [(ngModel)]="pValidFrom">
-            <label>Priority</label><input [(ngModel)]="pPriority">
-            <label>RateType</label><input [(ngModel)]="pRateType">
-            <label>Rate</label><input [(ngModel)]="pRate">
-            <label>Is Public</label><input [(ngModel)]="pIsPublic">
-            <label>Rule Type</label><input [(ngModel)]="pRuleType">
-            <label>Control Rules</label><textarea style="height: 200px" [(ngModel)]="pRules"></textarea>
+            <label>Code</label><input [(ngModel)]="pricingRule.code">
+            <label>Description</label><input [(ngModel)]="pricingRule.description">
+            <label>Expire Date</label><input [(ngModel)]="pricingRule.validTo">
+            <label>Initiation Date</label><input [(ngModel)]="pricingRule.validFrom">
+            <label>Priority</label><input [(ngModel)]="pricingRule.priority">
+            <label>RateType</label><input [(ngModel)]="pricingRule.rateType">
+            <label>Rate</label><input [(ngModel)]="pricingRule.rate">
+            <label>Public</label><input [(ngModel)]="pricingRule.public">
+            <label>Rule Type</label><input [(ngModel)]="pricingRule.ruleType">
+            <label>Control Rules</label><textarea style="height: 200px" [(ngModel)]="pricingRule.controlRules"></textarea>
         </div>
-        <button (click)="loadPromoCode()" class="default-button" style="width: 100px">Load</button>
-        <button (click)="savePromoCode()" class="default-button" style="width: 100px">Save</button>
+        <button (click)="loadPricingRule()" class="default-button" style="width: 100px">Load</button>
+        <button (click)="addNewPricingRule()" class="default-button" style="width: 100px">Save</button>
     </ng-container>
 
     <!--    Doctor Profile Editable Toggle-->

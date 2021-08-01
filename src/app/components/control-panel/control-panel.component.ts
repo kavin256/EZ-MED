@@ -5,6 +5,7 @@ import {ConfigModel} from '../../models/config';
 import {Constants} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataEncryptionService} from '../../services/data-encryption.service';
+import {PricingRule} from '../../models/pricing-rule';
 
 @Component({
     selector: 'app-control-panel',
@@ -14,17 +15,8 @@ import {DataEncryptionService} from '../../services/data-encryption.service';
 export class ControlPanelComponent implements OnInit {
     visibleSection = '';
     code = '';
-    pCode = '';
-    pDescription = '';
-    pIsPublic = '';
-    pValidTo = '';
-    pValidFrom = '';
-    pPriority = '';
-    pRateType = '';
-    pRate = '';
-    pRuleType = '';
-    pRules = '';
-    promos = [];
+    pricingRule: PricingRule = new PricingRule();
+    pricingRules: PricingRule [] = [];
     desc = '';
     configValue = '';
     email: string;
@@ -88,58 +80,15 @@ export class ControlPanelComponent implements OnInit {
         }
     }
 
-    loadPromoCodes() {
-        if (this.isUnlocked()) {
-            this.promos = [
-                {
-                    code: 'CODEGEN_10',
-                    validFrom: '2021-04-02',
-                    validTo: '2021-08-02',
-                    rate: '10',
-                    rules: 'rul'
-                },
-                {
-                    code: 'CODEGEN_10',
-                    validFrom: '2021-04-02',
-                    validTo: '2021-08-02',
-                    rate: '10',
-                    rules: 'rul'
-                },
-                {
-                    code: 'CODEGEN_10',
-                    validFrom: '2021-04-02',
-                    validTo: '2021-08-02',
-                    rate: '10',
-                    rules: 'rul'
-                }
-            ];
-            // // create url and send request
-            // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-            // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-            //     .then((data: any) => {
-            //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-            //             this.desc = data.data[0].description;
-            //             this.configValue = data.data[0].value;
-            //         } else if (data && data.status && data.status.code === -1) {
-            //             alert(data.status.message);
-            //         }
-            //     }).catch((data: any) => {
-            //     if (data && data.error && data.error.status) {
-            //         alert(data.error.status.message);
-            //     }
-            // });
-        }
-    }
-
-    loadPromoCode() {
+    loadPricingRules() {
         if (this.isUnlocked()) {
             // create url and send request
-            const url = Constants.API_BASE_URL + Constants.PRICING_RULE + this.pCode;
+            const url = Constants.API_BASE_URL + Constants.PRICING_MARGINS;
             this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                        this.pDescription = data.data[0].description;
-                        this.pIsPublic = data.data[0].isPublic;
+                        this.pricingRules = data.data[0] as PricingRule [];
+                        this.pricingRules.forEach(x => x.controlRules = JSON.stringify(x.controlRules));
                     } else if (data && data.status && data.status.code === -1) {
                         alert(data.status.message);
                     }
@@ -151,23 +100,46 @@ export class ControlPanelComponent implements OnInit {
         }
     }
 
-    savePromoCode() {
+    loadPricingRule() {
         if (this.isUnlocked()) {
-            // // create url and send request
-            // const url = Constants.API_BASE_URL + Constants.CONFIGURATIONS + '/' + this.code;
-            // this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
-            //     .then((data: any) => {
-            //         if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-            //             this.desc = data.data[0].description;
-            //             this.configValue = data.data[0].value;
-            //         } else if (data && data.status && data.status.code === -1) {
-            //             alert(data.status.message);
-            //         }
-            //     }).catch((data: any) => {
-            //     if (data && data.error && data.error.status) {
-            //         alert(data.error.status.message);
-            //     }
-            // });
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.PRICING_RULE + '/' + this.pricingRule.code;
+            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.pricingRule = data.data[0];
+                        this.pricingRule.controlRules = JSON.stringify(this.pricingRule.controlRules);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
+    addNewPricingRule() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const pricingRuleObj = JSON.parse(JSON.stringify(this.pricingRule));
+            pricingRuleObj.controlRules = JSON.parse(pricingRuleObj.controlRules);
+            const url = Constants.API_BASE_URL + Constants.PRICING_RULE;
+            this.dataLoaderService.post<Prescription>(url, new HttpParams(), new HttpHeaders(), null, pricingRuleObj)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.pricingRule = data.data[0];
+                        this.pricingRule.controlRules = JSON.stringify(this.pricingRule.controlRules);
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
         }
     }
 
