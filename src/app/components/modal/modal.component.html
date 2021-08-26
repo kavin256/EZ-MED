@@ -47,9 +47,12 @@
     </ng-container>
     <ng-container *ngIf="modalType === 'D_AGREEMENT'">
         <div style="text-align: justify">
-            {{dataA}}<br><br>
+            <ng-container *ngFor="let x of D_AGREEMENT">
+                <p disabled style="font-size: smaller">{{x}}</p>
+            </ng-container>
+            <br><br>
+<!--            <textarea disabled style="font-size: x-small; width: 320px; height: 480px">{{dataA}}</textarea><br><br>-->
             <div style="text-align: right">
-
                 <button class="default-button button-warning" style="margin:5px;" style="width: 150px"
                         (click)="dismiss()">
                     I don't agree
@@ -62,7 +65,12 @@
     </ng-container>
     <ng-container *ngIf="modalType === 'P_AGREEMENT'">
         <div style="text-align: justify">
-            {{dataA}}<br><br>
+            <!--            <textarea disabled style="font-size: x-small; width: 320px; height: 480px">{{dataA}}</textarea><br><br>-->
+            <!--            <p disabled style="font-size: x-small; width: 320px; height: 480px">{{dataA}}</p><br><br>-->
+            <ng-container *ngFor="let x of P_AGREEMENT">
+                <p disabled style="font-size: smaller">{{x}}</p>
+            </ng-container>
+            <br><br>
             <div style="text-align: right">
                 <button class="default-button button-warning" style="margin:5px;" style="width: 150px"
                         (click)="dismiss()">
