@@ -184,7 +184,7 @@ export class SignUpComponent implements OnInit {
         }
     }
 
-    SignUp() {
+    signUp() {
         this.passwordMissMatch = false;
         this.isIncompleteErrorAvailable = false;
         if (!this.validateInput(this.isDoctor)) {
@@ -204,7 +204,7 @@ export class SignUpComponent implements OnInit {
             userObj.title = this.title.trim();
             userObj.male = this.male;
             userObj.birthday = this.birthday;
-            userObj.contactNumber = this.dataHandlerService.formatPhoneNumber(this.contactNumber.trim());
+            userObj.contactNumber = this.contactNumber.trim();
             userObj.whatsAppNumber = this.whatsAppNumber.trim();
             userObj.doctor = this.isDoctor;
             userObj.userAllergies = this.knownAllergies;
