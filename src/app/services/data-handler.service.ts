@@ -241,6 +241,9 @@ export class DataHandlerService {
       case DoctorType.COUN:
         professionalType = 'COUN';
         break;
+      case DoctorType.AYUR:
+        professionalType = 'AYUR';
+        break;
       case DoctorType.GEN:
         professionalType = 'GEN';
         break;
@@ -263,6 +266,9 @@ export class DataHandlerService {
         break;
       case 'GEN':
         professionalType = DoctorType.GEN;
+        break;
+      case 'AYUR':
+        professionalType = DoctorType.AYUR;
         break;
       case 'OTH':
         professionalType = DoctorType.OTH;

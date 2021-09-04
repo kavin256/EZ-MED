@@ -43,6 +43,9 @@ export class DoctorProfileComponent implements OnInit {
             category: DoctorType.COUN
         },
         {
+            category: DoctorType.AYUR
+        },
+        {
             category: DoctorType.OTH
         }
     ];

@@ -40,6 +40,9 @@ export class SearchProfessionalsMainComponent implements OnInit {
       category: DoctorType.COUN
     },
     {
+      category: DoctorType.AYUR
+    },
+    {
       category: DoctorType.OTH
     }
   ];
@@ -73,7 +76,7 @@ export class SearchProfessionalsMainComponent implements OnInit {
     }
 
     // General Practitioners don't have a specialization
-    if (this.selectedCategory === DoctorType.GEN) {
+    if (this.selectedCategory === DoctorType.GEN || this.selectedCategory === DoctorType.AYUR) {
       this.selectedSpecialization = null;
     }
 
