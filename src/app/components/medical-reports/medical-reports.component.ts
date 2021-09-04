@@ -70,9 +70,9 @@ export class MedicalReportsComponent implements OnInit {
 
                     // removing the prefix
                     const prefixLength = this.objectListing.prefix.length;
-                    const appointmentNumberLength = this.appointmentId.toString().length;
+                    // const appointmentNumberLength = this.appointmentId.toString().length;
                     this.objectListing.objectSummaries.forEach((objectSummary) => {
-                        objectSummary.keyName = objectSummary.key.slice(prefixLength + appointmentNumberLength + 1);
+                        objectSummary.keyName = objectSummary.key.slice(prefixLength + 1);
                     });
 
                 }
