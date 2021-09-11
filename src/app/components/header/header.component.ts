@@ -15,17 +15,7 @@ import {DataLoaderService} from '../../services/data-loader.service';
 
 export class HeaderComponent implements OnInit, AfterViewInit {
 
-    constructor(
-        public dataHandlerService: DataHandlerService,
-        public router: Router,
-        public dataStore: DataStoreService,
-        public dataLoaderService: DataLoaderService,
-        public https: HttpClient
-    ) {
-    }
-
     profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC;
-
     signUpResultObject = {
         isSignUp: undefined,
         userType: undefined
@@ -37,8 +27,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     isSignUp = true;
     userType;
 
-    // Close the dropdown if the user clicks outside of it
-    @HostListener('document:click', ['$event'])
+    constructor(
+        public dataHandlerService: DataHandlerService,
+        public router: Router,
+        public dataStore: DataStoreService,
+        public dataLoaderService: DataLoaderService,
+        public https: HttpClient
+    ) {
+    }
 
     ngOnInit() {
         if (sessionStorage.getItem(SessionStorageKeys.loggedInUser)) {
