@@ -1,9 +1,17 @@
 <div class="app-header">
     <div class="mat-card-style">
         <div class="app-header-content">
-            <div class="logo">
-                <img src="./assets/img/ez_med_logo.png" width="100" (click)="goToHomePage()">
+            <div class="menu">
+                <img src="./assets/img/icon-menu-png-14.jpeg" width="50px" (click)="openDropDown()">
+                <div *ngIf="openedDropDown" class="dropdown-content">
+                    <a (click)="goToHomePage()">Home</a>
+                    <a (click)="profilePicClick()">Profile</a>
+                </div>
             </div>
+            <div class="logo">
+                <img src="./assets/img/logo-ezmed-new.png" width="160px">
+            </div>
+
             <div class="profile">
                 <div style="padding-top: 20px" *ngIf="!(loggedInUser && firstName)">
                     <button class="default-button log-in-button" (click)="profilePicClick()">Log In</button>
@@ -16,22 +24,4 @@
             </div>
         </div>
     </div>
-    <!--    <table>-->
-    <!--        <tr style="height: 20px"></tr>-->
-    <!--        <tr>-->
-    <!--            <th class="header-logo" align="left">-->
-    <!--                <img src="./assets/img/ez_med_logo.png" width="100" (click)="goToHomePage()">-->
-    <!--            </th>-->
-    <!--            <th style="width: 100px;">-->
-    <!--                <div *ngIf="!(loggedInUser && firstName)" align="center">-->
-    <!--                    <button class="default-button log-in-button" (click)="profilePicClick()">Log In</button>-->
-    <!--                </div>-->
-    <!--                <div *ngIf="loggedInUser && firstName" align="center">-->
-    <!--                    <img (click)="profilePicClick()" [src]="profileImageURL" width="60px"/>-->
-    <!--                    <p (click)="profilePicClick()"-->
-    <!--                       style="align-content: center; padding-top: 5px; font-size: small">{{firstName}}</p>-->
-    <!--                </div>-->
-    <!--            </th>-->
-    <!--        </tr>-->
-    <!--    </table>-->
 </div>
