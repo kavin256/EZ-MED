@@ -6,6 +6,7 @@ import {Constants} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataEncryptionService} from '../../services/data-encryption.service';
 import {PricingRule} from '../../models/pricing-rule';
+import {UserData} from '../../models/user-data';
 
 @Component({
     selector: 'app-control-panel',
@@ -17,7 +18,11 @@ export class ControlPanelComponent implements OnInit {
     code = '';
     pricingRule: PricingRule = new PricingRule();
     pricingRules: PricingRule [] = [];
+    dpdObj: UserData;
     desc = '';
+    profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC;
+    signatureImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN;
+    stampImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP;
     configValue = '';
     email: string;
     newPW: string;
@@ -109,6 +114,34 @@ export class ControlPanelComponent implements OnInit {
                     if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                         this.pricingRule = data.data[0];
                         this.pricingRule.controlRules = JSON.stringify(this.pricingRule.controlRules);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
+    loadProfessionalProfile() {
+        if (this.isUnlocked()) {
+
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + this.email;
+            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.dpdObj = data.data[0];
+
+                        // load profile pic
+                        this.profileImageURL += this.dpdObj.userId;
+                        // load signature Image URL pic
+                        this.signatureImageURL += this.dpdObj.userId;
+                        // load stamp Image URL pic
+                        this.stampImageURL += this.dpdObj.userId;
+
                     } else if (data && data.status && data.status.code === -1) {
                         alert(data.status.message);
                     }

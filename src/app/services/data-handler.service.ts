@@ -133,7 +133,7 @@ export class DataHandlerService {
     return this.configurationsMap.get(configurationName);
   }
 
-  loadUserData(userName: string, dataLoaderService: DataLoaderService, router: Router): any {
+  loadUserData(userName: string, dataLoaderService: DataLoaderService, router?: Router): any {
     let userData = null;
     const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + userName;
     dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
@@ -142,11 +142,11 @@ export class DataHandlerService {
           userData = data.data[0];
           sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(userData));
           const user = JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser));
-          if (user && user.doctor) {
+          if (router && user && user.doctor) {
             router.navigate(['doctor/dashboard']).then(r => {
               location.reload();
             });
-          } else if (user && !user.doctor) {
+          } else if (router && user && !user.doctor) {
             router.navigate(['user/dashboard']).then(r => {
               location.reload();
             });

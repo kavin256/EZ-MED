@@ -180,15 +180,15 @@
         <div *ngIf="userData?.profileCompleted && !onVacation && userData?.visibleForSearches" class="banner success">
             <p><b>Profile Status: </b>Active</p>
         </div>
-        <div *ngIf="userData?.profileCompleted && !onVacation && !userData?.visibleForSearches" class="banner error">
-            <p>Your profile is <b>NOT visible in searches</b> since manual verification is in progress.
-                We will contact you within 2 working days. Feel free to contact us for any concerns. <b>{{contactEmail}}</b></p>
-        </div>
 <!--        <div *ngIf="userData?.profileCompleted && !onVacation && !userData?.visibleForSearches" class="banner error">-->
-<!--            <p>Your profile is active. But <b>not yet visible in searches</b> since it is not yet verified by EZMED manually.-->
-<!--                Please contact EZMED to verify your profile. Send an email to <b>{{contactEmail}}</b> with your-->
-<!--                <b>full name</b> and <b>email.</b></p>-->
+<!--            <p>Your profile is <b>NOT visible in searches</b> since manual verification is in progress.-->
+<!--                We will contact you within 2 working days. Feel free to contact us for any concerns. <b>{{contactEmail}}</b></p>-->
 <!--        </div>-->
+        <div *ngIf="userData?.profileCompleted && !onVacation && !userData?.visibleForSearches" class="banner error">
+            <p>Your profile is active. But <b>not yet visible in searches</b> since it is not yet verified by EZMED manually.
+                Please contact EZMED to verify your profile. Send an email to <b>{{contactEmail}}</b> with your
+                <b>full name</b> and <b>email.</b></p>
+        </div>
 
         <div class="banner error" *ngIf="userData?.profileCompleted && onVacation">
             <p><b>Profile Status: </b>Your profile is not Visible in searches and there are no any active appointments

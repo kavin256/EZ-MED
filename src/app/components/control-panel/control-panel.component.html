@@ -76,7 +76,9 @@
             </div>
             <br>
         </ng-container>
-        <button *ngIf="!(pricingRules && pricingRules.length)" (click)="loadPricingRules()" class="default-button">Load Pricing Rules</button>
+        <button *ngIf="!(pricingRules && pricingRules.length)" (click)="loadPricingRules()" class="default-button">Load
+            Pricing Rules
+        </button>
         <p><b>Set pricing rule code values</b></p>
         <div class="simple-form">
             <label>Code</label><input [(ngModel)]="pricingRule.code">
@@ -88,7 +90,8 @@
             <label>Rate</label><input [(ngModel)]="pricingRule.rate">
             <label>Public</label><input [(ngModel)]="pricingRule.public">
             <label>Rule Type</label><input [(ngModel)]="pricingRule.ruleType">
-            <label>Control Rules</label><textarea style="height: 200px" [(ngModel)]="pricingRule.controlRules"></textarea>
+            <label>Control Rules</label><textarea style="height: 200px"
+                                                  [(ngModel)]="pricingRule.controlRules"></textarea>
         </div>
         <button (click)="loadPricingRule()" class="default-button" style="width: 100px">Load</button>
         <button (click)="addNewPricingRule()" class="default-button" style="width: 100px">Add New</button>
@@ -113,6 +116,49 @@
             <button [disabled]="!email" (click)="setEditableMode()" class="default-button" style="width: 100px">Save
             </button>
         </div>
+    </ng-container>
+
+    <!--    Doctor Profile Details-->
+    <h3 (click)="visibleSection = visibleSection ? '':'dpd'"
+        class="collapsible">{{visibleSection === 'dpd' ? '- ' : '+ '}} Doctor Profile Details</h3>
+    <ng-container *ngIf="visibleSection === 'dpd'">
+        <p>Check professional's profile details</p>
+        <div class="simple-form">
+            <label>Email</label><input [(ngModel)]="email">
+            <label>ID</label><input disabled [(ngModel)]="id">
+
+            <button (click)="loadProfessionalProfile()" class="default-button" style="width: 100px">Load</button>
+            <br>
+        </div>
+        <ng-container *ngIf="dpdObj">
+            <div class="simple-form">
+                <p>Name</p><input disabled [value]="dpdObj?.title + '. ' + dpdObj?.firstName + ' ' + dpdObj?.lastName">
+                <p>Contact Number</p><input disabled [value]="dpdObj?.contactNumber">
+                <p>WhatsApp Number</p><input disabled [value]="dpdObj?.whatsAppNumber">
+                <p>Qualifications</p><input disabled [value]="dpdObj?.qualifications">
+                <p>Bio</p><input disabled [value]="dpdObj?.bio">
+                <p>Price</p><input disabled [value]="dpdObj?.priceForAppointment">
+                <p>Professional Level</p><input disabled [value]="dpdObj?.professionalType">
+                <p>Registration No.</p><input disabled [value]="dpdObj?.regNo">
+            </div>
+
+            <br>
+            <p>Profile Picture</p>
+            <img *ngIf="dpdObj" class="professional-profile-pic" [src]="profileImageURL">
+            <br>
+            <br>
+
+            <p>Signature</p>
+            <img *ngIf="dpdObj" class="professional-profile-pic" [src]="signatureImageURL">
+            <br>
+            <br>
+
+            <p>Stamp</p>
+            <img *ngIf="dpdObj" class="professional-profile-pic" [src]="stampImageURL">
+            <br>
+            <br>
+        </ng-container>
+
     </ng-container>
 
     <!--    Doctor Profile Bio Section-->

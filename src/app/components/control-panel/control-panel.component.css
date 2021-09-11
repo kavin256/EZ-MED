@@ -12,6 +12,11 @@
     grid-template-columns: 2fr 1fr 1fr;
     gap: 5px;
 }
+
+.professional-profile-pic {
+    width: 200px;
+}
+
 .collapsible {
     background-color: #777;
     color: white;
