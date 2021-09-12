@@ -6,6 +6,7 @@
                 <div *ngIf="openedDropDown" class="dropdown-content">
                     <a (click)="goToHomePage()">Home</a>
                     <a (click)="profilePicClick()">Profile</a>
+                    <a *ngIf="!loggedInUser?.doctor" (click)="makeAppointment()">Make Appointment</a>
                 </div>
             </div>
             <div class="logo">

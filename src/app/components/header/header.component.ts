@@ -109,6 +109,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         });
     }
 
+    makeAppointment() {
+        this.openedDropDown = false;
+        this.router.navigate(['/searchProfessionals']).then(r => {
+        });
+    }
+
     private setFirstName(loggedInUser: any): string {
         let fName = null;
         if (loggedInUser && loggedInUser.doctor) {
