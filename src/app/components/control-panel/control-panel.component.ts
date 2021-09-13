@@ -288,8 +288,8 @@ export class ControlPanelComponent implements OnInit {
             const encrypted = this.dataEncryptionService.set('123456$#@$^@1ERF', this.newPW.trim());
 
             // create url and send request
-            const url = Constants.API_BASE_URL + Constants.PW_CHANGE + this.email + '/' + encrypted;
-            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, null)
+            const url = Constants.API_BASE_URL + Constants.PW_CHANGE + this.email;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, encrypted)
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                         alert(data.status.message);
