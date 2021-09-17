@@ -19,7 +19,6 @@ export class DoctorScheduleComponent implements OnInit {
 
     constructor(
         public router: Router,
-        public dataStore: DataStoreService,
         public dataLoaderService: DataLoaderService,
         public dataHandlerService: DataHandlerService
     ) {
@@ -129,22 +128,18 @@ export class DoctorScheduleComponent implements OnInit {
                     this.prepareDisplayData(this.doctorScheduleData);
                     sessionStorage.setItem(SessionStorageKeys.professionalScheduleData, JSON.stringify(this.doctorScheduleData));
                     this.loaderVisible = false;
-                    // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                 } else if (data && data.status && data.status.code === -1) {
                     sessionStorage.setItem(SessionStorageKeys.professionalScheduleData, null);
                     this.loaderVisible = false;
-                    // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
                 }
             }).finally(() => {
             this.loaderVisible = false;
-            // this.dataLoaderService.activateLoader(false, MODAL_TYPES.LOADING);
         });
     }
 
     private updateSchedule() {
         let success = true;
         this.loaderVisible = true;
-        // this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
 
         // from hours and minutes to date
         if (this.doctorScheduleData) {

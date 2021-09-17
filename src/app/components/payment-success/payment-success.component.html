@@ -10,38 +10,36 @@
     </ng-container>
     <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
         <div class="banner plain left-aligned">
-            <p><b>Card No.: </b>{{paymentResponseData?.cardNo}}</p>
-            <p><b>Name on card: </b>{{paymentResponseData?.cardHolder}}</p>
-            <p><b>Amount: </b>{{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>
-            <p><b>Comment: </b>{{paymentResponseData?.respTxt }}</p>
-            <p><b>Ref. number: </b>{{paymentResponseData?.txnRef}}</p>
+            <p style="font-size: x-small"><b>Card No.: </b>{{paymentResponseData?.cardNo}}</p>
+            <p style="font-size: x-small"><b>Name on card: </b>{{paymentResponseData?.cardHolder}}</p>
+            <p style="font-size: x-small"><b>Amount: </b>{{paymentResponseData?.currency}} {{paymentResponseData?.paymentAmt}}</p>
+            <p style="font-size: x-small"><b>Comment: </b>{{paymentResponseData?.respTxt }}</p>
+            <p style="font-size: x-small"><b>Ref. number: </b>{{paymentResponseData?.txnRef}}</p>
         </div>
         <div class="banner success left-aligned">
-            <p><b>Appointment Id: </b>{{paymentResponseData?.appointment?.appointmentId}}</p>
-            <p><b>Professional: </b>{{paymentResponseData?.appointment?.doctorData?.title}}
+            <p style="font-size: x-small"><b>Appointment Id: </b>{{paymentResponseData?.appointment?.appointmentId}}</p>
+            <p style="font-size: x-small"><b>Professional: </b>{{paymentResponseData?.appointment?.doctorData?.title}}
                 . {{paymentResponseData?.appointment?.doctorData?.firstName}} {{paymentResponseData?.appointment?.doctorData?.lastName}}
             </p>
-            <p><b>Date: </b>{{paymentResponseData?.appointment?.appointmentDate}}</p>
-            <p><b>Time: </b>{{getTime(paymentResponseData?.appointment?.appointmentTime)}}</p>
+            <p style="font-size: x-small"><b>Date: </b>{{paymentResponseData?.appointment?.appointmentDate}}</p>
+            <p style="font-size: x-small"><b>Time: </b>{{getTime(paymentResponseData?.appointment?.appointmentTime)}}</p>
         </div>
     </ng-container>
     <div *ngIf="paymentResponseData && !isPaymentSuccessful" class="banner plain left-aligned">
-        <p><b>Card No.: </b>{{paymentResponseData?.cardNo}}</p>
-        <p><b>Name on card: </b>{{paymentResponseData?.cardHolder}}</p>
-        <p><b>Reason: </b>{{paymentResponseData?.respTxt}}</p>
-        <p><b>Ref. number: </b>{{paymentResponseData?.txnRef}}</p>
+        <p style="font-size: x-small"><b>Card No.: </b>{{paymentResponseData?.cardNo}}</p>
+        <p style="font-size: x-small"><b>Name on card: </b>{{paymentResponseData?.cardHolder}}</p>
+        <p style="font-size: x-small"><b>Reason: </b>{{paymentResponseData?.respTxt}}</p>
+        <p style="font-size: x-small"><b>Ref. number: </b>{{paymentResponseData?.txnRef}}</p>
     </div>
     <div class="banner warning" *ngIf="paymentResponseData">
-        <p>Please make sure you have the ref. number of the payment with you for future reference</p>
+        <p style="color: #d84344"><b>Please upload the related medical reports (if any) before the consultation starts</b></p>
     </div>
     <ng-container *ngIf="paymentResponseData && isPaymentSuccessful">
         <button (click)="goToAppointment()" class="default-button">Go to my appointments</button>
         <br>
     </ng-container>
-    <button (click)="goToDashboard()" class="default-button">Go to my profile</button>
 </div>
 <!--    Modal-->
-<!--    <button (click)="clickToggleModal()">open</button>-->
 <div *ngIf="loaderVisible" id="myModal" class="custom-modal">
     <div class="custom-modal-content">
         <div class="loader"></div>

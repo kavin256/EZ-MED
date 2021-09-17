@@ -118,10 +118,11 @@
         </div>
     </ng-container>
 
-    <!--    Doctor Profile Details-->
-    <h3 (click)="visibleSection = visibleSection ? '':'dpd'"
-        class="collapsible">{{visibleSection === 'dpd' ? '- ' : '+ '}} Doctor Profile Details</h3>
-    <ng-container *ngIf="visibleSection === 'dpd'">
+    <!--    Doctor Profile Edit-->
+    <h3 (click)="visibleSection = visibleSection ? '':'dpe'"
+        class="collapsible">{{visibleSection === 'dpe' ? '- ' : '+ '}} Doctor Profile Edit</h3>
+
+    <ng-container *ngIf="visibleSection === 'dpe'">
         <p>Check professional's profile details</p>
         <div class="simple-form">
             <label>Email</label><input [(ngModel)]="email">
@@ -130,35 +131,187 @@
             <button (click)="loadProfessionalProfile()" class="default-button" style="width: 100px">Load</button>
             <br>
         </div>
-        <ng-container *ngIf="dpdObj">
-            <div class="simple-form">
-                <p>Name</p><input disabled [value]="dpdObj?.title + '. ' + dpdObj?.firstName + ' ' + dpdObj?.lastName">
-                <p>Contact Number</p><input disabled [value]="dpdObj?.contactNumber">
-                <p>WhatsApp Number</p><input disabled [value]="dpdObj?.whatsAppNumber">
-                <p>Qualifications</p><input disabled [value]="dpdObj?.qualifications">
-                <p>Bio</p><input disabled [value]="dpdObj?.bio">
-                <p>Price</p><input disabled [value]="dpdObj?.priceForAppointment">
-                <p>Professional Level</p><input disabled [value]="dpdObj?.professionalType">
-                <p>Registration No.</p><input disabled [value]="dpdObj?.regNo">
-            </div>
+        <ng-container *ngIf="dpeUserData">
+            <br>
+            <mat-form-field>
+                <mat-label>EzMed registration no.:</mat-label>
+                <input [disabled]="true" matInput placeholder="" [(ngModel)]="dpeUserData.userId">
+            </mat-form-field>
+            <br>
 
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <mat-select required [(value)]="dpeUserData.title">
+                    <ng-container *ngFor="let title of titles">
+                        <mat-option value="{{title.value}}">
+                            {{title.value}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field>
+                <mat-label>First Name: {{dpeUserData.firstName}}</mat-label>
+                <input required matInput placeholder=""
+                       [(ngModel)]="dpeUserData.firstName">
+            </mat-form-field>
+            <br>
+
+            <mat-form-field>
+                <mat-label>Last Name: {{dpeUserData.lastName}}</mat-label>
+                <input required matInput placeholder=""
+                       [(ngModel)]="dpeUserData.lastName">
+            </mat-form-field>
+            <br>
+
+            <mat-form-field>
+                <mat-label>Professional Level</mat-label>
+                <mat-select (selectionChange)="selectCategory($event)"
+                            [value]="selectedCategory">
+                    <ng-container *ngFor="let category of categories">
+                        <mat-option value="{{category.category}}">{{category.category}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field>
+                <mat-label>Registration Number (SLMC):</mat-label>
+                <input matInput placeholder="" [(ngModel)]="dpeUserData.regNo">
+            </mat-form-field>
+            <br>
+
+            <mat-form-field>
+                <mat-label>Qualifications (as in the stamp):</mat-label>
+                <textarea required matInput placeholder="eg: MD(Russia), MBBS(SL)"
+                          [(ngModel)]="dpeUserData.qualifications"></textarea>
+            </mat-form-field>
+            <br>
+
+            <ng-container
+                    *ngIf="selectedCategory !== undefined && selectedCategory !== null &&
+                !(selectedCategory === 'Ayurweda' || selectedCategory === 'General Practitioner' || selectedCategory === 'Any')">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Specialization #1</mat-label>
+                    <mat-select matNativeControl [(value)]="dpeUserData.specialityA">
+                        <ng-container *ngFor="let specialization of specializations">
+                            <mat-option value="{{specialization}}">
+                                {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+            </ng-container>
+
+            <ng-container
+                    *ngIf="selectedCategory !== undefined && selectedCategory !== null &&
+                !(selectedCategory === 'Ayurweda' || selectedCategory === 'General Practitioner' || selectedCategory === 'Any')">
+                <mat-form-field
+                        class="example-full-width">
+                    <mat-label>Specialization #2 (Optional)</mat-label>
+                    <mat-select matNativeControl [(value)]="dpeUserData.specialityB">
+                        <ng-container *ngFor="let specialization of specializations">
+                            <mat-option value="{{specialization}}">
+                                {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+            </ng-container>
+
+            <ng-container
+                    *ngIf="selectedCategory !== undefined && selectedCategory !== null &&
+                !(selectedCategory === 'Ayurweda' || selectedCategory === 'General Practitioner' || selectedCategory === 'Any')">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Specialization #3 (Optional)</mat-label>
+                    <mat-select matNativeControl [(value)]="dpeUserData.specialityC">
+                        <ng-container *ngFor="let specialization of specializations">
+                            <mat-option value="{{specialization}}">
+                                {{dataHandlerService.convertCamelCaseToSentence(specialization)}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+            </ng-container>
+
+            <mat-form-field>
+                <mat-label>Contact Number:</mat-label>
+                <input required matInput placeholder=""
+                       [(ngModel)]="dpeUserData.contactNumber">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>WhatsApp (With country code):</mat-label>
+                <input matInput placeholder="" [(ngModel)]="dpeUserData.whatsAppNumber">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Email:</mat-label>
+                <input [disabled]="true" disabled required matInput placeholder="" [(ngModel)]="dpeUserData.email">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Price per consultation ({{priceCurrency}}):</mat-label>
+                <input required matInput placeholder=""
+                       [(ngModel)]="dpeUserData.priceForAppointment">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Bio:</mat-label>
+                <textarea matInput placeholder="" [(ngModel)]="dpeUserData.bio"></textarea>
+            </mat-form-field>
+            <br>
+            <button class="default-button" style="width: 100px" (click)="saveData()">Save</button>
+            <br>
             <br>
             <p>Profile Picture</p>
-            <img *ngIf="dpdObj" class="professional-profile-pic" [src]="profileImageURL">
+            <img *ngIf="dpeUserData" class="professional-profile-pic" [src]="profileImageURL">
             <br>
             <br>
 
             <p>Signature</p>
-            <img *ngIf="dpdObj" class="professional-profile-pic" [src]="signatureImageURL">
+            <img *ngIf="dpeUserData" class="professional-profile-pic" [src]="signatureImageURL">
             <br>
             <br>
 
             <p>Stamp</p>
-            <img *ngIf="dpdObj" class="professional-profile-pic" [src]="stampImageURL">
+            <img *ngIf="dpeUserData" class="professional-profile-pic" [src]="stampImageURL">
             <br>
             <br>
+            <div style="align-items: center; width: 200px">
+                <ng-container *ngIf="dpeUserData?.editableMode">
+                    <mat-label style="font-size: small">Upload Profile Picture: (Square shape is better)</mat-label>
+                    <br>
+                    <input type="file"
+                           accept="image/*"
+                           (change)="uploadImage($event)">
+                    <br>
+                    <br>
+                </ng-container>
+                <ng-container *ngIf="dpeUserData?.editableMode">
+                    <mat-label style="font-size: small">Upload Signature:</mat-label>
+                    <br>
+                    <input type="file"
+                           accept="image/*"
+                           (change)="uploadSignature($event)">
+                    <br>
+                    <br>
+                </ng-container>
+                <ng-container *ngIf="dpeUserData?.editableMode">
+                    <mat-label style="font-size: small">Upload Professional Stamp:</mat-label>
+                    <br>
+                    <input type="file"
+                           accept="image/*"
+                           (change)="uploadStamp($event)">
+                    <br>
+                    <br>
+                </ng-container>
+            </div>
         </ng-container>
-
     </ng-container>
 
     <!--    Doctor Profile Bio Section-->

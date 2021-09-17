@@ -2,7 +2,8 @@
 
     <ng-container *ngIf="!addItem && !doctorSide">
         <div align="center">
-            <button [disabled]="!editable" (click)="addMoreItem()" class="default-button">
+<!--            <button [disabled]="!editable" (click)="addMoreItem()" class="default-button">-->
+            <button (click)="addMoreItem()" class="default-button">
                 Add a file
             </button>
         </div>

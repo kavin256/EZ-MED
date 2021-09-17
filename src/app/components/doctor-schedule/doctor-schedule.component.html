@@ -17,12 +17,6 @@
                 </b></p>
                 <ng-container *ngFor="let workingTimePeriod of schedule.workingTimePeriods; let i = index">
 
-                    <!--                    <p align="left"><b>-->
-                    <!--                        <mat-checkbox-->
-                    <!--                                (change)="workingTimePeriod.isActive = !workingTimePeriod.isActive"-->
-                    <!--                                [checked]="workingTimePeriod && workingTimePeriod.isActive"><span style="font-family: 'Arial Black'">{{schedule.title}} Slot #{{i+1}}</span>-->
-                    <!--                        </mat-checkbox>-->
-                    <!--                    </b></p>-->
                     <ng-container>
                         <mat-label>From:</mat-label>
                         <ngb-timepicker [(ngModel)]="workingTimePeriod.startTimeSelected"
@@ -84,7 +78,6 @@
                               color="secondary">Cancel</button></span>
 </div>
 <!--    Modal-->
-<!--    <button (click)="clickToggleModal()">open</button>-->
 <div *ngIf="loaderVisible" id="myModal" class="custom-modal">
     <div class="custom-modal-content">
         <div class="loader"></div>

@@ -7,30 +7,18 @@
             <p class="professional-card-item-name">
                 {{professional?.title}} {{professional?.firstName}} {{professional?.lastName}}
             </p>
-            <!--        <p class="professional-card-item-content">-->
-            <!--            {{professional?.qualifications}}-->
-            <!--        </p>-->
-            <!--        <p class="professional-card-item-content">-->
-            <!--            {{professional?.qualifications}}-->
-            <!--        </p>-->
             <p class="professional-card-item-content">
                 <b>{{dataHandlerService.convertProfessionalTypeFromDBFormat(
                     professional?.professionalType) | uppercase}}</b>
             </p>
             <ng-container *ngIf="professional?.specialityA || professional?.specialityB || professional?.specialityC">
-                <!--            <p class="professional-card-item-content">-->
-                <!--                <mat-divider style="left: inherit;"></mat-divider>-->
-                <!--            </p>-->
                 <p class="professional-card-item-content">
-                    ( {{professional?.specialityA}}{{professional?.specialityB ?
-                    ', ' + professional?.specialityB : ''}}{{professional?.specialityC ?
-                    ', ' + professional?.specialityC : ''}} )
+                    ( {{dataHandlerService.convertCamelCaseToSentence(professional?.specialityA)}}{{professional?.specialityB ?
+                    ', ' + dataHandlerService.convertCamelCaseToSentence(professional?.specialityB) : ''}}{{professional?.specialityC ?
+                    ', ' + dataHandlerService.convertCamelCaseToSentence(professional?.specialityC) : ''}} )
                 </p>
             </ng-container>
             <ng-container *ngIf="isSearch">
-                <!--            <p class="professional-card-item-content" style="padding-bottom: 10px">-->
-                <!--                <mat-divider style="left: inherit;"></mat-divider>-->
-                <!--            </p>-->
                 <p class="professional-card-item-content" style="padding-top: 10px; color: #4CAF50">
                     <b>{{professional?.nextAvailableTime}}</b>
                 </p>
@@ -48,11 +36,6 @@
             <p class="professional-card-details-content">
                 <b>{{'Bio:' | uppercase}}</b>
             </p>
-            <!--        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">-->
-            <!--            Dr. (Mrs) Ranasinghe is a Board Certified Consultant Endocrinologist and had her Clinical-->
-            <!--            Trainings at Addenbrookes hospital, Cambridge, UK. She has published many research articles-->
-            <!--            in diverse areas of Endocrinology.-->
-            <!--        </p>-->
             <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">
                 {{professional?.bio}}
             </p>
@@ -60,12 +43,8 @@
         <p *ngIf="isSearch" class="professional-card-details-content price"
            style="text-align: right; font-size: small; color: #001f72">
             <br>
-            <!--            Price per consultation: <b>{{currency}} {{professional?.rate?.price}}</b>-->
             <b>Price: {{currency}} {{professional?.rate?.price}}</b>
         </p>
-        <!--        <p class="professional-card-details-content" style="text-align: justify; margin-left: 20px">-->
-        <!--            {{currency}} {{professional?.rate?.price}}-->
-        <!--        </p>-->
         <div *ngIf="isSearch" class="professional-card-details-content mk-button">
             <button (click)="selectProfessional_($event, professional)" class="default-button secondary"
                     style="alignment: right">Make Appointment

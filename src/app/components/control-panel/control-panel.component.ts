@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Prescription} from '../../models/prescription';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {ConfigModel} from '../../models/config';
-import {Constants} from '../../utils/Constants';
+import {Constants, DoctorTitles, DoctorType} from '../../utils/Constants';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {DataEncryptionService} from '../../services/data-encryption.service';
 import {PricingRule} from '../../models/pricing-rule';
 import {UserData} from '../../models/user-data';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {DataKey} from '../../services/data-store.service';
 
 @Component({
     selector: 'app-control-panel',
@@ -18,7 +20,8 @@ export class ControlPanelComponent implements OnInit {
     code = '';
     pricingRule: PricingRule = new PricingRule();
     pricingRules: PricingRule [] = [];
-    dpdObj: UserData;
+    dpeUserData: UserData;
+    selectedImage: File;
     desc = '';
     profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC;
     signatureImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN;
@@ -34,15 +37,51 @@ export class ControlPanelComponent implements OnInit {
     countB = 0;
     countC = 0;
     unlockPW = '';
+    titles = [
+        {value: DoctorTitles.DR},
+        {value: DoctorTitles.MR},
+        {value: DoctorTitles.MRS},
+        {value: DoctorTitles.MS},
+        {value: DoctorTitles.PROF},
+    ];
+    specializations;
+    selectedSpecialization: any = null;
+    selectedCategory: any = null;
+    CONSULTANT_TYPES: any;
+    OTHER_MEDICAL_PROFESSIONAL_TYPES: any;
+    COUNSELLOR_TYPES: any;
+    priceCurrency = 'LKR';
+    categories = [
+        {
+            category: DoctorType.CON
+        },
+        {
+            category: DoctorType.GEN
+        },
+        {
+            category: DoctorType.COUN
+        },
+        {
+            category: DoctorType.AYUR
+        },
+        {
+            category: DoctorType.OTH
+        }
+    ];
 
     constructor(
+        public dataHandlerService: DataHandlerService,
         public dataLoaderService: DataLoaderService,
+        public https: HttpClient,
         public dataEncryptionService: DataEncryptionService,
     ) {
     }
 
     ngOnInit() {
         this.getTheCounts();
+        this.CONSULTANT_TYPES = JSON.parse(this.dataHandlerService.loadConfig('CONSULTANT_TYPES'));
+        this.OTHER_MEDICAL_PROFESSIONAL_TYPES = JSON.parse(this.dataHandlerService.loadConfig('OTHER_MEDICAL_PROFESSIONAL_TYPES'));
+        this.COUNSELLOR_TYPES = JSON.parse(this.dataHandlerService.loadConfig('COUNSELLOR_TYPES'));
     }
 
     addConfig() {
@@ -127,30 +166,141 @@ export class ControlPanelComponent implements OnInit {
 
     loadProfessionalProfile() {
         if (this.isUnlocked()) {
-
-            // create url and send request
+            this.dpeUserData = null;
             const url = Constants.API_BASE_URL + Constants.GET_USER_DATA + this.email;
-            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+            this.dataLoaderService.get<UserData>(url, new HttpParams(), new HttpHeaders())
                 .then((data: any) => {
-                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
-                        this.dpdObj = data.data[0];
+                    if (data && data.status && data.status.code === 1) {
+                        this.dpeUserData = data.data[0];
+                        this.profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC + this.dpeUserData.userId;
+                        this.signatureImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN + this.dpeUserData.userId;
+                        this.stampImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP + this.dpeUserData.userId;
 
-                        // load profile pic
-                        this.profileImageURL += this.dpdObj.userId;
-                        // load signature Image URL pic
-                        this.signatureImageURL += this.dpdObj.userId;
-                        // load stamp Image URL pic
-                        this.stampImageURL += this.dpdObj.userId;
-
+                        // converting professionalType to a user friendly readable format
+                        if (this.dpeUserData && this.dpeUserData.professionalType) {
+                            this.selectedCategory = this.dataHandlerService.convertProfessionalTypeFromDBFormat(
+                                JSON.parse(JSON.stringify(this.dpeUserData.professionalType)));
+                            this.selectCategory({value: this.selectedCategory});
+                        }
                     } else if (data && data.status && data.status.code === -1) {
-                        alert(data.status.message);
                     }
-                }).catch((data: any) => {
-                if (data && data.error && data.error.status) {
-                    alert(data.error.status.message);
-                }
-            });
+                });
         }
+    }
+
+    selectCategory($event) {
+        this.selectedSpecialization = null;
+        this.selectedCategory = $event.value;
+        switch (this.selectedCategory) {
+            case DoctorType.CON:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.CONSULTANT_TYPES);
+                break;
+            case DoctorType.COUN:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.COUNSELLOR_TYPES);
+                break;
+            case DoctorType.OTH:
+                this.specializations = [];
+                this.specializations = this.specializations.concat(this.OTHER_MEDICAL_PROFESSIONAL_TYPES);
+                break;
+            default:
+                this.specializations = [];
+                break;
+        }
+    }
+
+    saveData() {
+        if (this.selectedCategory &&
+            this.dpeUserData.priceForAppointment &&
+            parseInt(this.dpeUserData.priceForAppointment, 10) > 0) {
+
+            // converting professionalType to a database readable format
+            if (this.selectedCategory) {
+                this.dpeUserData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
+                    JSON.parse(JSON.stringify(this.selectedCategory)));
+            }
+            const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.dpeUserData.userId;
+            this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.dpeUserData)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1) {
+                        alert('User addition is successful');
+                    }
+                });
+        } else if (parseInt(this.dpeUserData.priceForAppointment, 10) <= 0) {
+            alert('Price per consultation should be more than LKR 0');
+        } else {
+            alert('Please fill mandatory fields.');
+        }
+    }
+
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadImage(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
+
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_PROFILE_PIC + this.dpeUserData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
+    }
+
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadSignature(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
+
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_SIGN + this.dpeUserData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
+    }
+
+    /**
+     * Upload user image handling
+     * @param event selected image
+     */
+    uploadStamp(event) {
+        this.selectedImage = event.target.files[0];
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedImage);
+
+        // sent request
+        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_STAMP + this.dpeUserData.userId;
+        const req = new HttpRequest('POST', url, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+        this.https.request(req).subscribe(
+            data => {
+                if (data) {
+                }
+            }
+        );
     }
 
     addNewPricingRule() {
@@ -323,6 +473,7 @@ export class ControlPanelComponent implements OnInit {
     }
 
     isUnlocked() {
-        return this.unlockPW === '1243';
+        return true;
+        // return this.unlockPW === '1243';
     }
 }

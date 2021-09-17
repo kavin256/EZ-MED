@@ -14,7 +14,6 @@ import {Subscription} from 'rxjs-compat/Subscription';
     styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent implements OnInit {
-    selectedImage: File;
     editable = false;
     loggedInUser = null;
     CONSULTANT_TYPES: any;
@@ -23,6 +22,9 @@ export class DoctorProfileComponent implements OnInit {
     priceCurrency = 'LKR';
     onVacation = false;
     userData: UserData;
+    profileImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_PROFILE_PIC;
+    signatureImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_SIGN;
+    stampImageURL = Constants.API_BASE_URL + Constants.DOWNLOAD_USER_STAMP;
     vacationModeTitle = 'Enable Vacation Mode';
     titles = [
         {value: DoctorTitles.DR},
@@ -85,6 +87,12 @@ export class DoctorProfileComponent implements OnInit {
             JSON.parse(sessionStorage.getItem(SessionStorageKeys.loggedInUser)), this.router);
         if (this.loggedInUser) {
             this.userData = this.loggedInUser;
+            // load profile pic
+            this.profileImageURL += this.userData.userId;
+            // load signature Image URL pic
+            this.signatureImageURL += this.userData.userId;
+            // load stamp Image URL pic
+            this.stampImageURL += this.userData.userId;
         }
 
         // converting professionalType to a user friendly readable format
@@ -93,10 +101,6 @@ export class DoctorProfileComponent implements OnInit {
                 JSON.parse(JSON.stringify(this.userData.professionalType)));
             this.selectCategory({value: this.selectedCategory});
         }
-    }
-
-    getColor(state: string) {
-        return '#000000';
     }
 
     selectCategory($event) {
@@ -125,31 +129,6 @@ export class DoctorProfileComponent implements OnInit {
         this.editable = editable;
     }
 
-    saveData() {
-        if (this.selectedCategory &&
-            this.userData.priceForAppointment &&
-            parseInt(this.userData.priceForAppointment, 10) > 0) {
-
-            // converting professionalType to a database readable format
-            if (this.selectedCategory) {
-                this.userData.professionalType = this.dataHandlerService.convertProfessionalTypeToDBFormat(
-                    JSON.parse(JSON.stringify(this.selectedCategory)));
-            }
-            const url = Constants.API_BASE_URL + Constants.UPDATE_USER_SPECIFIC_DATA + this.userData.userId;
-            this.dataLoaderService.put<UserData>(url, new HttpParams(), new HttpHeaders(), DataKey.uploadImage, this.userData)
-                .then((data: any) => {
-                    if (data && data.status && data.status.code === 1) {
-                        sessionStorage.setItem(SessionStorageKeys.loggedInUser, JSON.stringify(data.data[0]));
-                        this.toggleEditable(false);
-                    }
-                });
-        } else if (parseInt(this.userData.priceForAppointment, 10) <= 0) {
-            alert('Price per consultation should be more than LKR 0');
-        } else {
-            alert('Please fill mandatory fields.');
-        }
-    }
-
     goToMyAppointments() {
         this.router.navigate(['appointments']).then(r => {
         });
@@ -158,75 +137,6 @@ export class DoctorProfileComponent implements OnInit {
     editSchedule() {
         this.router.navigate(['doctor/schedule']).then(r => {
         });
-    }
-
-    /**
-     * Upload user image handling
-     * @param event selected image
-     */
-    uploadImage(event) {
-        this.selectedImage = event.target.files[0];
-        const formData: FormData = new FormData();
-        formData.append('file', this.selectedImage);
-
-        // sent request
-        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_PROFILE_PIC + this.userData.userId;
-        const req = new HttpRequest('POST', url, formData, {
-            reportProgress: true,
-            responseType: 'json'
-        });
-        this.https.request(req).subscribe(
-            data => {
-                if (data) {
-                }
-            }
-        );
-    }
-
-    /**
-     * Upload user image handling
-     * @param event selected image
-     */
-    uploadSignature(event) {
-        this.selectedImage = event.target.files[0];
-        const formData: FormData = new FormData();
-        formData.append('file', this.selectedImage);
-
-        // sent request
-        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_SIGN + this.userData.userId;
-        const req = new HttpRequest('POST', url, formData, {
-            reportProgress: true,
-            responseType: 'json'
-        });
-        this.https.request(req).subscribe(
-            data => {
-                if (data) {
-                }
-            }
-        );
-    }
-
-    /**
-     * Upload user image handling
-     * @param event selected image
-     */
-    uploadStamp(event) {
-        this.selectedImage = event.target.files[0];
-        const formData: FormData = new FormData();
-        formData.append('file', this.selectedImage);
-
-        // sent request
-        const url = Constants.API_BASE_URL + Constants.UPLOAD_USER_STAMP + this.userData.userId;
-        const req = new HttpRequest('POST', url, formData, {
-            reportProgress: true,
-            responseType: 'json'
-        });
-        this.https.request(req).subscribe(
-            data => {
-                if (data) {
-                }
-            }
-        );
     }
 
     checkForMandatoryFieldsToActivateProfile(userData: UserData) {

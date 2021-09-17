@@ -4,7 +4,7 @@
         <div class="banner warning">
             <p>Appointment Status: <b>{{getStatusName(appointment?.status)}}</b></p>
         </div>
-        <div class="banner info left-aligned">
+        <div *ngIf="!(doctorSide && isNew(appointment?.status))" class="banner info left-aligned">
 
 <!--            <ng-container *ngIf="doctorSide">-->
 <!--                <h1 style="font-size: x-large">WhatsApp: <a href="https://wa.me/{{patient?.whatsAppNumber}}">{{patient?.whatsAppNumber}}</a></h1>-->
@@ -62,8 +62,7 @@
         </ng-container>
         <br>
         <div class="banner info left-aligned" *ngIf="isPatientDetailsShown && patient">
-            <p style="font-size: small">Patient Name: {{patient?.title}}
-                . {{patient?.firstName}} {{patient?.lastName}}</p>
+            <p style="font-size: small">Patient Name: {{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</p>
             <p style="font-size: small">Patient Ref. No: {{patient?.userId}}</p>
             <p style="font-size: small">WhatsApp number: {{patient?.whatsAppNumber}}</p>
             <p style="font-size: small">Email: {{patient?.email}}</p>
@@ -75,7 +74,7 @@
     <ng-container *ngIf="doctorSide">
         <ng-container *ngIf="!isInProgress(appointment?.status)">
             <button [disabled]="!isNew(appointment?.status)" (click)="start()"
-                    class="default-button">Start Consultation
+                    class="default-button button-success">Start Consultation
             </button>
             <br>
         </ng-container>
