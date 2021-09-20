@@ -97,6 +97,9 @@ export class SignUpComponent implements OnInit {
 
     registerNewUser(user: UserData) {
         this.loaderVisible = true;
+        if (!user.password) {
+            user.password = 'abcd1234';
+        }
         user.password = this.dataEncryptionService.set('123456$#@$^@1ERF', user.password);
         user.birthday = this.datePipe.transform(this.bDayFormControl.value, 'yyyy-MM-dd');
 
@@ -167,10 +170,7 @@ export class SignUpComponent implements OnInit {
                 !this.firstNameFormControl.invalid &&
                 !this.lastNameFormControl.invalid &&
                 !this.emailFormControl.invalid &&
-                !this.genderFormControl.invalid &&
-                !this.contactNumberFormControl.invalid &&
-                !this.passFormControl.invalid &&
-                !this.conPassFormControl.invalid;
+                !this.contactNumberFormControl.invalid;
         } else {
             return !this.titleFormControl.invalid &&
                 !this.firstNameFormControl.invalid &&
@@ -190,24 +190,26 @@ export class SignUpComponent implements OnInit {
         if (!this.validateInput(this.isDoctor)) {
             window.scroll(0, 0);
             this.isIncompleteErrorAvailable = true;
-        } else if (!this.pass || !this.conPass || this.pass !== this.conPass) {
+        } else if (!this.isDoctor && (!this.pass || !this.conPass || this.pass !== this.conPass)) {
             this.passwordMissMatch = true;
             this.pass = null;
             this.conPass = null;
         } else {
             const userObj = new UserData();
+            userObj.doctor = this.isDoctor;
+            if (!this.isDoctor) {
+                userObj.password = this.pass.trim();
+                userObj.male = this.male;
+                userObj.birthday = this.birthday;
+                userObj.whatsAppNumber = this.whatsAppNumber.trim();
+                userObj.userAllergies = this.knownAllergies;
+            }
             userObj.userId = this.userId;
             userObj.email = this.email.trim();
-            userObj.password = this.pass.trim();
             userObj.firstName = this.firstName.trim();
             userObj.lastName = this.lastName.trim();
             userObj.title = this.title.trim();
-            userObj.male = this.male;
-            userObj.birthday = this.birthday;
             userObj.contactNumber = this.contactNumber.trim();
-            userObj.whatsAppNumber = this.whatsAppNumber.trim();
-            userObj.doctor = this.isDoctor;
-            userObj.userAllergies = this.knownAllergies;
 
             this.registerNewUser(userObj);
         }

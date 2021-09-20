@@ -83,6 +83,7 @@
                                #input2 [(ngModel)]='email' [formControl]="emailFormControl">
                     </mat-form-field>
                     <br>
+                    <ng-container *ngIf="!isDoctor">
                     <mat-form-field appearance="legacy">
                         <mat-label>Gender</mat-label>
                         <mat-select required (selectionChange)="setGender($event.value)"
@@ -93,6 +94,7 @@
                         </mat-select>
                     </mat-form-field>
                     <br>
+                    </ng-container>
                 </div>
                 <div [hidden]="isDoctor">
                     <mat-form-field>
@@ -121,7 +123,7 @@
 <!--                        <span> WhatsApp number is the same as contact number</span></p>-->
 <!--                </div>-->
 
-                <div>
+                <div *ngIf="!isDoctor">
                     <mat-form-field appearance="legacy">
                         <mat-label>WhatsApp (With country code)</mat-label>
                         <input matInput #input7 [(ngModel)]='whatsAppNumber' placeholder="eg: +94712345678"
@@ -135,6 +137,7 @@
                     </mat-form-field>
                     <br>
                 </div>
+                <ng-container *ngIf="!isDoctor">
                 <mat-form-field appearance="legacy">
                     <mat-label>Preferred Password</mat-label>
                     <input matInput
@@ -151,9 +154,12 @@
                            [formControl]="conPassFormControl">
                 </mat-form-field>
                 <br>
+                </ng-container>
                 <button class="default-button button-white" (click)="openAgreement()">Open Agreement</button>
                 <br>
-                <button class="default-button" [disabled]="!agreed" (click)="signUp()">Sign Up
+                <button *ngIf="isDoctor" class="default-button" [disabled]="!agreed" (click)="signUp()">Send Sign Up Request
+                </button>
+                <button *ngIf="!isDoctor" class="default-button" [disabled]="!agreed" (click)="signUp()">Sign Up
                 </button>
                 <br>
                 <div *ngIf="passwordMissMatch" class="banner error">
