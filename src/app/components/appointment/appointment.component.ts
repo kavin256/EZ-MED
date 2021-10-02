@@ -19,6 +19,7 @@ import {Prescription} from '../../models/prescription';
 export class AppointmentComponent implements OnInit, OnDestroy {
 
     appointmentTime: string;
+    moreOptionsVisible: boolean;
     isConfirmationActive = false;
     changeRequestSent = false;
     doctorSide = false;
@@ -28,13 +29,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     patient: UserData;
     doctor: UserData;
     loggedInUser: UserData = null;
-    isPatientDetailsShown = true;
+    isPatientDetailsShown = false;
     selectedProfessionalUserId: string;
     sub = new Subscription();
     previousStatus: APPOINTMENT_STATUS;
     networkError: boolean;
     medicalHistory: any;
     messageText: string;
+    messageBoxVisible: boolean;
 
     constructor(
         public router: Router,
@@ -105,7 +107,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     repeatedStatusChecker() {
         setTimeout(() => {
             if (!this.networkError && !this.doctorSide
-                && (this.appointment.status === APPOINTMENT_STATUS.NOT_STARTED || this.appointment.status === APPOINTMENT_STATUS.IN_PROGRESS)
+                && (this.appointment.status === APPOINTMENT_STATUS.NOT_STARTED
+                    || this.appointment.status === APPOINTMENT_STATUS.IN_PROGRESS)
             ) {
                 this.liteStatusChecker();
                 this.repeatedStatusChecker();
@@ -187,6 +190,15 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.updateAppointmentStatus();
     }
 
+    userConsentForChargeRemoval() {
+        this.messageBoxVisible = true;
+    }
+
+    continueChargeRemoval() {
+        this.appointment.status = APPOINTMENT_STATUS.DONT_CHARGE_REQUEST_BY_DOCTOR;
+        this.updateAppointmentStatus();
+    }
+
     start() {
         this.previousStatus = this.appointment.status;
         this.appointment.status = APPOINTMENT_STATUS.IN_PROGRESS;
@@ -241,7 +253,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     private updateAppointmentStatus() {
         this.dataLoaderService.activateLoader(true, MODAL_TYPES.LOADING);
-        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS + this.appointment.appointmentId + '/' + this.appointment.status;
+        const url = Constants.API_BASE_URL + Constants.USER_APPOINTMENT_SET_STATUS
+            + this.appointment.appointmentId + '/' + this.appointment.status;
         this.dataLoaderService.put(url, new HttpParams(), new HttpHeaders(), null, null)
             .then((data: any) => {
                 if (data && data.status && data.status.code === 1) {

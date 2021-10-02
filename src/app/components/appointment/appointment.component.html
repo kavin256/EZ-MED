@@ -6,16 +6,16 @@
         </div>
         <div *ngIf="!(doctorSide && isNew(appointment?.status))" class="banner info left-aligned">
 
-<!--            <ng-container *ngIf="doctorSide">-->
-<!--                <h1 style="font-size: x-large">WhatsApp: <a href="https://wa.me/{{patient?.whatsAppNumber}}">{{patient?.whatsAppNumber}}</a></h1>-->
-<!--            </ng-container>-->
             <ng-container *ngIf="doctorSide">
-                <h1 style="font-size: large">WhatsApp: <a href="https://wa.me/{{patient?.whatsAppNumber}}?text={{messageText}}">{{patient?.whatsAppNumber}}</a></h1>
+                <h1 style="font-size: large">WhatsApp: <a
+                        href="https://wa.me/{{patient?.whatsAppNumber}}?text={{messageText}}">{{patient?.whatsAppNumber}}</a>
+                </h1>
                 <br>
             </ng-container>
 
             <ng-container *ngIf="doctorSide">
-                <h1 style="font-size: large">Contact: <a href="tel:{{patient?.contactNumber}}">{{patient?.contactNumber}}</a></h1>
+                <h1 style="font-size: large">Contact: <a
+                        href="tel:{{patient?.contactNumber}}">{{patient?.contactNumber}}</a></h1>
                 <br>
             </ng-container>
 
@@ -34,11 +34,6 @@
             Email: {{contactEmail}}
         </div>
     </ng-container>
-    <!--    <ng-container *ngIf="!doctorSide">-->
-    <!--        <app-professional-card-->
-    <!--                [professional]="doctor"-->
-    <!--        ></app-professional-card>-->
-    <!--    </ng-container>-->
     <ng-container>
         <div class="banner info left-aligned" *ngIf="appointment?.concern && appointment?.concern !== 'undefined'">
             <p>{{doctorSide ? "Patient's" : "Your"}} concern <br><b><i>"{{appointment?.concern}}"</i></b></p>
@@ -52,8 +47,6 @@
         <ng-container *ngIf="!isPatientDetailsShown">
             <button (click)="isPatientDetailsShown = !isPatientDetailsShown" class="default-button">Show Patient Details
             </button>
-            <br>
-            <br>
         </ng-container>
         <ng-container *ngIf="isPatientDetailsShown">
             <button (click)="isPatientDetailsShown = !isPatientDetailsShown" class="default-button">
@@ -62,7 +55,8 @@
         </ng-container>
         <br>
         <div class="banner info left-aligned" *ngIf="isPatientDetailsShown && patient">
-            <p style="font-size: small">Patient Name: {{patient?.title}}. {{patient?.firstName}} {{patient?.lastName}}</p>
+            <p style="font-size: small">Patient Name: {{patient?.title}}
+                . {{patient?.firstName}} {{patient?.lastName}}</p>
             <p style="font-size: small">Patient Ref. No: {{patient?.userId}}</p>
             <p style="font-size: small">WhatsApp number: {{patient?.whatsAppNumber}}</p>
             <p style="font-size: small">Email: {{patient?.email}}</p>
@@ -93,28 +87,51 @@
 
     <button (click)="goToPrescription()" class="default-button">Prescriptions</button>
     <br>
-
-    <button [disabled]="!isNew(appointment?.status)" *ngIf="!isConfirmationActive" (click)="userConsent()"
-            class="default-button button-warning">Cancel Appointment
-    </button>
     <br>
-    <ng-container *ngIf="isConfirmationActive">
-        <br>
-        <p align="center">Are you sure?</p>
-        <div *ngIf="!doctorSide" class="banner warning">
-            <p>You will not be refunded if you cancel the appointment</p>
-            <br>
-        </div>
-        <button (click)="cancel()" style="width: 150px" mat-raised-button color="warn">Cancel
-            Appointment
-        </button>
-        <span>&nbsp;&nbsp;<button (click)="dismiss()" style="width: 150px" mat-raised-button
-                                  color="secondary">Dismiss</button></span>
-        <br>
 
-    </ng-container>
+    <div class="dropdown">
+        <span class="dropdown-trigger"
+              (click)="moreOptionsVisible = !moreOptionsVisible">{{!moreOptionsVisible ? 'Show' : 'Hide'}}
+            More Options</span>
+        <br>
+        <button (click)="userConsentForChargeRemoval()"
+                *ngIf="doctorSide && !isConfirmationActive && moreOptionsVisible"
+                class="default-button button-warning">Don't charge this for this appointment
+        </button>
+        <br>
+        <button
+                [disabled]="!isNew(appointment?.status)"
+                *ngIf="!isConfirmationActive && moreOptionsVisible"
+                (click)="userConsent()"
+                class="default-button button-warning">Cancel Appointment
+        </button>
+        <br>
+    </div>
+    <br>
+
     <button *ngIf="!isConfirmationActive" (click)="goBack()" class="default-button button-warning">
         Back
     </button>
 
+    <!--    User consent for removing the appointment charge-->
+    <app-message-box
+            *ngIf="messageBoxVisible"
+            [display]="messageBoxVisible"
+            [title]="'Are you sure?'"
+            [messageContent]="'By doing this, the patient will be refunded, and you will not receive a payment. ' +
+             'You can not revoke this action'"
+            (closeMessage)="messageBoxVisible = !messageBoxVisible"
+            (approve)="continueChargeRemoval()"
+    ></app-message-box>
+
+    <!--    User consent for cancelling the appointment -->
+    <app-message-box
+            *ngIf="isConfirmationActive"
+            [display]="isConfirmationActive"
+            [title]="'Are you sure?'"
+            [doctorSide]="doctorSide"
+            [messageContent]="doctorSide ? '' : 'You will not be refunded if you cancel the appointment'"
+            (closeMessage)="dismiss()"
+            (approve)="cancel()"
+    ></app-message-box>
 </div>

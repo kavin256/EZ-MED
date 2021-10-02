@@ -57,6 +57,7 @@ import { MedicalReportsComponent } from './components/medical-reports/medical-re
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { VerificationComponent } from './components/verification/verification.component';
 import { ControlPanelComponent } from './components/control-panel/control-panel.component';
+import { MessageBoxComponent } from './components/message-box/message-box.component';
 
 export function initialize(app: AppService) {
     return async () => {
@@ -94,7 +95,8 @@ export function initialize(app: AppService) {
         TransitionPageComponent,
         MedicalReportsComponent,
         VerificationComponent,
-        ControlPanelComponent
+        ControlPanelComponent,
+        MessageBoxComponent
     ],
     imports: [
         BrowserModule,

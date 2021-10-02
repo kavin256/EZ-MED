@@ -1,0 +1,19 @@
+<div *ngIf="display" class="modal">
+    <div class="modal-content">
+        <p align="center">{{title}}</p>
+        <div *ngIf="messageContent" align="center">
+            <div class="banner warning">
+                <p>{{messageContent}}</p>
+            </div>
+        </div>
+        <div align="center">
+            <button style="width: 150px" mat-raised-button color="warn" (click)="approve.emit()">Yes
+            </button>
+            <br>
+            <br>
+            <button style="width: 150px" mat-raised-button (click)="closeMessage.emit()"
+                    color="secondary">Dismiss
+            </button>
+        </div>
+    </div>
+</div>
