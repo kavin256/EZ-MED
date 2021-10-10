@@ -99,6 +99,48 @@
         <button (click)="deletePricingRule()" class="default-button" style="width: 100px">Delete</button>
     </ng-container>
 
+    <!--    Refunds-->
+    <h3 (click)="visibleSection = visibleSection ? '':'refunds'"
+        class="collapsible">{{visibleSection === 'refunds' ? '- ' : '+ '}} Refunds</h3>
+    <ng-container *ngIf="visibleSection === 'refunds'">
+        <p><b>Pricing rules</b></p>
+        <ng-container *ngFor="let refund of refunds">
+            <div class="simple-form">
+                <p>Appointment Number</p><input disabled [value]="refund?.appointmentNumber">
+                <p>Description</p><input disabled [value]="refund?.description">
+                <p>Amount</p><input disabled [value]="refund?.amount">
+                <p>Doctor Name</p><input disabled [value]="refund?.doctor">
+                <p>Doctor Email</p><input disabled [value]="refund?.doctorEmail">
+                <p>Patient Name</p><input disabled [value]="refund?.patient">
+                <p>Patient Email</p><input disabled [value]="refund?.patientEmail">
+                <p>Patient Phone</p><input disabled [value]="refund?.patientPhone">
+                <p>Paid</p><input disabled [value]="refund?.paid">
+            </div>
+            <br>
+        </ng-container>
+        <button *ngIf="!(refunds && refunds.length)" (click)="loadRefunds()" class="default-button">Load
+            Refunds
+        </button>
+        <p><b>Set refund values</b></p>
+        <div class="simple-form">
+            <label>Appointment Number</label><input [(ngModel)]="refund.appointmentNumber">
+            <label>Description</label><input [(ngModel)]="refund.description">
+            <label>Amount</label><input [(ngModel)]="refund.amount">
+            <label>Doctor Name</label><input [(ngModel)]="refund.doctor">
+            <label>Doctor Email</label><input [(ngModel)]="refund.doctorEmail">
+            <label>Patient Name</label><input [(ngModel)]="refund.patient">
+            <label>Patient Email</label><input [(ngModel)]="refund.patientEmail">
+            <label>Patient Phone</label><input [(ngModel)]="refund.patientPhone">
+            <div>
+                <input style="margin: 5px" type="checkbox" [(ngModel)]="refund.paid">
+                <label style="margin: 5px"> Paid </label>
+            </div>
+        </div>
+        <button (click)="loadRefund()" class="default-button" style="width: 100px">Load</button>
+        <button (click)="updateRefund()" class="default-button" style="width: 100px">Update</button>
+        <button (click)="deleteRefund()" class="default-button" style="width: 100px">Delete</button>
+    </ng-container>
+
     <!--    Doctor Profile Editable Toggle-->
     <h3 (click)="visibleSection = visibleSection ? '':'dpet'"
         class="collapsible">{{visibleSection === 'dpet' ? '- ' : '+ '}} Doctor Profile Editable Toggle</h3>

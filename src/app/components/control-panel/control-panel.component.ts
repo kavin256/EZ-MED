@@ -9,6 +9,7 @@ import {PricingRule} from '../../models/pricing-rule';
 import {UserData} from '../../models/user-data';
 import {DataHandlerService} from '../../services/data-handler.service';
 import {DataKey} from '../../services/data-store.service';
+import {Refund} from '../../models/refund';
 
 @Component({
     selector: 'app-control-panel',
@@ -20,6 +21,8 @@ export class ControlPanelComponent implements OnInit {
     code = '';
     pricingRule: PricingRule = new PricingRule();
     pricingRules: PricingRule [] = [];
+    refund: Refund = new Refund();
+    refunds: Refund [] = [];
     dpeUserData: UserData;
     selectedImage: File;
     desc = '';
@@ -144,6 +147,25 @@ export class ControlPanelComponent implements OnInit {
         }
     }
 
+    loadRefunds() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.REFUNDS_LOAD_ALL;
+            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.refunds = data.data[0] as Refund [];
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
     loadPricingRule() {
         if (this.isUnlocked()) {
             // create url and send request
@@ -153,6 +175,25 @@ export class ControlPanelComponent implements OnInit {
                     if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
                         this.pricingRule = data.data[0];
                         this.pricingRule.controlRules = JSON.stringify(this.pricingRule.controlRules);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
+    loadRefund() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.REFUND + this.refund.id;
+            this.dataLoaderService.get<Prescription>(url, new HttpParams(), new HttpHeaders())
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.refund = data.data[0];
                     } else if (data && data.status && data.status.code === -1) {
                         alert(data.status.message);
                     }
@@ -349,10 +390,50 @@ export class ControlPanelComponent implements OnInit {
         }
     }
 
+    updateRefund() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const refundObj = JSON.parse(JSON.stringify(this.refund));
+            const url = Constants.API_BASE_URL + Constants.REFUND;
+            this.dataLoaderService.put<Prescription>(url, new HttpParams(), new HttpHeaders(), null, refundObj)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1 && data.data && data.data.length > 0) {
+                        this.refund = data.data[0];
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
     deletePricingRule() {
         if (this.isUnlocked()) {
             // create url and send request
             const url = Constants.API_BASE_URL + Constants.PRICING_RULE + '/' + this.pricingRule.code;
+            this.dataLoaderService.delete<Prescription>(url, new HttpParams(), new HttpHeaders(), null)
+                .then((data: any) => {
+                    if (data && data.status && data.status.code === 1) {
+                        alert(data.status.message);
+                    } else if (data && data.status && data.status.code === -1) {
+                        alert(data.status.message);
+                    }
+                }).catch((data: any) => {
+                if (data && data.error && data.error.status) {
+                    alert(data.error.status.message);
+                }
+            });
+        }
+    }
+
+    deleteRefund() {
+        if (this.isUnlocked()) {
+            // create url and send request
+            const url = Constants.API_BASE_URL + Constants.REFUND + this.refund.id;
             this.dataLoaderService.delete<Prescription>(url, new HttpParams(), new HttpHeaders(), null)
                 .then((data: any) => {
                     if (data && data.status && data.status.code === 1) {

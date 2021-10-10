@@ -16,6 +16,8 @@ export enum Constants {
     PROFESSIONAL_VISIBILITY = '/admin/control-panel/doctor-visibility/',
     PRICING_RULE = '/pricing-rule',
     PRICING_MARGINS = '/pricing-rule/margin',
+    REFUNDS_LOAD_ALL = '/refund/all',
+    REFUND = '/refund/',
     UPLOAD_USER_PROFILE_PIC = '/userImages/upload/profilePic/',
     DOWNLOAD_USER_PROFILE_PIC = '/userImages/download/profilePic/',
     UPLOAD_USER_SIGN = '/userImages/upload/signature/',
